@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+<title>Rakuten Fit — Case Study | Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== Design Tokens ===== */
+
+  /* ===== Reset ===== */
+
+  /* ===== Nav ===== */
+
+  /* ===== Case Study Hero ===== */
+
+  /* ===== Hero Image ===== */
+
+  /* ===== Overview Bar ===== */
+
+  /* ===== Tags ===== */
+
+  /* ===== Metrics Grid ===== */
+  .metrics {
+    max-width: var(--max-w); margin: 0 auto; padding: 48px 64px;
+  }
+  .metrics__grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--rule-40); border-bottom: 1px solid var(--rule-40);
+    padding: 32px 0;
+  }
+  .metrics__item { padding: 0 32px; border-left: 1px solid var(--rule-40); }
+  .metrics__item:first-child { border-left: none; padding-left: 0; }
+  .metrics__item:last-child { padding-right: 0; }
+  .metrics__value {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink-100);
+  }
+  .metrics__label {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
+  }
+
+  /* ===== Content Layout (TOC + Body) ===== */
+  .cs-content {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 64px;
+    display: grid; grid-template-columns: 200px 1fr; gap: 64px;
+  }
+
+  /* ===== Table of Contents ===== */
+  .toc { position: sticky; top: 80px; align-self: start; }
+  .toc__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .toc__list { list-style: none; }
+  .toc__list li { margin-top: 12px; }
+  .toc__list a {
+    font-size: 13px; font-weight: 400; color: var(--ink-60);
+    transition: color 0.3s var(--ease);
+  }
+  .toc__list a:hover, .toc__list a.active { color: var(--ink-100); }
+
+  /* ===== STAR-D Sections ===== */
+  .stard-section {
+    padding: 48px 0; border-top: 1px solid var(--rule-40);
+  }
+  .stard-section:first-child { border-top: none; }
+  .stard-section__overline {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
+  }
+  .stard-section__title {
+    font-size: 26px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 24px;
+  }
+  .stard-section__body p {
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-80); margin-top: 16px;
+  }
+  .stard-section__body p:first-child { margin-top: 0; }
+
+  /* ===== Inline Image ===== */
+
+  /* ===== Pull Quote ===== */
+
+  /* ===== Before / After (embedded in flow) ===== */
+  .ba-inline {
+    margin: 32px 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--rule-40); border-radius: 8px; overflow: hidden;
+  }
+  .ba-inline__cell {
+    background: var(--white); padding: 24px;
+  }
+  .ba-inline__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .ba-inline__label--before { color: var(--ink-40); }
+  .ba-inline__label--after { color: var(--ink-100); }
+  .ba-inline__text {
+    font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--ink-80);
+  }
+
+  /* ===== Recognition ===== */
+  .recognition {
+    padding: 48px 0 0; border-top: 1px solid var(--rule-40);
+  }
+  .recognition__title {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .recognition__list {
+    list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px;
+  }
+  .recognition__list li {
+    font-size: 14px; font-weight: 400; color: var(--ink-80);
+  }
+
+  /* ===== Prev / Next Nav ===== */
+
+  /* ===== Footer ===== */
+
+  /* ===== Scroll animations ===== */
+  
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1119px) {
+    .cs-content { grid-template-columns: 1fr; gap: 0; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 32px; border-bottom: 1px solid var(--rule-40); }
+    .toc__label { width: 100%; }
+    .toc__list { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .toc__list li { margin-top: 0; }
+
+  }
+  @media (max-width: 767px) {
+
+    .metrics { padding: 32px 24px; }
+    .metrics__grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .metrics__item { border-left: none; padding: 0; }
+    .cs-content { padding: 0 24px 40px; }
+    .ba-inline { grid-template-columns: 1fr; }
+
+  }
+  /* ===== Animation Layer (v1_animation) ===== */
+  #snow-zone { position: relative; overflow: hidden; }
+  #snow-zone img { position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="../index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../design-thinking.html">Design Thinking</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div id="snow-zone">
+
+<!-- ===== CASE STUDY HERO ===== -->
+<section class="cs-hero">
+  <div class="reveal">
+    <a href="Projects_Preview.html#audio" class="cs-hero__back">← Projects</a>
+  </div>
+  <div class="reveal" style="transition-delay: 0.05s">
+    <p class="cs-hero__brand">Rakuten Fit</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.1s">
+    <h1 class="cs-hero__title">Making <span class="bold">Fitness</span> Economically <span class="bold">Productive</span></h1>
+  </div>
+  <div class="reveal" style="transition-delay: 0.15s">
+    <p class="cs-hero__statement">Designing a fitness companion app that transforms physical activity into economic value — connecting a white-label wearable to the Rakuten Economic Zone's 111 million members, where steps become Rakuten Points and health data informs life insurance premiums.</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s">
+    <div class="cs-hero__image">Hero image — Rakuten Fit daily dashboard with points earning</div>
+  </div>
+</section>
+
+<!-- ===== OVERVIEW BAR ===== -->
+<div class="overview-bar reveal">
+  <div class="overview-bar__inner">
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Role</p>
+      <p class="overview-bar__value">Global Innovation Director</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Timeline</p>
+      <p class="overview-bar__value">2023–2025</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Platform</p>
+      <p class="overview-bar__value">iOS / Android</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Team</p>
+      <p class="overview-bar__value">SourceFuse Technologies for Rakuten Mobile</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAGS ===== -->
+<div class="tags reveal">
+  <span class="tag">Wearable UX</span>
+  <span class="tag">Gamification</span>
+  <span class="tag">Rakuten Points</span>
+  <span class="tag">iOS/Android</span>
+  <span class="tag">User Personas</span>
+  <span class="tag">Nike Co-Brand</span>
+  <span class="tag">Health Data Privacy</span>
+</div>
+
+<!-- ===== METRICS ===== -->
+<div class="metrics reveal">
+  <div class="metrics__grid">
+    <div class="metrics__item">
+      <p class="metrics__value">111M</p>
+      <p class="metrics__label">Rakuten ecosystem members</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">40+</p>
+      <p class="metrics__label">High-fidelity screens designed</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">6</p>
+      <p class="metrics__label">Research-validated personas</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">4-Tier</p>
+      <p class="metrics__label">Gamification framework</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOC + CONTENT ===== -->
+<div class="cs-content">
+
+  <!-- Table of Contents -->
+  <aside class="toc reveal">
+    <p class="toc__label">Contents</p>
+    <ul class="toc__list">
+      <li><a href="#context" class="active">Opening Context</a></li>
+      <li><a href="#work">The Work</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+      <li style="margin-top:20px; padding-top:12px; border-top: 1px solid var(--rule-40)"><a href="#recognition">Recognition</a></li>
+    </ul>
+  </aside>
+
+  <!-- Content Body -->
+  <div>
+
+    <!-- OPENING CONTEXT -->
+    <div id="context" class="stard-section reveal">
+      <p class="stard-section__overline">Context</p>
+      <h2 class="stard-section__title">111 Million Members Without a Fitness Ecosystem</h2>
+      <div class="stard-section__body">
+        <p>Rakuten operates Japan's largest internet services ecosystem — 70+ businesses, 111.4 million members, 76.7% using two or more services. Rakuten Points function as near-currency used by 59.3% of Japan's consumers. Yet Rakuten had no branded fitness product — even as the Japanese fitness app market was projected to grow to $5.3 billion by 2035.</p>
+        <p>The strategic gap: every competitor — Apple, Google, Samsung — treated fitness as standalone. None could connect physical activity to a massive e-commerce rewards ecosystem. In November 2023, Rakuten Life Insurance launched "Well Smile" — the first medical insurance in Japan to refund premiums as Rakuten Points based on health.</p>
+
+        <p class="pull-quote">Every fitness app asks: how do we get users to exercise? Rakuten Fit asks: how do we make exercise economically productive?</p>
+
+        <div class="inline-image">Competitive landscape — Apple Health, Fitbit, Samsung Health vs. Rakuten ecosystem advantage</div>
+
+        <p>Key constraints: white-label hardware with limited sensors, complex points economy across 70+ services, multi-stakeholder alignment (Mobile, Insurance, e-commerce), Japanese market specificity.</p>
+      </div>
+    </div>
+
+    <!-- THE WORK -->
+    <div id="work" class="stard-section reveal">
+      <p class="stard-section__overline">The Work</p>
+      <h2 class="stard-section__title">Steps as Currency</h2>
+      <div class="stard-section__body">
+        <p>Deep competitive teardown of 6 platforms mapping onboarding, daily engagement, gamification, rewards, data visualization, ecosystem connections. Japanese fitness market analysis — aging population, privacy sensitivity, femtech boom.</p>
+        <p>6 personas: Health-Conscious Points Optimizer, Casual Walker, Dedicated Runner, Insurance-Motivated, Social Competitor, Corporate Wellness Participant.</p>
+        <p>4-tier gamification system: Starter (1x points), Active (1.5x), Challenger (2x), Champion (3x + exclusive rewards). Core engagement loop: Activity → Achievement → Points → Spending → Motivation → Activity.</p>
+
+        <div class="inline-image--half">
+          <div>4-tier gamification with Rakuten Points multiplier</div>
+          <div>Engagement feedback loop diagram</div>
+        </div>
+
+        <p>40+ high-fidelity screens: Onboarding (6), Daily Dashboard (8), Challenges & Gamification (10), Health Insights (8), Ecosystem Integration (6), Settings (4).</p>
+        <p>Nike co-branded experience proposal — seasonal challenges earning both Rakuten Points and exclusive Nike product access.</p>
+        <p>Insurance data architecture: opt-in only, visible benefit, data transparency, user control, positive framing. "Your activity this month earned you ¥X in premium refund."</p>
+
+        <div class="inline-image">Insurance integration — health data → premium impact visualization</div>
+      </div>
+    </div>
+
+    <!-- IMPACT -->
+    <div id="impact" class="stard-section reveal">
+      <p class="stard-section__overline">Impact</p>
+      <h2 class="stard-section__title">Fitness as Economic Infrastructure</h2>
+      <div class="stard-section__body">
+        <p>40+ high-fidelity screens, 6 personas, 4-tier gamification framework. First-of-its-kind design connecting wearable health data to e-commerce points, life insurance premiums, and brand partnerships. Nike co-brand proposal. Privacy-first health data sharing design. Built to MVP/prototype stage with user testing. Validated core hypothesis: Rakuten Points as fitness reward is stronger than badges, streaks, or social metrics.</p>
+
+        <div class="ba-inline">
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--before">Before</p>
+            <p class="ba-inline__text">Fitness apps compete on tracking accuracy, social features, coaching</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--after">After</p>
+            <p class="ba-inline__text">Rakuten Fit competes on economic outcomes — steps become currency</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--before">Before</p>
+            <p class="ba-inline__text">Health data sharing = surveillance anxiety</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--after">After</p>
+            <p class="ba-inline__text">Opt-in, visible benefit, user-controlled data → trust</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFLECTION -->
+    <div id="reflection" class="stard-section reveal">
+      <p class="stard-section__overline">Reflection</p>
+      <h2 class="stard-section__title">Competing on Outcomes, Not Features</h2>
+      <div class="stard-section__body">
+        <p>When hardware is a constraint, software and ecosystem create the moat. No Apple Watch can earn Rakuten Points. Ecosystem thinking — this isn't standalone, it's a node in 70+ services. Gamification as behavioral architecture — tangible economic rewards bridge intention and action. Privacy-first data design — health data to insurance is a trust problem of the highest order.</p>
+
+        <p class="pull-quote">People abandon fitness apps because the rewards are abstract. Rakuten Fit makes exercise economically productive — your morning walk earns money you can spend this afternoon.</p>
+
+        <p>The design system I established demonstrates three capabilities: ecosystem-integrated incentive design, white-label hardware opportunity as competitive advantage through software, and health data architecture that builds trust through transparency and user control.</p>
+      </div>
+    </div>
+
+    <!-- RECOGNITION -->
+    <div id="recognition" class="recognition reveal">
+      <p class="recognition__title">Recognition</p>
+      <ul class="recognition__list">
+        <li>40+ Screen Design System</li>
+        <li>6 User Personas</li>
+        <li>Nike Co-Brand Proposal</li>
+        <li>MVP Validated</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== PREV / NEXT ===== -->
+<div class="prev-next reveal">
+  <div class="prev-next__inner">
+    <a href="denon-marantz.html" class="prev-next__link prev-next__link--prev">
+      <p class="prev-next__label">← Previous Case Study</p>
+      <p class="prev-next__title">Making Premium Audio Feel as Good as It Sounds</p>
+    </a>
+    <a href="tdk.html" class="prev-next__link prev-next__link--next">
+      <p class="prev-next__label">Next Case Study →</p>
+      <p class="prev-next__title">Three Companies, One Intelligent Interface</p>
+    </a>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+</div><!-- end #snow-zone -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script src="../js/scroll-reveal.js" defer></script>
+<script src="../js/weather-hero.js" defer></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
+</body>
+</html>

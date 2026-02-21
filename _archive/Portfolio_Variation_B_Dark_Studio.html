@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keisuke Shingu — Variation B: Dark Studio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap');
+
+  :root {
+    --bg-primary: #000000;
+    --bg-secondary: #0A0A0A;
+    --bg-card: #111111;
+    --bg-elevated: #1A1A1A;
+    --border: #222222;
+    --text-primary: #F5F5F7;
+    --text-secondary: #A1A1A6;
+    --text-tertiary: #6E6E73;
+    --accent-blue: #2997FF;
+    --accent-purple: #BF5AF2;
+    --accent-green: #30D158;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 16px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav .logo {
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  nav .nav-links { display: flex; gap: 32px; list-style: none; }
+
+  nav .nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+
+  nav .nav-links a:hover { color: var(--text-primary); }
+
+  /* Hero */
+  .hero {
+    padding: 200px 48px 100px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent-blue);
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: 80px;
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #F5F5F7 0%, #A1A1A6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 32px;
+  }
+
+  .hero .subtitle {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Glowing Stats */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin: 80px 48px;
+    border-radius: 16px;
+    overflow: hidden;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .stat-cell {
+    background: var(--bg-card);
+    padding: 40px 32px;
+    text-align: center;
+  }
+
+  .stat-cell .value {
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+  }
+
+  .stat-cell .value.blue { color: var(--accent-blue); }
+  .stat-cell .value.purple { color: var(--accent-purple); }
+  .stat-cell .value.green { color: var(--accent-green); }
+
+  .stat-cell .desc {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+
+  /* Heritage */
+  .heritage {
+    padding: 80px 48px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .heritage .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-blue);
+    background: rgba(41,151,255,0.1);
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid rgba(41,151,255,0.2);
+    margin-bottom: 20px;
+  }
+
+  .heritage h2 {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .heritage p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 640px;
+  }
+
+  /* Timeline as horizontal flow */
+  .timeline-flow {
+    display: flex;
+    gap: 16px;
+    margin-top: 48px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .flow-item {
+    flex-shrink: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    min-width: 180px;
+    position: relative;
+  }
+
+  .flow-item::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    font-size: 14px;
+  }
+
+  .flow-item:last-child::after { content: ''; }
+
+  .flow-item .year {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+
+  .flow-item .title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .flow-item .detail {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+  }
+
+  /* Project Cards */
+  .projects {
+    padding: 80px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .projects .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .project-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .dark-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .dark-card:hover {
+    border-color: #333;
+    transform: translateY(-2px);
+  }
+
+  .dark-card.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .dark-card .image-area {
+    background: var(--bg-elevated);
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dark-card .image-area.tall { height: 400px; }
+
+  .dark-card .content {
+    padding: 28px 28px 32px;
+  }
+
+  .dark-card .tier-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+
+  .dark-card .tier-badge.lead {
+    background: rgba(41,151,255,0.15);
+    color: var(--accent-blue);
+    border: 1px solid rgba(41,151,255,0.25);
+  }
+
+  .dark-card .tier-badge.full {
+    background: rgba(191,90,242,0.15);
+    color: var(--accent-purple);
+    border: 1px solid rgba(191,90,242,0.25);
+  }
+
+  .dark-card .tier-badge.support {
+    background: rgba(48,209,88,0.15);
+    color: var(--accent-green);
+    border: 1px solid rgba(48,209,88,0.25);
+  }
+
+  .dark-card .tier-badge.brief {
+    background: rgba(255,255,255,0.05);
+    color: var(--text-tertiary);
+    border: 1px solid var(--border);
+  }
+
+  .dark-card h3 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .dark-card .company {
+    font-size: 14px;
+    color: var(--accent-blue);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .dark-card .desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .dark-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .dark-card .tag {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+
+  /* Footer */
+  footer {
+    padding: 64px 48px;
+    border-top: 1px solid var(--border);
+    max-width: 960px;
+    margin: 80px auto 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  footer .left {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  footer .right a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .design-note {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--accent-blue);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="design-note">Variation B: Dark Studio</div>
+
+<nav>
+  <div class="logo">KS</div>
+  <ul class="nav-links">
+    <li><a href="#">Work</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Resume</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Product Design / UX — Apple, Meta, Google</div>
+  <h1>Digital meets<br>physical.</h1>
+  <p class="subtitle">25 years designing at the intersection of hardware, software, and AI. 50+ products shipped in Apple's ecosystem. One USPTO patent. From QuarkXPress to AI agents.</p>
+</section>
+
+<div class="stats-grid">
+  <div class="stat-cell">
+    <div class="value blue">50+</div>
+    <div class="desc">AirPlay 2 / HomeKit<br>products certified</div>
+  </div>
+  <div class="stat-cell">
+    <div class="value">60+</div>
+    <div class="desc">SKUs unified under<br>one design language</div>
+  </div>
+  <div class="stat-cell">
+    <div class="value purple">#1</div>
+    <div class="desc">Market position<br>achieved (from #5)</div>
+  </div>
+  <div class="stat-cell">
+    <div class="value green">35%</div>
+    <div class="desc">Support call<br>reduction</div>
+  </div>
+</div>
+
+<section class="heritage">
+  <div class="badge">Mac Creative Tools Heritage</div>
+  <h2>Part of the core group that built the Mac creative ecosystem.</h2>
+  <p>From desktop publishing through motion graphics to music production and AI — every era of Mac creative software, I was there designing the interfaces professionals relied on.</p>
+
+  <div class="timeline-flow">
+    <div class="flow-item">
+      <div class="year">1999–2007</div>
+      <div class="title">QuarkXPress</div>
+      <div class="detail">Macworld Best of Show<br>95% market share · 30+ languages</div>
+    </div>
+    <div class="flow-item">
+      <div class="year">2007–2012</div>
+      <div class="title">Traktor · Miselu</div>
+      <div class="detail">Mac-dominant DJ platform<br>USPTO Patent · Google I/O</div>
+    </div>
+    <div class="flow-item">
+      <div class="year">2012–2016</div>
+      <div class="title">Beatport · Festivals</div>
+      <div class="detail">Music distribution<br>EDC · Ultra · Burning Man</div>
+    </div>
+    <div class="flow-item">
+      <div class="year">2017–2021</div>
+      <div class="title">Denon / Marantz</div>
+      <div class="detail">50+ AirPlay 2 products<br>#5→#1 · Monotype licensing</div>
+    </div>
+    <div class="flow-item">
+      <div class="year">2023–Now</div>
+      <div class="title">Fabrion · AI</div>
+      <div class="detail">AI-native MES<br>Multi-agent systems</div>
+    </div>
+  </div>
+</section>
+
+<section class="projects">
+  <div class="section-label">Selected Work</div>
+
+  <!-- Lead: Full Width -->
+  <div class="dark-card full-width" style="margin-bottom:24px">
+    <div class="image-area tall">Denon/Marantz — AirPlay 2 integration + Before/After TV GUI</div>
+    <div class="content">
+      <span class="tier-badge lead">Lead Case Study — Apple Ecosystem</span>
+      <h3>HEOS Ecosystem & Embedded Display UX</h3>
+      <div class="company">Denon / Marantz</div>
+      <div class="desc">Transforming the UX of two premium audio brands across 60+ products. Bitmap-to-vector migration, Monotype embedded font licensing, AirPlay 2 / HomeKit certification for 50+ products, voice-first setup redesign.</div>
+      <div class="tags">
+        <span class="tag">AirPlay 2</span>
+        <span class="tag">HomeKit</span>
+        <span class="tag">Siri</span>
+        <span class="tag">Qt/QML</span>
+        <span class="tag">Embedded Linux</span>
+        <span class="tag">Monotype</span>
+        <span class="tag">Design System</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Two Column -->
+  <div class="project-row">
+    <div class="dark-card">
+      <div class="image-area">Fabrion — AI Dashboard + Swim Lanes</div>
+      <div class="content">
+        <span class="tier-badge full">Full Depth — AI Native</span>
+        <h3>AI-Native MES</h3>
+        <div class="company">Fabrion</div>
+        <div class="desc">0→1 product: multi-agent AI for EV manufacturing. AI Constitution, trust calibration, token pipeline.</div>
+        <div class="tags">
+          <span class="tag">Multi-Agent</span>
+          <span class="tag">Design System</span>
+          <span class="tag">Trust UX</span>
+        </div>
+      </div>
+    </div>
+    <div class="dark-card">
+      <div class="image-area">Rakuten Fit — Screens + Gamification</div>
+      <div class="content">
+        <span class="tier-badge support">Supporting — Health Ecosystem</span>
+        <h3>Fitness as Economic Value</h3>
+        <div class="company">Rakuten Fit</div>
+        <div class="desc">Wearable companion for 111M Rakuten members. Fitness → Points → Insurance → Commerce.</div>
+        <div class="tags">
+          <span class="tag">iOS/Android</span>
+          <span class="tag">Wearable</span>
+          <span class="tag">Gamification</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three Column Brief -->
+  <div class="project-row" style="grid-template-columns: 1fr 1fr 1fr;">
+    <div class="dark-card">
+      <div class="content">
+        <span class="tier-badge support">Edge AI</span>
+        <h3>TDK SensEI</h3>
+        <div class="desc" style="font-size:13px">Sensor fusion dashboard for 3 merged AI companies. Predictive maintenance visualization.</div>
+      </div>
+    </div>
+    <div class="dark-card">
+      <div class="content">
+        <span class="tier-badge brief">Immersive</span>
+        <h3>Ogilvy/Audi + Music</h3>
+        <div class="desc" style="font-size:13px">Audi Q4 e-tron launch. Festival visuals at EDC, Ultra, Burning Man. Spatial audio.</div>
+      </div>
+    </div>
+    <div class="dark-card">
+      <div class="content">
+        <span class="tier-badge brief">Invention + Current</span>
+        <h3>Miselu C.24 · AI Workflow</h3>
+        <div class="desc" style="font-size:13px">USPTO patent. Google I/O. Plus: Figma → Claude Code → functional POC pipeline.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="left">Keisuke Shingu — Product Design / UX</div>
+  <div class="right"><a href="mailto:keisuke@gmail.com">keisuke@gmail.com</a></div>
+</footer>
+
+</body>
+</html>

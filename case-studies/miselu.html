@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+<title>Miselu C.24 — Case Study | Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== Design Tokens ===== */
+
+  /* ===== Reset ===== */
+
+  /* ===== Nav ===== */
+
+  /* ===== Case Study Hero ===== */
+
+  /* ===== Hero Image ===== */
+
+  /* ===== Overview Bar ===== */
+
+  /* ===== Tags ===== */
+
+  /* ===== Brief Narrative ===== */
+
+  /* ===== Key Highlight ===== */
+
+  /* ===== Inline Image ===== */
+
+  /* ===== Pull Quote ===== */
+
+  /* ===== Prev / Next Nav ===== */
+
+  /* ===== Footer ===== */
+
+  /* ===== Scroll animations ===== */
+  
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 767px) {
+
+  }
+  /* ===== Animation Layer (v1_animation) ===== */
+  #snow-zone { position: relative; overflow: hidden; }
+  #snow-zone img { position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="../index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../design-thinking.html">Design Thinking</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div id="snow-zone">
+
+<!-- ===== CASE STUDY HERO ===== -->
+<section class="cs-hero">
+  <div class="reveal">
+    <a href="Projects_Preview.html#invention" class="cs-hero__back">← Projects</a>
+  </div>
+  <div class="reveal" style="transition-delay: 0.05s">
+    <p class="cs-hero__brand">Miselu C.24</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.1s">
+    <h1 class="cs-hero__title"><span class="bold">OS-Level</span> Audio <span class="bold">Engineering</span></h1>
+  </div>
+  <div class="reveal" style="transition-delay: 0.15s">
+    <p class="cs-hero__statement">A Bluetooth LE MIDI keyboard controller with a USPTO patent — reducing Android audio latency from 250ms to under 10ms and making real-time musical performance possible on Android for the first time.</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s">
+    <div class="cs-hero__image">Hero image — Miselu C.24 Bluetooth MIDI keyboard</div>
+  </div>
+</section>
+
+<!-- ===== OVERVIEW BAR ===== -->
+<div class="overview-bar reveal">
+  <div class="overview-bar__inner">
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Role</p>
+      <p class="overview-bar__value">Director of Software Products</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Timeline</p>
+      <p class="overview-bar__value">2011–2013</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Platform</p>
+      <p class="overview-bar__value">iOS, Android, Bluetooth LE MIDI</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAGS ===== -->
+<div class="tags reveal">
+  <span class="tag">USPTO Patent</span>
+  <span class="tag">Bluetooth LE</span>
+  <span class="tag">MIDI</span>
+  <span class="tag">Android Audio</span>
+  <span class="tag">Google I/O 2012</span>
+  <span class="tag">KORG</span>
+  <span class="tag">Yamaha</span>
+</div>
+
+<!-- ===== BRIEF NARRATIVE ===== -->
+<div class="brief-content reveal">
+  <p>The Miselu C.24 was a portable, wireless musical instrument that connected to smartphones and tablets via Bluetooth Low Energy. As Director of Software Products, I designed and built the software ecosystem that made the hardware perform — and solved a platform-level problem that no one else had cracked.</p>
+
+  <p>The stock Android audio stack in 2012 had approximately 250ms of latency — a quarter-second delay between pressing a key and hearing sound. For reference, anything above 10ms is perceptible to musicians and makes real-time performance impossible. I forked the Android audio pipeline, bypassing the high-level audio framework to communicate directly with the hardware audio layer. This required deep OS-level engineering — understanding the Linux kernel's audio subsystem, the Android HAL (Hardware Abstraction Layer), and the timing characteristics of specific audio chipsets.</p>
+
+  <div class="inline-image">Latency comparison — 250ms stock Android vs. sub-10ms Miselu pipeline</div>
+
+  <p>The result: sub-10ms latency on Android — a breakthrough that made the C.24 the first viable real-time MIDI controller for the Android platform. The C.24 and the Neiro music creation app were demonstrated at Google I/O 2012, showcasing the latency breakthrough to thousands of developers.</p>
+
+  <p>I am a named inventor on US Patent 9,165,476 — covering the wireless MIDI controller technology that enabled low-latency musical instrument communication over Bluetooth Low Energy. I also established partnerships with KORG and Yamaha, validating the technology and opening distribution channels in the professional music industry.</p>
+
+  <p class="pull-quote">A USPTO patent, a Google I/O demo, and partnerships with KORG and Yamaha — from a startup that dared to fork Android's audio pipeline to make music happen in real time.</p>
+</div>
+
+<!-- ===== KEY HIGHLIGHTS ===== -->
+<div class="key-highlight reveal">
+  <div class="key-highlight__inner">
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">&lt;10ms</p>
+      <p class="key-highlight__label">Android audio latency (from 250ms)</p>
+    </div>
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">1</p>
+      <p class="key-highlight__label">USPTO Patent (US9165476B2)</p>
+    </div>
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">2012</p>
+      <p class="key-highlight__label">Google I/O demonstration</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PREV / NEXT ===== -->
+<div class="prev-next reveal">
+  <div class="prev-next__inner">
+    <a href="ogilvy.html" class="prev-next__link">
+      <p class="prev-next__label">← Previous</p>
+      <p class="prev-next__title">Beyond Screens</p>
+    </a>
+    <a href="beatport-ni.html" class="prev-next__link prev-next__link--next">
+      <p class="prev-next__label">Next →</p>
+      <p class="prev-next__title">Digital Music Distribution & DJ Software</p>
+    </a>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+</div><!-- end #snow-zone -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script src="../js/scroll-reveal.js" defer></script>
+<script src="../js/weather-hero.js" defer></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
+</body>
+</html>

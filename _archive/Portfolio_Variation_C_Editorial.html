@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keisuke Shingu — Variation C: Editorial</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap');
+
+  :root {
+    --white: #FFFFFF;
+    --cream: #F8F7F4;
+    --warm-gray: #E8E5DF;
+    --text-dark: #1A1A1A;
+    --text-mid: #555555;
+    --text-light: #999999;
+    --accent: #1A1A1A;
+    --rule: #D4D0C8;
+    --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--white);
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    z-index: 100;
+  }
+
+  nav .logo {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-dark);
+    letter-spacing: -0.02em;
+  }
+
+  nav .nav-links { display: flex; gap: 40px; list-style: none; }
+
+  nav .nav-links a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  nav .nav-links a:hover { color: var(--text-dark); }
+
+  /* Hero — Magazine Style */
+  .hero {
+    padding: 240px 64px 120px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .hero .date-line {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .hero h1 {
+    font-family: var(--font-serif);
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--text-dark);
+    margin-bottom: 40px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .hero .lead {
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-mid);
+    max-width: 560px;
+    border-left: 2px solid var(--text-dark);
+    padding-left: 24px;
+  }
+
+  /* Divider */
+  .divider {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 64px;
+  }
+
+  .divider hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Stats — Editorial */
+  .stats-editorial {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 64px;
+  }
+
+  .stat-ed {
+    text-align: center;
+    padding: 0 16px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .stat-ed:last-child { border-right: none; }
+
+  .stat-ed .number {
+    font-family: var(--font-serif);
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text-dark);
+    letter-spacing: -0.03em;
+  }
+
+  .stat-ed .caption {
+    font-size: 11px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 8px;
+  }
+
+  /* Heritage */
+  .heritage-ed {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 64px;
+  }
+
+  .heritage-ed .overline {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-light);
+    margin-bottom: 20px;
+  }
+
+  .heritage-ed h2 {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+  }
+
+  .heritage-ed h2 em { font-style: italic; }
+
+  .heritage-ed p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-mid);
+    max-width: 560px;
+  }
+
+  /* Timeline — Typographic */
+  .timeline-typo {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+    margin-top: 48px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .tl-row {
+    display: contents;
+  }
+
+  .tl-row .year {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-light);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tl-row .info {
+    padding: 16px 0 16px 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tl-row .info .role {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-dark);
+  }
+
+  .tl-row .info .detail {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  /* Projects — Editorial Cards */
+  .projects-ed {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 64px;
+  }
+
+  .projects-ed .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 48px;
+    border-bottom: 2px solid var(--text-dark);
+    padding-bottom: 12px;
+  }
+
+  .projects-ed .section-head h2 {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .projects-ed .section-head .count {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+
+  /* Feature Card */
+  .feature-card {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    margin-bottom: 80px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .feature-card .image-frame {
+    background: var(--cream);
+    border-radius: 8px;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 13px;
+  }
+
+  .feature-card .text-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .feature-card .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-light);
+    margin-bottom: 12px;
+  }
+
+  .feature-card h3 {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .feature-card .company-line {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-mid);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .feature-card .excerpt {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-mid);
+    margin-bottom: 24px;
+  }
+
+  .feature-card .read-more {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dark);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+
+  .feature-card .read-more:hover { gap: 12px; }
+
+  /* Grid Cards */
+  .grid-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 80px;
+    padding-bottom: 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .grid-card {
+    background: var(--cream);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .grid-card:hover { transform: translateY(-3px); }
+
+  .grid-card .img-area {
+    height: 240px;
+    background: var(--warm-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 13px;
+  }
+
+  .grid-card .card-text {
+    padding: 24px 28px 28px;
+  }
+
+  .grid-card .card-text .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+
+  .grid-card .card-text h4 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .grid-card .card-text .sub {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  /* Small List */
+  .brief-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .brief-item {
+    padding: 32px 24px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .brief-item:last-child { border-right: none; }
+  .brief-item:hover { background: var(--cream); }
+
+  .brief-item .num {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    color: var(--rule);
+    margin-bottom: 12px;
+  }
+
+  .brief-item h5 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .brief-item p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-light);
+  }
+
+  /* Footer */
+  footer {
+    max-width: 1000px;
+    margin: 80px auto 0;
+    padding: 48px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 2px solid var(--text-dark);
+  }
+
+  footer .left {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  footer .right {
+    font-size: 13px;
+    color: var(--text-light);
+  }
+
+  footer .right a {
+    color: var(--text-dark);
+    text-decoration: none;
+  }
+
+  .design-note {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--text-dark);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 200;
+  }
+</style>
+</head>
+<body>
+
+<div class="design-note">Variation C: Editorial</div>
+
+<nav>
+  <div class="logo">Keisuke Shingu</div>
+  <ul class="nav-links">
+    <li><a href="#">Work</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Resume</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="date-line">Product Design / UX — February 2026</div>
+  <h1>Designing where<br><em>digital meets</em><br>physical.</h1>
+  <p class="lead">
+    I was part of the core group that built the Mac creative professional tools — from desktop publishing through music production to AI-native systems. 25 years. 50+ Apple ecosystem products. One patent.
+  </p>
+</section>
+
+<div class="divider"><hr></div>
+
+<section class="stats-editorial">
+  <div class="stat-ed">
+    <div class="number">50+</div>
+    <div class="caption">AirPlay 2 / HomeKit</div>
+  </div>
+  <div class="stat-ed">
+    <div class="number">60+</div>
+    <div class="caption">SKUs Unified</div>
+  </div>
+  <div class="stat-ed">
+    <div class="number">#1</div>
+    <div class="caption">Market Position</div>
+  </div>
+  <div class="stat-ed">
+    <div class="number">35%</div>
+    <div class="caption">Support Reduction</div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<section class="heritage-ed">
+  <div class="overline">Career Heritage</div>
+  <h2>Building the Mac creative ecosystem,<br><em>one era at a time.</em></h2>
+  <p>From QuarkXPress to AI agents — every generation of creative software on the Mac, I was there designing the interfaces professionals relied on.</p>
+
+  <div class="timeline-typo">
+    <div class="tl-row">
+      <div class="year">1999–2007</div>
+      <div class="info">
+        <div class="role">QuarkXPress — Print & Publishing</div>
+        <div class="detail">Macworld Best of Show · 95% global market share · Forbes, Condé Nast, NYT, Rolling Stone</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="year">2007–2012</div>
+      <div class="info">
+        <div class="role">Native Instruments Traktor · Miselu — Music & Audio</div>
+        <div class="detail">Mac-dominant DJ platform · USPTO Patent US9165476B2 · Google I/O 2012</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="year">2012–2016</div>
+      <div class="info">
+        <div class="role">Beatport · Festival Visuals — Immersive</div>
+        <div class="detail">Digital music distribution · Real-time visuals at EDC, Ultra, Detroit Movement, Burning Man</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="year">2017–2021</div>
+      <div class="info">
+        <div class="role">Denon / Marantz — Hardware & Apple Ecosystem</div>
+        <div class="detail">50+ AirPlay 2/HomeKit products · #5→#1 market position · Monotype embedded font licensing</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="year">2023–Now</div>
+      <div class="info">
+        <div class="role">Fabrion · TDK · Slalom — AI & Edge Computing</div>
+        <div class="detail">AI-native MES · Edge AI sensor platform · Innovation partnerships (NVIDIA, OpenAI, Anthropic)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="projects-ed">
+  <div class="section-head">
+    <h2>Selected Work</h2>
+    <div class="count">7 projects · 3 tiers</div>
+  </div>
+
+  <!-- Feature: Denon/Marantz -->
+  <div class="feature-card">
+    <div class="image-frame">Marantz Cinema porthole + TV GUI before/after</div>
+    <div class="text-col">
+      <div class="label">Lead Case Study — Apple Ecosystem</div>
+      <h3>HEOS Ecosystem &<br>Embedded Display UX</h3>
+      <div class="company-line">Denon / Marantz — Director of UX, 2017–2021</div>
+      <p class="excerpt">Transforming the user experience of two premium audio brands across 60+ products — from 8-bit-era bitmap displays to a modern, vector-based design system — driving Denon/Marantz from #5 to #1 market position.</p>
+      <a href="#" class="read-more">Read case study →</a>
+    </div>
+  </div>
+
+  <!-- Grid: Fabrion + Rakuten -->
+  <div class="grid-cards">
+    <div class="grid-card">
+      <div class="img-area">Fabrion dashboard + AI Constitution</div>
+      <div class="card-text">
+        <div class="label">Full Depth — AI Native</div>
+        <h4>AI-Native Manufacturing<br>Execution System</h4>
+        <div class="sub">Fabrion — Founding Designer, 2025–Present</div>
+      </div>
+    </div>
+    <div class="grid-card">
+      <div class="img-area">Rakuten Fit screens + engagement loop</div>
+      <div class="card-text">
+        <div class="label">Supporting — Health Ecosystem</div>
+        <h4>Fitness Meets the Rakuten<br>Economic Zone</h4>
+        <div class="sub">SourceFuse / Rakuten — Innovation Director, 2023–2025</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brief List -->
+  <div class="brief-list">
+    <div class="brief-item">
+      <div class="num">04</div>
+      <h5>TDK SensEI</h5>
+      <p>Edge AI sensor platform. Dashboard design for 3 merged companies. Predictive maintenance visualization.</p>
+    </div>
+    <div class="brief-item">
+      <div class="num">05</div>
+      <h5>Ogilvy/Audi + Music</h5>
+      <p>Audi Q4 e-tron immersive launch. Festival visuals — EDC, Ultra, Burning Man. Spatial audio design.</p>
+    </div>
+    <div class="brief-item">
+      <div class="num">06</div>
+      <h5>Miselu C.24 · AI Workflow</h5>
+      <p>USPTO patent. Google I/O. Current: AI-native design workflow with Claude Code + Google Antigravity.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="left">Keisuke Shingu</div>
+  <div class="right">Product Design / UX — <a href="mailto:keisuke@gmail.com">keisuke@gmail.com</a></div>
+</footer>
+
+</body>
+</html>

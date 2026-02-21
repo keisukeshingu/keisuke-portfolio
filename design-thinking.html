@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/footer.css">
+
+<title>Design Thinking — Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>/* ===== Design Tokens ===== */
+
+  /* ===== Reset ===== */
+
+  /* ===== Nav ===== */
+
+  .nav__links 
+  .nav__links a:hover { color: var(--ink-100); }
+  .nav__links a.active { color: var(--ink-100); font-weight: 500; }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 192px 64px 80px;
+    max-width: var(--max-w); margin: 0 auto;
+  }
+  .hero__heading {
+    font-size: 56px; font-weight: 200; line-height: 1.08;
+    letter-spacing: -0.035em; color: var(--ink-60);
+    max-width: 680px; text-wrap: balance;
+  }
+  .hero__heading .bold { font-weight: 600; color: var(--ink-100); }
+  .hero__subtitle {
+    font-size: 17px; font-weight: 300; line-height: 1.6;
+    color: var(--ink-60); margin-top: 24px; max-width: 560px;
+  }
+
+  /* ===== Category Filters ===== */
+  .dt-filters {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 48px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .dt-filter {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.02em;
+    padding: 6px 16px; border-radius: 100px;
+    border: 1px solid var(--rule-40);
+    color: var(--ink-80); background: transparent;
+    cursor: pointer; transition: all 0.3s var(--ease);
+    font-family: inherit;
+  }
+  .dt-filter:hover { border-color: var(--ink-40); color: var(--ink-100); }
+  .dt-filter.active {
+    background: var(--ink-100); color: var(--white);
+    border-color: var(--ink-100);
+  }
+
+  /* ===== Featured Post ===== */
+  .dt-featured {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 64px;
+  }
+  .dt-featured__link {
+    display: block;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--paper);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .dt-featured__link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+  }
+  .dt-featured__image-wrap {
+    width: 100%; aspect-ratio: 16/9; overflow: hidden;
+    background: linear-gradient(135deg, var(--paper) 0%, var(--rule-40) 100%);
+    position: relative;
+  }
+  .dt-featured__image-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+  .dt-featured__link:hover .dt-featured__image-wrap img {
+    transform: scale(1.03);
+  }
+  .dt-featured__image-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--ink-40); font-weight: 300;
+  }
+  .dt-featured__body { padding: 32px 36px 36px; }
+  .dt-featured__met
+  .dt-featured__meta .dot { margin: 0 8px; }
+  .dt-featured__title {
+    font-size: 28px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 12px;
+  }
+  .dt-featured__excerpt {
+    font-size: 15px; font-weight: 300; line-height: 1.6;
+    color: var(--ink-80); margin-bottom: 16px; max-width: 640px;
+  }
+  .dt-featured__footer {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+  }
+  .dt-featured__footer .dot { margin: 0 6px; color: var(--ink-40); }
+
+  /* ===== Post Grid ===== */
+  .dt-grid {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 80px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  .dt-card {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--paper);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .dt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 32px rgba(0,0,0,0.05);
+  }
+  .dt-card__image-wrap {
+    width: 100%; aspect-ratio: 4/3; overflow: hidden;
+    background: linear-gradient(135deg, var(--rule-40) 0%, var(--paper) 100%);
+    position: relative;
+  }
+  .dt-card__image-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+  .dt-card:hover .dt-card__image-wrap img {
+    transform: scale(1.05);
+  }
+  .dt-card__image-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--ink-40); font-weight: 300;
+  }
+  .dt-card__body { padding: 24px 28px 28px; }
+  .dt-card__met
+  .dt-card__meta .dot { margin: 0 6px; }
+  .dt-card__title {
+    font-size: 22px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 8px;
+  }
+  .dt-card__excerpt {
+    font-size: 13px; font-weight: 300; line-height: 1.55;
+    color: var(--ink-80);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .dt-card__footer {
+    font-size: 12px; font-weight: 300; color: var(--ink-60);
+  }
+
+  /* ===== Section Divider ===== */
+  .dt-divider {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px;
+  }
+  .dt-divider__line {
+    border: none; border-top: 1px solid var(--rule-40);
+    margin-bottom: 48px;
+  }
+  .dt-divider__label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 32px;
+  }
+
+  /* ===== Spacer ===== */
+  .spacer { height: 80px; }
+
+  /* ===== Footer ===== */
+
+  .footer__links 
+  .footer__links a:hover { color: var(--ink-100); }
+
+  /* ===== Scroll Animations ===== */
+  
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 767px) {
+    .hero { padding: 140px 24px 48px; }
+    .hero__heading { font-size: 36px; }
+    .hero__subtitle { font-size: 15px; margin-top: 16px; }
+
+    .dt-filters { padding: 0 24px 32px; }
+    .dt-featured { padding: 0 24px 48px; }
+    .dt-featured__body { padding: 24px; }
+    .dt-featured__title { font-size: 22px; }
+    .dt-grid { padding: 0 24px 48px; grid-template-columns: 1fr; gap: 24px; }
+    .dt-card__body { padding: 20px; }
+    .dt-card__title { font-size: 19px; }
+    .dt-divider { padding: 0 24px; }
+
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    
+    .dt-featured__link, .dt-card { transition: none; }
+    .dt-featured__image-wrap img, .dt-card__image-wrap img { transition: none; }
+  }</style>
+</head></head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="design-thinking.html" class="active">Design Thinking</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="reveal">
+    <h1 class="hero__heading">
+      <span class="bold">Design Thinking</span>
+    </h1>
+    <p class="hero__subtitle">
+      Essays on digital craft, AI-native UX, and the intersection of technology & human judgment.
+    </p>
+  </div>
+</section>
+
+<!-- ===== CATEGORY FILTERS ===== -->
+<div class="dt-filters reveal">
+  <button class="dt-filter active" data-category="all">All</button>
+  <button class="dt-filter" data-category="ai-ux">AI & UX</button>
+  <button class="dt-filter" data-category="design-systems">Design Systems</button>
+  <button class="dt-filter" data-category="japanese-aesthetics">Japanese Aesthetics</button>
+  <button class="dt-filter" data-category="engineering">Engineering</button>
+</div>
+
+<!-- ===== FEATURED POST ===== -->
+<div class="dt-featured reveal" data-category="ai-ux">
+  <a href="DT_Example.html" class="dt-featured__link">
+    <div class="dt-featured__image-wrap">
+      <div class="dt-featured__image-placeholder">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+    <div class="dt-featured__body">
+      <p class="dt-featured__meta">
+        AI & UX<span class="dot">·</span>February 19, 2026
+      </p>
+      <h2 class="dt-featured__title">
+        Agents as Cognitive Prosthetics — Designing AI That Extends Human Judgment
+      </h2>
+      <p class="dt-featured__excerpt">
+        Most AI interfaces treat machines as replacements for human decision-making. But the most powerful design pattern isn't replacement — it's extension. How do we design AI systems that amplify rather than override human judgment?
+      </p>
+      <p class="dt-featured__footer">
+        Keisuke Shingu<span class="dot">·</span>12 min read
+      </p>
+    </div>
+  </a>
+</div>
+
+<!-- ===== DIVIDER ===== -->
+<div class="dt-divider">
+  <p class="dt-divider__label">More Essays</p>
+</div>
+
+<!-- ===== POST GRID ===== -->
+<div class="dt-grid">
+
+  <a href="DT_Ma.html" class="dt-card reveal" data-category="japanese-aesthetics">
+    <div class="dt-card__image-wrap">
+      <div class="dt-card__image-placeholder">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+    <div class="dt-card__body">
+      <p class="dt-card__meta">
+        Japanese Aesthetics<span class="dot">·</span>Jan 2026
+      </p>
+      <h3 class="dt-card__title">Ma — The Power of Negative Space in Digital Interfaces</h3>
+      <p class="dt-card__excerpt">
+        In Japanese aesthetics, the space between elements carries as much meaning as the elements themselves. What does this mean for designing information-dense enterprise dashboards?
+      </p>
+      <p class="dt-card__footer">8 min read</p>
+    </div>
+  </a>
+
+  <a href="DT_DesignTokens.html" class="dt-card reveal" data-category="design-systems">
+    <div class="dt-card__image-wrap">
+      <div class="dt-card__image-placeholder">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+    <div class="dt-card__body">
+      <p class="dt-card__meta">
+        Design Systems<span class="dot">·</span>Dec 2025
+      </p>
+      <h3 class="dt-card__title">Design Tokens Are Not Enough — Building Living Systems</h3>
+      <p class="dt-card__excerpt">
+        Why most design systems fail at the seams. A framework for creating systems that evolve gracefully across products, platforms, and organizational change.
+      </p>
+      <p class="dt-card__footer">10 min read</p>
+    </div>
+  </a>
+
+  <a href="DT_60fps.html" class="dt-card reveal" data-category="engineering">
+    <div class="dt-card__image-wrap">
+      <div class="dt-card__image-placeholder">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+    <div class="dt-card__body">
+      <p class="dt-card__meta">
+        Engineering<span class="dot">·</span>Nov 2025
+      </p>
+      <h3 class="dt-card__title">The 60fps Imperative — Performance as a Design Decision</h3>
+      <p class="dt-card__excerpt">
+        Frame rate isn't a technical spec — it's a design choice. How sub-perceptual latency shapes user trust, engagement, and the feeling of quality in premium products.
+      </p>
+      <p class="dt-card__footer">6 min read</p>
+    </div>
+  </a>
+
+  <a href="DT_Confidence.html" class="dt-card reveal" data-category="ai-ux">
+    <div class="dt-card__image-wrap">
+      <div class="dt-card__image-placeholder">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+    <div class="dt-card__body">
+      <p class="dt-card__meta">
+        AI & UX<span class="dot">·</span>Oct 2025
+      </p>
+      <h3 class="dt-card__title">Confidence Calibration — When AI Should Say "I Don't Know"</h3>
+      <p class="dt-card__excerpt">
+        The most important UX pattern in AI isn't showing answers — it's communicating uncertainty. Lessons from designing a multi-agent manufacturing platform.
+      </p>
+      <p class="dt-card__footer">9 min read</p>
+    </div>
+  </a>
+
+</div>
+
+<div class="spacer"></div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script src="js/scroll-reveal.js" defer></script>
+
+</body>
+</html>

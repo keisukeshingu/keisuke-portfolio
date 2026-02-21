@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Denon / Marantz — Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ——— Design Tokens (embedded) ——— */
+  :root {
+    --primitive-white:#FFFFFF;--primitive-paper:#F5F5F7;--primitive-ink-100:#1D1D1F;--primitive-ink-80:#6E6E73;--primitive-ink-60:#86868B;--primitive-ink-40:#AEAEB2;--primitive-rule-60:#D2D2D7;--primitive-rule-40:#E8E8ED;
+    --color-bg:var(--primitive-white);--color-surface:var(--primitive-paper);--color-text-primary:var(--primitive-ink-100);--color-text-secondary:var(--primitive-ink-80);--color-text-tertiary:var(--primitive-ink-60);--color-text-quaternary:var(--primitive-ink-40);--color-border:var(--primitive-rule-60);--color-border-light:var(--primitive-rule-40);--color-nav-bg:rgba(255,255,255,0.92);--color-focus:var(--primitive-ink-100);
+    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;--font-mono:'SF Mono','Fira Code','Cascadia Code',monospace;
+    --weight-thin:200;--weight-light:300;--weight-regular:400;--weight-medium:500;--weight-semibold:600;
+    --type-size-display:56px;--type-size-heading-1:32px;--type-size-heading-2:26px;--type-size-heading-3:18px;--type-size-body-lg:17px;--type-size-body:15px;--type-size-body-sm:14px;--type-size-caption:13px;--type-size-label:12px;--type-size-overline:11px;--type-size-micro:10px;
+    --leading-none:1;--leading-tight:1.08;--leading-snug:1.2;--leading-normal:1.25;--leading-relaxed:1.5;--leading-loose:1.65;--leading-body:1.7;
+    --tracking-tightest:-0.035em;--tracking-tighter:-0.03em;--tracking-tight:-0.025em;--tracking-snug:-0.02em;--tracking-normal:-0.01em;--tracking-none:0;--tracking-loose:0.02em;--tracking-widest:0.12em;
+    --space-0:0;--space-1:2px;--space-2:4px;--space-3:6px;--space-4:8px;--space-6:12px;--space-7:14px;--space-8:16px;--space-9:18px;--space-12:24px;--space-14:28px;--space-16:32px;--space-20:48px;--space-24:56px;--space-28:64px;--space-32:80px;--space-40:96px;--space-hero:192px;
+    --grid-max-width:1120px;--grid-margin:64px;--grid-margin-mobile:24px;--grid-gutter:24px;--grid-columns:12;
+    --max-width-page:1120px;--max-width-hero-heading:680px;--max-width-hero-subtitle:520px;
+    --border-section:1px solid var(--color-border-light);--border-accent:1px solid var(--color-border);--border-focus:2px solid var(--color-focus);--border-radius-sm:2px;--border-radius-md:8px;--border-radius-full:50%;--focus-offset:4px;
+    --ease-default:cubic-bezier(0.25,0.46,0.45,0.94);--ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+    --duration-fast:150ms;--duration-normal:300ms;--duration-slow:500ms;--duration-slower:800ms;
+    --blur-nav:20px;--opacity-nav:0.92;--opacity-badge:0.85;
+    --z-base:1;--z-sticky:10;--z-nav:100;--z-overlay:200;--z-modal:300;
+  }
+  .text-thin{font-weight:var(--weight-thin);color:var(--color-text-tertiary)}
+  .text-emphasis{font-style:normal;font-weight:var(--weight-medium);color:var(--color-text-primary)}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:72px}
+  body{font-family:var(--font-sans);background:var(--color-bg);color:var(--color-text-primary);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-feature-settings:'ss01' on,'cv01' on}
+  a:focus-visible{outline:var(--border-focus);outline-offset:var(--focus-offset);border-radius:var(--border-radius-sm)}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}}
+  @media(max-width:767px){:root{--type-size-display:44px;--type-size-heading-1:28px;--type-size-heading-2:22px;--type-size-heading-3:17px;--type-size-body-lg:16px;--grid-margin:24px}}
+  @media(max-width:479px){:root{--type-size-display:36px;--type-size-heading-1:24px;--type-size-heading-2:20px;--type-size-heading-3:16px;--type-size-body-lg:16px;--grid-margin:24px}}
+</style>
+<style>
+
+  /* ============================================================
+     CASE STUDY DETAIL — Page-Specific Layout
+     ============================================================ */
+
+  /* ——— Page Container with Sidebar ——— */
+  .page-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    max-width: calc(var(--max-width-page) + 200px);
+    margin: 0 auto;
+    gap: 0;
+  }
+
+  .page-sidebar {
+    padding-top: 120px;
+    padding-left: var(--space-12);
+  }
+
+  .page-main {
+    max-width: var(--max-width-page);
+  }
+
+  @media (max-width: 1119px) {
+    .page-layout {
+      grid-template-columns: 1fr;
+      max-width: var(--max-width-page);
+    }
+    .page-sidebar { display: none; }
+  }
+
+  /* ——— Nav ——— */
+  .c-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: var(--space-9) var(--grid-margin);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background: var(--color-nav-bg);
+    backdrop-filter: blur(var(--blur-nav));
+    -webkit-backdrop-filter: blur(var(--blur-nav));
+    z-index: var(--z-nav);
+  }
+
+  .c-nav__logo {
+    font-weight: var(--weight-semibold);
+    font-size: var(--type-size-body-sm);
+    letter-spacing: var(--tracking-normal);
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  .c-nav__links {
+    display: flex;
+    gap: var(--space-16);
+    list-style: none;
+  }
+
+  .c-nav__links a {
+    text-decoration: none;
+    color: var(--color-text-tertiary);
+    font-size: var(--type-size-caption);
+    font-weight: var(--weight-regular);
+    transition: color var(--duration-normal) var(--ease-default);
+  }
+
+  .c-nav__links a:hover,
+  .c-nav__links a.is-active { color: var(--color-text-primary); }
+
+  /* ——— Breadcrumb ——— */
+  .breadcrumb {
+    padding: 72px var(--grid-margin) var(--space-8);
+  }
+
+  .breadcrumb a {
+    font-size: var(--type-size-caption);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    transition: color var(--duration-normal) var(--ease-default);
+  }
+
+  .breadcrumb a:hover { color: var(--color-text-primary); }
+
+  /* ——— CS Hero ——— */
+  .cs-hero {
+    padding: var(--space-8) var(--grid-margin) 0;
+  }
+
+  .cs-hero__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-16);
+  }
+
+  .cs-hero__image .ph {
+    text-align: center;
+    color: var(--color-text-quaternary);
+    font-size: var(--type-size-label);
+    line-height: var(--leading-relaxed);
+  }
+
+  .cs-hero__meta-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-6);
+    margin-bottom: var(--space-4);
+  }
+
+  .cs-hero__index {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-quaternary);
+    letter-spacing: var(--tracking-loose);
+  }
+
+  .cs-hero__tier {
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+  }
+
+  .cs-hero__title {
+    font-size: var(--type-size-display);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tightest);
+    margin-bottom: var(--space-4);
+  }
+
+  .cs-hero__brand {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-secondary);
+  }
+
+  /* ——— Overview Bar ——— */
+  .overview-bar {
+    padding: var(--space-12) var(--grid-margin);
+    border-top: var(--border-section);
+    border-bottom: var(--border-section);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--grid-gutter);
+    margin-top: var(--space-16);
+  }
+
+  .overview-bar dt {
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-2);
+  }
+
+  .overview-bar dd {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-primary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ——— Hero Statement (Blockquote) ——— */
+  .hero-statement {
+    padding: var(--space-28) var(--grid-margin);
+    border-bottom: var(--border-section);
+  }
+
+  .hero-statement blockquote {
+    font-size: var(--type-size-heading-2);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-snug);
+    color: var(--color-text-primary);
+    max-width: 760px;
+  }
+
+  .hero-statement blockquote em {
+    font-style: normal;
+    font-weight: var(--weight-semibold);
+  }
+
+  /* ——— STAR-D Sections ——— */
+  .star-section {
+    padding: var(--space-32) var(--grid-margin);
+    border-bottom: var(--border-section);
+  }
+
+  .star-section__letter {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-8);
+  }
+
+  .star-section__title {
+    font-size: var(--type-size-heading-1);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-snug);
+    margin-bottom: var(--space-12);
+  }
+
+  .star-section__subtitle {
+    font-size: var(--type-size-heading-3);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-normal);
+    line-height: var(--leading-normal);
+    margin-top: var(--space-20);
+    margin-bottom: var(--space-6);
+  }
+
+  .star-section p {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    max-width: 680px;
+    margin-bottom: var(--space-8);
+  }
+
+  .star-section p strong {
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  /* ——— Two-Column Block ——— */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-28);
+    align-items: start;
+    margin: var(--space-16) 0;
+  }
+
+  .two-col__image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .two-col__image .ph {
+    font-size: var(--type-size-label);
+    color: var(--color-text-quaternary);
+    text-align: center;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ——— Full Image ——— */
+  .full-image {
+    margin: var(--space-16) 0;
+  }
+
+  .full-image__frame {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-3);
+  }
+
+  .full-image__frame .ph {
+    font-size: var(--type-size-label);
+    color: var(--color-text-quaternary);
+    text-align: center;
+  }
+
+  .full-image__caption {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+  }
+
+  /* ——— Before / After ——— */
+  .before-after {
+    margin: var(--space-16) 0;
+  }
+
+  .before-after__label {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-4);
+  }
+
+  .before-after__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--grid-gutter);
+  }
+
+  .before-after__panel {
+    position: relative;
+  }
+
+  .before-after__panel-label {
+    position: absolute;
+    top: var(--space-6);
+    left: var(--space-6);
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-primary);
+    background: var(--color-bg);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--border-radius-sm);
+  }
+
+  .before-after__image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .before-after__image .ph {
+    font-size: var(--type-size-label);
+    color: var(--color-text-quaternary);
+    text-align: center;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ——— Process Steps ——— */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: var(--border-section);
+    margin: var(--space-16) 0;
+  }
+
+  .process-step {
+    padding: var(--space-12) var(--space-12) 0 0;
+    position: relative;
+  }
+
+  .process-step::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    background: var(--color-text-primary);
+    border-radius: var(--border-radius-full);
+  }
+
+  .process-step:not(:first-child) {
+    padding-left: var(--space-12);
+    border-left: var(--border-section);
+  }
+
+  .process-step:not(:first-child)::before {
+    left: var(--space-12);
+  }
+
+  .process-step__number {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-4);
+  }
+
+  .process-step__title {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .process-step__desc {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-light);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ——— Metrics Grid ——— */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: var(--border-section);
+    border-bottom: var(--border-section);
+    margin: var(--space-16) 0;
+  }
+
+  .metrics-item {
+    padding: var(--space-12) var(--space-12) var(--space-12) 0;
+  }
+
+  .metrics-item:not(:first-child) {
+    padding-left: var(--space-12);
+    border-left: var(--border-section);
+  }
+
+  .metrics-value {
+    font-size: 28px;
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tighter);
+    color: var(--color-text-primary);
+    line-height: var(--leading-none);
+    margin-bottom: var(--space-2);
+  }
+
+  .metrics-value .dim {
+    font-weight: var(--weight-thin);
+    color: var(--color-text-tertiary);
+  }
+
+  .metrics-label {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+  }
+
+  /* ——— Tags ——— */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-8);
+    margin: var(--space-8) 0;
+  }
+
+  .tags span {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+  }
+
+  .tags span::before {
+    content: '\00B7\2002';
+    color: var(--color-border);
+  }
+
+  .tags span:first-child::before { content: ''; }
+
+  /* ——— Inline Table ——— */
+  .inline-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-8) 0;
+    max-width: 680px;
+  }
+
+  .inline-table th {
+    text-align: left;
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    padding: var(--space-4) var(--space-6) var(--space-4) 0;
+    border-bottom: var(--border-section);
+  }
+
+  .inline-table td {
+    font-size: var(--type-size-caption);
+    font-weight: var(--weight-light);
+    color: var(--color-text-secondary);
+    padding: var(--space-4) var(--space-6) var(--space-4) 0;
+    border-bottom: var(--border-section);
+    line-height: var(--leading-relaxed);
+    vertical-align: top;
+  }
+
+  .inline-table td strong {
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  /* ——— Recognition List ——— */
+  .recognition-list {
+    list-style: none;
+    margin: var(--space-8) 0;
+    max-width: 680px;
+  }
+
+  .recognition-list li {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    padding: var(--space-6) 0;
+    border-bottom: var(--border-section);
+  }
+
+  .recognition-list li strong {
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  /* ——— Prev/Next ——— */
+  .prevnext {
+    border-top: var(--border-section);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 var(--grid-margin);
+  }
+
+  .prevnext__link {
+    padding: var(--space-16) 0;
+    text-decoration: none;
+    display: block;
+  }
+
+  .prevnext__link--next {
+    text-align: right;
+    border-left: var(--border-section);
+    padding-left: var(--space-12);
+  }
+
+  .prevnext__link--prev {
+    padding-right: var(--space-12);
+  }
+
+  .prevnext__direction {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--space-2);
+  }
+
+  .prevnext__title {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    transition: color var(--duration-normal) var(--ease-default);
+  }
+
+  .prevnext__link:hover .prevnext__title {
+    color: var(--color-text-secondary);
+  }
+
+  /* ——— Footer ——— */
+  .cs-footer {
+    padding: var(--space-20) var(--grid-margin) var(--space-28);
+    border-top: var(--border-section);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .cs-footer__name {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-normal);
+  }
+
+  .cs-footer__role {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-light);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-2);
+  }
+
+  .cs-footer__link {
+    font-size: var(--type-size-caption);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: var(--weight-regular);
+    border-bottom: var(--border-accent);
+    padding-bottom: var(--space-1);
+    transition: border-color var(--duration-normal) var(--ease-default);
+  }
+
+  .cs-footer__link:hover { border-color: var(--color-text-primary); }
+
+  /* ——— ToC Sidebar ——— */
+  .toc {
+    position: sticky;
+    top: 88px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .toc li {
+    margin-bottom: var(--space-4);
+  }
+
+  .toc a {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    transition: color var(--duration-normal) var(--ease-default);
+    display: block;
+    padding: var(--space-2) 0;
+  }
+
+  .toc a:hover,
+  .toc .is-active a {
+    color: var(--color-text-primary);
+  }
+
+  .toc .is-active a {
+    font-weight: var(--weight-semibold);
+  }
+
+  /* ——— Responsive ——— */
+  @media (max-width: 767px) {
+    .cs-hero { padding: var(--space-4) var(--grid-margin-mobile) 0; }
+    .breadcrumb { padding: 72px var(--grid-margin-mobile) var(--space-4); }
+    .overview-bar { grid-template-columns: repeat(2, 1fr); padding-left: var(--grid-margin-mobile); padding-right: var(--grid-margin-mobile); }
+    .hero-statement { padding: var(--space-16) var(--grid-margin-mobile); }
+    .star-section { padding: var(--space-20) var(--grid-margin-mobile); }
+    .two-col { grid-template-columns: 1fr; gap: var(--space-8); }
+    .before-after__grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .prevnext { grid-template-columns: 1fr; padding: 0 var(--grid-margin-mobile); }
+    .prevnext__link--next { text-align: left; border-left: none; border-top: var(--border-section); padding-left: 0; }
+    .cs-footer { flex-direction: column; gap: var(--space-4); padding-left: var(--grid-margin-mobile); padding-right: var(--grid-margin-mobile); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ——— NAVIGATION ——— -->
+<nav class="c-nav">
+  <a href="#" class="c-nav__logo">Keisuke Shingu</a>
+  <ul class="c-nav__links">
+    <li><a href="#" class="is-active">Work</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Resume</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ——— PAGE LAYOUT: Sidebar + Main ——— -->
+<div class="page-layout">
+
+  <!-- Sidebar ToC (desktop only) -->
+  <aside class="page-sidebar">
+    <ul class="toc">
+      <li class="is-active"><a href="#overview">Overview</a></li>
+      <li><a href="#situation">Situation</a></li>
+      <li><a href="#task">Task</a></li>
+      <li><a href="#action">Action</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="page-main">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="#">← All Work</a>
+    </div>
+
+    <!-- ——— HERO ——— -->
+    <section class="cs-hero" id="overview">
+      <div class="cs-hero__image">
+        <div class="ph">Marantz Cinema porthole display + TV GUI before/after<br>16:9 hero composition</div>
+      </div>
+      <div class="cs-hero__meta-row">
+        <span class="cs-hero__index">01</span>
+        <span class="cs-hero__tier">Lead Case Study</span>
+      </div>
+      <h1 class="cs-hero__title">Making Premium Audio<br>Feel as Good as It Sounds</h1>
+      <div class="cs-hero__brand">Denon / Marantz</div>
+    </section>
+
+    <!-- ——— OVERVIEW BAR ——— -->
+    <div class="overview-bar">
+      <dl>
+        <dt>Role</dt>
+        <dd>Director of UX — Visual Design & Design Systems</dd>
+      </dl>
+      <dl>
+        <dt>Timeline</dt>
+        <dd>2017–2021 (4 years)</dd>
+      </dl>
+      <dl>
+        <dt>Platform</dt>
+        <dd>Embedded Linux, iOS/Android, TV GUI</dd>
+      </dl>
+      <dl>
+        <dt>Team</dt>
+        <dd>Globally distributed, 4 offices</dd>
+      </dl>
+    </div>
+
+    <!-- ——— HERO STATEMENT ——— -->
+    <div class="hero-statement">
+      <blockquote>Two heritage audio brands, 60+ products, four global offices — and an interface stuck in the 8-bit era. I led the UX transformation that <em>unified the entire ecosystem</em>, earned Apple certification for 50+ devices, and moved the company from #5 to #1.</blockquote>
+    </div>
+
+    <!-- ——— TAGS ——— -->
+    <div style="padding: var(--space-8) var(--grid-margin); border-bottom: var(--border-section);">
+      <div class="tags">
+        <span>AirPlay 2</span>
+        <span>HomeKit</span>
+        <span>Embedded Linux</span>
+        <span>Qt/QML</span>
+        <span>Design System</span>
+        <span>Monotype</span>
+        <span>Multi-language</span>
+        <span>Voice-First</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         S — SITUATION
+         ============================================================ -->
+    <section class="star-section" id="situation">
+      <div class="star-section__letter">Situation</div>
+      <h2 class="star-section__title">Premium Audio, Legacy Experience</h2>
+
+      <p>In 2017, Denon and Marantz sat at #5 in the premium home audio market. The products themselves were acclaimed for sound quality — audiophiles trusted the engineering. But the user experience told a different story. Product reviews averaged 3.5 stars, and UX was consistently cited as the primary weakness.</p>
+
+      <p>The root cause ran deeper than interface polish. Leadership wanted to compete directly with Sonos, Apple, Google, and Amazon in the smart home and wireless streaming space through the HEOS multi-room audio platform. But <strong>HEOS wasn't fully integrated with the core audio products.</strong> The streaming app felt disconnected from the receivers and amplifiers that were the brand's foundation.</p>
+
+      <h3 class="star-section__subtitle">The Technical Debt</h3>
+
+      <p>The TV GUI had the visual quality of an 8-bit game. The underlying architecture used bitmap graphics with no structured file system — every string of text, every icon was a rasterized image baked at a fixed resolution.</p>
+
+      <!-- Before/After comparison -->
+      <div class="before-after">
+        <div class="before-after__label">Visual Transformation</div>
+        <div class="before-after__grid">
+          <div class="before-after__panel">
+            <div class="before-after__panel-label">Before</div>
+            <div class="before-after__image"><div class="ph">2016 Bitmap TV GUI<br>480p, pixelated menus</div></div>
+          </div>
+          <div class="before-after__panel">
+            <div class="before-after__panel-label">After</div>
+            <div class="before-after__image"><div class="ph">2021 Vector HD GUI<br>1080p/8K-ready</div></div>
+          </div>
+        </div>
+      </div>
+
+      <p>This bitmap approach had three cascading failures: a resolution ceiling that couldn't scale to 4K/8K, localization paralysis requiring thousands of per-language bitmap files, and the impossibility of visual consistency across 60+ SKUs.</p>
+
+      <h3 class="star-section__subtitle">The Competitive Landscape</h3>
+
+      <table class="inline-table">
+        <thead>
+          <tr>
+            <th>Competitor</th>
+            <th>Strength</th>
+            <th>UX Approach</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sonos</strong></td>
+            <td>Multi-room ecosystem, software-first</td>
+            <td>Best-in-class app, seamless setup</td>
+          </tr>
+          <tr>
+            <td><strong>Apple</strong></td>
+            <td>HomeKit, AirPlay, ecosystem lock-in</td>
+            <td>Invisible UX — "it just works"</td>
+          </tr>
+          <tr>
+            <td><strong>Google</strong></td>
+            <td>Chromecast Audio, Google Home</td>
+            <td>Voice-first, ambient computing</td>
+          </tr>
+          <tr>
+            <td><strong>Amazon</strong></td>
+            <td>Alexa, Echo ecosystem</td>
+            <td>Voice-first, skill-based UX</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============================================================
+         T — TASK
+         ============================================================ -->
+    <section class="star-section" id="task">
+      <div class="star-section__letter">Task</div>
+      <h2 class="star-section__title">Unify Two Brands Across 60+ Products</h2>
+
+      <p>The design challenge: unify and modernize the user experience across two premium audio brands and 60+ products — bridging embedded hardware, mobile software, TV output, and voice-assistant ecosystems — to compete with software-first companies like Sonos and platform giants like Apple.</p>
+
+      <h3 class="star-section__subtitle">Success Criteria</h3>
+
+      <div class="metrics-grid">
+        <div class="metrics-item">
+          <div class="metrics-value">4.0<span class="dim">★+</span></div>
+          <div class="metrics-label">Target product reviews (from 3.5★)</div>
+        </div>
+        <div class="metrics-item">
+          <div class="metrics-value">50<span class="dim">+</span></div>
+          <div class="metrics-label">Products to certify for AirPlay 2</div>
+        </div>
+        <div class="metrics-item">
+          <div class="metrics-value">200<span class="dim">+</span></div>
+          <div class="metrics-label">SKUs needing unified UX</div>
+        </div>
+        <div class="metrics-item">
+          <div class="metrics-value">30<span class="dim">+</span></div>
+          <div class="metrics-label">Languages to support</div>
+        </div>
+      </div>
+
+      <h3 class="star-section__subtitle">Key Constraints</h3>
+
+      <p><strong>Extreme hardware limitations</strong> — Small embedded displays (1–3 inches) with limited color depth. Every pixel counts. <strong>Legacy platform migration</strong> — Shift from bitmap to vector had to happen without disrupting the active product pipeline. <strong>Apple certification</strong> — AirPlay 2 and HomeKit required strict HIG compliance. <strong>Multi-platform delivery</strong> — Embedded Linux, iOS, Android, and TV GUI are four fundamentally different rendering environments.</p>
+    </section>
+
+    <!-- ============================================================
+         A — ACTION
+         ============================================================ -->
+    <section class="star-section" id="action">
+      <div class="star-section__letter">Action</div>
+      <h2 class="star-section__title">From Research to Ecosystem Redesign</h2>
+
+      <h3 class="star-section__subtitle">Research: Understanding the Problem Space</h3>
+
+      <p>I approached research through mixed methods: <strong>support data analysis</strong> revealed setup and initial configuration as the top frustration driver. <strong>Product review mining</strong> showed sound quality scores of 4.5–5.0★ but overall ratings of 3.5★ — the delta between acoustic quality and user experience was the gap to close.</p>
+
+      <p>The critical insight: audiophiles and mainstream users didn't need different products — they needed <strong>different layers of the same experience.</strong> A well-designed progressive disclosure system serves both.</p>
+
+      <!-- Two-column: user types -->
+      <div class="two-col">
+        <div>
+          <h3 class="star-section__subtitle" style="margin-top: 0;">The Audiophile</h3>
+          <p>Deep control, precision, customization. Access to every setting, signal path transparency. Clunky interface undermines the premium price.</p>
+        </div>
+        <div>
+          <h3 class="star-section__subtitle" style="margin-top: 0;">The Mainstream User</h3>
+          <p>Simplicity, "it just works." Easy setup, streaming access, voice control. Too complex for daily use, poor smart home integration.</p>
+        </div>
+      </div>
+
+      <h3 class="star-section__subtitle">The Platform Migration — Bitmap to Vector</h3>
+
+      <p>The foundational design decision: replacing the entire bitmap-based rendering system with a <strong>Qt framework on embedded Linux</strong>, converting all graphics to SVG with font-embedding and database-driven content. This solved resolution independence, localization at scale, and established a design system foundation — all in one architectural move.</p>
+
+      <!-- Process diagram -->
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-step__number">01</div>
+          <div class="process-step__title">Audit</div>
+          <div class="process-step__desc">Cataloged 60+ SKUs and mapped every screen state across both brand lines.</div>
+        </div>
+        <div class="process-step">
+          <div class="process-step__number">02</div>
+          <div class="process-step__title">Architect</div>
+          <div class="process-step__desc">Proposed Qt/SVG/font-embedding migration. Validated against RAM and CPU constraints.</div>
+        </div>
+        <div class="process-step">
+          <div class="process-step__number">03</div>
+          <div class="process-step__title">Design</div>
+          <div class="process-step__desc">Created brand design language for Denon (modern) and Marantz (premium) with shared interaction patterns.</div>
+        </div>
+        <div class="process-step">
+          <div class="process-step__number">04</div>
+          <div class="process-step__title">Ship</div>
+          <div class="process-step__desc">Rolled out across full product line. Achieved Apple AirPlay 2 certification for 50+ devices.</div>
+        </div>
+      </div>
+
+      <h3 class="star-section__subtitle">The Monotype Breakthrough</h3>
+
+      <p>The migration created an unexpected challenge: <strong>no standard font licensing model existed for embedded devices.</strong> I became the point person negotiating with Monotype to establish an entirely new licensing framework — covering per-device pricing at 60+ SKU scale, CJK character sets, embedded ROM constraints, and firmware update rights.</p>
+
+      <p>The resulting model saved multi-million dollars compared to bitmap production. But the impact went further: <strong>the framework I established was subsequently adopted by Audi, Porsche, BMW, and Mercedes</strong> for automotive infotainment systems.</p>
+
+      <!-- Full-width image -->
+      <div class="full-image">
+        <div class="full-image__frame">
+          <div class="ph">Design guidelines excerpt — typography system, Monotype font specimens, icon library</div>
+        </div>
+        <div class="full-image__caption">Brand & visual design guidelines: shared interaction logic with differentiated visual expression across Denon and Marantz.</div>
+      </div>
+
+      <h3 class="star-section__subtitle">Voice-First Setup Flow</h3>
+
+      <p>Support data revealed product setup as the single largest frustration source. I redesigned the flow around three principles: <strong>guided onboarding via companion app</strong> (the HEOS mobile app as primary setup interface), <strong>multi-assistant integration</strong> (Siri, Alexa, and Google Assistant in a unified sequence), and <strong>progressive complexity</strong> (default simplicity with expert depth on demand).</p>
+
+      <h3 class="star-section__subtitle">Apple Ecosystem Compliance</h3>
+
+      <p>AirPlay 2 and HomeKit certification for 50+ products required strict Apple HIG compliance. I translated Apple's requirements into our design guidelines, created per-category compliance checklists, and validated each product before submission to Apple's certification program.</p>
+
+      <!-- Two-column: image -->
+      <div class="two-col">
+        <div class="two-col__image">
+          <div class="ph">HEOS setup flow screens<br>Before/after comparison</div>
+        </div>
+        <div class="two-col__image">
+          <div class="ph">Apple Home app integration<br>Denon/Marantz products</div>
+        </div>
+      </div>
+
+      <h3 class="star-section__subtitle">Leading Design Across Four Continents</h3>
+
+      <table class="inline-table">
+        <thead>
+          <tr>
+            <th>Office</th>
+            <th>Core Strength</th>
+            <th>Design Interface</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>United States</strong></td>
+            <td>Product strategy, design</td>
+            <td>Design vision, stakeholder alignment</td>
+          </tr>
+          <tr>
+            <td><strong>Japan</strong></td>
+            <td>Audio & mechanical engineering</td>
+            <td>Hardware constraints, display specs</td>
+          </tr>
+          <tr>
+            <td><strong>Australia</strong></td>
+            <td>Software, HEOS platform</td>
+            <td>HEOS app UX, streaming integration</td>
+          </tr>
+          <tr>
+            <td><strong>Europe / China</strong></td>
+            <td>Marketing, sales</td>
+            <td>Market requirements, localization</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ============================================================
+         R — RESULTS
+         ============================================================ -->
+    <section class="star-section" id="results">
+      <div class="star-section__letter">Results</div>
+      <h2 class="star-section__title">From #5 to #1</h2>
+
+      <div class="metrics-grid">
+        <div class="metrics-item">
+          <div class="metrics-value">5<span class="dim">→</span>1</div>
+          <div class="metrics-label">Market position</div>
+        </div>
+        <div class="metrics-item">
+          <div class="metrics-value">3.5<span class="dim">→</span>4.5<span class="dim">★</span></div>
+          <div class="metrics-label">Product reviews</div>
+        </div>
+        <div class="metrics-item">
+          <div class="metrics-value">35<span class="dim">%</span></div>
+          <div class="metrics-label">Support call reduction</div>
+        </div>
+        <div class="metrics-item">
+          <div class="metrics-value">50<span class="dim">+</span></div>
+          <div class="metrics-label">Apple-certified products</div>
+        </div>
+      </div>
+
+      <h3 class="star-section__subtitle">Product & Design Outcomes</h3>
+
+      <p><strong>New embedded UX framework</strong> — Complete migration from bitmap to vector-based rendering on Qt/QML embedded Linux. <strong>Marantz Teal design language</strong> — HD GUI aesthetic reflecting the brand's premium heritage. <strong>Brand & visual design guidelines</strong> — Cross-platform specification adopted by engineering teams across five countries.</p>
+
+      <p><strong>Voice-first setup system</strong> — Redesigned onboarding integrating Siri, Alexa, and Google Assistant. <strong>Multi-language architecture</strong> — Database-driven localization replacing thousands of bitmap assets, saving multi-million dollars. <strong>Industry-first font licensing</strong> — Monotype embedded device framework, subsequently adopted by Audi, Porsche, BMW, and Mercedes.</p>
+
+      <h3 class="star-section__subtitle">Industry Recognition</h3>
+
+      <ul class="recognition-list">
+        <li><strong>EISA Awards</strong> — European Imaging and Sound Association recognition for AV receiver excellence (2018–2020)</li>
+        <li><strong>What Hi-Fi? Awards</strong> — UK's leading audio publication recognition for product quality</li>
+        <li><strong>Japan Good Design Award</strong> — Recognition from the Japan Institute of Design Promotion</li>
+        <li><strong>Qt World Summit Speaker</strong> — "UX Design with Qt for Global Consumer Brands"</li>
+      </ul>
+
+      <!-- Full-width image -->
+      <div class="full-image">
+        <div class="full-image__frame">
+          <div class="ph">Product ecosystem — full Denon/Marantz range showing unified UX across receivers, speakers, soundbars</div>
+        </div>
+        <div class="full-image__caption">60+ SKUs unified under a cohesive design language — the largest AirPlay 2 portfolio in premium audio.</div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         D — DESIGN THINKING
+         ============================================================ -->
+    <section class="star-section" id="reflection" style="border-bottom: none;">
+      <div class="star-section__letter">Design Thinking</div>
+      <h2 class="star-section__title">Fix the Framework, Not the Screens</h2>
+
+      <p>My approach wasn't to redesign individual product interfaces — it was to fix the underlying technical and design frameworks so that better UX became the <strong>default output.</strong> When the rendering system makes premium typography impossible, you don't iterate on bitmap fonts — you replace the rendering system.</p>
+
+      <table class="inline-table">
+        <thead>
+          <tr>
+            <th>Problem</th>
+            <th>Surface Fix</th>
+            <th>Framework Fix</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Ugly TV GUI</strong></td>
+            <td>Redesign bitmaps</td>
+            <td>Migrate to Qt/SVG/font-embedding</td>
+          </tr>
+          <tr>
+            <td><strong>Localization bottleneck</strong></td>
+            <td>Hire more producers</td>
+            <td>Database-driven + Monotype licensing</td>
+          </tr>
+          <tr>
+            <td><strong>Inconsistent UX</strong></td>
+            <td>Individual product specs</td>
+            <td>Brand guidelines that scale</td>
+          </tr>
+          <tr>
+            <td><strong>Complex setup</strong></td>
+            <td>Better manuals</td>
+            <td>Voice-first, app-guided architecture</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="star-section__subtitle">Constrained Hardware as Design Discipline</h3>
+
+      <p>On a 1–3 inch display with physical buttons, you cannot fall back on visual complexity. Every decision must answer: <strong>what does the user need to know right now, and how do I show it in the fewest pixels possible?</strong> This constraint-driven rigor produces thinking that applies far beyond embedded systems.</p>
+
+      <h3 class="star-section__subtitle">What I'd Do Differently</h3>
+
+      <p><strong>Invest in a true component library earlier.</strong> The guidelines approach worked at scale but relied on each team's interpretation. <strong>Push for direct user testing sooner.</strong> Analytics identified the right problems, but observing users with prototypes would have shortened iteration. <strong>Document the framework migration methodology</strong> — it was a repeatable process valuable to the broader industry.</p>
+
+      <h3 class="star-section__subtitle">Connecting to the Bigger Picture</h3>
+
+      <p><strong>Platform thinking over feature thinking</strong> — designing for 60+ SKUs across four platforms forces systems thinking directly applicable to large-scale design at Apple, Meta, or Google. <strong>Hardware-software bridge</strong> — the ability to design across embedded firmware, mobile apps, and TV interfaces spans the full stack. <strong>Cross-industry influence</strong> — the Monotype licensing model I established became an industry standard adopted by premium automotive brands.</p>
+    </section>
+
+    <!-- ——— PREV / NEXT ——— -->
+    <div class="prevnext">
+      <div class="prevnext__link prevnext__link--prev" style="visibility: hidden;">
+        <!-- No previous — this is the first case study -->
+      </div>
+      <a href="#" class="prevnext__link prevnext__link--next">
+        <div class="prevnext__direction">Next →</div>
+        <div class="prevnext__title">Teaching Machines to Earn Human Trust</div>
+      </a>
+    </div>
+
+    <!-- ——— FOOTER ——— -->
+    <footer class="cs-footer">
+      <div>
+        <div class="cs-footer__name">Keisuke Shingu</div>
+        <div class="cs-footer__role">Creative Technologist — Hardware × Software × AI</div>
+      </div>
+      <div>
+        <a href="mailto:keisuke@gmail.com" class="cs-footer__link">keisuke@gmail.com</a>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keisuke Shingu — Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap');
+
+  :root {
+    --white: #FFFFFF;
+    --paper: #FAFAF8;
+    --ink: #111111;
+    --ink-light: #555555;
+    --ink-faint: #777777;
+    --ink-ghost: #C8C8C8;
+    --rule: #E0E0DC;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--white);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'ss01' on, 'cv01' on;
+  }
+
+  html { scroll-padding-top: 72px; }
+
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
+
+  /* ——— Navigation ——— */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 100;
+  }
+
+  nav .logo {
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  nav .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  nav .nav-links a {
+    text-decoration: none;
+    color: var(--ink-faint);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    transition: color 0.3s var(--ease);
+  }
+
+  nav .nav-links a:hover { color: var(--ink); }
+
+  /* ——— Hero ——— */
+  .hero {
+    padding: 200px 64px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 80px;
+    align-items: end;
+    padding-bottom: 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero h1 {
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+
+  .hero h1 strong {
+    font-weight: 600;
+  }
+
+  .hero .aside {
+    padding-bottom: 8px;
+  }
+
+  .hero .aside p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink-light);
+  }
+
+  .hero .aside p em {
+    font-style: normal;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ——— Stats ——— */
+  .stats {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 64px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .stat {
+    padding: 0 24px 0 0;
+  }
+
+  .stat:not(:last-child) {
+    border-right: 1px solid var(--rule);
+  }
+
+  .stat:not(:first-child) {
+    padding-left: 24px;
+  }
+
+  .stat .num {
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+
+  .stat .num strong {
+    font-weight: 600;
+  }
+
+  .stat .meta {
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-top: 4px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  /* ——— Heritage ——— */
+  .heritage {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 64px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .heritage .overline {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin-bottom: 20px;
+  }
+
+  .heritage h2 {
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    max-width: 560px;
+  }
+
+  .heritage h2 strong {
+    font-weight: 600;
+  }
+
+  .heritage .intro {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink-light);
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+
+  .timeline-analog {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+  }
+
+  .tl-item {
+    padding: 24px 20px 24px 0;
+    border-top: 2px solid var(--ink);
+    position: relative;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--ink);
+    border-radius: 50%;
+  }
+
+  .tl-item:not(:first-child) {
+    padding-left: 20px;
+  }
+
+  .tl-item .year {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .tl-item .domain {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .tl-item .context {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  .tl-item .note {
+    font-size: 10px;
+    color: var(--ink-faint);
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+
+  /* ——— Projects ——— */
+  .projects {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 64px 0;
+  }
+
+  .projects .overline {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin-bottom: 48px;
+  }
+
+  .project-row {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 0;
+    padding: 56px 0;
+    border-top: 1px solid var(--rule);
+    align-items: center;
+  }
+
+  .project-row.reverse {
+    grid-template-columns: 1fr 1.15fr;
+  }
+
+  .project-row .image-frame {
+    background: var(--paper);
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .project-row .image-frame .ph {
+    text-align: center;
+    padding: 32px;
+  }
+
+  .project-row .image-frame .ph-icon {
+    font-size: 32px;
+    color: var(--ink-ghost);
+    margin-bottom: 12px;
+  }
+
+  .project-row .image-frame .ph-label {
+    font-size: 11px;
+    color: var(--ink-faint);
+    line-height: 1.5;
+  }
+
+  .project-row .text-block {
+    padding: 0 56px;
+  }
+
+  .project-row .tier {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+
+  .project-row h3 {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+
+  .project-row h3 strong {
+    font-weight: 600;
+  }
+
+  .project-row .brand {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-light);
+    margin-bottom: 16px;
+  }
+
+  .project-row .blurb {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+  }
+
+  .tags-minimal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+
+  .tags-minimal span {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--ink-faint);
+  }
+
+  .tags-minimal span::before {
+    content: '·  ';
+    color: var(--ink-ghost);
+  }
+
+  .tags-minimal span:first-child::before {
+    content: '';
+  }
+
+  /* ——— Small Grid ——— */
+  .grid-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .grid-cell {
+    padding: 48px 32px 48px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 240px;
+  }
+
+  .grid-cell:not(:last-child) {
+    border-right: 1px solid var(--rule);
+  }
+
+  .grid-cell:not(:first-child) {
+    padding-left: 32px;
+  }
+
+  .grid-cell .tier {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+
+  .grid-cell h4 {
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .grid-cell p {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--ink-light);
+  }
+
+  /* ——— Footer ——— */
+  footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 56px 64px 64px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 56px;
+  }
+
+  footer .name {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  footer .role {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--ink-faint);
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  footer .contact a {
+    font-size: 13px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 400;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+    transition: border-color 0.3s var(--ease);
+  }
+
+  footer .contact a:hover {
+    border-color: var(--ink);
+  }
+
+  /* ——— Variant Label ——— */
+  .variant-tag {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: var(--ink);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    z-index: 200;
+    opacity: 0.85;
+  }
+</style>
+</head>
+<body>
+
+<div class="variant-tag">A2 — Analog</div>
+
+<nav>
+  <div class="logo">Keisuke Shingu</div>
+  <ul class="nav-links">
+    <li><a href="#">Work</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Resume</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1>Designing where<br>digital meets<br><strong>physical.</strong></h1>
+  </div>
+  <div class="aside">
+    <p>25 years shipping products at the intersection of <em>hardware, software, and AI</em> — from embedded displays and wearable platforms to multi-agent systems. <em>50+ products in Apple's ecosystem.</em></p>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat">
+    <div class="num"><strong>50+</strong></div>
+    <div class="meta">AirPlay 2 / HomeKit<br>products certified</div>
+  </div>
+  <div class="stat">
+    <div class="num"><strong>60+</strong></div>
+    <div class="meta">SKUs with unified<br>design language</div>
+  </div>
+  <div class="stat">
+    <div class="num"><strong>#1</strong></div>
+    <div class="meta">Market position<br>from #5</div>
+  </div>
+  <div class="stat">
+    <div class="num"><strong>1</strong></div>
+    <div class="meta">USPTO patent<br>holder</div>
+  </div>
+</section>
+
+<section class="heritage">
+  <div class="overline">Apple Creative Tools Heritage</div>
+  <h2>Building the <strong>Mac creative ecosystem</strong> for twenty-five years.</h2>
+  <p class="intro">From desktop publishing to AI-native systems — part of the core group building the tools that made the Mac the creative professional's platform.</p>
+
+  <div class="timeline-analog">
+    <div class="tl-item">
+      <div class="year">1999–2007</div>
+      <div class="domain">Print & Publishing</div>
+      <div class="context">QuarkXPress</div>
+      <div class="note">Macworld Best of Show<br>95% global DTP market share</div>
+    </div>
+    <div class="tl-item">
+      <div class="year">2007–2012</div>
+      <div class="domain">Music & Audio</div>
+      <div class="context">Traktor · Miselu C.24</div>
+      <div class="note">USPTO Patent · Google I/O<br>Apple-native hardware</div>
+    </div>
+    <div class="tl-item">
+      <div class="year">2012–2016</div>
+      <div class="domain">Immersive</div>
+      <div class="context">Beatport · Festivals</div>
+      <div class="note">EDC · Ultra · Burning Man<br>Spatial audio & visuals</div>
+    </div>
+    <div class="tl-item">
+      <div class="year">2017–2021</div>
+      <div class="domain">Hardware Ecosystem</div>
+      <div class="context">Denon / Marantz</div>
+      <div class="note">50+ AirPlay 2 certified<br>HomeKit · Siri integration</div>
+    </div>
+    <div class="tl-item">
+      <div class="year">2023–Now</div>
+      <div class="domain">AI-Native Systems</div>
+      <div class="context">Fabrion · TDK</div>
+      <div class="note">Multi-agent MES<br>Edge AI sensor platform</div>
+    </div>
+  </div>
+</section>
+
+<section class="projects">
+  <div class="overline">Selected Work</div>
+
+  <div class="project-row">
+    <div class="image-frame">
+      <div class="ph">
+        <div class="ph-icon">&#9834;</div>
+        <div class="ph-label">Marantz Cinema porthole display<br>+ TV GUI before / after</div>
+      </div>
+    </div>
+    <div class="text-block">
+      <div class="tier">Lead Case Study</div>
+      <h3><strong>HEOS Ecosystem</strong> &<br>Embedded Display UX</h3>
+      <div class="brand">Denon / Marantz</div>
+      <p class="blurb">Transforming the UX of two premium audio brands across 60+ products — driving #5 to #1 market position and certifying 50+ products for AirPlay 2 and HomeKit.</p>
+      <div class="tags-minimal">
+        <span>AirPlay 2</span>
+        <span>HomeKit</span>
+        <span>Embedded Linux</span>
+        <span>Qt/QML</span>
+        <span>Design System</span>
+        <span>Monotype</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-row reverse">
+    <div class="text-block">
+      <div class="tier">Full Depth</div>
+      <h3><strong>AI-Native</strong> Manufacturing<br>Execution System</h3>
+      <div class="brand">Fabrion</div>
+      <p class="blurb">Designing the first AI-native MES for electric vehicle production — a composable mesh of AI agents with trust, transparency, and human control at its core.</p>
+      <div class="tags-minimal">
+        <span>Multi-Agent AI</span>
+        <span>Design System</span>
+        <span>Trust Calibration</span>
+        <span>Token Pipeline</span>
+        <span>0→1</span>
+      </div>
+    </div>
+    <div class="image-frame">
+      <div class="ph">
+        <div class="ph-icon">&#9881;</div>
+        <div class="ph-label">Fabrion dashboard<br>+ AI agent swim lanes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-row">
+    <div class="image-frame">
+      <div class="ph">
+        <div class="ph-icon">&#9829;</div>
+        <div class="ph-label">Rakuten Fit screens<br>+ gamification tiers</div>
+      </div>
+    </div>
+    <div class="text-block">
+      <div class="tier">Supporting</div>
+      <h3><strong>Fitness Meets</strong> the<br>Rakuten Economic Zone</h3>
+      <div class="brand">Rakuten Fit</div>
+      <p class="blurb">Designing a wearable companion app that transforms physical activity into economic value — connecting fitness to 111 million Rakuten ecosystem members.</p>
+      <div class="tags-minimal">
+        <span>iOS / Android</span>
+        <span>Wearable</span>
+        <span>Gamification</span>
+        <span>Health Data</span>
+        <span>Ecosystem</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-row">
+    <div class="grid-cell">
+      <div class="tier">Supporting</div>
+      <h4>Edge AI Sensor Platform</h4>
+      <p>TDK SensEI — Unifying data from 3 merged companies into a single predictive maintenance dashboard.</p>
+    </div>
+    <div class="grid-cell">
+      <div class="tier">Brief Showcase</div>
+      <h4>Creative & Immersive</h4>
+      <p>Ogilvy / Audi + Music — Spatial audio, festival visuals, and the Audi Q4 e-tron launch event design.</p>
+    </div>
+    <div class="grid-cell">
+      <div class="tier">Brief Showcase</div>
+      <h4>Miselu C.24 · AI Workflow</h4>
+      <p>USPTO patent holder. Google I/O demo. Plus: current AI-native design workflow.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="name">Keisuke Shingu</div>
+    <div class="role">Senior Product Designer — Hardware × Software × AI</div>
+  </div>
+  <div class="contact"><a href="mailto:keisuke@gmail.com">keisuke@gmail.com</a></div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+<title>AI Workflow — Case Study | Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== Design Tokens ===== */
+
+  /* ===== Reset ===== */
+
+  /* ===== Nav ===== */
+
+  /* ===== Case Study Hero ===== */
+
+  /* ===== Hero Image ===== */
+
+  /* ===== Overview Bar ===== */
+
+  /* ===== Tags ===== */
+
+  /* ===== Metrics Grid ===== */
+  .metrics {
+    max-width: var(--max-w); margin: 0 auto; padding: 48px 64px;
+  }
+  .metrics__grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--rule-40); border-bottom: 1px solid var(--rule-40);
+    padding: 32px 0;
+  }
+  .metrics__item { padding: 0 32px; border-left: 1px solid var(--rule-40); }
+  .metrics__item:first-child { border-left: none; padding-left: 0; }
+  .metrics__item:last-child { padding-right: 0; }
+  .metrics__value {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink-100);
+  }
+  .metrics__label {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
+  }
+
+  /* ===== Content Layout (TOC + Body) ===== */
+  .cs-content {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 64px;
+    display: grid; grid-template-columns: 200px 1fr; gap: 64px;
+  }
+
+  /* ===== Table of Contents ===== */
+  .toc { position: sticky; top: 80px; align-self: start; }
+  .toc__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .toc__list { list-style: none; }
+  .toc__list li { margin-top: 12px; }
+  .toc__list a {
+    font-size: 13px; font-weight: 400; color: var(--ink-60);
+    transition: color 0.3s var(--ease);
+  }
+  .toc__list a:hover, .toc__list a.active { color: var(--ink-100); }
+
+  /* ===== STAR-D Sections ===== */
+  .stard-section {
+    padding: 48px 0; border-top: 1px solid var(--rule-40);
+  }
+  .stard-section:first-child { border-top: none; }
+  .stard-section__overline {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
+  }
+  .stard-section__title {
+    font-size: 26px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 24px;
+  }
+  .stard-section__body p {
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-80); margin-top: 16px;
+  }
+  .stard-section__body p:first-child { margin-top: 0; }
+
+  /* ===== Inline Image ===== */
+
+  /* ===== Pull Quote ===== */
+
+  /* ===== Before / After (embedded in flow) ===== */
+  .ba-inline {
+    margin: 32px 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--rule-40); border-radius: 8px; overflow: hidden;
+  }
+  .ba-inline__cell {
+    background: var(--white); padding: 24px;
+  }
+  .ba-inline__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .ba-inline__label--before { color: var(--ink-40); }
+  .ba-inline__label--after { color: var(--ink-100); }
+  .ba-inline__text {
+    font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--ink-80);
+  }
+
+  /* ===== Recognition ===== */
+  .recognition {
+    padding: 48px 0 0; border-top: 1px solid var(--rule-40);
+  }
+  .recognition__title {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .recognition__list {
+    list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px;
+  }
+  .recognition__list li {
+    font-size: 14px; font-weight: 400; color: var(--ink-80);
+  }
+
+  /* ===== Prev / Next Nav ===== */
+
+  /* ===== Footer ===== */
+
+  /* ===== Scroll animations ===== */
+  
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1119px) {
+    .cs-content { grid-template-columns: 1fr; gap: 0; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 32px; border-bottom: 1px solid var(--rule-40); }
+    .toc__label { width: 100%; }
+    .toc__list { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .toc__list li { margin-top: 0; }
+
+  }
+  @media (max-width: 767px) {
+
+    .metrics { padding: 32px 24px; }
+    .metrics__grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .metrics__item { border-left: none; padding: 0; }
+    .cs-content { padding: 0 24px 40px; }
+    .ba-inline { grid-template-columns: 1fr; }
+
+  }
+  /* ===== Animation Layer (v1_animation) ===== */
+  #snow-zone { position: relative; overflow: hidden; }
+  #snow-zone img { position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="../index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../design-thinking.html">Design Thinking</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div id="snow-zone">
+
+<!-- ===== CASE STUDY HERO ===== -->
+<section class="cs-hero">
+  <div class="reveal">
+    <a href="Projects_Preview.html#workflow" class="cs-hero__back">← Projects</a>
+  </div>
+  <div class="reveal" style="transition-delay: 0.05s">
+    <p class="cs-hero__brand">AI-Native Workflow</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.1s">
+    <h1 class="cs-hero__title"><span class="bold">Design-to-Code</span> in Days, Not <span class="bold">Weeks</span></h1>
+  </div>
+  <div class="reveal" style="transition-delay: 0.15s">
+    <p class="cs-hero__statement">Building an AI-native design workflow that collapses the design-to-development gap — combining Claude Code, Google Antigravity, and Figma MCP Server to go from high-fidelity design to functional proof-of-concept in hours instead of weeks.</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s">
+    <div class="cs-hero__image">Hero image — Figma → MCP → AI agents → functional code pipeline</div>
+  </div>
+</section>
+
+<!-- ===== OVERVIEW BAR ===== -->
+<div class="overview-bar reveal">
+  <div class="overview-bar__inner">
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Role</p>
+      <p class="overview-bar__value">Designer / Developer</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Timeline</p>
+      <p class="overview-bar__value">2025–2026 (ongoing)</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Platform</p>
+      <p class="overview-bar__value">Cross-platform development</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Team</p>
+      <p class="overview-bar__value">Personal project / Workflow R&D</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAGS ===== -->
+<div class="tags reveal">
+  <span class="tag">Claude Code</span>
+  <span class="tag">Google Antigravity</span>
+  <span class="tag">Figma MCP</span>
+  <span class="tag">AI-Native</span>
+  <span class="tag">Design Systems</span>
+  <span class="tag">Design-to-Code</span>
+  <span class="tag">Agentic Development</span>
+</div>
+
+<!-- ===== METRICS ===== -->
+<div class="metrics reveal">
+  <div class="metrics__grid">
+    <div class="metrics__item">
+      <p class="metrics__value">Days</p>
+      <p class="metrics__label">Design-to-POC time (from weeks)</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">1:1</p>
+      <p class="metrics__label">Design-to-code fidelity</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">3</p>
+      <p class="metrics__label">AI platforms integrated</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">0</p>
+      <p class="metrics__label">Manual handoff steps</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOC + CONTENT ===== -->
+<div class="cs-content">
+
+  <!-- Table of Contents -->
+  <aside class="toc reveal">
+    <p class="toc__label">Contents</p>
+    <ul class="toc__list">
+      <li><a href="#context" class="active">Opening Context</a></li>
+      <li><a href="#work">The Work</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+      <li style="margin-top:20px; padding-top:12px; border-top: 1px solid var(--rule-40)"><a href="#recognition">Recognition</a></li>
+    </ul>
+  </aside>
+
+  <!-- Content Body -->
+  <div>
+
+    <!-- OPENING CONTEXT (S+T combined) -->
+    <div id="context" class="stard-section reveal">
+      <p class="stard-section__overline">Opening Context</p>
+      <h2 class="stard-section__title">The Industry's Oldest Frustration</h2>
+      <div class="stard-section__body">
+        <p>The traditional product design workflow has a structural inefficiency: designers create static artifacts, then developers reinterpret them into code. Every handoff introduces translation loss — spacing shifts, interactions get simplified, animations get cut. The gap between "what was designed" and "what shipped" is the industry's oldest frustration.</p>
+
+        <p>I'm building a workflow that collapses this gap by combining the most advanced AI development platforms with Figma's design ecosystem.</p>
+
+        <p class="pull-quote">Many designers talk about AI-native workflows. I'm building one — with the most advanced tools available.</p>
+
+        <div class="inline-image">Inline image placeholder — Traditional workflow timeline vs. AI-native workflow timeline</div>
+      </div>
+    </div>
+
+    <!-- THE WORK -->
+    <div id="work" class="stard-section reveal">
+      <p class="stard-section__overline">The Work</p>
+      <h2 class="stard-section__title">Three Platforms, One Pipeline</h2>
+      <div class="stard-section__body">
+        <p>Google Antigravity (launched November 2025) — Google's cross-platform IDE with autonomous AI agents. Multi-model support (Gemini 3 Pro/Flash + Claude Sonnet). Figma MCP Server integration for automated extraction of design tokens, component specs, and image assets.</p>
+
+        <p>Claude Code — terminal-based agentic coding with deep contextual understanding. Excels at nuanced design-to-code translation — understanding design intent, not just specs. Iterative refinement through multi-turn conversations.</p>
+
+        <p>Figma MCP Server — the critical bridge: reads design files programmatically, exports tokens, extracts component hierarchies, generates image assets.</p>
+
+        <div class="inline-image--half">
+          <div>Google Antigravity — agentic development IDE</div>
+          <div>Claude Code — design intent interpretation</div>
+        </div>
+
+        <p>The workflow phases:</p>
+        <p>1. Design: Figma high-fidelity designs (same as traditional)<br>
+        2. Specification: Figma MCP auto-extracts tokens, specs, assets (minutes vs. hours)<br>
+        3. Scaffolding: Antigravity agents scaffold from Figma data (minutes vs. hours-days)<br>
+        4. Component build: Claude Code builds from design intent + tokens (hours vs. days)<br>
+        5. Integration: Claude Code implements full interaction logic (hours vs. days)<br>
+        6. Refinement: Side-by-side comparison, iterative AI refinement (minutes vs. days)</p>
+
+        <div class="inline-image">Inline image placeholder — Side-by-side Figma design vs. AI-generated functional component</div>
+      </div>
+    </div>
+
+    <!-- IMPACT -->
+    <div id="impact" class="stard-section reveal">
+      <p class="stard-section__overline">Impact</p>
+      <h2 class="stard-section__title">Gap Eliminated</h2>
+      <div class="stard-section__body">
+        <p>Designers can validate their own work in code without waiting for engineering sprints. Design reviews happen on functional prototypes, not static mockups. Iteration speed collapses from weekly cycles to same-day refinement. Design intent is preserved because AI understands the relationship between tokens, components, and interactions.</p>
+
+        <div class="ba-inline">
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--before">Before</p>
+            <p class="ba-inline__text">Design → manual redlines → developer interprets → QA cycle → 2-4 weeks</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--after">After</p>
+            <p class="ba-inline__text">Design → MCP extraction → AI scaffolding → AI component build → hours</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--before">Before</p>
+            <p class="ba-inline__text">Design intent lost in translation — "this doesn't match the design"</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--after">After</p>
+            <p class="ba-inline__text">1:1 fidelity — AI understands tokens, components, and interactions holistically</p>
+          </div>
+        </div>
+
+        <p>The career progression tells a story:</p>
+        <p>Denon/Marantz: Brand guidelines interpreted by platform teams → inconsistency<br>
+        Fabrion: Token pipeline Figma → Style Dictionary → Tailwind → Storybook → manual handoff still required<br>
+        AI-Native Workflow: Figma → MCP → AI agents → functional code → gap eliminated</p>
+      </div>
+    </div>
+
+    <!-- REFLECTION -->
+    <div id="reflection" class="stard-section reveal">
+      <p class="stard-section__overline">Reflection</p>
+      <h2 class="stard-section__title">The Future of Design Engineering</h2>
+      <div class="stard-section__body">
+        <p>This workflow represents a fundamental shift in how design teams can operate. It's the natural evolution of every design system I've built. Each career phase reduced the distance between design intent and shipped product. The current workflow eliminates it entirely.</p>
+
+        <p class="pull-quote">From guidelines to tokens to AI-mediated implementation. Each step reduced the distance between design intent and shipped product. The current workflow eliminates it.</p>
+      </div>
+    </div>
+
+    <!-- RECOGNITION -->
+    <div id="recognition" class="recognition reveal">
+      <p class="recognition__title">Recognition</p>
+      <ul class="recognition__list">
+        <li>Active R&D Project</li>
+        <li>Cross-Platform AI Integration</li>
+        <li>Design-to-Code Pipeline</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== PREV / NEXT ===== -->
+<div class="prev-next reveal">
+  <div class="prev-next__inner">
+    <a href="fabrion.html" class="prev-next__link">
+      <p class="prev-next__label">← Previous Case Study</p>
+      <p class="prev-next__title">Teaching Machines to Earn Human Trust</p>
+    </a>
+    <a href="ogilvy.html" class="prev-next__link prev-next__link--next">
+      <p class="prev-next__label">Next Case Study →</p>
+      <p class="prev-next__title">Beyond Screens</p>
+    </a>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+</div><!-- end #snow-zone -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script src="../js/scroll-reveal.js" defer></script>
+<script src="../js/weather-hero.js" defer></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
+</body>
+</html>

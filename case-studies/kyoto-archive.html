@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+<title>Kunichika Digital Archive — Case Study | Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Noto+Serif+JP:wght@200;300&display=swap" rel="stylesheet">
+<style>
+/* ===== Design Tokens ===== */
+
+  /* ===== Reset ===== */
+
+  /* ===== Nav ===== */
+
+  /* ===== Case Study Hero ===== */
+
+  /* ===== Hero Image ===== */
+
+  /* ===== Overview Bar ===== */
+
+  /* ===== Tags ===== */
+
+  /* ===== Brief Narrative ===== */
+
+  /* ===== Key Highlight ===== */
+
+  /* ===== Inline Image ===== */
+
+  /* ===== Pull Quote ===== */
+
+  /* ===== Print Detail — Kunichika specific ===== */
+  .print-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 32px 0;
+  }
+  .print-grid__item {
+    aspect-ratio: 2/3;
+    background: linear-gradient(160deg, #F0EDE8 0%, #DDD5C8 100%);
+    border-radius: 6px;
+    display: flex; align-items: flex-end; justify-content: flex-start;
+    padding: 10px 12px;
+    position: relative; overflow: hidden;
+  }
+  .print-grid__item::before {
+    content: attr(data-actor);
+    font-size: 10px; font-weight: 400;
+    color: var(--ink-60); letter-spacing: 0.05em;
+  }
+  .print-grid__item::after {
+    content: attr(data-kanji);
+    position: absolute; top: 12px; right: 14px;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 200; font-size: 22px;
+    color: rgba(179, 58, 58, 0.15);
+    letter-spacing: 0.1em; writing-mode: vertical-rl;
+  }
+
+  /* ===== Prev / Next Nav ===== */
+
+  /* ===== Footer ===== */
+
+  /* ===== Scroll animations ===== */
+  
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 767px) {
+
+    .print-grid { grid-template-columns: repeat(2, 1fr); }
+
+  }
+
+  /* ===== Animation Layer ===== */
+  #snow-zone { position: relative; overflow: hidden; }
+  #snow-zone img { position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="../index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../design-thinking.html">Design Thinking</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div id="snow-zone">
+
+<!-- ===== CASE STUDY HERO ===== -->
+<section class="cs-hero">
+  <div class="reveal">
+    <a href="Projects_Preview.html#publishing" class="cs-hero__back">← Projects</a>
+  </div>
+  <div class="reveal" style="transition-delay: 0.05s">
+    <p class="cs-hero__brand">Toyohara Kunichika Digital Archive · Kyoto University of the Arts</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.1s">
+    <h1 class="cs-hero__title">Bringing <span class="bold">1,000 Lost Prints</span> Back to Life</h1>
+  </div>
+  <div class="reveal" style="transition-delay: 0.15s">
+    <p class="cs-hero__statement">The Ohe Naokichi Collection at Kyoto University of the Arts holds the world's most concentrated body of work by Toyohara Kunichika — the last great master of Meiji-era Ukiyo-e. No comparable collection exists in any public institution. This was the project to give them their first real audience: a 4K digital archive, showcased at the National Museum of Kyoto as part of a government cultural heritage program.</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.18s">
+    <p class="cs-hero__kanji">記 · 伝 · 色</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s">
+    <div class="cs-hero__image">Kunichika Archive — 4K display installation, National Museum of Kyoto</div>
+  </div>
+</section>
+
+<!-- ===== OVERVIEW BAR ===== -->
+<div class="overview-bar reveal">
+  <div class="overview-bar__inner">
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Role</p>
+      <p class="overview-bar__value">Digital Archive Designer</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Institution</p>
+      <p class="overview-bar__value">Kyoto University of the Arts · National Museum of Kyoto</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Platform</p>
+      <p class="overview-bar__value">4K Display · Cultural Heritage Archive · Government Program</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAGS ===== -->
+<div class="tags reveal">
+  <span class="tag">Digital Archive</span>
+  <span class="tag">Ukiyo-e</span>
+  <span class="tag">Toyohara Kunichika</span>
+  <span class="tag">4K Display</span>
+  <span class="tag">National Museum of Kyoto</span>
+  <span class="tag">Cultural Heritage</span>
+  <span class="tag">Government Program</span>
+  <span class="tag">Meiji Era</span>
+  <span class="tag">Ohe Naokichi Collection</span>
+  <span class="tag">Yakusha-e</span>
+</div>
+
+<!-- ===== BRIEF NARRATIVE ===== -->
+<div class="brief-content reveal">
+
+  <h3>The Collection</h3>
+  <p>Toyohara Kunichika (豊原国周, 1835–1900) is one of the Three Greats of Meiji Ukiyo-e — alongside Yoshitoshi Tsukioka and Kiyochika Kobayashi — and was celebrated as the "Meiji Sharaku" for his unrivalled yakusha-e: woodblock portraits of Kabuki actors. He produced over 13,000 prints in his lifetime, yet the most concentrated collection of his work — more than 1,000 prints donated by Ohe Naokichi, the second president of Kyoto University of the Arts — had no public-facing presence. It lived in academic storage.</p>
+
+  <p>Ohe had spent decades acquiring Kunichika's prints, beginning with the discovery of a foundational reference text on the artist. He donated the collection to the university in nine phases beginning in 1983, with one condition: that it be used for education and research. The digital archive was the answer to that condition — and to a larger question about what it means to preserve something that almost nobody has seen.</p>
+
+  <div class="inline-image" data-kanji="役者絵">Kunichika yakusha-e — actor portrait print, Ohe Naokichi Collection</div>
+
+  <h3>The Design Challenge</h3>
+  <p>Designing for 150-year-old woodblock prints on a 4K monitor isn't a display problem — it's a fidelity problem. Kunichika's signature aniline dyes, imported from Germany during the Meiji era, produce vivid reds and dark purples that shift unpredictably between print generations and photographic reproduction. Before the archive could be browsed, each print had to be photographed at 4K resolution with color calibration against the original physical work. The display itself had to render those colors faithfully — the difference between a flat scan and a print that breathes.</p>
+
+  <p>The archive interface was built around Kunichika's own organizational logic. His prints are not random — they belong to documented series (the "100 Roles of Baiko," the "100 Roles of Ichikawa Danjuro"), to specific plays, specific actors, specific dates. The information architecture mirrors the way a Kabuki scholar would navigate the collection: by actor lineage, by play title, by era, by visual series. For a general audience at the museum, the same content surfaces through a different gate — by color, by face, by emotional register.</p>
+
+  <div class="print-grid">
+    <div class="print-grid__item" data-actor="Ichikawa Danjuro IX" data-kanji="團十郎"></div>
+    <div class="print-grid__item" data-actor="Onoe Kikugoro V" data-kanji="菊五郎"></div>
+    <div class="print-grid__item" data-actor="Ichikawa Sadanji I" data-kanji="左團次"></div>
+  </div>
+
+  <p class="pull-quote">A print becomes an archive when you can hold it still long enough for someone to truly see it. 4K resolution was not about pixels — it was about respect for what the artist originally made.</p>
+
+  <h3>The Exhibition</h3>
+  <p>The archive was selected for showcase at the National Museum of Kyoto as part of a government-supported cultural heritage digitization program — a recognition of both the collection's rarity and the interface's ability to make it publicly accessible. The 4K display installation presented the prints at near-original scale, allowing visitors to read the carver's name, the publisher's address, and the print number in Kunichika's own hand — details invisible in standard reproduction. What had been a scholar's archive became a public experience.</p>
+
+  <p>The project sits at an intersection that has become central to how I think about design: cultural systems with centuries of internal logic, made accessible without losing their depth. Every IP-native world I've designed since — from Gundam's virtual space colonies to AI agent platforms that must earn human trust — carries this same principle: honour the logic that already exists before you design the interface around it.</p>
+
+</div>
+
+<!-- ===== KEY HIGHLIGHTS ===== -->
+<div class="key-highlight reveal">
+  <div class="key-highlight__inner">
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">1,000+</p>
+      <p class="key-highlight__label">Kunichika prints in the Ohe Naokichi Collection</p>
+    </div>
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">4K</p>
+      <p class="key-highlight__label">Resolution display — near original print scale</p>
+    </div>
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">国立</p>
+      <p class="key-highlight__label">Showcased at National Museum of Kyoto, government program</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PREV / NEXT ===== -->
+<div class="prev-next reveal">
+  <div class="prev-next__inner">
+    <a href="quarkxpress.html" class="prev-next__link">
+      <p class="prev-next__label">← Previous</p>
+      <p class="prev-next__title">The Platform That Defined Publishing</p>
+    </a>
+    <a href="beatport-ni.html" class="prev-next__link prev-next__link--next">
+      <p class="prev-next__label">Next →</p>
+      <p class="prev-next__title">Digital Music Distribution & DJ Software</p>
+    </a>
+  </div>
+</div>
+
+</div><!-- end #snow-zone -->
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script src="../js/scroll-reveal.js" defer></script>
+<script src="../js/weather-hero.js" defer></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (!snowZone) return;
+  if (typeof WeatherV2 !== 'undefined') {
+    WeatherV2.init(snowZone, snowZone.dataset.weatherMode || 'snow');
+  } else if (typeof WeatherHero !== 'undefined') {
+    WeatherHero.init(snowZone);
+  }
+})();
+</script>
+</body>
+</html>

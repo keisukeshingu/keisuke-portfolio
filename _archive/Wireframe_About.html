@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ——— Design Tokens (embedded) ——— */
+  :root {
+    --primitive-white:#FFFFFF;--primitive-paper:#F5F5F7;--primitive-ink-100:#1D1D1F;--primitive-ink-80:#6E6E73;--primitive-ink-60:#86868B;--primitive-ink-40:#AEAEB2;--primitive-rule-60:#D2D2D7;--primitive-rule-40:#E8E8ED;
+    --color-bg:var(--primitive-white);--color-surface:var(--primitive-paper);--color-text-primary:var(--primitive-ink-100);--color-text-secondary:var(--primitive-ink-80);--color-text-tertiary:var(--primitive-ink-60);--color-text-quaternary:var(--primitive-ink-40);--color-border:var(--primitive-rule-60);--color-border-light:var(--primitive-rule-40);--color-nav-bg:rgba(255,255,255,0.92);--color-focus:var(--primitive-ink-100);
+    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;--font-mono:'SF Mono','Fira Code','Cascadia Code',monospace;
+    --weight-thin:200;--weight-light:300;--weight-regular:400;--weight-medium:500;--weight-semibold:600;
+    --type-size-display:56px;--type-size-heading-1:32px;--type-size-heading-2:26px;--type-size-heading-3:18px;--type-size-body-lg:17px;--type-size-body:15px;--type-size-body-sm:14px;--type-size-caption:13px;--type-size-label:12px;--type-size-overline:11px;--type-size-micro:10px;
+    --leading-none:1;--leading-tight:1.08;--leading-snug:1.2;--leading-normal:1.25;--leading-relaxed:1.5;--leading-loose:1.65;--leading-body:1.7;
+    --tracking-tightest:-0.035em;--tracking-tighter:-0.03em;--tracking-tight:-0.025em;--tracking-snug:-0.02em;--tracking-normal:-0.01em;--tracking-none:0;--tracking-loose:0.02em;--tracking-widest:0.12em;
+    --space-0:0;--space-1:2px;--space-2:4px;--space-3:6px;--space-4:8px;--space-6:12px;--space-7:14px;--space-8:16px;--space-9:18px;--space-12:24px;--space-14:28px;--space-16:32px;--space-20:48px;--space-24:56px;--space-28:64px;--space-32:80px;--space-40:96px;--space-hero:192px;
+    --grid-max-width:1120px;--grid-margin:64px;--grid-margin-mobile:24px;--grid-gutter:24px;--grid-columns:12;
+    --max-width-page:1120px;--max-width-hero-heading:680px;--max-width-hero-subtitle:520px;
+    --border-section:1px solid var(--color-border-light);--border-accent:1px solid var(--color-border);--border-focus:2px solid var(--color-focus);--border-radius-sm:2px;--border-radius-md:8px;--border-radius-full:50%;--focus-offset:4px;
+    --ease-default:cubic-bezier(0.25,0.46,0.45,0.94);--ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+    --duration-fast:150ms;--duration-normal:300ms;--duration-slow:500ms;--duration-slower:800ms;
+    --blur-nav:20px;--opacity-nav:0.92;--opacity-badge:0.85;
+    --z-base:1;--z-sticky:10;--z-nav:100;--z-overlay:200;--z-modal:300;
+  }
+  .text-thin{font-weight:var(--weight-thin);color:var(--color-text-tertiary)}
+  .text-emphasis{font-style:normal;font-weight:var(--weight-medium);color:var(--color-text-primary)}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:72px}
+  body{font-family:var(--font-sans);background:var(--color-bg);color:var(--color-text-primary);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-feature-settings:'ss01' on,'cv01' on}
+  a:focus-visible{outline:var(--border-focus);outline-offset:var(--focus-offset);border-radius:var(--border-radius-sm)}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}}
+  @media(max-width:767px){:root{--type-size-display:44px;--type-size-heading-1:28px;--type-size-heading-2:22px;--type-size-heading-3:17px;--type-size-body-lg:16px;--grid-margin:24px}}
+  @media(max-width:479px){:root{--type-size-display:36px;--type-size-heading-1:24px;--type-size-heading-2:20px;--type-size-heading-3:16px;--type-size-body-lg:16px;--grid-margin:24px}}
+</style>
+<style>
+
+  /* ============================================================
+     ABOUT PAGE — Layout
+     ============================================================ */
+
+  /* ——— Nav ——— */
+  .c-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: var(--space-9) var(--grid-margin);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background: var(--color-nav-bg);
+    backdrop-filter: blur(var(--blur-nav));
+    -webkit-backdrop-filter: blur(var(--blur-nav));
+    z-index: var(--z-nav);
+  }
+
+  .c-nav__logo {
+    font-weight: var(--weight-semibold);
+    font-size: var(--type-size-body-sm);
+    letter-spacing: var(--tracking-normal);
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  .c-nav__links {
+    display: flex;
+    gap: var(--space-16);
+    list-style: none;
+  }
+
+  .c-nav__links a {
+    text-decoration: none;
+    color: var(--color-text-tertiary);
+    font-size: var(--type-size-caption);
+    font-weight: var(--weight-regular);
+    transition: color var(--duration-normal) var(--ease-default);
+  }
+
+  .c-nav__links a:hover,
+  .c-nav__links a.is-active { color: var(--color-text-primary); }
+
+  /* ——— Portrait Area ——— */
+  .portrait {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-hero) var(--grid-margin) 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-28);
+    align-items: end;
+    padding-bottom: var(--space-32);
+    border-bottom: var(--border-section);
+  }
+
+  .portrait__image {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .portrait__image .ph {
+    text-align: center;
+    color: var(--color-text-quaternary);
+    font-size: var(--type-size-label);
+    line-height: var(--leading-relaxed);
+  }
+
+  .portrait__info {
+    padding-bottom: var(--space-8);
+  }
+
+  .portrait__kicker {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-12);
+  }
+
+  .portrait__name {
+    font-size: var(--type-size-display);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tightest);
+    margin-bottom: var(--space-4);
+  }
+
+  .portrait__title {
+    font-size: var(--type-size-body-lg);
+    font-weight: var(--weight-light);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+  }
+
+  .portrait__location {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+  }
+
+  /* ——— Philosophy ——— */
+  .philosophy {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-28) var(--grid-margin);
+    border-bottom: var(--border-section);
+  }
+
+  .philosophy__quote {
+    font-size: var(--type-size-heading-1);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    max-width: 760px;
+  }
+
+  .philosophy__quote em {
+    font-style: normal;
+    font-weight: var(--weight-semibold);
+  }
+
+  .philosophy__body {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    max-width: 640px;
+    margin-top: var(--space-16);
+  }
+
+  .philosophy__body strong {
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  /* ——— Heritage Timeline (Expanded) ——— */
+  .heritage-expanded {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-32) var(--grid-margin);
+    border-bottom: var(--border-section);
+  }
+
+  .heritage-expanded__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-28);
+    align-items: start;
+    margin-bottom: var(--space-20);
+  }
+
+  .heritage-expanded__overline {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-8);
+  }
+
+  .heritage-expanded__title {
+    font-size: var(--type-size-heading-1);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-snug);
+  }
+
+  .heritage-expanded__intro {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    padding-top: var(--space-14);
+  }
+
+  /* Era items — expanded narrative per era */
+  .era {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--space-16);
+    padding: var(--space-16) 0;
+    border-top: var(--border-section);
+    align-items: start;
+  }
+
+  .era__sidebar {
+    position: relative;
+    padding-top: var(--space-4);
+  }
+
+  .era__sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    background: var(--color-text-primary);
+    border-radius: var(--border-radius-full);
+  }
+
+  .era__year {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-quaternary);
+    letter-spacing: var(--tracking-loose);
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-8);
+  }
+
+  .era__domain {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    padding-left: var(--space-8);
+  }
+
+  .era__content h3 {
+    font-size: var(--type-size-heading-3);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-normal);
+    margin-bottom: var(--space-4);
+    line-height: var(--leading-normal);
+  }
+
+  .era__content p {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-6);
+  }
+
+  .era__content p strong {
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  .era__highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-8);
+    margin-top: var(--space-4);
+  }
+
+  .era__highlights span {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+  }
+
+  .era__highlights span::before {
+    content: '\00B7\2002';
+    color: var(--color-border);
+  }
+
+  .era__highlights span:first-child::before { content: ''; }
+
+  .era__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--space-8);
+  }
+
+  .era__image .ph {
+    font-size: var(--type-size-label);
+    color: var(--color-text-quaternary);
+    text-align: center;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ——— Selected Clients ——— */
+  .clients {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-32) var(--grid-margin);
+    border-bottom: var(--border-section);
+  }
+
+  .clients__overline {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-12);
+  }
+
+  .clients__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-8) var(--space-16);
+  }
+
+  .clients__item {
+    padding: var(--space-6) 0;
+    border-bottom: var(--border-section);
+  }
+
+  .clients__name {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .clients__context {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-light);
+    color: var(--color-text-tertiary);
+  }
+
+  /* ——— Contact CTA ——— */
+  .contact-cta {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-32) var(--grid-margin);
+    border-bottom: var(--border-section);
+  }
+
+  .contact-cta__overline {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-8);
+  }
+
+  .contact-cta__title {
+    font-size: var(--type-size-heading-1);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-snug);
+    margin-bottom: var(--space-8);
+  }
+
+  .contact-cta__title .text-thin {
+    font-weight: var(--weight-thin);
+    color: var(--color-text-tertiary);
+  }
+
+  .contact-cta__body {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-12);
+    max-width: 480px;
+  }
+
+  .contact-cta__links {
+    display: flex;
+    gap: var(--space-16);
+  }
+
+  .contact-cta__link {
+    font-size: var(--type-size-caption);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: var(--weight-regular);
+    border-bottom: var(--border-accent);
+    padding-bottom: var(--space-1);
+    transition: border-color var(--duration-normal) var(--ease-default);
+  }
+
+  .contact-cta__link:hover {
+    border-color: var(--color-text-primary);
+  }
+
+  /* ——— Footer ——— */
+  .about-footer {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-20) var(--grid-margin) var(--space-28);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .about-footer__name {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-normal);
+  }
+
+  .about-footer__role {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-light);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-2);
+  }
+
+  .about-footer__link {
+    font-size: var(--type-size-caption);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: var(--weight-regular);
+    border-bottom: var(--border-accent);
+    padding-bottom: var(--space-1);
+    transition: border-color var(--duration-normal) var(--ease-default);
+  }
+
+  .about-footer__link:hover {
+    border-color: var(--color-text-primary);
+  }
+
+  /* ——— Responsive ——— */
+  @media (max-width: 767px) {
+    .portrait {
+      grid-template-columns: 1fr;
+      gap: var(--space-16);
+      padding-left: var(--grid-margin-mobile);
+      padding-right: var(--grid-margin-mobile);
+    }
+    .portrait__image { aspect-ratio: 1 / 1; max-width: 280px; }
+    .philosophy { padding-left: var(--grid-margin-mobile); padding-right: var(--grid-margin-mobile); }
+    .heritage-expanded { padding-left: var(--grid-margin-mobile); padding-right: var(--grid-margin-mobile); }
+    .heritage-expanded__header { grid-template-columns: 1fr; gap: var(--space-8); }
+    .era { grid-template-columns: 1fr; gap: var(--space-4); }
+    .clients { padding-left: var(--grid-margin-mobile); padding-right: var(--grid-margin-mobile); }
+    .clients__grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-cta { padding-left: var(--grid-margin-mobile); padding-right: var(--grid-margin-mobile); }
+    .contact-cta__links { flex-direction: column; gap: var(--space-4); }
+    .about-footer { flex-direction: column; gap: var(--space-4); padding-left: var(--grid-margin-mobile); padding-right: var(--grid-margin-mobile); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ——— NAVIGATION ——— -->
+<nav class="c-nav">
+  <a href="#" class="c-nav__logo">Keisuke Shingu</a>
+  <ul class="c-nav__links">
+    <li><a href="#">Work</a></li>
+    <li><a href="#" class="is-active">About</a></li>
+    <li><a href="#">Resume</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+
+<!-- ============================================================
+     PORTRAIT AREA
+     ============================================================ -->
+<section class="portrait">
+  <div class="portrait__image">
+    <div class="ph">Portrait photograph<br>3:4 aspect ratio<br>Natural, professional</div>
+  </div>
+  <div class="portrait__info">
+    <div class="portrait__kicker">About</div>
+    <h1 class="portrait__name">Keisuke<br>Shingu</h1>
+    <div class="portrait__title">Creative Technologist</div>
+    <div class="portrait__location">San Francisco / Tokyo</div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PHILOSOPHY
+     ============================================================ -->
+<section class="philosophy">
+  <p class="philosophy__quote">"Every new medium deserves a new interface. I've spent 25 years <em>designing the bridge</em> between creative tools and emerging technology."</p>
+  <p class="philosophy__body">I was part of the core group who built the creative software that defined the Mac. Desktop publishing gave way to music production, music to immersive experience, and experience to the intelligent enterprise. Each leap was a chance to rethink what an interface could be. The last five years: bringing that instinct to <strong>enterprise at global scale</strong> — from premium consumer hardware to AI-native manufacturing systems.</p>
+</section>
+
+
+<!-- ============================================================
+     HERITAGE TIMELINE (Expanded)
+     ============================================================ -->
+<section class="heritage-expanded">
+  <div class="heritage-expanded__header">
+    <div>
+      <div class="heritage-expanded__overline">A Life at the Frontier</div>
+      <h2 class="heritage-expanded__title">Each era brought a new canvas.<br><span class="text-thin">I designed the tools.</span></h2>
+    </div>
+    <div>
+      <p class="heritage-expanded__intro">From QuarkXPress to AI-native enterprise systems, my career traces the arc of creative technology itself. Every transition demanded new thinking — new interaction models, new design systems, new ways to bridge human intention and machine capability.</p>
+    </div>
+  </div>
+
+  <!-- Era 1: The Printed Word -->
+  <article class="era">
+    <div class="era__sidebar">
+      <div class="era__year">1999–2007</div>
+      <div class="era__domain">The Printed Word</div>
+    </div>
+    <div class="era__content">
+      <h3>QuarkXPress — Where Digital Publishing Was Born</h3>
+      <p>I joined Quark when QuarkXPress held <strong>95% of the global publishing market.</strong> Every magazine, newspaper, and book you read was likely laid out in our software. This was my education in designing tools for creative professionals — people who demand precision, speed, and reliability.</p>
+      <p>Working on the software that defined desktop publishing taught me that the best creative tools become invisible. The interface should never compete with the work being created.</p>
+      <div class="era__highlights">
+        <span>QuarkXPress</span>
+        <span>Desktop Publishing</span>
+        <span>Macworld Best of Show</span>
+        <span>95% Market Share</span>
+      </div>
+      <div class="era__image">
+        <div class="ph">QuarkXPress interface / Macworld era imagery</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Era 2: Sound & Signal -->
+  <article class="era">
+    <div class="era__sidebar">
+      <div class="era__year">2007–2012</div>
+      <div class="era__domain">Sound & Signal</div>
+    </div>
+    <div class="era__content">
+      <h3>From Print to Music — Designing Instruments for a New Generation</h3>
+      <p>The transition from print to music software was my first paradigm shift. At <strong>Native Instruments (Traktor)</strong>, I designed interfaces for professional DJs — tools where latency is measured in milliseconds and the interface is performed, not just used.</p>
+      <p>Then came <strong>Miselu C.24</strong> — a piano keyboard designed for the iPad generation. I hold the <strong>USPTO patent</strong> for this instrument, which was demonstrated at <strong>Google I/O.</strong> The belief: creative tools should be as portable as ideas.</p>
+      <div class="era__highlights">
+        <span>Traktor</span>
+        <span>Miselu C.24</span>
+        <span>USPTO Patent</span>
+        <span>Google I/O</span>
+        <span>Apple-Native</span>
+      </div>
+      <div class="era__image">
+        <div class="ph">Traktor interface / Miselu C.24 hardware / Google I/O demo</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Era 3: The Live Stage -->
+  <article class="era">
+    <div class="era__sidebar">
+      <div class="era__year">2012–2016</div>
+      <div class="era__domain">The Live Stage</div>
+    </div>
+    <div class="era__content">
+      <h3>When Music Became Architecture</h3>
+      <p>At <strong>Beatport</strong> and through festival collaborations, I moved from screen-based interfaces into spatial experience design. EDC, Ultra, Burning Man — these weren't just events, they were environments where <strong>sound, light, and interaction merged into architecture.</strong></p>
+      <p>This era taught me to design for the body, not just the eye. When your canvas is a festival stage and your users are thousands of people moving through space, traditional UI thinking breaks down entirely.</p>
+      <div class="era__highlights">
+        <span>Beatport</span>
+        <span>Spatial Audio</span>
+        <span>EDC</span>
+        <span>Ultra</span>
+        <span>Burning Man</span>
+        <span>Immersive</span>
+      </div>
+      <div class="era__image">
+        <div class="ph">Festival stage / immersive experience design / Ogilvy Audi Q4 e-tron</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Era 4: Enterprise Hardware -->
+  <article class="era">
+    <div class="era__sidebar">
+      <div class="era__year">2017–2021</div>
+      <div class="era__domain">Enterprise Hardware</div>
+    </div>
+    <div class="era__content">
+      <h3>Denon / Marantz — Premium Audio Meets Global Scale</h3>
+      <p>As <strong>Director of UX</strong>, I led the transformation of two heritage audio brands across 60+ products. The challenge: migrate from 8-bit bitmap displays to modern vector-based interfaces while maintaining continuous product shipments across four global offices.</p>
+      <p>Key achievements: <strong>#5 to #1 market position</strong>, 50+ Apple-certified products, an industry-first embedded font licensing model with Monotype (later adopted by Audi, Porsche, BMW, and Mercedes), and a 35% reduction in customer support calls.</p>
+      <div class="era__highlights">
+        <span>Denon / Marantz</span>
+        <span>AirPlay 2</span>
+        <span>HomeKit</span>
+        <span>60+ SKUs</span>
+        <span>Qt/QML</span>
+        <span>Monotype</span>
+      </div>
+      <div class="era__image">
+        <div class="ph">Marantz Cinema porthole / Denon receiver / unified product ecosystem</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Era 5: Intelligent Industry -->
+  <article class="era">
+    <div class="era__sidebar">
+      <div class="era__year">2023–Now</div>
+      <div class="era__domain">Intelligent Industry</div>
+    </div>
+    <div class="era__content">
+      <h3>AI-Native Enterprise — Where Human and Machine Collaborate</h3>
+      <p>At <strong>Fabrion</strong>, I'm the founding designer of an AI-native manufacturing execution system where multi-agent AI and factory teams collaborate in real time. The design challenge: earning human trust in autonomous decision-making at industrial scale.</p>
+      <p>Simultaneously at <strong>TDK SensEI</strong>, I'm designing the dashboard that turns raw edge sensor data into predictive foresight for industrial B2B clients — unifying three merged enterprise brands into one coherent intelligence platform.</p>
+      <div class="era__highlights">
+        <span>Fabrion</span>
+        <span>TDK SensEI</span>
+        <span>Multi-Agent AI</span>
+        <span>Trust Calibration</span>
+        <span>Edge Sensing</span>
+        <span>0→1</span>
+      </div>
+      <div class="era__image">
+        <div class="ph">Fabrion dashboard / TDK SensEI platform / AI agent swim lanes</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+
+<!-- ============================================================
+     SELECTED CLIENTS & BRANDS
+     ============================================================ -->
+<section class="clients">
+  <div class="clients__overline">Selected Clients & Brands</div>
+  <div class="clients__grid">
+    <div class="clients__item">
+      <div class="clients__name">Denon / Marantz</div>
+      <div class="clients__context">Premium audio, 60+ SKUs</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">Fabrion</div>
+      <div class="clients__context">AI-native manufacturing</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">TDK SensEI</div>
+      <div class="clients__context">Edge sensor intelligence</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">Rakuten</div>
+      <div class="clients__context">Fitness + economic ecosystem</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">QuarkXPress</div>
+      <div class="clients__context">Desktop publishing</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">Native Instruments</div>
+      <div class="clients__context">Traktor, music production</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">Miselu</div>
+      <div class="clients__context">Hardware, USPTO patent</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">Ogilvy / Audi</div>
+      <div class="clients__context">Immersive brand experience</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">Beatport</div>
+      <div class="clients__context">Music + festival tech</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">Monotype</div>
+      <div class="clients__context">Embedded font licensing</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">Apple</div>
+      <div class="clients__context">AirPlay 2 / HomeKit partner</div>
+    </div>
+    <div class="clients__item">
+      <div class="clients__name">Google</div>
+      <div class="clients__context">Google I/O demo partner</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     CONTACT CTA
+     ============================================================ -->
+<section class="contact-cta">
+  <div class="contact-cta__overline">Get in Touch</div>
+  <h2 class="contact-cta__title">Let's build what's <span class="text-thin">next.</span></h2>
+  <p class="contact-cta__body">I'm always interested in conversations about design systems at scale, AI-native interfaces, or any project where creative tools meet emerging technology.</p>
+  <div class="contact-cta__links">
+    <a href="mailto:keisuke@gmail.com" class="contact-cta__link">keisuke@gmail.com</a>
+    <a href="#" class="contact-cta__link">LinkedIn</a>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="about-footer">
+  <div>
+    <div class="about-footer__name">Keisuke Shingu</div>
+    <div class="about-footer__role">Creative Technologist — Hardware × Software × AI</div>
+  </div>
+  <div>
+    <a href="mailto:keisuke@gmail.com" class="about-footer__link">keisuke@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>

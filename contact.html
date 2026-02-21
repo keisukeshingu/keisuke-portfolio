@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/footer.css">
+
+  <title>Contact — Keisuke Shingu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background-color: var(--nav-bg);
+      backdrop-filter: blur(var(--blur));
+      border-bottom: 1px solid var(--rule-40);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 64px;
+      z-index: 1000;
+    }
+
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      color: var(--ink-100);
+      transition: color 0.3s var(--ease);
+    }
+
+    .nav-logo:hover {
+      color: var(--ink-60);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links 
+
+    .nav-links a:hover {
+      color: var(--ink-100);
+    }
+
+    /* Scroll reveal animation */
+
+    .scroll-reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 192px;
+      padding-bottom: 128px;
+      padding-left: 64px;
+      padding-right: 64px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .overline {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--ink-60);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      color: var(--ink-100);
+    }
+
+    .hero .subtitle {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--ink-80);
+      max-width: 520px;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .contact-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--rule-40);
+      border-radius: 8px;
+      padding: 12px 32px;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--ink-100);
+      background-color: var(--white);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+    }
+
+    .contact-btn:hover {
+      border-color: var(--ink-80);
+      background-color: var(--paper);
+    }
+
+    /* Footer */
+
+    .footer__links 
+
+    .footer__links a:hover {
+      color: var(--ink-100);
+    }
+
+    /* Responsive */
+    @media (max-width: 1119px) {
+      nav {
+        padding: 0 24px;
+      }
+
+      .hero {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      footer {
+        padding: 40px 24px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      nav {
+        padding: 0 16px;
+        height: 56px;
+      }
+
+      .nav-logo {
+        font-size: 14px;
+      }
+
+      .nav-links {
+        gap: 16px;
+      }
+
+      .nav-links a {
+        font-size: 13px;
+      }
+
+      .hero {
+        padding-top: 96px;
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-bottom: 64px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+        margin-bottom: 16px;
+      }
+
+      .hero .subtitle {
+        font-size: 15px;
+        margin-bottom: 32px;
+      }
+
+      .contact-buttons {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .contact-btn {
+        width: 100%;
+      }
+
+    }</style>
+</head></head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="nav-logo">Keisuke Shingu</a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+        <li><a href="design-thinking.html">Design Thinking</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <section class="hero scroll-reveal">
+      <div class="overline">Contact</div>
+      <h1>Let's build something together.</h1>
+      <p class="subtitle">I'm open to Staff and Principal Product Design roles where hardware, software, and AI converge. Currently based between Tokyo and San Francisco.</p>
+      <div class="contact-buttons">
+        <a href="mailto:keisuke@gmail.com" class="contact-btn">keisuke@gmail.com</a>
+        <a href="#" class="contact-btn">LinkedIn</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div>
+        <p class="footer__name">Keisuke Shingu</p>
+        <p class="footer__tagline">Creative Technologist · Tokyo / San Francisco</p>
+      </div>
+      <div class="footer__links">
+        <a href="mailto:keisuke@gmail.com">Email</a>
+        <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</div>
+  </footer>
+
+  <script src="js/scroll-reveal.js" defer></script>
+</body>
+</html>

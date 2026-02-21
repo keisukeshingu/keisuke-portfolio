@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation Debug — Inline (No External Files)</title>
+<style>
+  body { font-family: -apple-system, sans-serif; padding: 40px; background: #f5f5f7; color: #1d1d1f; }
+  h2 { margin: 30px 0 10px; font-size: 18px; }
+  .row { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin: 16px 0; }
+  .box { border: 2px solid #d2d2d7; background: white; display: flex; align-items: center; justify-content: center; }
+  .label { font-size: 12px; color: #6e6e73; margin-top: 4px; text-align: center; }
+  #log { font-family: monospace; font-size: 12px; background: #1d1d1f; color: #86ff86; padding: 16px; border-radius: 8px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; margin: 20px 0; }
+  .hero-test { position: relative; width: 100%; height: 300px; background: #fff; border: 2px solid #d2d2d7; margin: 10px 0; overflow: hidden; }
+  .hero-content { position: relative; z-index: 1; padding: 40px; }
+  .pass { color: #22c55e; font-weight: 600; }
+  .fail { color: #ef4444; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>Inline Animation Debug</h1>
+<p>This page has ALL JavaScript inline — no external file dependencies. If animations show here but not in Portfolio_Preview.html, the issue is file loading.</p>
+
+<div id="log"></div>
+
+<h2>Test A: Raw Canvas Drawing (should show red circle + ripple rings)</h2>
+<div class="row" id="testA"></div>
+
+<h2>Test B: MicroAnim Library (3 animations at 80px)</h2>
+<div class="row" id="testB"></div>
+
+<h2>Test C: Small size test (20px, 16px, 14px — actual icon sizes)</h2>
+<div class="row" id="testC"></div>
+
+<h2>Test D: Weather-like particle canvas (snow dots)</h2>
+<div class="hero-test" id="testD">
+  <div class="hero-content">
+    <p style="font-size: 24px; font-weight: 200; color: #86868b;">Particles should float behind this text</p>
+  </div>
+</div>
+
+<h2>Test E: Script loading check for Portfolio_Preview.html</h2>
+<div id="testE"></div>
+
+<script>
+// ── Logging ──
+const logEl = document.getElementById('log');
+function log(msg, ok) {
+  const d = document.createElement('div');
+  d.textContent = msg;
+  if (ok === true) d.style.color = '#86ff86';
+  if (ok === false) d.style.color = '#ff8686';
+  logEl.appendChild(d);
+}
+
+log('Browser: ' + navigator.userAgent);
+log('devicePixelRatio: ' + window.devicePixelRatio);
+log('prefers-reduced-motion: ' + window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+log('window.innerWidth: ' + window.innerWidth);
+log('Protocol: ' + window.location.protocol);
+log('');
+
+// ══════════════════════════════════════════
+// TEST A: Raw Canvas (no library)
+// ══════════════════════════════════════════
+try {
+  const container = document.getElementById('testA');
+  const DPR = window.devicePixelRatio || 1;
+  const SIZE = 80;
+
+  const cvs = document.createElement('canvas');
+  cvs.width = SIZE * DPR;
+  cvs.height = SIZE * DPR;
+  cvs.style.width = SIZE + 'px';
+  cvs.style.height = SIZE + 'px';
+  cvs.className = 'box';
+
+  const ctx = cvs.getContext('2d');
+  ctx.scale(DPR, DPR);
+
+  // Draw a red filled circle
+  ctx.fillStyle = 'rgba(179, 58, 58, 0.7)';
+  ctx.beginPath();
+  ctx.arc(40, 40, 8, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Draw expanding ring
+  ctx.strokeStyle = 'rgba(26, 26, 26, 0.5)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(40, 40, 25, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Draw outer ring
+  ctx.strokeStyle = 'rgba(179, 58, 58, 0.3)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.arc(40, 40, 35, 0, Math.PI * 2);
+  ctx.stroke();
+
+  container.appendChild(cvs);
+
+  const lbl = document.createElement('div');
+  lbl.className = 'label';
+  lbl.innerHTML = '<span class="pass">PASS</span> — Raw canvas works';
+  container.appendChild(lbl);
+
+  log('Test A: Raw canvas drawing — PASS', true);
+} catch(e) {
+  log('Test A: FAIL — ' + e.message, false);
+}
+
+// ══════════════════════════════════════════
+// TEST B: Embed MicroAnim inline and test
+// ══════════════════════════════════════════
+
+// Inline a minimal subset of MicroAnim (just 3 animations)
+const TestMicroAnim = (function() {
+  const R='179,58,58', K='26,26,26';
+  let P=2, Z=56, M=28, D=2;
+
+  function init(dpr, size) { P=dpr||2; Z=(size||28)*P; M=Z/2; D=P; }
+
+  const sin=Math.sin, cos=Math.cos, PI=Math.PI, TAU=PI*2;
+  const cl=v=>v<0?0:v>1?1:v;
+  const oC=t=>1-(1-t)**3;
+
+  function cr(x,y,r,c,s,w) { if(r<.3)return; c.beginPath(); c.arc(x,y,r,0,TAU); c.strokeStyle=s; c.lineWidth=w; c.stroke(); }
+  function dt(x,y,r,c,f) { if(r<.2)return; c.beginPath(); c.arc(x,y,r,0,TAU); c.fillStyle=f; c.fill(); }
+
+  const lib = [
+    // 0: Ripple
+    ['Ripple', 1800, function(c,t) {
+      for(let i=0;i<3;i++) {
+        var d=cl((t-i*.1)/.55);
+        if(d<=0||d>=1) continue;
+        cr(M,M,oC(d)*M*.85,c,'rgba('+(i?K:R)+','+(.7*sin(d*PI))+')',(!i?1.3:.7)*D);
+      }
+      dt(M,M,2.2*D,c,'rgba('+R+','+(.7*sin(t*PI))+')');
+    }],
+    // 11: Breathe (placed at index 1 for simplicity)
+    ['Breathe', 2800, function(c,t) {
+      var b=sin(t*TAU)*.5+.5;
+      var pts=[[.33,.36,2.8],[.64,.3,1.8],[.4,.64,3.5],[.7,.6,1.3]];
+      for(var i=0;i<4;i++) {
+        var p=pts[i], dx=(p[0]-.5)*b*.15, dy=(p[1]-.5)*b*.15;
+        cr((p[0]+dx)*Z,(p[1]+dy)*Z,p[2]*D*(.85+b*.15),c,'rgba('+K+','+(.45+b*.3)+')',D);
+      }
+    }],
+    // 14: Ensō (placed at index 2 for simplicity)
+    ['Ensō', 2400, function(c,t) {
+      c.beginPath();
+      c.arc(M,M,M*.6,-PI/2,-PI/2+t*5.5);
+      c.strokeStyle='rgba('+R+',.5)';
+      c.lineWidth=1.8*D;
+      c.lineCap='round';
+      c.stroke();
+      c.beginPath();
+      c.arc(M,M,M*.36,-PI/2,-PI/2+t*4.4);
+      c.strokeStyle='rgba('+K+',.1)';
+      c.lineWidth=.6*D;
+      c.lineCap='round';
+      c.stroke();
+    }]
+  ];
+
+  return { init, lib };
+})();
+
+try {
+  const container = document.getElementById('testB');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  TestMicroAnim.init(DPR, 28);
+
+  log('TestMicroAnim.init(' + DPR + ', 28) called', true);
+
+  TestMicroAnim.lib.forEach(function(anim, idx) {
+    const [name, cycleMs, drawFn] = anim;
+    const size = 28 * DPR;
+
+    const wrap = document.createElement('div');
+    wrap.style.textAlign = 'center';
+
+    const cvs = document.createElement('canvas');
+    cvs.width = size;
+    cvs.height = size;
+    cvs.style.width = '80px';
+    cvs.style.height = '80px';
+    cvs.className = 'box';
+
+    const ctx = cvs.getContext('2d');
+
+    // Animate
+    let startTs = null;
+    function loop(ts) {
+      if (!startTs) startTs = ts;
+      const t = ((ts - startTs) % cycleMs) / cycleMs;
+      ctx.clearRect(0, 0, size, size);
+      drawFn(ctx, t);
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    wrap.appendChild(cvs);
+    const lbl = document.createElement('div');
+    lbl.className = 'label';
+    lbl.textContent = name + ' (80px, animated)';
+    wrap.appendChild(lbl);
+    container.appendChild(wrap);
+
+    log('Test B: ' + name + ' animation created at 80px — PASS', true);
+  });
+} catch(e) {
+  log('Test B: FAIL — ' + e.message, false);
+}
+
+// ══════════════════════════════════════════
+// TEST C: Small sizes (actual icon sizes)
+// ══════════════════════════════════════════
+try {
+  const container = document.getElementById('testC');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const sizes = [20, 16, 14];
+
+  TestMicroAnim.lib.forEach(function(anim, idx) {
+    const [name, cycleMs, drawFn] = anim;
+    const canvasSize = 28 * DPR;
+    const displaySize = sizes[idx];
+
+    const wrap = document.createElement('div');
+    wrap.style.textAlign = 'center';
+
+    const cvs = document.createElement('canvas');
+    cvs.width = canvasSize;
+    cvs.height = canvasSize;
+    cvs.style.width = displaySize + 'px';
+    cvs.style.height = displaySize + 'px';
+    cvs.style.border = '1px solid #d2d2d7';
+    cvs.style.background = '#fff';
+
+    const ctx = cvs.getContext('2d');
+    // Draw at rest (t=0.5)
+    drawFn(ctx, 0.5);
+
+    wrap.appendChild(cvs);
+    const lbl = document.createElement('div');
+    lbl.className = 'label';
+    lbl.textContent = name + ' (' + displaySize + 'px)';
+    wrap.appendChild(lbl);
+    container.appendChild(wrap);
+
+    log('Test C: ' + name + ' at ' + displaySize + 'px — drawn', true);
+  });
+} catch(e) {
+  log('Test C: FAIL — ' + e.message, false);
+}
+
+// ══════════════════════════════════════════
+// TEST D: Simple particle system (weather-like)
+// ══════════════════════════════════════════
+try {
+  const heroEl = document.getElementById('testD');
+  const rect = heroEl.getBoundingClientRect();
+  const W = rect.width;
+  const H = rect.height;
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;overflow:hidden;opacity:0.55;';
+
+  const cvs = document.createElement('canvas');
+  cvs.width = W * DPR;
+  cvs.height = H * DPR;
+  cvs.style.cssText = 'position:absolute;top:0;left:0;width:' + W + 'px;height:' + H + 'px;';
+
+  wrapper.appendChild(cvs);
+  heroEl.style.position = 'relative';
+  heroEl.insertBefore(wrapper, heroEl.firstChild);
+
+  const ctx = cvs.getContext('2d');
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+  // Simple snow particles
+  const particles = [];
+  for (let i = 0; i < 30; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vy: 0.3 + Math.random() * 0.5,
+      vx: (Math.random() - 0.5) * 0.3,
+      r: 1 + Math.random() * 2,
+      isShu: Math.random() < 0.1,
+      opacity: 0.3 + Math.random() * 0.4
+    });
+  }
+
+  function animateParticles(ts) {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.y += p.vy;
+      p.x += p.vx + Math.sin(ts * 0.001 + p.x * 0.01) * 0.2;
+      if (p.y > H + 10) { p.y = -10; p.x = Math.random() * W; }
+      if (p.x < -10) p.x = W + 10;
+      if (p.x > W + 10) p.x = -10;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      if (p.isShu) {
+        ctx.fillStyle = 'rgba(179,58,58,' + p.opacity + ')';
+      } else {
+        ctx.fillStyle = 'rgba(26,26,26,' + (p.opacity * 0.15) + ')';
+      }
+      ctx.fill();
+    });
+    requestAnimationFrame(animateParticles);
+  }
+  requestAnimationFrame(animateParticles);
+
+  log('Test D: Particle system created (' + W + 'x' + H + ', ' + particles.length + ' particles) — PASS', true);
+} catch(e) {
+  log('Test D: FAIL — ' + e.message, false);
+}
+
+// ══════════════════════════════════════════
+// TEST E: Check if external scripts would load
+// ══════════════════════════════════════════
+const testE = document.getElementById('testE');
+
+function checkScript(name) {
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = name;
+    script.onload = () => resolve({ name, ok: true });
+    script.onerror = (e) => resolve({ name, ok: false, error: e });
+    document.head.appendChild(script);
+  });
+}
+
+Promise.all([
+  checkScript('micro-anim.js'),
+  checkScript('weather-hero.js'),
+  checkScript('case-study-icons.js')
+]).then(results => {
+  results.forEach(r => {
+    const el = document.createElement('p');
+    if (r.ok) {
+      el.innerHTML = '<span class="pass">✓ LOADED</span> ' + r.name;
+      log('Test E: ' + r.name + ' loaded successfully', true);
+    } else {
+      el.innerHTML = '<span class="fail">✗ FAILED</span> ' + r.name + ' — file not found or blocked';
+      log('Test E: ' + r.name + ' FAILED to load!', false);
+    }
+    testE.appendChild(el);
+  });
+
+  // Also check if MicroAnim is now in scope
+  const maCheck = document.createElement('p');
+  if (typeof MicroAnim !== 'undefined') {
+    maCheck.innerHTML = '<span class="pass">✓</span> MicroAnim global variable is accessible (' + MicroAnim.lib.length + ' animations)';
+    log('MicroAnim global: accessible, ' + MicroAnim.lib.length + ' animations', true);
+  } else {
+    maCheck.innerHTML = '<span class="fail">✗</span> MicroAnim global variable NOT accessible!';
+    log('MicroAnim global: NOT accessible!', false);
+  }
+  testE.appendChild(maCheck);
+
+  const whCheck = document.createElement('p');
+  if (typeof WeatherHero !== 'undefined') {
+    whCheck.innerHTML = '<span class="pass">✓</span> WeatherHero global variable is accessible';
+  } else {
+    whCheck.innerHTML = '<span class="fail">✗</span> WeatherHero global variable NOT accessible!';
+  }
+  testE.appendChild(whCheck);
+
+  const csCheck = document.createElement('p');
+  if (typeof CaseStudyIcons !== 'undefined') {
+    csCheck.innerHTML = '<span class="pass">✓</span> CaseStudyIcons global variable is accessible (placeAll: ' + (typeof CaseStudyIcons.placeAll) + ')';
+  } else {
+    csCheck.innerHTML = '<span class="fail">✗</span> CaseStudyIcons global variable NOT accessible!';
+  }
+  testE.appendChild(csCheck);
+});
+
+log('');
+log('=== All inline tests complete ===');
+log('If Tests A-D show animations but Test E fails, the issue is file loading.');
+log('If Tests A-D also fail, the issue is with canvas rendering in your browser.');
+</script>
+
+</body>
+</html>

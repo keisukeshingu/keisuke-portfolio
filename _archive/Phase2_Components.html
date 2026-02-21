@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Component Library — Keisuke Shingu Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ——— Design Tokens (embedded) ——— */
+  :root {
+    --primitive-white:#FFFFFF;--primitive-paper:#F5F5F7;--primitive-ink-100:#1D1D1F;--primitive-ink-80:#6E6E73;--primitive-ink-60:#86868B;--primitive-ink-40:#AEAEB2;--primitive-rule-60:#D2D2D7;--primitive-rule-40:#E8E8ED;
+    --color-bg:var(--primitive-white);--color-surface:var(--primitive-paper);--color-text-primary:var(--primitive-ink-100);--color-text-secondary:var(--primitive-ink-80);--color-text-tertiary:var(--primitive-ink-60);--color-text-quaternary:var(--primitive-ink-40);--color-border:var(--primitive-rule-60);--color-border-light:var(--primitive-rule-40);--color-nav-bg:rgba(255,255,255,0.92);--color-focus:var(--primitive-ink-100);
+    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;--font-mono:'SF Mono','Fira Code','Cascadia Code',monospace;
+    --weight-thin:200;--weight-light:300;--weight-regular:400;--weight-medium:500;--weight-semibold:600;
+    --type-size-display:56px;--type-size-heading-1:32px;--type-size-heading-2:26px;--type-size-heading-3:18px;--type-size-body-lg:17px;--type-size-body:15px;--type-size-body-sm:14px;--type-size-caption:13px;--type-size-label:12px;--type-size-overline:11px;--type-size-micro:10px;
+    --leading-none:1;--leading-tight:1.08;--leading-snug:1.2;--leading-normal:1.25;--leading-relaxed:1.5;--leading-loose:1.65;--leading-body:1.7;
+    --tracking-tightest:-0.035em;--tracking-tighter:-0.03em;--tracking-tight:-0.025em;--tracking-snug:-0.02em;--tracking-normal:-0.01em;--tracking-none:0;--tracking-loose:0.02em;--tracking-widest:0.12em;
+    --space-0:0;--space-1:2px;--space-2:4px;--space-3:6px;--space-4:8px;--space-6:12px;--space-7:14px;--space-8:16px;--space-9:18px;--space-12:24px;--space-14:28px;--space-16:32px;--space-20:48px;--space-24:56px;--space-28:64px;--space-32:80px;--space-40:96px;--space-hero:192px;
+    --grid-max-width:1120px;--grid-margin:64px;--grid-margin-mobile:24px;--grid-gutter:24px;--grid-columns:12;
+    --max-width-page:1120px;--max-width-hero-heading:680px;--max-width-hero-subtitle:520px;
+    --border-section:1px solid var(--color-border-light);--border-accent:1px solid var(--color-border);--border-focus:2px solid var(--color-focus);--border-radius-sm:2px;--border-radius-md:8px;--border-radius-full:50%;--focus-offset:4px;
+    --ease-default:cubic-bezier(0.25,0.46,0.45,0.94);--ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+    --duration-fast:150ms;--duration-normal:300ms;--duration-slow:500ms;--duration-slower:800ms;
+    --blur-nav:20px;--opacity-nav:0.92;--opacity-badge:0.85;
+    --z-base:1;--z-sticky:10;--z-nav:100;--z-overlay:200;--z-modal:300;
+  }
+  .text-thin{font-weight:var(--weight-thin);color:var(--color-text-tertiary)}
+  .text-emphasis{font-style:normal;font-weight:var(--weight-medium);color:var(--color-text-primary)}
+  .type-display{font-family:var(--font-sans);font-size:var(--type-size-display);font-weight:var(--weight-semibold);line-height:var(--leading-tight);letter-spacing:var(--tracking-tightest);color:var(--color-text-primary)}
+  .type-heading-1{font-family:var(--font-sans);font-size:var(--type-size-heading-1);font-weight:var(--weight-semibold);line-height:var(--leading-snug);letter-spacing:var(--tracking-tight);color:var(--color-text-primary)}
+  .type-heading-2{font-family:var(--font-sans);font-size:var(--type-size-heading-2);font-weight:var(--weight-semibold);line-height:var(--leading-snug);letter-spacing:var(--tracking-snug);color:var(--color-text-primary)}
+  .type-heading-3{font-family:var(--font-sans);font-size:var(--type-size-heading-3);font-weight:var(--weight-semibold);line-height:var(--leading-normal);letter-spacing:var(--tracking-normal);color:var(--color-text-primary)}
+  .type-body-lg{font-family:var(--font-sans);font-size:var(--type-size-body-lg);font-weight:var(--weight-light);line-height:var(--leading-body);letter-spacing:var(--tracking-none);color:var(--color-text-secondary)}
+  .type-body{font-family:var(--font-sans);font-size:var(--type-size-body);font-weight:var(--weight-light);line-height:var(--leading-body);letter-spacing:var(--tracking-none);color:var(--color-text-secondary)}
+  .type-body-sm{font-family:var(--font-sans);font-size:var(--type-size-body-sm);font-weight:var(--weight-medium);line-height:var(--leading-relaxed);letter-spacing:var(--tracking-none);color:var(--color-text-primary)}
+  .type-caption{font-family:var(--font-sans);font-size:var(--type-size-caption);font-weight:var(--weight-light);line-height:var(--leading-loose);letter-spacing:var(--tracking-none);color:var(--color-text-secondary)}
+  .type-label{font-family:var(--font-sans);font-size:var(--type-size-label);font-weight:var(--weight-light);line-height:var(--leading-relaxed);letter-spacing:var(--tracking-none);color:var(--color-text-tertiary)}
+  .type-overline{font-family:var(--font-sans);font-size:var(--type-size-overline);font-weight:var(--weight-medium);line-height:var(--leading-none);letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--color-text-quaternary)}
+  .type-micro{font-family:var(--font-sans);font-size:var(--type-size-micro);font-weight:var(--weight-medium);line-height:1.4;letter-spacing:var(--tracking-widest);text-transform:uppercase;color:var(--color-text-quaternary)}
+  .type-stat{font-family:var(--font-sans);font-size:28px;font-weight:var(--weight-semibold);line-height:var(--leading-none);letter-spacing:var(--tracking-tighter);color:var(--color-text-primary)}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:72px}
+  body{font-family:var(--font-sans);background:var(--color-bg);color:var(--color-text-primary);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-feature-settings:'ss01' on,'cv01' on}
+  a:focus-visible{outline:var(--border-focus);outline-offset:var(--focus-offset);border-radius:var(--border-radius-sm)}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}}
+  @media(max-width:767px){:root{--type-size-display:44px;--type-size-heading-1:28px;--type-size-heading-2:22px;--type-size-heading-3:17px;--type-size-body-lg:16px;--grid-margin:24px}}
+  @media(max-width:479px){:root{--type-size-display:36px;--type-size-heading-1:24px;--type-size-heading-2:20px;--type-size-heading-3:16px;--type-size-body-lg:16px;--grid-margin:24px}}
+</style>
+<style>
+
+  /* ============================================================
+     COMPONENT LIBRARY — Layout & Documentation Styles
+     ============================================================ */
+
+  .lib-header {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-hero) var(--grid-margin) var(--space-32);
+    border-bottom: var(--border-section);
+  }
+
+  .lib-header h1 {
+    font-size: var(--type-size-display);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tightest);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-8);
+  }
+
+  .lib-header p {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    max-width: 560px;
+  }
+
+  .lib-section {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-32) var(--grid-margin);
+    border-bottom: var(--border-section);
+  }
+
+  .lib-section-title {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-4);
+  }
+
+  .lib-section-name {
+    font-size: var(--type-size-heading-1);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    margin-bottom: var(--space-12);
+  }
+
+  .lib-section-desc {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-20);
+    max-width: 560px;
+  }
+
+  .lib-component-label {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-tertiary);
+    letter-spacing: var(--tracking-loose);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: var(--border-section);
+  }
+
+  .lib-component {
+    margin-bottom: var(--space-28);
+  }
+
+  .lib-demo {
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    margin-top: var(--space-8);
+    background: var(--color-bg);
+  }
+
+  .lib-demo-dark {
+    background: var(--primitive-ink-100);
+  }
+
+  .lib-demo-padded {
+    padding: var(--space-16);
+  }
+
+  .lib-note {
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-4);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ============================================================
+     COMPONENT STYLES
+     ============================================================ */
+
+  /* ——— NAV ——— */
+  .c-nav {
+    position: relative;
+    width: 100%;
+    padding: var(--space-9) var(--grid-margin);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background: var(--color-nav-bg);
+    backdrop-filter: blur(var(--blur-nav));
+    -webkit-backdrop-filter: blur(var(--blur-nav));
+  }
+
+  .c-nav.c-nav--fixed {
+    position: fixed;
+    top: 0;
+    z-index: var(--z-nav);
+  }
+
+  .c-nav__logo {
+    font-weight: var(--weight-semibold);
+    font-size: var(--type-size-body-sm);
+    letter-spacing: var(--tracking-normal);
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  .c-nav__links {
+    display: flex;
+    gap: var(--space-16);
+    list-style: none;
+  }
+
+  .c-nav__links a {
+    text-decoration: none;
+    color: var(--color-text-tertiary);
+    font-size: var(--type-size-caption);
+    font-weight: var(--weight-regular);
+    transition: color var(--duration-normal) var(--ease-default);
+  }
+
+  .c-nav__links a:hover,
+  .c-nav__links a.is-active {
+    color: var(--color-text-primary);
+  }
+
+  /* Mobile nav toggle */
+  .c-nav__toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    position: relative;
+  }
+
+  .c-nav__toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--color-text-primary);
+    position: absolute;
+    left: 2px;
+    transition: transform var(--duration-normal) var(--ease-default);
+  }
+
+  .c-nav__toggle span:nth-child(1) { top: 6px; }
+  .c-nav__toggle span:nth-child(2) { top: 11px; }
+  .c-nav__toggle span:nth-child(3) { top: 16px; }
+
+  /* ——— HERO: HOMEPAGE ——— */
+  .c-hero {
+    padding: var(--space-hero) var(--grid-margin) var(--space-0);
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding-bottom: var(--space-32);
+    border-bottom: var(--border-section);
+  }
+
+  .c-hero__kicker {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-12);
+  }
+
+  .c-hero__title {
+    font-size: var(--type-size-display);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tightest);
+    color: var(--color-text-primary);
+    max-width: var(--max-width-hero-heading);
+    margin-bottom: var(--space-16);
+  }
+
+  .c-hero__title .text-thin {
+    font-weight: var(--weight-thin);
+    color: var(--color-text-tertiary);
+  }
+
+  .c-hero__subtitle {
+    font-size: var(--type-size-body-lg);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    max-width: var(--max-width-hero-subtitle);
+  }
+
+  .c-hero__subtitle em {
+    font-style: normal;
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  /* ——— HERO: CASE STUDY ——— */
+  .c-cs-hero {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: 120px var(--grid-margin) 0;
+  }
+
+  .c-cs-hero__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-16);
+  }
+
+  .c-cs-hero__image .ph {
+    text-align: center;
+    color: var(--color-text-quaternary);
+    font-size: var(--type-size-label);
+  }
+
+  .c-cs-hero__meta-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-6);
+    margin-bottom: var(--space-4);
+  }
+
+  .c-cs-hero__index {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-quaternary);
+    letter-spacing: var(--tracking-loose);
+  }
+
+  .c-cs-hero__tier {
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+  }
+
+  .c-cs-hero__title {
+    font-size: var(--type-size-display);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tightest);
+    margin-bottom: var(--space-4);
+  }
+
+  .c-cs-hero__brand {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-secondary);
+  }
+
+  /* ——— OVERVIEW BAR (Case Study Metadata Strip) ——— */
+  .c-overview-bar {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-12) var(--grid-margin);
+    border-top: var(--border-section);
+    border-bottom: var(--border-section);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--grid-gutter);
+  }
+
+  .c-overview-bar__item dt {
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-2);
+  }
+
+  .c-overview-bar__item dd {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-primary);
+  }
+
+  /* ——— SECTION HEADER ——— */
+  .c-section-header {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-32) var(--grid-margin) var(--space-20);
+  }
+
+  .c-section-header__overline {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-8);
+  }
+
+  .c-section-header__title {
+    font-size: var(--type-size-heading-1);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-snug);
+    margin-bottom: var(--space-6);
+  }
+
+  .c-section-header__intro {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    max-width: 640px;
+  }
+
+  /* ——— TWO-COLUMN: TEXT + IMAGE ——— */
+  .c-two-col {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-20) var(--grid-margin);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-28);
+    align-items: start;
+  }
+
+  .c-two-col--reverse {
+    direction: rtl;
+  }
+
+  .c-two-col--reverse > * {
+    direction: ltr;
+  }
+
+  .c-two-col__text h3 {
+    font-size: var(--type-size-heading-2);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-snug);
+    line-height: var(--leading-snug);
+    margin-bottom: var(--space-8);
+  }
+
+  .c-two-col__text p {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+  }
+
+  .c-two-col__image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .c-two-col__image .ph {
+    font-size: var(--type-size-label);
+    color: var(--color-text-quaternary);
+    text-align: center;
+  }
+
+  /* ——— FULL-WIDTH IMAGE + CAPTION ——— */
+  .c-full-image {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-20) var(--grid-margin);
+  }
+
+  .c-full-image__frame {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-6);
+  }
+
+  .c-full-image__frame .ph {
+    font-size: var(--type-size-label);
+    color: var(--color-text-quaternary);
+    text-align: center;
+  }
+
+  .c-full-image__caption {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ——— BEFORE / AFTER ——— */
+  .c-before-after {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-20) var(--grid-margin);
+  }
+
+  .c-before-after__label {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-8);
+  }
+
+  .c-before-after__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--grid-gutter);
+  }
+
+  .c-before-after__panel {
+    position: relative;
+  }
+
+  .c-before-after__panel-label {
+    position: absolute;
+    top: var(--space-6);
+    left: var(--space-6);
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-primary);
+    background: var(--color-bg);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--border-radius-sm);
+  }
+
+  .c-before-after__image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .c-before-after__image .ph {
+    font-size: var(--type-size-label);
+    color: var(--color-text-quaternary);
+  }
+
+  /* ——— PROCESS DIAGRAM ——— */
+  .c-process {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-20) var(--grid-margin);
+  }
+
+  .c-process__steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: var(--border-section);
+  }
+
+  .c-process__step {
+    padding: var(--space-12) var(--space-12) 0 0;
+    position: relative;
+  }
+
+  .c-process__step:not(:first-child) {
+    padding-left: var(--space-12);
+    border-left: var(--border-section);
+  }
+
+  .c-process__step::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    background: var(--color-text-primary);
+    border-radius: var(--border-radius-full);
+  }
+
+  .c-process__step:not(:first-child)::before {
+    left: var(--space-12);
+  }
+
+  .c-process__number {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-4);
+  }
+
+  .c-process__title {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .c-process__desc {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-light);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ——— QUOTE / PULLQUOTE ——— */
+  .c-quote {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-28) var(--grid-margin);
+    border-top: var(--border-section);
+    border-bottom: var(--border-section);
+  }
+
+  .c-quote__text {
+    font-size: var(--type-size-heading-2);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-snug);
+    color: var(--color-text-primary);
+    max-width: 720px;
+  }
+
+  .c-quote__text em {
+    font-style: normal;
+    font-weight: var(--weight-semibold);
+  }
+
+  .c-quote__attribution {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-8);
+  }
+
+  /* ——— METRICS ROW ——— */
+  .c-metrics {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-20) var(--grid-margin);
+  }
+
+  .c-metrics__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: var(--border-section);
+  }
+
+  .c-metrics__item {
+    padding: var(--space-12) var(--space-12) var(--space-12) 0;
+  }
+
+  .c-metrics__item:not(:first-child) {
+    padding-left: var(--space-12);
+    border-left: var(--border-section);
+  }
+
+  .c-metrics__value {
+    font-size: 28px;
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tighter);
+    color: var(--color-text-primary);
+    line-height: var(--leading-none);
+    margin-bottom: var(--space-2);
+  }
+
+  .c-metrics__value .dim {
+    font-weight: var(--weight-thin);
+    color: var(--color-text-tertiary);
+  }
+
+  .c-metrics__label {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+  }
+
+  /* ——— TAG ROW ——— */
+  .c-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-8);
+  }
+
+  .c-tags span {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+  }
+
+  .c-tags span::before {
+    content: '\00B7\2002';
+    color: var(--color-border);
+  }
+
+  .c-tags span:first-child::before {
+    content: '';
+  }
+
+  /* ——— PROJECT CARD: LARGE ——— */
+  .c-project-card-lg {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 0;
+    padding: var(--space-24) 0;
+    border-top: var(--border-section);
+    align-items: center;
+  }
+
+  .c-project-card-lg--reverse {
+    grid-template-columns: 1fr 1.15fr;
+  }
+
+  .c-project-card-lg__image {
+    background: var(--color-surface);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .c-project-card-lg__image .ph {
+    text-align: center;
+    color: var(--color-text-quaternary);
+    font-size: var(--type-size-label);
+  }
+
+  .c-project-card-lg__body {
+    padding: 0 var(--space-24);
+  }
+
+  .c-project-card-lg__meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .c-project-card-lg__index {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-quaternary);
+    letter-spacing: var(--tracking-loose);
+  }
+
+  .c-project-card-lg__tier {
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+  }
+
+  .c-project-card-lg__title {
+    font-size: var(--type-size-heading-2);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-snug);
+    line-height: var(--leading-snug);
+    margin-bottom: var(--space-3);
+  }
+
+  .c-project-card-lg__brand {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-9);
+  }
+
+  .c-project-card-lg__blurb {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-12);
+  }
+
+  /* ——— PROJECT CARD: SMALL (Grid Cell) ——— */
+  .c-project-card-sm {
+    padding: var(--space-20) var(--space-12) var(--space-20) 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 240px;
+  }
+
+  .c-project-card-sm:not(:first-child) {
+    padding-left: var(--space-12);
+    border-left: var(--border-section);
+  }
+
+  .c-project-card-sm__meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-6);
+    margin-bottom: var(--space-7);
+  }
+
+  .c-project-card-sm__index {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-quaternary);
+  }
+
+  .c-project-card-sm__tier {
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+  }
+
+  .c-project-card-sm__title {
+    font-size: var(--type-size-heading-3);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-normal);
+    margin-bottom: var(--space-4);
+    line-height: var(--leading-normal);
+  }
+
+  .c-project-card-sm__desc {
+    font-size: var(--type-size-caption);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-loose);
+    color: var(--color-text-secondary);
+  }
+
+  /* ——— TIMELINE CARD ——— */
+  .c-timeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-top: var(--border-section);
+  }
+
+  .c-timeline__item {
+    padding: var(--space-12) var(--space-12) 0 0;
+    position: relative;
+  }
+
+  .c-timeline__item::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    background: var(--color-text-primary);
+    border-radius: var(--border-radius-full);
+  }
+
+  .c-timeline__item:not(:first-child) {
+    padding-left: var(--space-12);
+    border-left: var(--border-section);
+  }
+
+  .c-timeline__item:not(:first-child)::before {
+    left: var(--space-12);
+  }
+
+  .c-timeline__year {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-quaternary);
+    letter-spacing: var(--tracking-loose);
+    margin-bottom: var(--space-6);
+  }
+
+  .c-timeline__domain {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .c-timeline__context {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-light);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .c-timeline__note {
+    font-size: var(--type-size-micro);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-4);
+    line-height: 1.4;
+  }
+
+  /* ——— STATS BAND ——— */
+  .c-stats-band {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: 0 var(--grid-margin);
+  }
+
+  .c-stats-band__inner {
+    padding: var(--space-24) 0;
+    border-top: var(--border-section);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .c-stats-band__stat {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+
+  .c-stats-band__number {
+    font-size: 28px;
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tighter);
+    color: var(--color-text-primary);
+    line-height: var(--leading-none);
+  }
+
+  .c-stats-band__number .dim {
+    font-weight: var(--weight-thin);
+    color: var(--color-text-tertiary);
+  }
+
+  .c-stats-band__meta {
+    font-size: var(--type-size-label);
+    color: var(--color-text-tertiary);
+    font-weight: var(--weight-regular);
+  }
+
+  .c-stats-band__divider {
+    width: 1px;
+    height: var(--space-12);
+    background: var(--color-border-light);
+  }
+
+  /* ——— FOOTER ——— */
+  .c-footer {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-20) var(--grid-margin) var(--space-28);
+    border-top: var(--border-section);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .c-footer__name {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-normal);
+    color: var(--color-text-primary);
+  }
+
+  .c-footer__role {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-light);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-2);
+  }
+
+  .c-footer__link {
+    font-size: var(--type-size-caption);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: var(--weight-regular);
+    border-bottom: var(--border-accent);
+    padding-bottom: var(--space-1);
+    transition: border-color var(--duration-normal) var(--ease-default);
+  }
+
+  .c-footer__link:hover {
+    border-color: var(--color-text-primary);
+  }
+
+  /* ——— BREADCRUMB / BACK NAV ——— */
+  .c-breadcrumb {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-8) var(--grid-margin);
+  }
+
+  .c-breadcrumb a {
+    font-size: var(--type-size-caption);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    transition: color var(--duration-normal) var(--ease-default);
+  }
+
+  .c-breadcrumb a:hover {
+    color: var(--color-text-primary);
+  }
+
+  /* ——— TABLE OF CONTENTS SIDEBAR ——— */
+  .c-toc {
+    position: sticky;
+    top: 88px;
+    width: 180px;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .c-toc__item {
+    margin-bottom: var(--space-4);
+  }
+
+  .c-toc__item a {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    transition: color var(--duration-normal) var(--ease-default);
+    display: block;
+    padding: var(--space-2) 0;
+  }
+
+  .c-toc__item a:hover,
+  .c-toc__item.is-active a {
+    color: var(--color-text-primary);
+  }
+
+  .c-toc__item.is-active a {
+    font-weight: var(--weight-semibold);
+  }
+
+  /* ——— PREV / NEXT NAVIGATION ——— */
+  .c-prevnext {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: 0 var(--grid-margin);
+    border-top: var(--border-section);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .c-prevnext__link {
+    padding: var(--space-16) 0;
+    text-decoration: none;
+    display: block;
+    transition: background var(--duration-normal) var(--ease-default);
+  }
+
+  .c-prevnext__link:last-child {
+    text-align: right;
+    border-left: var(--border-section);
+    padding-left: var(--space-12);
+  }
+
+  .c-prevnext__link:first-child {
+    padding-right: var(--space-12);
+  }
+
+  .c-prevnext__direction {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--space-2);
+  }
+
+  .c-prevnext__title {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    transition: color var(--duration-normal) var(--ease-default);
+  }
+
+  .c-prevnext__link:hover .c-prevnext__title {
+    color: var(--color-text-secondary);
+  }
+
+  /* ——— HERITAGE HEADER (Two-column) ——— */
+  .c-heritage-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-28);
+    align-items: start;
+    margin-bottom: var(--space-20);
+  }
+
+  .c-heritage-header__overline {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-8);
+  }
+
+  .c-heritage-header__title {
+    font-size: var(--type-size-heading-1);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-snug);
+  }
+
+  .c-heritage-header__intro {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    padding-top: var(--space-14);
+  }
+
+  /* ——— RESPONSIVE ——— */
+  @media (max-width: 767px) {
+    .c-nav__links { display: none; }
+    .c-nav__toggle { display: block; }
+    .c-hero { padding: 120px var(--grid-margin-mobile) 0; padding-bottom: var(--space-20); }
+    .c-two-col { grid-template-columns: 1fr; gap: var(--space-16); }
+    .c-two-col--reverse { direction: ltr; }
+    .c-overview-bar { grid-template-columns: repeat(2, 1fr); }
+    .c-project-card-lg { grid-template-columns: 1fr; }
+    .c-project-card-lg--reverse { grid-template-columns: 1fr; }
+    .c-timeline { grid-template-columns: repeat(2, 1fr); }
+    .c-metrics__grid { grid-template-columns: repeat(2, 1fr); }
+    .c-process__steps { grid-template-columns: repeat(2, 1fr); }
+    .c-prevnext { grid-template-columns: 1fr; }
+    .c-prevnext__link:last-child { text-align: left; border-left: none; border-top: var(--border-section); padding-left: 0; }
+    .c-heritage-header { grid-template-columns: 1fr; gap: var(--space-12); }
+    .c-stats-band__inner { flex-wrap: wrap; gap: var(--space-12); }
+    .c-before-after__grid { grid-template-columns: 1fr; }
+    .c-footer { flex-direction: column; gap: var(--space-8); }
+
+    .lib-header, .lib-section { padding-left: var(--grid-margin-mobile); padding-right: var(--grid-margin-mobile); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     LIBRARY HEADER
+     ============================================================ -->
+<div class="lib-header">
+  <h1>Component <span class="text-thin">Library</span></h1>
+  <p>Every reusable element for the Keisuke Shingu portfolio. Built from the Refined V2 canonical design. All components consume design-tokens.css.</p>
+</div>
+
+
+<!-- ============================================================
+     01. NAVIGATION
+     ============================================================ -->
+<div class="lib-section">
+  <div class="lib-section-title">01</div>
+  <div class="lib-section-name">Navigation</div>
+  <div class="lib-section-desc">Fixed top bar with frosted glass backdrop. Logo left, links right. Mobile: hamburger icon replaces links.</div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Desktop Navigation — Default</div>
+    <div class="lib-demo">
+      <nav class="c-nav">
+        <a href="#" class="c-nav__logo">Keisuke Shingu</a>
+        <ul class="c-nav__links">
+          <li><a href="#" class="is-active">Work</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Resume</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <button class="c-nav__toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+    <div class="lib-note">Position: fixed, top: 0. Background: rgba(255,255,255,0.92) + backdrop-filter: blur(20px). Height: 56px (18px padding × 2 + baseline). Z-index: 100.</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     02. HEROES
+     ============================================================ -->
+<div class="lib-section">
+  <div class="lib-section-title">02</div>
+  <div class="lib-section-name">Heroes</div>
+  <div class="lib-section-desc">Two hero variants: homepage and case study. The homepage hero is the canonical V2 design. The case study hero uses full-width imagery.</div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Homepage Hero</div>
+    <div class="lib-demo lib-demo-padded">
+      <section class="c-hero" style="padding-top: 80px; border: none;">
+        <div class="c-hero__kicker">Creative Technologist</div>
+        <h1 class="c-hero__title">Every new medium<br>deserves a new <span class="text-thin">interface.</span></h1>
+        <p class="c-hero__subtitle">For 25 years I've followed the frontier — from the page to the stage to the factory floor. Wherever <em>creative tools meet emerging technology</em>, I design the bridge.</p>
+      </section>
+    </div>
+    <div class="lib-note">Top padding: 192px (includes nav clearance). Bottom padding: 80px. Border-bottom: 1px rule-light.</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Case Study Hero</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-cs-hero" style="padding-top: 24px;">
+        <div class="c-cs-hero__image">
+          <div class="ph">Hero image — 16:9 or 4:3 aspect</div>
+        </div>
+        <div class="c-cs-hero__meta-row">
+          <span class="c-cs-hero__index">01</span>
+          <span class="c-cs-hero__tier">Lead Case Study</span>
+        </div>
+        <h2 class="c-cs-hero__title">Making Premium Audio<br>Feel as Good as It Sounds</h2>
+        <div class="c-cs-hero__brand">Denon / Marantz</div>
+      </div>
+    </div>
+    <div class="lib-note">Full-width hero image. Index + tier badge below. Display-size title. Brand name in secondary color.</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     03. CONTENT BLOCKS
+     ============================================================ -->
+<div class="lib-section">
+  <div class="lib-section-title">03</div>
+  <div class="lib-section-name">Content Blocks</div>
+  <div class="lib-section-desc">Building blocks for case study narrative sections. Each maps to a STAR-D section (Situation, Task, Action, Results, Design Thinking).</div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Section Header (Overline + Title + Intro)</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-section-header" style="padding: 0;">
+        <div class="c-section-header__overline">Situation</div>
+        <h2 class="c-section-header__title">A legacy interface in a modern world</h2>
+        <p class="c-section-header__intro">When I joined the team, the product line spanned 60+ SKUs across two heritage brands. The GUI had not been meaningfully updated since 2009 — a full decade of technical debt rendered in 8-bit graphics on embedded Linux displays.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Overview Bar (Metadata Strip)</div>
+    <div class="lib-demo">
+      <div class="c-overview-bar" style="max-width: 100%;">
+        <dl class="c-overview-bar__item">
+          <dt>Role</dt>
+          <dd>Director of UX — Visual Design</dd>
+        </dl>
+        <dl class="c-overview-bar__item">
+          <dt>Timeline</dt>
+          <dd>2017–2021 (4 years)</dd>
+        </dl>
+        <dl class="c-overview-bar__item">
+          <dt>Platform</dt>
+          <dd>Embedded Linux, iOS, Android</dd>
+        </dl>
+        <dl class="c-overview-bar__item">
+          <dt>Team</dt>
+          <dd>Globally distributed, 4 offices</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="lib-note">4-column grid. Overline (micro) for labels, body-sm for values. Borders top and bottom.</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Two-Column: Text + Image (Default)</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-two-col" style="max-width: 100%; padding: 0;">
+        <div class="c-two-col__text">
+          <h3>Unified design language</h3>
+          <p>Both brands needed to feel premium yet distinct. Denon targets modern audiophiles; Marantz serves heritage purists. The system had to flex without fracturing — shared components, differentiated personality.</p>
+        </div>
+        <div class="c-two-col__image">
+          <div class="ph">Screenshot or diagram</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Two-Column: Text + Image (Reversed)</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-two-col c-two-col--reverse" style="max-width: 100%; padding: 0;">
+        <div class="c-two-col__image">
+          <div class="ph">Screenshot or diagram</div>
+        </div>
+        <div class="c-two-col__text">
+          <h3>Typography as identity</h3>
+          <p>We partnered with Monotype to license Frutiger — a typeface that rendered beautifully on low-resolution embedded displays while maintaining the brands' premium character at every size.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Full-Width Image with Caption</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-full-image" style="max-width: 100%; padding: 0;">
+        <div class="c-full-image__frame">
+          <div class="ph">Full-width screenshot — 16:9</div>
+        </div>
+        <div class="c-full-image__caption">Fig 1. The Marantz Cinema 30 porthole display showing the redesigned home screen with AirPlay 2 integration.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Before / After Comparison</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-before-after" style="max-width: 100%; padding: 0;">
+        <div class="c-before-after__label">Visual Transformation</div>
+        <div class="c-before-after__grid">
+          <div class="c-before-after__panel">
+            <div class="c-before-after__panel-label">Before</div>
+            <div class="c-before-after__image"><div class="ph">2016 GUI</div></div>
+          </div>
+          <div class="c-before-after__panel">
+            <div class="c-before-after__panel-label">After</div>
+            <div class="c-before-after__image"><div class="ph">2021 GUI</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="lib-note">Side-by-side layout. Before/After labels positioned absolutely over images. 4:3 aspect ratio.</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Process Diagram (Horizontal Steps)</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-process" style="max-width: 100%; padding: 0;">
+        <div class="c-process__steps">
+          <div class="c-process__step">
+            <div class="c-process__number">01</div>
+            <div class="c-process__title">Audit</div>
+            <div class="c-process__desc">Cataloged 60+ SKUs and mapped every screen state across both brand lines.</div>
+          </div>
+          <div class="c-process__step">
+            <div class="c-process__number">02</div>
+            <div class="c-process__title">Unify</div>
+            <div class="c-process__desc">Created shared component library with brand-specific theming tokens.</div>
+          </div>
+          <div class="c-process__step">
+            <div class="c-process__number">03</div>
+            <div class="c-process__title">Validate</div>
+            <div class="c-process__desc">Tested on embedded hardware. Iterated with engineering in Japan and Germany.</div>
+          </div>
+          <div class="c-process__step">
+            <div class="c-process__number">04</div>
+            <div class="c-process__title">Ship</div>
+            <div class="c-process__desc">Rolled out across full product line. Achieved Apple Works with AirPlay certification.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="lib-note">Mirrors timeline component pattern: dot markers, column dividers. 4-column layout (adjustable).</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Quote / Pullquote</div>
+    <div class="lib-demo">
+      <div class="c-quote">
+        <p class="c-quote__text">"Two heritage audio brands, 60+ products, four global offices — and an interface stuck in the 8-bit era. I led the UX transformation that <em>unified the entire ecosystem.</em>"</p>
+        <div class="c-quote__attribution">— Keisuke Shingu, Director of UX</div>
+      </div>
+    </div>
+    <div class="lib-note">heading-2 size at light weight for the quote. Optional attribution below. Border top + bottom.</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Metrics Row (Results)</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-metrics" style="max-width: 100%; padding: 0;">
+        <div class="c-metrics__grid">
+          <div class="c-metrics__item">
+            <div class="c-metrics__value">5<span class="dim">→</span>1</div>
+            <div class="c-metrics__label">Market position</div>
+          </div>
+          <div class="c-metrics__item">
+            <div class="c-metrics__value">3.5<span class="dim">→</span>4.5<span class="dim">★</span></div>
+            <div class="c-metrics__label">Product reviews</div>
+          </div>
+          <div class="c-metrics__item">
+            <div class="c-metrics__value">35<span class="dim">%</span></div>
+            <div class="c-metrics__label">Support call reduction</div>
+          </div>
+          <div class="c-metrics__item">
+            <div class="c-metrics__value">50<span class="dim">+</span></div>
+            <div class="c-metrics__label">Apple-certified products</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="lib-note">4-column grid with column dividers. Stat values at 28px semibold. Dim spans for symbols (thin weight, tertiary color).</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Tag Row (Minimal Dot-Separated)</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-tags">
+        <span>AirPlay 2</span>
+        <span>HomeKit</span>
+        <span>Embedded Linux</span>
+        <span>Qt/QML</span>
+        <span>Design System</span>
+        <span>Monotype</span>
+      </div>
+    </div>
+    <div class="lib-note">Dot separator via ::before pseudo-element (except first child). Overline size, tertiary color.</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     04. CARDS
+     ============================================================ -->
+<div class="lib-section">
+  <div class="lib-section-title">04</div>
+  <div class="lib-section-name">Cards</div>
+  <div class="lib-section-desc">Project cards for the homepage work section. Large cards for featured projects, small cards for the 3-column grid.</div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Project Card — Large (Image Left)</div>
+    <div class="lib-demo">
+      <div style="max-width: 960px; margin: 0 auto; padding: 0 32px;">
+        <article class="c-project-card-lg">
+          <div class="c-project-card-lg__image">
+            <div class="ph">Project hero image — 4:3</div>
+          </div>
+          <div class="c-project-card-lg__body">
+            <div class="c-project-card-lg__meta">
+              <span class="c-project-card-lg__index">01</span>
+              <span class="c-project-card-lg__tier">Lead Case Study</span>
+            </div>
+            <h3 class="c-project-card-lg__title">Making Premium Audio<br>Feel as Good as It Sounds</h3>
+            <div class="c-project-card-lg__brand">Denon / Marantz</div>
+            <p class="c-project-card-lg__blurb">Two heritage audio brands, 60+ products, four global offices — and an interface stuck in the 8-bit era. I led the UX transformation.</p>
+            <div class="c-tags">
+              <span>AirPlay 2</span>
+              <span>HomeKit</span>
+              <span>Embedded Linux</span>
+              <span>Qt/QML</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Project Card — Large (Image Right, Reversed)</div>
+    <div class="lib-demo">
+      <div style="max-width: 960px; margin: 0 auto; padding: 0 32px;">
+        <article class="c-project-card-lg c-project-card-lg--reverse">
+          <div class="c-project-card-lg__body">
+            <div class="c-project-card-lg__meta">
+              <span class="c-project-card-lg__index">02</span>
+              <span class="c-project-card-lg__tier">Full Depth</span>
+            </div>
+            <h3 class="c-project-card-lg__title">Teaching Machines<br>to Earn Human Trust</h3>
+            <div class="c-project-card-lg__brand">Fabrion</div>
+            <p class="c-project-card-lg__blurb">A clean-sheet enterprise platform where AI agents and factory teams collaborate in real time.</p>
+            <div class="c-tags">
+              <span>Multi-Agent AI</span>
+              <span>Design System</span>
+              <span>Trust Calibration</span>
+              <span>0→1</span>
+            </div>
+          </div>
+          <div class="c-project-card-lg__image">
+            <div class="ph">Project hero image — 4:3</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Project Card — Small (3-Column Grid)</div>
+    <div class="lib-demo">
+      <div style="max-width: 960px; margin: 0 auto; padding: 0 32px;">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: var(--border-section);">
+          <article class="c-project-card-sm">
+            <div class="c-project-card-sm__meta">
+              <span class="c-project-card-sm__index">04</span>
+              <span class="c-project-card-sm__tier">Supporting</span>
+            </div>
+            <h4 class="c-project-card-sm__title">Making the Invisible Visible</h4>
+            <p class="c-project-card-sm__desc">TDK SensEI — Three merged enterprises, one unified sensor intelligence platform.</p>
+          </article>
+          <article class="c-project-card-sm">
+            <div class="c-project-card-sm__meta">
+              <span class="c-project-card-sm__index">05</span>
+              <span class="c-project-card-sm__tier">Brief Showcase</span>
+            </div>
+            <h4 class="c-project-card-sm__title">Brand as Spatial Experience</h4>
+            <p class="c-project-card-sm__desc">Ogilvy / Audi — Immersive event experiences and festival stages.</p>
+          </article>
+          <article class="c-project-card-sm">
+            <div class="c-project-card-sm__meta">
+              <span class="c-project-card-sm__index">06</span>
+              <span class="c-project-card-sm__tier">Brief Showcase</span>
+            </div>
+            <h4 class="c-project-card-sm__title">Instruments Without Boundaries</h4>
+            <p class="c-project-card-sm__desc">Miselu C.24 — A piano keyboard for the iPad generation. USPTO patent holder.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Timeline Card (Heritage)</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-timeline">
+        <div class="c-timeline__item">
+          <div class="c-timeline__year">1999–2007</div>
+          <div class="c-timeline__domain">The Printed Word</div>
+          <div class="c-timeline__context">QuarkXPress</div>
+          <div class="c-timeline__note">Macworld Best of Show<br>95% of global publishing</div>
+        </div>
+        <div class="c-timeline__item">
+          <div class="c-timeline__year">2007–2012</div>
+          <div class="c-timeline__domain">Sound & Signal</div>
+          <div class="c-timeline__context">Traktor · Miselu C.24</div>
+          <div class="c-timeline__note">USPTO Patent · Google I/O</div>
+        </div>
+        <div class="c-timeline__item">
+          <div class="c-timeline__year">2012–2016</div>
+          <div class="c-timeline__domain">The Live Stage</div>
+          <div class="c-timeline__context">Beatport · Festivals</div>
+          <div class="c-timeline__note">EDC · Ultra · Burning Man</div>
+        </div>
+        <div class="c-timeline__item">
+          <div class="c-timeline__year">2017–2021</div>
+          <div class="c-timeline__domain">Enterprise Hardware</div>
+          <div class="c-timeline__context">Denon / Marantz</div>
+          <div class="c-timeline__note">60+ SKUs redesigned</div>
+        </div>
+        <div class="c-timeline__item">
+          <div class="c-timeline__year">2023–Now</div>
+          <div class="c-timeline__domain">Intelligent Industry</div>
+          <div class="c-timeline__context">Fabrion · TDK</div>
+          <div class="c-timeline__note">AI-native enterprise</div>
+        </div>
+      </div>
+    </div>
+    <div class="lib-note">5-column grid. Dot markers on top border. Column dividers between items. Same pattern reused for process diagrams.</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     05. PAGE FURNITURE
+     ============================================================ -->
+<div class="lib-section">
+  <div class="lib-section-title">05</div>
+  <div class="lib-section-name">Page Furniture</div>
+  <div class="lib-section-desc">Structural elements that appear on every page or page type: stats band, footer, breadcrumbs, table of contents, and case study navigation.</div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Stats Band</div>
+    <div class="lib-demo">
+      <div class="c-stats-band" style="max-width: 100%;">
+        <div class="c-stats-band__inner">
+          <div class="c-stats-band__stat">
+            <span class="c-stats-band__number">50<span class="dim">+</span></span>
+            <span class="c-stats-band__meta">Apple-certified products</span>
+          </div>
+          <div class="c-stats-band__divider"></div>
+          <div class="c-stats-band__stat">
+            <span class="c-stats-band__number">200<span class="dim">+</span></span>
+            <span class="c-stats-band__meta">SKUs unified</span>
+          </div>
+          <div class="c-stats-band__divider"></div>
+          <div class="c-stats-band__stat">
+            <span class="c-stats-band__number">5<span class="dim">→</span>1</span>
+            <span class="c-stats-band__meta">Market position</span>
+          </div>
+          <div class="c-stats-band__divider"></div>
+          <div class="c-stats-band__stat">
+            <span class="c-stats-band__number">1</span>
+            <span class="c-stats-band__meta">USPTO patent</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="lib-note">Flex row with space-between. Vertical hairline dividers between stats. Padding: 56px top/bottom.</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Footer</div>
+    <div class="lib-demo">
+      <footer class="c-footer" style="max-width: 100%;">
+        <div>
+          <div class="c-footer__name">Keisuke Shingu</div>
+          <div class="c-footer__role">Creative Technologist — Hardware × Software × AI</div>
+        </div>
+        <div>
+          <a href="mailto:keisuke@gmail.com" class="c-footer__link">keisuke@gmail.com</a>
+        </div>
+      </footer>
+    </div>
+    <div class="lib-note">Flex row, space-between. Name (semibold) + role (light, tertiary). Contact link with border-bottom underline.</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Breadcrumb / Back Navigation</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-breadcrumb" style="padding: 0;">
+        <a href="#">← All Work</a>
+      </div>
+    </div>
+    <div class="lib-note">Positioned below nav on case study pages. Caption size, tertiary color. Hover transitions to primary.</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Table of Contents Sidebar</div>
+    <div class="lib-demo lib-demo-padded">
+      <ul class="c-toc" style="position: static;">
+        <li class="c-toc__item"><a href="#">Overview</a></li>
+        <li class="c-toc__item is-active"><a href="#">Situation</a></li>
+        <li class="c-toc__item"><a href="#">Task</a></li>
+        <li class="c-toc__item"><a href="#">Action</a></li>
+        <li class="c-toc__item"><a href="#">Results</a></li>
+        <li class="c-toc__item"><a href="#">Reflection</a></li>
+      </ul>
+    </div>
+    <div class="lib-note">Sticky sidebar, visible at ≥1120px. Active state: semibold + primary color. Top offset: 88px (nav height + padding).</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Prev / Next Navigation</div>
+    <div class="lib-demo">
+      <div class="c-prevnext" style="max-width: 100%;">
+        <a href="#" class="c-prevnext__link">
+          <div class="c-prevnext__direction">← Previous</div>
+          <div class="c-prevnext__title">Making Premium Audio Feel as Good as It Sounds</div>
+        </a>
+        <a href="#" class="c-prevnext__link">
+          <div class="c-prevnext__direction">Next →</div>
+          <div class="c-prevnext__title">Turning Motion into Currency</div>
+        </a>
+      </div>
+    </div>
+    <div class="lib-note">Full-width bar at bottom of case study pages. 2-column grid. Direction label (tertiary) + project title (primary, semibold).</div>
+  </div>
+
+  <div class="lib-component">
+    <div class="lib-component-label">Heritage Header (Two-Column)</div>
+    <div class="lib-demo lib-demo-padded">
+      <div class="c-heritage-header">
+        <div>
+          <div class="c-heritage-header__overline">A Life at the Frontier</div>
+          <h2 class="c-heritage-header__title">Each era brought<br>a new canvas.<br><span class="text-thin">I designed the tools.</span></h2>
+        </div>
+        <div>
+          <p class="c-heritage-header__intro">I was part of the core group who built the creative software that defined the Mac. Desktop publishing gave way to music production, music to immersive experience, and experience to the intelligent enterprise.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lib-note">2-column grid, 1:1. Left: overline + heading. Right: intro paragraph with top padding for baseline alignment.</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     06. TYPE SPECIMENS
+     ============================================================ -->
+<div class="lib-section">
+  <div class="lib-section-title">06</div>
+  <div class="lib-section-name">Type Specimens</div>
+  <div class="lib-section-desc">Every type preset rendered at actual scale. Inter with OpenType features 'ss01' (alternate digits) and 'cv01' (single-story a).</div>
+
+  <div class="lib-component">
+    <div class="lib-demo lib-demo-padded" style="display: flex; flex-direction: column; gap: 32px;">
+      <div>
+        <div class="lib-component-label" style="border: none; margin-bottom: 8px;">Display — 56/1.08 · Semibold · -0.035em</div>
+        <div class="type-display">Every new medium deserves a new interface.</div>
+      </div>
+      <div>
+        <div class="lib-component-label" style="border: none; margin-bottom: 8px;">Heading 1 — 32/1.2 · Semibold · -0.025em</div>
+        <div class="type-heading-1">Each era brought a new canvas.</div>
+      </div>
+      <div>
+        <div class="lib-component-label" style="border: none; margin-bottom: 8px;">Heading 2 — 26/1.2 · Semibold · -0.02em</div>
+        <div class="type-heading-2">Making Premium Audio Feel as Good as It Sounds</div>
+      </div>
+      <div>
+        <div class="lib-component-label" style="border: none; margin-bottom: 8px;">Heading 3 — 18/1.25 · Semibold · -0.01em</div>
+        <div class="type-heading-3">Brand as Spatial Experience</div>
+      </div>
+      <div>
+        <div class="lib-component-label" style="border: none; margin-bottom: 8px;">Body Large — 17/1.7 · Light</div>
+        <div class="type-body-lg">For 25 years I've followed the frontier — from the page to the stage to the factory floor.</div>
+      </div>
+      <div>
+        <div class="lib-component-label" style="border: none; margin-bottom: 8px;">Body — 15/1.7 · Light</div>
+        <div class="type-body">Two heritage audio brands, 60+ products, four global offices — and an interface stuck in the 8-bit era. I led the UX transformation that unified the entire ecosystem.</div>
+      </div>
+      <div>
+        <div class="lib-component-label" style="border: none; margin-bottom: 8px;">Caption — 13/1.65 · Light</div>
+        <div class="type-caption">TDK SensEI — Three merged enterprises, one unified sensor intelligence platform.</div>
+      </div>
+      <div>
+        <div class="lib-component-label" style="border: none; margin-bottom: 8px;">Label — 12/1.5 · Light</div>
+        <div class="type-label">Creative Technologist — Hardware × Software × AI</div>
+      </div>
+      <div>
+        <div class="lib-component-label" style="border: none; margin-bottom: 8px;">Overline — 11/1.0 · Medium · 0.12em · Uppercase</div>
+        <div class="type-overline">Selected Work</div>
+      </div>
+      <div>
+        <div class="lib-component-label" style="border: none; margin-bottom: 8px;">Micro — 10/1.4 · Medium · 0.12em · Uppercase</div>
+        <div class="type-micro">Lead Case Study</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     07. COLOR SWATCHES
+     ============================================================ -->
+<div class="lib-section">
+  <div class="lib-section-title">07</div>
+  <div class="lib-section-name">Color Palette</div>
+  <div class="lib-section-desc">Semantic color tokens derived from the Apple ink/rule family. Light mode only — dark mode tokens defined but commented out.</div>
+
+  <div class="lib-component">
+    <div class="lib-demo lib-demo-padded">
+      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">
+        <div>
+          <div style="width: 100%; aspect-ratio: 1; background: var(--color-text-primary); border-radius: 4px; margin-bottom: 8px;"></div>
+          <div class="type-micro" style="color: var(--color-text-secondary);">Text Primary</div>
+          <div class="type-micro" style="color: var(--color-text-tertiary);">#1D1D1F</div>
+        </div>
+        <div>
+          <div style="width: 100%; aspect-ratio: 1; background: var(--color-text-secondary); border-radius: 4px; margin-bottom: 8px;"></div>
+          <div class="type-micro" style="color: var(--color-text-secondary);">Text Secondary</div>
+          <div class="type-micro" style="color: var(--color-text-tertiary);">#6E6E73</div>
+        </div>
+        <div>
+          <div style="width: 100%; aspect-ratio: 1; background: var(--color-text-tertiary); border-radius: 4px; margin-bottom: 8px;"></div>
+          <div class="type-micro" style="color: var(--color-text-secondary);">Text Tertiary</div>
+          <div class="type-micro" style="color: var(--color-text-tertiary);">#86868B</div>
+        </div>
+        <div>
+          <div style="width: 100%; aspect-ratio: 1; background: var(--color-text-quaternary); border-radius: 4px; margin-bottom: 8px;"></div>
+          <div class="type-micro" style="color: var(--color-text-secondary);">Text Quaternary</div>
+          <div class="type-micro" style="color: var(--color-text-tertiary);">#AEAEB2</div>
+        </div>
+        <div>
+          <div style="width: 100%; aspect-ratio: 1; background: var(--color-surface); border: 1px solid var(--color-border-light); border-radius: 4px; margin-bottom: 8px;"></div>
+          <div class="type-micro" style="color: var(--color-text-secondary);">Surface</div>
+          <div class="type-micro" style="color: var(--color-text-tertiary);">#F5F5F7</div>
+        </div>
+        <div>
+          <div style="width: 100%; aspect-ratio: 1; background: var(--color-border); border-radius: 4px; margin-bottom: 8px;"></div>
+          <div class="type-micro" style="color: var(--color-text-secondary);">Border</div>
+          <div class="type-micro" style="color: var(--color-text-tertiary);">#D2D2D7</div>
+        </div>
+        <div>
+          <div style="width: 100%; aspect-ratio: 1; background: var(--color-border-light); border-radius: 4px; margin-bottom: 8px;"></div>
+          <div class="type-micro" style="color: var(--color-text-secondary);">Border Light</div>
+          <div class="type-micro" style="color: var(--color-text-tertiary);">#E8E8ED</div>
+        </div>
+        <div>
+          <div style="width: 100%; aspect-ratio: 1; background: var(--color-bg); border: 1px solid var(--color-border-light); border-radius: 4px; margin-bottom: 8px;"></div>
+          <div class="type-micro" style="color: var(--color-text-secondary);">Background</div>
+          <div class="type-micro" style="color: var(--color-text-tertiary);">#FFFFFF</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     08. SPACING
+     ============================================================ -->
+<div class="lib-section" style="border-bottom: none;">
+  <div class="lib-section-title">08</div>
+  <div class="lib-section-name">Spacing Scale</div>
+  <div class="lib-section-desc">8px base unit system. Visual representation of all spacing tokens used across components.</div>
+
+  <div class="lib-component">
+    <div class="lib-demo lib-demo-padded">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-1 · 2px</div>
+          <div style="height: 8px; width: 2px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-2 · 4px</div>
+          <div style="height: 8px; width: 4px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-4 · 8px</div>
+          <div style="height: 8px; width: 8px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-6 · 12px</div>
+          <div style="height: 8px; width: 12px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-8 · 16px</div>
+          <div style="height: 8px; width: 16px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-12 · 24px</div>
+          <div style="height: 8px; width: 24px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-16 · 32px</div>
+          <div style="height: 8px; width: 32px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-20 · 48px</div>
+          <div style="height: 8px; width: 48px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-24 · 56px</div>
+          <div style="height: 8px; width: 56px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-28 · 64px</div>
+          <div style="height: 8px; width: 64px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-32 · 80px</div>
+          <div style="height: 8px; width: 80px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="type-micro" style="width: 80px; text-align: right; color: var(--color-text-tertiary);">space-40 · 96px</div>
+          <div style="height: 8px; width: 96px; background: var(--color-text-primary); border-radius: 1px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

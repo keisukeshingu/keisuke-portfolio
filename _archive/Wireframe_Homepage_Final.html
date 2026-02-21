@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keisuke Shingu — Creative Technologist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ——— Design Tokens (embedded) ——— */
+  :root {
+    --primitive-white:#FFFFFF;--primitive-paper:#F5F5F7;--primitive-ink-100:#1D1D1F;--primitive-ink-80:#6E6E73;--primitive-ink-60:#86868B;--primitive-ink-40:#AEAEB2;--primitive-rule-60:#D2D2D7;--primitive-rule-40:#E8E8ED;
+    --color-bg:var(--primitive-white);--color-surface:var(--primitive-paper);--color-text-primary:var(--primitive-ink-100);--color-text-secondary:var(--primitive-ink-80);--color-text-tertiary:var(--primitive-ink-60);--color-text-quaternary:var(--primitive-ink-40);--color-border:var(--primitive-rule-60);--color-border-light:var(--primitive-rule-40);--color-nav-bg:rgba(255,255,255,0.92);--color-focus:var(--primitive-ink-100);
+    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;--font-mono:'SF Mono','Fira Code','Cascadia Code',monospace;
+    --weight-thin:200;--weight-light:300;--weight-regular:400;--weight-medium:500;--weight-semibold:600;
+    --type-size-display:56px;--type-size-heading-1:32px;--type-size-heading-2:26px;--type-size-heading-3:18px;--type-size-body-lg:17px;--type-size-body:15px;--type-size-body-sm:14px;--type-size-caption:13px;--type-size-label:12px;--type-size-overline:11px;--type-size-micro:10px;
+    --leading-none:1;--leading-tight:1.08;--leading-snug:1.2;--leading-normal:1.25;--leading-relaxed:1.5;--leading-loose:1.65;--leading-body:1.7;
+    --tracking-tightest:-0.035em;--tracking-tighter:-0.03em;--tracking-tight:-0.025em;--tracking-snug:-0.02em;--tracking-normal:-0.01em;--tracking-none:0;--tracking-loose:0.02em;--tracking-widest:0.12em;
+    --space-0:0;--space-1:2px;--space-2:4px;--space-3:6px;--space-4:8px;--space-6:12px;--space-7:14px;--space-8:16px;--space-9:18px;--space-12:24px;--space-14:28px;--space-16:32px;--space-20:48px;--space-24:56px;--space-28:64px;--space-32:80px;--space-40:96px;--space-hero:192px;
+    --grid-max-width:1120px;--grid-margin:64px;--grid-margin-mobile:24px;--grid-gutter:24px;--grid-columns:12;
+    --max-width-page:1120px;--max-width-hero-heading:680px;--max-width-hero-subtitle:520px;
+    --border-section:1px solid var(--color-border-light);--border-accent:1px solid var(--color-border);--border-focus:2px solid var(--color-focus);--border-radius-sm:2px;--border-radius-md:8px;--border-radius-full:50%;--focus-offset:4px;
+    --ease-default:cubic-bezier(0.25,0.46,0.45,0.94);--ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+    --duration-fast:150ms;--duration-normal:300ms;--duration-slow:500ms;--duration-slower:800ms;
+    --blur-nav:20px;--opacity-nav:0.92;--opacity-badge:0.85;
+    --z-base:1;--z-sticky:10;--z-nav:100;--z-overlay:200;--z-modal:300;
+  }
+  .text-thin{font-weight:var(--weight-thin);color:var(--color-text-tertiary)}
+  .text-emphasis{font-style:normal;font-weight:var(--weight-medium);color:var(--color-text-primary)}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:72px}
+  body{font-family:var(--font-sans);background:var(--color-bg);color:var(--color-text-primary);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-feature-settings:'ss01' on,'cv01' on}
+  a:focus-visible{outline:var(--border-focus);outline-offset:var(--focus-offset);border-radius:var(--border-radius-sm)}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}}
+  @media(max-width:767px){:root{--type-size-display:44px;--type-size-heading-1:28px;--type-size-heading-2:22px;--type-size-heading-3:17px;--type-size-body-lg:16px;--grid-margin:24px}}
+  @media(max-width:479px){:root{--type-size-display:36px;--type-size-heading-1:24px;--type-size-heading-2:20px;--type-size-heading-3:16px;--type-size-body-lg:16px;--grid-margin:24px}}
+</style>
+<style>
+
+  /* ============================================================
+     HOMEPAGE — Final Wireframe (V2 + IA Refinements)
+     Imports design-tokens.css for all variables.
+     Semantic HTML, ARIA landmarks, responsive, WCAG AA.
+     ============================================================ */
+
+  /* ——— Nav ——— */
+  .c-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: var(--space-9) var(--grid-margin);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background: var(--color-nav-bg);
+    backdrop-filter: blur(var(--blur-nav));
+    -webkit-backdrop-filter: blur(var(--blur-nav));
+    z-index: var(--z-nav);
+  }
+
+  .c-nav__logo {
+    font-weight: var(--weight-semibold);
+    font-size: var(--type-size-body-sm);
+    letter-spacing: var(--tracking-normal);
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  .c-nav__links {
+    display: flex;
+    gap: var(--space-16);
+    list-style: none;
+  }
+
+  .c-nav__links a {
+    text-decoration: none;
+    color: var(--color-text-tertiary);
+    font-size: var(--type-size-caption);
+    font-weight: var(--weight-regular);
+    transition: color var(--duration-normal) var(--ease-default);
+  }
+
+  .c-nav__links a:hover,
+  .c-nav__links a.is-active { color: var(--color-text-primary); }
+
+  .c-nav__toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    position: relative;
+  }
+
+  .c-nav__toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--color-text-primary);
+    position: absolute;
+    left: 2px;
+    transition: transform var(--duration-normal) var(--ease-default);
+  }
+
+  .c-nav__toggle span:nth-child(1) { top: 6px; }
+  .c-nav__toggle span:nth-child(2) { top: 11px; }
+  .c-nav__toggle span:nth-child(3) { top: 16px; }
+
+  /* ——— Hero ——— */
+  .hero {
+    padding: var(--space-hero) var(--grid-margin) 0;
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding-bottom: var(--space-32);
+    border-bottom: var(--border-section);
+  }
+
+  .hero__kicker {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-12);
+  }
+
+  .hero__title {
+    font-size: var(--type-size-display);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tightest);
+    color: var(--color-text-primary);
+    max-width: var(--max-width-hero-heading);
+    margin-bottom: var(--space-16);
+  }
+
+  .hero__title .text-thin {
+    font-weight: var(--weight-thin);
+    color: var(--color-text-tertiary);
+  }
+
+  .hero__subtitle {
+    font-size: var(--type-size-body-lg);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    max-width: var(--max-width-hero-subtitle);
+  }
+
+  .hero__subtitle em {
+    font-style: normal;
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  /* ——— Heritage ——— */
+  .heritage {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-32) var(--grid-margin);
+    border-bottom: var(--border-section);
+  }
+
+  .heritage__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-28);
+    align-items: start;
+    margin-bottom: var(--space-20);
+  }
+
+  .heritage__overline {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: var(--space-8);
+  }
+
+  .heritage__title {
+    font-size: var(--type-size-heading-1);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-snug);
+  }
+
+  .heritage__title .text-thin {
+    font-weight: var(--weight-thin);
+    color: var(--color-text-tertiary);
+  }
+
+  .heritage__intro {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    padding-top: var(--space-14);
+  }
+
+  /* Timeline */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-top: var(--border-section);
+  }
+
+  .tl-item {
+    padding: var(--space-12) var(--space-12) 0 0;
+    position: relative;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    background: var(--color-text-primary);
+    border-radius: var(--border-radius-full);
+  }
+
+  .tl-item:not(:first-child) {
+    padding-left: var(--space-12);
+    border-left: var(--border-section);
+  }
+
+  .tl-item:not(:first-child)::before {
+    left: var(--space-12);
+  }
+
+  .tl-year {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-quaternary);
+    letter-spacing: var(--tracking-loose);
+    margin-bottom: var(--space-6);
+  }
+
+  .tl-domain {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .tl-context {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-light);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .tl-note {
+    font-size: var(--type-size-micro);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-4);
+    line-height: 1.4;
+  }
+
+  /* ——— Projects ——— */
+  .projects {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-32) var(--grid-margin) 0;
+  }
+
+  .projects__overline {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+    margin-bottom: 0;
+  }
+
+  /* Project row (large card) */
+  .project-row {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 0;
+    padding: var(--space-24) 0;
+    border-top: var(--border-section);
+    align-items: center;
+  }
+
+  .project-row:first-of-type {
+    margin-top: var(--space-20);
+  }
+
+  .project-row--reverse {
+    grid-template-columns: 1fr 1.15fr;
+  }
+
+  .project-row__image {
+    background: var(--color-surface);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .project-row__image .ph {
+    text-align: center;
+    padding: var(--space-16);
+    color: var(--color-text-quaternary);
+    font-size: var(--type-size-label);
+    line-height: var(--leading-relaxed);
+  }
+
+  .project-row__body {
+    padding: 0 var(--space-24);
+  }
+
+  .project-row__meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .project-row__index {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-quaternary);
+    letter-spacing: var(--tracking-loose);
+  }
+
+  .project-row__tier {
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+  }
+
+  .project-row__title {
+    font-size: var(--type-size-heading-2);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-snug);
+    line-height: var(--leading-snug);
+    margin-bottom: var(--space-3);
+  }
+
+  .project-row__title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-normal) var(--ease-default);
+  }
+
+  .project-row__title a:hover {
+    color: var(--color-text-secondary);
+  }
+
+  .project-row__brand {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-9);
+  }
+
+  .project-row__blurb {
+    font-size: var(--type-size-body);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-12);
+  }
+
+  /* Tags */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-8);
+  }
+
+  .tags span {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-tertiary);
+  }
+
+  .tags span::before {
+    content: '\00B7\2002';
+    color: var(--color-border);
+  }
+
+  .tags span:first-child::before { content: ''; }
+
+  /* Grid row (small cards) */
+  .grid-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: var(--border-section);
+  }
+
+  .grid-cell {
+    padding: var(--space-20) var(--space-12) var(--space-20) 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 240px;
+  }
+
+  .grid-cell:not(:last-child) {
+    border-right: var(--border-section);
+  }
+
+  .grid-cell:not(:first-child) {
+    padding-left: var(--space-12);
+  }
+
+  .grid-cell__meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-6);
+    margin-bottom: var(--space-7);
+  }
+
+  .grid-cell__index {
+    font-size: var(--type-size-overline);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-quaternary);
+  }
+
+  .grid-cell__tier {
+    font-size: var(--type-size-micro);
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-quaternary);
+  }
+
+  .grid-cell__title {
+    font-size: var(--type-size-heading-3);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-normal);
+    margin-bottom: var(--space-4);
+    line-height: var(--leading-normal);
+  }
+
+  .grid-cell__title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-normal) var(--ease-default);
+  }
+
+  .grid-cell__title a:hover {
+    color: var(--color-text-secondary);
+  }
+
+  .grid-cell__desc {
+    font-size: var(--type-size-caption);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-loose);
+    color: var(--color-text-secondary);
+  }
+
+  /* ——— Stats Band ——— */
+  .stats-band {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: 0 var(--grid-margin);
+  }
+
+  .stats-band__inner {
+    padding: var(--space-24) 0;
+    border-top: var(--border-section);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .stat-inline {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+
+  .stat-number {
+    font-size: 28px;
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tighter);
+    color: var(--color-text-primary);
+    line-height: var(--leading-none);
+  }
+
+  .stat-number .dim {
+    font-weight: var(--weight-thin);
+    color: var(--color-text-tertiary);
+  }
+
+  .stat-meta {
+    font-size: var(--type-size-label);
+    color: var(--color-text-tertiary);
+    font-weight: var(--weight-regular);
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: var(--space-12);
+    background: var(--color-border-light);
+  }
+
+  /* ——— Footer ——— */
+  .site-footer {
+    max-width: var(--max-width-page);
+    margin: 0 auto;
+    padding: var(--space-20) var(--grid-margin) var(--space-28);
+    border-top: var(--border-section);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .site-footer__name {
+    font-size: var(--type-size-body-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-normal);
+  }
+
+  .site-footer__role {
+    font-size: var(--type-size-label);
+    font-weight: var(--weight-light);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-2);
+  }
+
+  .site-footer__link {
+    font-size: var(--type-size-caption);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: var(--weight-regular);
+    border-bottom: var(--border-accent);
+    padding-bottom: var(--space-1);
+    transition: border-color var(--duration-normal) var(--ease-default);
+  }
+
+  .site-footer__link:hover {
+    border-color: var(--color-text-primary);
+  }
+
+  /* ——— Responsive ——— */
+  @media (max-width: 767px) {
+    .c-nav { padding: var(--space-6) var(--grid-margin-mobile); }
+    .c-nav__links { display: none; }
+    .c-nav__toggle { display: block; }
+
+    .hero { padding: 120px var(--grid-margin-mobile) 0; padding-bottom: var(--space-20); }
+    .heritage { padding: var(--space-20) var(--grid-margin-mobile); }
+    .heritage__header { grid-template-columns: 1fr; gap: var(--space-8); }
+    .timeline { grid-template-columns: repeat(2, 1fr); }
+    .tl-item:nth-child(3) { border-left: none; padding-left: 0; }
+    .tl-item:nth-child(3)::before { left: 0; }
+
+    .projects { padding: var(--space-20) var(--grid-margin-mobile) 0; }
+    .project-row { grid-template-columns: 1fr; gap: var(--space-8); }
+    .project-row--reverse { grid-template-columns: 1fr; }
+    .project-row__body { padding: var(--space-8) 0 0; }
+    .grid-row { grid-template-columns: 1fr; }
+    .grid-cell { min-height: auto; border-right: none !important; padding-left: 0 !important; border-bottom: var(--border-section); }
+
+    .stats-band { padding: 0 var(--grid-margin-mobile); }
+    .stats-band__inner { flex-wrap: wrap; gap: var(--space-8); justify-content: flex-start; }
+    .stat-divider { display: none; }
+
+    .site-footer { flex-direction: column; gap: var(--space-4); padding-left: var(--grid-margin-mobile); padding-right: var(--grid-margin-mobile); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ——— NAVIGATION ——— -->
+<nav class="c-nav" role="navigation" aria-label="Main navigation">
+  <a href="/" class="c-nav__logo">Keisuke Shingu</a>
+  <ul class="c-nav__links">
+    <li><a href="/work" class="is-active">Work</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/resume">Resume</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+  <button class="c-nav__toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" aria-label="Introduction">
+  <div class="hero__kicker">Creative Technologist</div>
+  <h1 class="hero__title">Every new medium<br>deserves a new <span class="text-thin">interface.</span></h1>
+  <p class="hero__subtitle">For 25 years I've followed the frontier — from the page to the stage to the factory floor. Wherever <em>creative tools meet emerging technology</em>, I design the bridge. The last five years: bringing that instinct to <em>enterprise at global scale.</em></p>
+</section>
+
+
+<!-- ============================================================
+     HERITAGE
+     ============================================================ -->
+<section class="heritage" aria-label="Career heritage">
+  <div class="heritage__header">
+    <div>
+      <div class="heritage__overline">A Life at the Frontier</div>
+      <h2 class="heritage__title">Each era brought<br>a new canvas.<br><span class="text-thin">I designed the tools.</span></h2>
+    </div>
+    <div>
+      <p class="heritage__intro">I was part of the core group who built the creative software that defined the Mac. Desktop publishing gave way to music production, music to immersive experience, and experience to the intelligent enterprise. Each leap was a chance to rethink what an interface could be.</p>
+    </div>
+  </div>
+
+  <div class="timeline" role="list" aria-label="Career timeline">
+    <div class="tl-item" role="listitem">
+      <div class="tl-year"><time datetime="1999">1999–2007</time></div>
+      <div class="tl-domain">The Printed Word</div>
+      <div class="tl-context">QuarkXPress</div>
+      <div class="tl-note">Macworld Best of Show<br>95% of global publishing</div>
+    </div>
+    <div class="tl-item" role="listitem">
+      <div class="tl-year"><time datetime="2007">2007–2012</time></div>
+      <div class="tl-domain">Sound & Signal</div>
+      <div class="tl-context">Traktor · Miselu C.24</div>
+      <div class="tl-note">USPTO Patent · Google I/O<br>Apple-native instruments</div>
+    </div>
+    <div class="tl-item" role="listitem">
+      <div class="tl-year"><time datetime="2012">2012–2016</time></div>
+      <div class="tl-domain">The Live Stage</div>
+      <div class="tl-context">Beatport · Festivals</div>
+      <div class="tl-note">EDC · Ultra · Burning Man<br>Spatial audio & visuals</div>
+    </div>
+    <div class="tl-item" role="listitem">
+      <div class="tl-year"><time datetime="2017">2017–2021</time></div>
+      <div class="tl-domain">Enterprise Hardware</div>
+      <div class="tl-context">Denon / Marantz</div>
+      <div class="tl-note">60+ SKUs redesigned<br>50+ Apple-certified products</div>
+    </div>
+    <div class="tl-item" role="listitem">
+      <div class="tl-year"><time datetime="2023">2023–Now</time></div>
+      <div class="tl-domain">Intelligent Industry</div>
+      <div class="tl-context">Fabrion · TDK</div>
+      <div class="tl-note">AI-native enterprise<br>Edge sensing at scale</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SELECTED WORK
+     ============================================================ -->
+<section class="projects" aria-label="Selected work">
+  <div class="projects__overline">Selected Work</div>
+
+  <!-- 01: Denon / Marantz — Lead Case Study -->
+  <article class="project-row">
+    <div class="project-row__image">
+      <div class="ph">Marantz Cinema porthole display<br>+ TV GUI before / after</div>
+    </div>
+    <div class="project-row__body">
+      <div class="project-row__meta">
+        <span class="project-row__index">01</span>
+        <span class="project-row__tier">Lead Case Study</span>
+      </div>
+      <h3 class="project-row__title"><a href="/work/denon-marantz">Making Premium Audio<br>Feel as Good as It Sounds</a></h3>
+      <div class="project-row__brand">Denon / Marantz</div>
+      <p class="project-row__blurb">Two heritage audio brands, 60+ products, four global offices — and an interface stuck in the 8-bit era. I led the UX transformation that unified the entire ecosystem, earned Apple certification for 50+ devices, and moved the company from #5 to #1.</p>
+      <div class="tags">
+        <span>AirPlay 2</span>
+        <span>HomeKit</span>
+        <span>Embedded Linux</span>
+        <span>Qt/QML</span>
+        <span>Design System</span>
+        <span>Monotype</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 02: Fabrion — Full Depth -->
+  <article class="project-row project-row--reverse">
+    <div class="project-row__body">
+      <div class="project-row__meta">
+        <span class="project-row__index">02</span>
+        <span class="project-row__tier">Full Depth</span>
+      </div>
+      <h3 class="project-row__title"><a href="/work/fabrion">Teaching Machines<br>to Earn Human Trust</a></h3>
+      <div class="project-row__brand">Fabrion</div>
+      <p class="project-row__blurb">A clean-sheet enterprise platform where AI agents and factory teams collaborate in real time. As founding designer, I shaped every interaction — from the ethical framework governing multi-agent decisions to the design system scaling across EV production lines.</p>
+      <div class="tags">
+        <span>Multi-Agent AI</span>
+        <span>Design System</span>
+        <span>Trust Calibration</span>
+        <span>Token Pipeline</span>
+        <span>0→1</span>
+      </div>
+    </div>
+    <div class="project-row__image">
+      <div class="ph">Fabrion dashboard<br>+ AI agent swim lanes</div>
+    </div>
+  </article>
+
+  <!-- 03: Rakuten Fit — Supporting -->
+  <article class="project-row">
+    <div class="project-row__image">
+      <div class="ph">Rakuten Fit screens<br>+ gamification tiers</div>
+    </div>
+    <div class="project-row__body">
+      <div class="project-row__meta">
+        <span class="project-row__index">03</span>
+        <span class="project-row__tier">Supporting</span>
+      </div>
+      <h3 class="project-row__title"><a href="/work/rakuten-fit">Turning Motion<br>into Currency</a></h3>
+      <div class="project-row__brand">Rakuten Fit</div>
+      <p class="project-row__blurb">What if every step you took had economic value? I designed the wearable companion that bridges the physical body to Rakuten's 111-million-member digital economy — where health data becomes a new form of exchange within a B2B super-app ecosystem.</p>
+      <div class="tags">
+        <span>iOS / Android</span>
+        <span>Wearable</span>
+        <span>Gamification</span>
+        <span>Health Data</span>
+        <span>Ecosystem</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- Grid: 04, 05, 06 -->
+  <div class="grid-row">
+    <article class="grid-cell">
+      <div class="grid-cell__meta">
+        <span class="grid-cell__index">04</span>
+        <span class="grid-cell__tier">Supporting</span>
+      </div>
+      <h4 class="grid-cell__title"><a href="/work/tdk-sensei">Making the Invisible Visible</a></h4>
+      <p class="grid-cell__desc">TDK SensEI — Three merged enterprises, one unified sensor intelligence. Designing the dashboard that turns raw edge data into predictive foresight for industrial B2B clients.</p>
+    </article>
+    <article class="grid-cell">
+      <div class="grid-cell__meta">
+        <span class="grid-cell__index">05</span>
+        <span class="grid-cell__tier">Brief Showcase</span>
+      </div>
+      <h4 class="grid-cell__title"><a href="/work/ogilvy-audi">Brand as Spatial Experience</a></h4>
+      <p class="grid-cell__desc">Ogilvy / Audi — When the Audi Q4 e-tron launched, I designed the immersive event experience. Before that, the festival stages where music became architecture.</p>
+    </article>
+    <article class="grid-cell">
+      <div class="grid-cell__meta">
+        <span class="grid-cell__index">06</span>
+        <span class="grid-cell__tier">Brief Showcase</span>
+      </div>
+      <h4 class="grid-cell__title"><a href="/work/miselu-c24">Instruments Without Boundaries</a></h4>
+      <p class="grid-cell__desc">Miselu C.24 — A piano keyboard for the iPad generation. USPTO patent holder, Google I/O stage demo. The belief that creative tools should be as portable as ideas.</p>
+    </article>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     STATS BAND
+     ============================================================ -->
+<section class="stats-band" aria-label="Key achievements">
+  <div class="stats-band__inner">
+    <div class="stat-inline">
+      <span class="stat-number">50<span class="dim">+</span></span>
+      <span class="stat-meta">Apple-certified products</span>
+    </div>
+    <div class="stat-divider" role="separator"></div>
+    <div class="stat-inline">
+      <span class="stat-number">200<span class="dim">+</span></span>
+      <span class="stat-meta">SKUs unified</span>
+    </div>
+    <div class="stat-divider" role="separator"></div>
+    <div class="stat-inline">
+      <span class="stat-number">5<span class="dim">→</span>1</span>
+      <span class="stat-meta">Market position</span>
+    </div>
+    <div class="stat-divider" role="separator"></div>
+    <div class="stat-inline">
+      <span class="stat-number">1</span>
+      <span class="stat-meta">USPTO patent</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div>
+    <div class="site-footer__name">Keisuke Shingu</div>
+    <div class="site-footer__role">Creative Technologist — Hardware × Software × AI</div>
+  </div>
+  <div>
+    <a href="mailto:keisuke@gmail.com" class="site-footer__link">keisuke@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/footer.css">
+
+<title>Projects — Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Noto+Serif+JP:wght@200;300&display=swap" rel="stylesheet">
+<style>/* ===== Design Tokens ===== */
+
+  /* ===== Reset ===== */
+
+  /* ===== Nav ===== */
+
+  .nav__links 
+  .nav__links a:hover { color: var(--ink-100); }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 192px 64px 80px;
+    max-width: var(--max-w); margin: 0 auto;
+  }
+  .hero__heading {
+    font-size: 56px; font-weight: 200; line-height: 1.08;
+    letter-spacing: -0.035em; color: var(--ink-60);
+    max-width: 680px; text-wrap: balance;
+  }
+  .hero__heading .bold {
+    font-weight: 600; color: var(--ink-100);
+  }
+
+  /* ===== Era Section ===== */
+  .era {
+    padding: 0 64px; max-width: var(--max-w); margin: 0 auto;
+    scroll-margin-top: 72px;
+  }
+  .era + .era { margin-top: 64px; }
+  .era__header {
+    display: flex; align-items: baseline; gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule-40);
+  }
+  .era__label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40);
+  }
+  .era__period {
+    font-size: 11px; font-weight: 300; letter-spacing: 0.04em;
+    color: var(--ink-40);
+  }
+
+  /* ===== Era Card Grid ===== */
+  .era__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  /* ===== Case Study Card ===== */
+  .case-entry {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border: 1px solid var(--rule-40);
+    border-radius: 12px;
+    cursor: pointer;
+    background: var(--white);
+    transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .case-entry:hover {
+    background: rgba(245, 245, 247, 0.55);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+
+  .case-entry__top {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .case-entry__title {
+    font-size: 18px; font-weight: 600; line-height: 1.25;
+    letter-spacing: -0.015em; color: var(--ink-100);
+  }
+  .case-entry__role {
+    font-size: 12px; font-weight: 300; color: var(--ink-60);
+    margin-top: 2px;
+  }
+  .case-entry__brand {
+    font-size: 14px; font-weight: 300; color: var(--ink-80); margin-top: 2px;
+  }
+  .case-entry__tags {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 10px;
+    line-height: 1.5;
+  }
+  .case-entry__tags .dot { color: var(--ink-40); margin: 0 5px; }
+
+  /* ===== Project Image Placeholder (half-size card) ===== */
+  .case-entry__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .case-entry__image--placeholder {
+    background: linear-gradient(135deg, var(--paper) 0%, var(--rule-40) 100%);
+    border: 1px solid var(--rule-40);
+  }
+  .case-entry__image--placeholder::before {
+    content: attr(data-label);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-40);
+  }
+  .case-entry__image--placeholder::after {
+    content: attr(data-kanji);
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 200;
+    font-size: 18px;
+    color: var(--shu-10);
+    letter-spacing: 0.15em;
+  }
+  .case-entry__image canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.15;
+  }
+  .case-entry:hover .case-entry__image canvas {
+    opacity: 0.35;
+    transition: opacity 0.5s var(--ease);
+  }
+
+  /* ===== Kanji Accents ===== */
+  .era__kanji {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 200;
+    font-size: 11px;
+    color: var(--shu-20);
+    margin-left: auto;
+    letter-spacing: 0.1em;
+  }
+
+  /* ===== A. Animated Divider Strips ===== */
+  .divider-strip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 0;
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+  .divider-strip canvas {
+    width: 20px; height: 20px;
+    opacity: 0.18;
+  }
+  .divider-strip .divider-dot {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--rule-60);
+  }
+
+  /* ===== B. Floating Margin Accents ===== */
+  .margin-accent {
+    position: absolute;
+    left: max(12px, calc((100vw - var(--max-w)) / 2 - 64px));
+    opacity: 0.12;
+    transition: opacity 0.6s var(--ease);
+    z-index: 1;
+  }
+  .margin-accent:hover { opacity: 0.35; }
+  .margin-accent canvas { width: 28px; height: 28px; }
+  .era { position: relative; }
+
+  /* ===== C. Section Separator (Ensō) ===== */
+  .section-separator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 0;
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+  .section-separator canvas {
+    width: 48px; height: 48px;
+    opacity: 0.2;
+    transition: opacity 0.6s var(--ease);
+  }
+  .section-separator:hover canvas { opacity: 0.4; }
+
+  /* ===== D. Era Header Dot Accents ===== */
+  .era__header { position: relative; }
+  .era-dot {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    opacity: 0.15;
+  }
+  .era-dot canvas {
+    width: 16px; height: 16px;
+  }
+
+  /* ===== Spacer before footer ===== */
+  .spacer { height: 80px; }
+
+  /* ===== Footer ===== */
+
+  .footer__links 
+  .footer__links a:hover { color: var(--ink-100); }
+
+  /* ===== Scroll animations ===== */
+  
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 767px) {
+    .hero { padding: 140px 24px 48px; }
+    .hero__heading { font-size: 36px; }
+    .era { padding: 0 24px; }
+    .era__grid { grid-template-columns: 1fr; gap: 16px; }
+
+    .case-entry { padding: 20px; }
+    .case-entry__title { font-size: 17px; }
+
+  }
+
+  /* ===== Animation Layer (v1_animation) ===== */
+  /* Snow zone container */
+  #snow-zone { position: relative; overflow: hidden; }
+
+  /* Protect images from snow overlap */
+  #snow-zone img {
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }</style>
+</head></head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="design-thinking.html">Design Thinking</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== SNOW CONTAINER (covers hero + all project sections) ===== -->
+<div id="snow-zone">
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="reveal">
+    <h1 class="hero__heading">
+      Each project <span class="bold">extended</span> a different <span class="bold">sense.</span>
+    </h1>
+  </div>
+</section>
+
+<!-- A. Divider strip: Hero → Projects -->
+<div class="divider-strip reveal" style="transition-delay: 0.1s">
+  <canvas class="strip-anim" data-anim="26"></canvas>
+  <div class="divider-dot"></div>
+  <canvas class="strip-anim" data-anim="5"></canvas>
+  <div class="divider-dot"></div>
+  <canvas class="strip-anim" data-anim="26"></canvas>
+</div>
+
+<!-- ===== AI SYSTEMS ===== -->
+<section id="ai-systems" class="era reveal">
+  <!-- B. Margin accent — floats in left gutter -->
+  <div class="margin-accent" style="top: 32px;">
+    <canvas class="margin-anim" data-anim="15"></canvas>
+  </div>
+  <div class="era__header">
+    <span class="era__label">Current Exploration & AI Systems</span>
+    <span class="era__period">2023 – Present</span>
+    <span class="era__kanji">未来 · 思考</span>
+    <!-- D. Era dot accent -->
+    <span class="era-dot"><canvas class="era-dot-anim" data-anim="0"></canvas></span>
+  </div>
+
+  <div class="era__grid">
+    <a href="case-studies/fabrion.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Teaching Machines to Earn Human Trust</h2>
+        <p class="case-entry__brand">Fabrion</p>
+        <p class="case-entry__role">Founding Designer, AI Agent Platform</p>
+      </div>
+      <p class="case-entry__tags">
+        AI Agents<span class="dot">·</span>Manufacturing<span class="dot">·</span>AI Constitution<span class="dot">·</span>Design System
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · AI Agent Dashboard" data-kanji="信頼">
+        <canvas class="case-entry__anim" data-anim="43" width="120" height="120"></canvas>
+      </div>
+    </a>
+
+    <a href="case-studies/tdk.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Edge AI Sensor Intelligence</h2>
+        <p class="case-entry__brand">TDK SensEI</p>
+        <p class="case-entry__role">Consultant, Edge AI Platform UX</p>
+      </div>
+      <p class="case-entry__tags">
+        Predictive Maintenance<span class="dot">·</span>Sensor Fusion<span class="dot">·</span>CES 2024 Innovation Award
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · Sensor Dashboard" data-kanji="感知">
+        <canvas class="case-entry__anim" data-anim="11" width="120" height="120"></canvas>
+      </div>
+    </a>
+
+    <a href="case-studies/ai-workflow.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Collapsing the Design-to-Code Gap</h2>
+        <p class="case-entry__brand">AI-Native Design Workflow</p>
+        <p class="case-entry__role">Designer / Developer</p>
+      </div>
+      <p class="case-entry__tags">
+        Claude Code<span class="dot">·</span>Google Antigravity<span class="dot">·</span>Figma MCP<span class="dot">·</span>Design-to-Code
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · AI Workflow Pipeline" data-kanji="創造">
+        <canvas class="case-entry__anim" data-anim="15" width="120" height="120"></canvas>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- C. Ensō separator: AI Systems → Agency -->
+<div class="section-separator reveal">
+  <canvas class="separator-anim" data-anim="15"></canvas>
+</div>
+
+<!-- ===== INNOVATION & IMMERSIVE ===== -->
+<section id="immersive" class="era reveal">
+  <div class="era__header">
+    <span class="era__label">Agency & Consulting</span>
+    <span class="era__period">2022 – 2023</span>
+    <span class="era__kanji">知覚</span>
+    <span class="era-dot"><canvas class="era-dot-anim" data-anim="4"></canvas></span>
+  </div>
+
+  <div class="era__grid">
+    <a href="case-studies/rakuten-fit.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Fitness Meets the Rakuten Ecosystem</h2>
+        <p class="case-entry__brand">Rakuten Fit</p>
+        <p class="case-entry__role">Global Innovation Director</p>
+      </div>
+      <p class="case-entry__tags">
+        Wearable<span class="dot">·</span>Gamification<span class="dot">·</span>111M Members<span class="dot">·</span>Ecosystem Design
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · Fitness Wearable App" data-kanji="活力">
+        <canvas class="case-entry__anim" data-anim="7" width="120" height="120"></canvas>
+      </div>
+    </a>
+
+    <a href="case-studies/ogilvy.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Beyond Screens</h2>
+        <p class="case-entry__brand">Audi Q4 e-tron · Geometry Ogilvy Japan</p>
+        <p class="case-entry__role">Head of Technology</p>
+      </div>
+      <p class="case-entry__tags">
+        Generative Visuals<span class="dot">·</span>AR Performance<span class="dot">·</span>Spatial Audio<span class="dot">·</span>Agency of Record
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · Immersive Brand Experience" data-kanji="没入">
+        <canvas class="case-entry__anim" data-anim="18" width="120" height="120"></canvas>
+      </div>
+    </a>
+
+    <a href="case-studies/slalom.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Designing the World Fans Step Into</h2>
+        <p class="case-entry__brand">Gundam Metaverse · Slalom Consulting</p>
+        <p class="case-entry__role">Director of Experience Design</p>
+      </div>
+      <p class="case-entry__tags">
+        Gundam Metaverse<span class="dot">·</span>IP Virtual World<span class="dot">·</span>Bandai Namco<span class="dot">·</span>Spatial UX<span class="dot">·</span>Toyota Woven City<span class="dot">·</span>NVIDIA
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Gundam Metaverse · SIDE-G Virtual Space" data-kanji="世界">
+        <canvas class="case-entry__anim" data-anim="21" width="120" height="120"></canvas>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- C. Ensō separator: Agency → Audio -->
+<div class="section-separator reveal">
+  <canvas class="separator-anim" data-anim="15"></canvas>
+</div>
+
+<!-- ===== PREMIUM AUDIO & HARDWARE INVENTION ===== -->
+<section id="audio" class="era reveal">
+  <!-- B. Margin accent — floats in left gutter -->
+  <div class="margin-accent" style="top: 32px;">
+    <canvas class="margin-anim" data-anim="15"></canvas>
+  </div>
+  <div class="era__header">
+    <span class="era__label">Premium Audio & Hardware Invention</span>
+    <span class="era__period">2011 – 2021</span>
+    <span class="era__kanji">聴覚 · 触感</span>
+    <span class="era-dot"><canvas class="era-dot-anim" data-anim="0"></canvas></span>
+  </div>
+
+  <div class="era__grid">
+    <a href="case-studies/denon-marantz.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Making Premium Audio Feel as Good as It Sounds</h2>
+        <p class="case-entry__brand">Denon / Marantz</p>
+        <p class="case-entry__role">Director of UX — Visual Design & Design Systems</p>
+      </div>
+      <p class="case-entry__tags">
+        AirPlay 2<span class="dot">·</span>HomeKit<span class="dot">·</span>Embedded Linux<span class="dot">·</span>60+ Products<span class="dot">·</span>Monotype
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · Audio Design System" data-kanji="音">
+        <canvas class="case-entry__anim" data-anim="35" width="120" height="120"></canvas>
+      </div>
+    </a>
+
+    <a href="case-studies/miselu.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">OS-Level Audio Engineering</h2>
+        <p class="case-entry__brand">Miselu C.24</p>
+        <p class="case-entry__role">Director of Software Products</p>
+      </div>
+      <p class="case-entry__tags">
+        USPTO Patent<span class="dot">·</span>Google I/O 2012<span class="dot">·</span>TechCrunch Disrupt<span class="dot">·</span>KORG<span class="dot">·</span>Yamaha
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · MIDI Controller UX" data-kanji="発明">
+        <canvas class="case-entry__anim" data-anim="49" width="120" height="120"></canvas>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ===== MUSIC & LIVE PERFORMANCE ===== -->
+<section id="music" class="era reveal">
+  <div class="era__header">
+    <span class="era__label">Music & Live Performance</span>
+    <span class="era__period">2007 – Present</span>
+    <span class="era__kanji">流動</span>
+    <span class="era-dot"><canvas class="era-dot-anim" data-anim="7"></canvas></span>
+  </div>
+
+  <div class="era__grid">
+    <a href="case-studies/beatport-ni.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Digital Music Distribution & DJ Software</h2>
+        <p class="case-entry__brand">Beatport → Native Instruments</p>
+        <p class="case-entry__role">Research Lab / Product Manager</p>
+      </div>
+      <p class="case-entry__tags">
+        Content Distribution<span class="dot">·</span>Creator Tools<span class="dot">·</span>Traktor
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · DJ Software Interface" data-kanji="響">
+        <canvas class="case-entry__anim" data-anim="38" width="120" height="120"></canvas>
+      </div>
+    </a>
+
+    <a href="case-studies/robot-heart.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">The Bus That Became a World</h2>
+        <p class="case-entry__brand">Robot Heart · Burning Man / Further Future</p>
+        <p class="case-entry__role">Lead Visual Artist · 2011 – Present</p>
+      </div>
+      <p class="case-entry__tags">
+        Live Visuals<span class="dot">·</span>LED Art Car<span class="dot">·</span>Burning Man<span class="dot">·</span>Further Future<span class="dot">·</span>Generative VJ
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · LED Visual System" data-kanji="心">
+        <canvas class="case-entry__anim" data-anim="7" width="120" height="120"></canvas>
+      </div>
+    </a>
+
+    <a href="case-studies/techcrunch.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Giving a Conference Its Visual Voice</h2>
+        <p class="case-entry__brand">TechCrunch Disrupt · Studio ZIRO</p>
+        <p class="case-entry__role">Visual Artist / Creative Director · 2016</p>
+      </div>
+      <p class="case-entry__tags">
+        Event Branding<span class="dot">·</span>3D City Rendering<span class="dot">·</span>Stage Visuals<span class="dot">·</span>Keynote Motion<span class="dot">·</span>Kyle Gordon
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · Conference Visual System" data-kanji="技">
+        <canvas class="case-entry__anim" data-anim="22" width="120" height="120"></canvas>
+      </div>
+    </a>
+
+    <a href="case-studies/festivals.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Real-Time Generative Visuals at Scale</h2>
+        <p class="case-entry__brand">Festival Visuals · EDC / Ultra / Detroit</p>
+        <p class="case-entry__role">VJ / Visual Artist</p>
+      </div>
+      <p class="case-entry__tags">
+        EDC<span class="dot">·</span>Ultra<span class="dot">·</span>Detroit Movement<span class="dot">·</span>Real-Time Generative<span class="dot">·</span>TouchDesigner
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · Live Visual System" data-kanji="祭">
+        <canvas class="case-entry__anim" data-anim="19" width="120" height="120"></canvas>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- C. Ensō separator: Music → Publishing -->
+<div class="section-separator reveal">
+  <canvas class="separator-anim" data-anim="15"></canvas>
+</div>
+
+<!-- ===== PUBLISHING ===== -->
+<section id="publishing" class="era reveal">
+  <div class="era__header">
+    <span class="era__label">Print & Digital Publishing</span>
+    <span class="era__period">1999 – 2007</span>
+    <span class="era__kanji">視覚</span>
+    <span class="era-dot"><canvas class="era-dot-anim" data-anim="4"></canvas></span>
+  </div>
+
+  <div class="era__grid">
+    <a href="case-studies/quarkxpress.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">The Platform That Defined Publishing</h2>
+        <p class="case-entry__brand">QuarkXPress</p>
+        <p class="case-entry__role">Product Management & UI Group</p>
+      </div>
+      <p class="case-entry__tags">
+        95% Market Share<span class="dot">·</span>Forbes<span class="dot">·</span>Condé Nast<span class="dot">·</span>NYT<span class="dot">·</span>Rolling Stone
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Figma · Publishing Layout Engine" data-kanji="版">
+        <canvas class="case-entry__anim" data-anim="31" width="120" height="120"></canvas>
+      </div>
+    </a>
+
+    <a href="case-studies/kyoto-archive.html" class="case-entry">
+      <div class="case-entry__top">
+        <h2 class="case-entry__title">Bringing 1,000 Lost Prints Back to Life</h2>
+        <p class="case-entry__brand">Toyohara Kunichika Archive · Kyoto University of the Arts</p>
+        <p class="case-entry__role">Digital Archive Designer</p>
+      </div>
+      <p class="case-entry__tags">
+        Cultural Heritage<span class="dot">·</span>Digital Archive<span class="dot">·</span>4K Display<span class="dot">·</span>Ukiyo-e<span class="dot">·</span>National Museum of Kyoto<span class="dot">·</span>Government Program
+      </p>
+      <div class="case-entry__image case-entry__image--placeholder" data-label="Kunichika Archive · 4K Display" data-kanji="記">
+        <canvas class="case-entry__anim" data-anim="31" width="120" height="120"></canvas>
+      </div>
+    </a>
+  </div>
+</section>
+
+
+</div><!-- end #snow-zone -->
+
+<!-- A. Divider strip: Projects → Footer -->
+<div class="divider-strip">
+  <canvas class="strip-anim" data-anim="16"></canvas>
+  <div class="divider-dot"></div>
+  <canvas class="strip-anim" data-anim="0"></canvas>
+  <div class="divider-dot"></div>
+  <canvas class="strip-anim" data-anim="16"></canvas>
+</div>
+
+<div class="spacer"></div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scroll Reveal Script ===== -->
+<script src="js/scroll-reveal.js" defer></script>
+
+<!-- ===== MicroAnim Library — Multi-Size Group Driver ===== -->
+<script src="js/micro-anim.js"></script>
+<script>
+(function () {
+  if (typeof MicroAnim === 'undefined') return;
+
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const instances = [];
+
+  // Helper: init a group of canvases at a given display size
+  function initGroup(selector, displaySize) {
+    MicroAnim.init(DPR, displaySize);
+    document.querySelectorAll(selector).forEach(cv => {
+      const idx = parseInt(cv.dataset.anim, 10);
+      const entry = MicroAnim.lib[idx];
+      if (!entry) return;
+
+      cv.width = displaySize * DPR;
+      cv.height = displaySize * DPR;
+      cv.style.width = displaySize + 'px';
+      cv.style.height = displaySize + 'px';
+
+      const ctx = cv.getContext('2d');
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      instances.push({ ctx, drawFn: entry[2], cycleMs: entry[1], size: displaySize });
+    });
+  }
+
+  // Project image placeholder animations (60px)
+  initGroup('.case-entry__anim[data-anim]', 60);
+  // A. Divider strip animations (20px)
+  initGroup('.strip-anim[data-anim]', 20);
+  // B. Margin accent animations (28px)
+  initGroup('.margin-anim[data-anim]', 28);
+  // C. Section separator — Ensō (48px)
+  initGroup('.separator-anim[data-anim]', 48);
+  // D. Era header dot accents (16px)
+  initGroup('.era-dot-anim[data-anim]', 16);
+
+  function animate(ts) {
+    for (let i = 0; i < instances.length; i++) {
+      const inst = instances[i];
+      const t = (ts % inst.cycleMs) / inst.cycleMs;
+      // Re-init size for correct drawing scale
+      MicroAnim.init(DPR, inst.size);
+      inst.ctx.clearRect(0, 0, inst.size, inst.size);
+      inst.drawFn(inst.ctx, t);
+    }
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+})();
+</script>
+
+<!-- ===== Animation Layer — Pluggable Weather System ===== -->
+<script src="js/weather-hero.js"></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (!snowZone) return;
+  if (typeof WeatherV2 !== 'undefined') {
+    WeatherV2.init(snowZone, snowZone.dataset.weatherMode || 'snow');
+  } else if (typeof WeatherHero !== 'undefined') {
+    WeatherHero.init(snowZone);
+  }
+})();
+</script>
+
+</body>
+</html>

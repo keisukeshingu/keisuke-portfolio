@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keisuke Shingu — Product UX Planning & Design Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===== Design Tokens ===== */
+  :root {
+    --ink-100: #1D1D1F;
+    --ink-80: #6E6E73;
+    --ink-60: #86868B;
+    --ink-40: #AEAEB2;
+    --rule-60: #D2D2D7;
+    --rule-40: #E8E8ED;
+    --paper: #F5F5F7;
+    --white: #FFFFFF;
+    --nav-bg: rgba(255,255,255,0.92);
+    --blur: 20px;
+    --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+    --max-w: 1120px;
+  }
+
+  /* ===== Reset ===== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 72px;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--ink-100);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'ss01' on, 'cv01' on;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  /* ===== Nav ===== */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 56px; display: flex; align-items: center;
+    background: var(--nav-bg);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    border-bottom: 1px solid var(--rule-40);
+  }
+  .nav__inner {
+    width: 100%; max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav__logo { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink-100); }
+  .nav__links { display: flex; gap: 32px; list-style: none; }
+  .nav__links a { font-size: 13px; font-weight: 400; color: var(--ink-80); transition: color 0.3s var(--ease); }
+  .nav__links a:hover { color: var(--ink-100); }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 192px 64px 48px;
+    max-width: var(--max-w); margin: 0 auto;
+  }
+  .hero__kicker {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 24px;
+  }
+  .hero__heading {
+    font-size: 56px; font-weight: 200; line-height: 1.08;
+    letter-spacing: -0.035em; color: var(--ink-60);
+    max-width: 680px; text-wrap: balance;
+  }
+  .hero__heading .bold {
+    font-weight: 600; color: var(--ink-100);
+  }
+  .hero__subtitle {
+    font-size: 17px; font-weight: 300; line-height: 1.7;
+    color: var(--ink-80); margin-top: 24px;
+  }
+  .hero__quote {
+    font-size: 15px; font-weight: 300; line-height: 1.7;
+    color: var(--ink-60); margin-top: 20px;
+    font-style: italic;
+  }
+
+  /* ===== Section shared ===== */
+  .section {
+    padding: 64px; max-width: var(--max-w); margin: 0 auto;
+  }
+  .section--bordered { border-top: 1px solid var(--rule-40); }
+  .section__overline {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .section__heading {
+    font-size: 32px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.025em; color: var(--ink-100);
+  }
+  .section__intro {
+    font-size: 17px; font-weight: 300; line-height: 1.7;
+    color: var(--ink-80); margin-top: 16px;
+  }
+
+  /* ===== Heritage Grid ===== */
+  .heritage-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; background: transparent;
+    margin-top: 48px;
+  }
+  .heritage-card {
+    background: transparent; padding: 32px;
+    cursor: pointer; transition: background 0.3s var(--ease);
+    border-right: 1px solid var(--rule-40);
+    border-bottom: 1px solid var(--rule-40);
+  }
+  .heritage-card:nth-child(3n) { border-right: none; }
+  .heritage-card:nth-last-child(-n+3) { border-bottom: none; }
+  .heritage-card:hover { background: rgba(245, 245, 247, 0.55); }
+  .heritage-card__period {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40);
+  }
+  .heritage-card__domain {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 4px;
+  }
+  .heritage-card__headline {
+    font-size: 18px; font-weight: 600; letter-spacing: -0.01em;
+    color: var(--ink-100); margin-top: 16px;
+  }
+  .heritage-card__narrative {
+    font-size: 13px; font-weight: 300; line-height: 1.65;
+    color: var(--ink-80); margin-top: 12px;
+  }
+  .heritage-card__highlights {
+    list-style: none; margin-top: 16px;
+  }
+  .heritage-card__sense {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-100);
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--rule-40);
+  }
+  .heritage-card__highlights li {
+    font-size: 12px; font-weight: 300; color: var(--ink-60);
+    margin-top: 6px;
+  }
+
+  /* ===== Stats Band ===== */
+  .stats {
+    background: rgba(245, 245, 247, 0.4); padding: 48px 64px;
+  }
+  .stats__inner {
+    max-width: var(--max-w); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .stats__item {
+    padding: 0 32px;
+    border-left: 1px solid var(--rule-40);
+  }
+  .stats__item:first-child { border-left: none; padding-left: 0; }
+  .stats__item:last-child { padding-right: 0; }
+  .stats__value {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em;
+    color: var(--ink-100);
+  }
+  .stats__label {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
+  }
+
+  /* ===== Footer ===== */
+  .footer { border-top: 1px solid var(--rule-40); }
+  .footer__inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 40px 64px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .footer__name { font-size: 14px; font-weight: 500; color: var(--ink-100); }
+  .footer__tagline { font-size: 13px; font-weight: 300; color: var(--ink-60); margin-top: 4px; }
+  .footer__links { display: flex; gap: 32px; }
+  .footer__links a { font-size: 13px; font-weight: 300; color: var(--ink-80); transition: color 0.3s; }
+  .footer__links a:hover { color: var(--ink-100); }
+  .footer__copy {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 64px 40px;
+    border-top: 1px solid var(--rule-40); padding-top: 24px;
+    font-size: 12px; font-weight: 300; color: var(--ink-40);
+  }
+
+  /* ===== Scroll animations ===== */
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1119px) {
+    .heritage-grid { grid-template-columns: repeat(2, 1fr); }
+    .heritage-card:nth-child(3n) { border-right: 1px solid var(--rule-40); }
+    .heritage-card:nth-child(2n) { border-right: none; }
+    .heritage-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--rule-40); }
+    .heritage-card:nth-last-child(-n+2) { border-bottom: none; }
+  }
+  @media (max-width: 767px) {
+    .hero { padding: 140px 24px 48px; }
+    .hero__heading { font-size: 36px; }
+    .section { padding: 48px 24px; }
+    .nav__inner { padding: 0 24px; }
+    .nav__links { display: none; }
+    .heritage-grid { grid-template-columns: 1fr; }
+    .heritage-card:nth-child(n) { border-right: none; border-bottom: 1px solid var(--rule-40); }
+    .heritage-card:last-child { border-bottom: none; }
+    .stats { padding: 32px 24px; }
+    .stats__inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .stats__item { border-left: none; padding: 0; }
+    .footer__inner { padding: 32px 24px; flex-direction: column; gap: 24px; }
+    .footer__copy { padding: 0 24px 32px; }
+  }
+
+  /* ===== Animation Layer (v1_animation) ===== */
+  /* Snow zone container */
+  #snow-zone { position: relative; overflow: hidden; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="Portfolio_Preview.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="Projects_Preview.html">Projects</a></li>
+      <li><a href="DesignThinking_Preview.html">Design Thinking</a></li>
+      <li><a href="About_Preview.html">About</a></li>
+      <li><a href="Contact_Preview.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== SNOW CONTAINER (covers hero + heritage + stats) ===== -->
+<div id="snow-zone">
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="reveal">
+    <p class="hero__kicker">Product UX Planning & Design Engineering</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.1s">
+    <h1 class="hero__heading">
+      Every <span class="bold">new medium</span> deserves <span class="bold">a new interface.</span>
+    </h1>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s">
+    <p class="hero__subtitle">
+      I design products where hardware, software, and AI converge —
+      from AI-native manufacturing systems to premium audio ecosystems
+      to immersive brand experiences.
+    </p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.3s">
+    <p class="hero__quote">
+      Marshall McLuhan saw that every technology extends a human sense. I believe AI extends thought itself — and the interface must honor the sense it serves.
+    </p>
+  </div>
+</section>
+
+<!-- ===== HERITAGE ===== -->
+<section class="section">
+  <div class="reveal">
+    <p class="section__overline">Career History</p>
+    <h2 class="section__heading">Each Medium Extended a Different Sense</h2>
+  </div>
+
+  <div class="heritage-grid">
+    <a href="Projects_Preview.html#ai-systems" class="heritage-card reveal" style="transition-delay: 0.05s">
+      <p class="heritage-card__period">2023 – Present</p>
+      <p class="heritage-card__domain">AI Systems</p>
+      <h3 class="heritage-card__headline">TDK → Fabrion</h3>
+      <p class="heritage-card__narrative">From edge AI sensor platforms at TDK (CES 2024 Innovation Award) to designing the first AI-native Manufacturing Execution System at Fabrion — building AI agent architectures that earn human trust through transparency and guardrails.</p>
+      <p class="heritage-card__sense">Extension of Thought</p>
+    </a>
+    <a href="Projects_Preview.html#immersive" class="heritage-card reveal" style="transition-delay: 0.1s">
+      <p class="heritage-card__period">2022 – 2023</p>
+      <p class="heritage-card__domain">Agency & Consulting</p>
+      <h3 class="heritage-card__headline">Ogilvy → Slalom</h3>
+      <p class="heritage-card__narrative">Immersive brand experiences for Audi at Ogilvy Japan — generative visuals, spatial audio, AR performance. Then innovation strategy at Slalom Build, leading experience design for enterprise clients including Toyota Woven City.</p>
+      <p class="heritage-card__sense">Extension of Perception</p>
+    </a>
+    <a href="Projects_Preview.html#audio" class="heritage-card reveal" style="transition-delay: 0.15s">
+      <p class="heritage-card__period">2017 – 2021</p>
+      <p class="heritage-card__domain">Premium Audio Ecosystems</p>
+      <h3 class="heritage-card__headline">Director of UX at Denon / Marantz</h3>
+      <p class="heritage-card__narrative">Transformed the user experience of two premium audio brands across 60+ products — from 8-bit bitmap displays to a modern vector-based design system.</p>
+      <p class="heritage-card__sense">Extension of Hearing</p>
+    </a>
+    <a href="Projects_Preview.html#invention" class="heritage-card reveal" style="transition-delay: 0.2s">
+      <p class="heritage-card__period">2011 – 2013</p>
+      <p class="heritage-card__domain">Hardware Invention</p>
+      <h3 class="heritage-card__headline">Miselu C.24</h3>
+      <p class="heritage-card__narrative">Designed and patented a Bluetooth LE MIDI keyboard controller — reducing Android audio latency from 250ms to under 10ms. Demoed at Google I/O 2012 and TechCrunch Disrupt. Partnerships with KORG and Yamaha.</p>
+      <p class="heritage-card__sense">Extension of Touch & Sound</p>
+    </a>
+    <a href="Projects_Preview.html#music" class="heritage-card reveal" style="transition-delay: 0.25s">
+      <p class="heritage-card__period">2007 – 2016</p>
+      <p class="heritage-card__domain">Music & Live Performance</p>
+      <h3 class="heritage-card__headline">Beatport → Native Instruments</h3>
+      <p class="heritage-card__narrative">Digital music distribution at Beatport, DJ software at Native Instruments — plus real-time generative visuals and VJ performances at EDC, Ultra, Detroit Movement, Burning Man, and Further Future.</p>
+      <p class="heritage-card__sense">Extension of Creative Flow</p>
+    </a>
+    <a href="Projects_Preview.html#publishing" class="heritage-card reveal" style="transition-delay: 0.3s">
+      <p class="heritage-card__period">1999 – 2007</p>
+      <p class="heritage-card__domain">Print & Digital Publishing</p>
+      <h3 class="heritage-card__headline">QuarkXPress & Quark Interactive Designer</h3>
+      <p class="heritage-card__narrative">Joined Quark when QuarkXPress held 95% of the global publishing market — Forbes, Condé Nast, NYT, Rolling Stone. Also pioneered Quark Interactive Designer, a JavaScript-native non-coding authoring tool for interactive media.</p>
+      <p class="heritage-card__sense">Extension of the Eye</p>
+    </a>
+  </div>
+
+  <div class="reveal" style="transition-delay: 0.35s">
+    <p class="section__intro" style="margin-top: 48px;">
+      Two decades designing at the intersection of hardware, software, and AI — from publishing to DJ tools, premium audio to immersive experiences, and now AI-native systems. Each chapter extended a different part of the human experience.
+    </p>
+  </div>
+</section>
+
+<!-- ===== STATS BAND ===== -->
+<section class="stats">
+  <div class="stats__inner reveal">
+    <div class="stats__item">
+      <p class="stats__value">#1</p>
+      <p class="stats__label">Market position (Denon/Marantz, from #5)</p>
+    </div>
+    <div class="stats__item">
+      <p class="stats__value">60+</p>
+      <p class="stats__label">Products with unified design system</p>
+    </div>
+    <div class="stats__item">
+      <p class="stats__value">50+</p>
+      <p class="stats__label">Apple-certified audio products</p>
+    </div>
+    <div class="stats__item">
+      <p class="stats__value">1</p>
+      <p class="stats__label">USPTO Patent (Miselu C.24)</p>
+    </div>
+  </div>
+</section>
+
+</div><!-- end #snow-zone -->
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="About_Preview.html">About</a>
+      <a href="Contact_Preview.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scroll Reveal Script ===== -->
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '-40px' }
+  );
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
+
+<!-- ===== Animation Layer (v1_animation) ===== -->
+<script src="weather-hero.js"></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
+
+</body>
+</html>

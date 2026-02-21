@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+<title>Fabrion — Case Study | Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== Design Tokens ===== */
+
+  /* ===== Reset ===== */
+
+  /* ===== Nav ===== */
+
+  /* ===== Case Study Hero ===== */
+
+  /* ===== Hero Image ===== */
+
+  /* ===== Overview Bar ===== */
+
+  /* ===== Tags ===== */
+
+  /* ===== Metrics Grid ===== */
+  .metrics {
+    max-width: var(--max-w); margin: 0 auto; padding: 48px 64px;
+  }
+  .metrics__grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--rule-40); border-bottom: 1px solid var(--rule-40);
+    padding: 32px 0;
+  }
+  .metrics__item { padding: 0 32px; border-left: 1px solid var(--rule-40); }
+  .metrics__item:first-child { border-left: none; padding-left: 0; }
+  .metrics__item:last-child { padding-right: 0; }
+  .metrics__value {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink-100);
+  }
+  .metrics__label {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
+  }
+
+  /* ===== Content Layout (TOC + Body) ===== */
+  .cs-content {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 64px;
+    display: grid; grid-template-columns: 200px 1fr; gap: 64px;
+  }
+
+  /* ===== Table of Contents ===== */
+  .toc { position: sticky; top: 80px; align-self: start; }
+  .toc__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .toc__list { list-style: none; }
+  .toc__list li { margin-top: 12px; }
+  .toc__list a {
+    font-size: 13px; font-weight: 400; color: var(--ink-60);
+    transition: color 0.3s var(--ease);
+  }
+  .toc__list a:hover, .toc__list a.active { color: var(--ink-100); }
+
+  /* ===== STAR-D Sections ===== */
+  .stard-section {
+    padding: 48px 0; border-top: 1px solid var(--rule-40);
+  }
+  .stard-section:first-child { border-top: none; }
+  .stard-section__overline {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
+  }
+  .stard-section__title {
+    font-size: 26px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 24px;
+  }
+  .stard-section__body p {
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-80); margin-top: 16px;
+  }
+  .stard-section__body p:first-child { margin-top: 0; }
+
+  /* ===== Inline Image ===== */
+
+  /* ===== Pull Quote ===== */
+
+  /* ===== Before / After (embedded in flow) ===== */
+  .ba-inline {
+    margin: 32px 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--rule-40); border-radius: 8px; overflow: hidden;
+  }
+  .ba-inline__cell {
+    background: var(--white); padding: 24px;
+  }
+  .ba-inline__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .ba-inline__label--before { color: var(--ink-40); }
+  .ba-inline__label--after { color: var(--ink-100); }
+  .ba-inline__text {
+    font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--ink-80);
+  }
+
+  /* ===== Recognition ===== */
+  .recognition {
+    padding: 48px 0 0; border-top: 1px solid var(--rule-40);
+  }
+  .recognition__title {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .recognition__list {
+    list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px;
+  }
+  .recognition__list li {
+    font-size: 14px; font-weight: 400; color: var(--ink-80);
+  }
+
+  /* ===== Prev / Next Nav ===== */
+
+  /* ===== Footer ===== */
+
+  /* ===== Scroll animations ===== */
+  
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1119px) {
+    .cs-content { grid-template-columns: 1fr; gap: 0; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 32px; border-bottom: 1px solid var(--rule-40); }
+    .toc__label { width: 100%; }
+    .toc__list { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .toc__list li { margin-top: 0; }
+
+  }
+  @media (max-width: 767px) {
+
+    .metrics { padding: 32px 24px; }
+    .metrics__grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .metrics__item { border-left: none; padding: 0; }
+    .cs-content { padding: 0 24px 40px; }
+    .ba-inline { grid-template-columns: 1fr; }
+
+  }
+  /* ===== Animation Layer (v1_animation) ===== */
+  #snow-zone { position: relative; overflow: hidden; }
+  #snow-zone img { position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="../index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../design-thinking.html">Design Thinking</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div id="snow-zone">
+
+<!-- ===== CASE STUDY HERO ===== -->
+<section class="cs-hero">
+  <div class="reveal">
+    <a href="Projects_Preview.html#ai-systems" class="cs-hero__back">← Projects</a>
+  </div>
+  <div class="reveal" style="transition-delay: 0.05s">
+    <p class="cs-hero__brand">Fabrion</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.1s">
+    <h1 class="cs-hero__title">Teaching <span class="bold">Machines</span> to <span class="bold">Earn Human Trust</span></h1>
+  </div>
+  <div class="reveal" style="transition-delay: 0.15s">
+    <p class="cs-hero__statement">Designing the first AI-native Manufacturing Execution System for electric vehicle production — a composable mesh of AI agents that act as trusted collaborators, delivering measurable business outcomes through transparent, resilient, and ethical intelligence.</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s">
+    <div class="cs-hero__image">Hero image — Fabrion AI alerts dashboard</div>
+  </div>
+</section>
+
+<!-- ===== OVERVIEW BAR ===== -->
+<div class="overview-bar reveal">
+  <div class="overview-bar__inner">
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Role</p>
+      <p class="overview-bar__value">Founding Designer, AI Agent Platform</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Timeline</p>
+      <p class="overview-bar__value">2025 – Present</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Platform</p>
+      <p class="overview-bar__value">Web (React, Tailwind, React Flow, Three.js)</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Team</p>
+      <p class="overview-bar__value">1 Designer + 6 Engineers + 1 SME</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAGS ===== -->
+<div class="tags reveal">
+  <span class="tag">AI Agents</span>
+  <span class="tag">Manufacturing</span>
+  <span class="tag">Multi-Agent UX</span>
+  <span class="tag">Design System</span>
+  <span class="tag">Figma → Tailwind</span>
+  <span class="tag">Constitutional AI</span>
+  <span class="tag">WCAG 2.2</span>
+</div>
+
+<!-- ===== METRICS ===== -->
+<div class="metrics reveal">
+  <div class="metrics__grid">
+    <div class="metrics__item">
+      <p class="metrics__value">0→1</p>
+      <p class="metrics__label">Product launched</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">50+</p>
+      <p class="metrics__label">Components in design system</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">4</p>
+      <p class="metrics__label">AI agents orchestrated</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">7</p>
+      <p class="metrics__label">AI Constitution principles</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOC + CONTENT ===== -->
+<div class="cs-content">
+
+  <!-- Table of Contents -->
+  <aside class="toc reveal">
+    <p class="toc__label">Contents</p>
+    <ul class="toc__list">
+      <li><a href="#context" class="active">Opening Context</a></li>
+      <li><a href="#work">The Work</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+      <li style="margin-top:20px; padding-top:12px; border-top: 1px solid var(--rule-40)"><a href="#recognition">Recognition</a></li>
+    </ul>
+  </aside>
+
+  <!-- Content Body -->
+  <div>
+
+    <!-- OPENING CONTEXT -->
+    <div id="context" class="stard-section reveal">
+      <p class="stard-section__overline">Context</p>
+      <h2 class="stard-section__title">Legacy MES Has Hit a Wall</h2>
+      <div class="stard-section__body">
+        <p>Modern EV production depends on MES to coordinate everything from parts procurement to final assembly. Industry standards — SAP and Siemens — were built for a different era. Their data orchestration has grown so complex that the systems meant to accelerate production have become bottlenecks. When a parts shortage hits or a quality issue surfaces, decision-makers can't reach consensus in near-real-time — trapped navigating layers of dashboards, cross-referencing siloed data sources. A single hour of line downtime can cost hundreds of thousands of dollars.</p>
+
+        <p>Fabrion was founded on a conviction: the next generation of MES wouldn't be built by adding more dashboards to legacy systems. It would be built AI-native from the ground up. I joined as the founding designer — the first and only designer on the team. Every design decision was mine to define.</p>
+
+        <p class="pull-quote">Legacy MES systems present data. Fabrion's AI agents present decisions.</p>
+
+        <div class="inline-image">Before — SAP MES dashboard complexity vs. Fabrion decision-first interface</div>
+      </div>
+    </div>
+
+    <!-- THE WORK -->
+    <div id="work" class="stard-section reveal">
+      <p class="stard-section__overline">The Work</p>
+      <h2 class="stard-section__title">Four Agents, One Decision Layer</h2>
+      <div class="stard-section__body">
+        <p>Research began with domain immersion — extensive sessions with our supply chain SME mapping decision-making workflows of each persona. I studied OpenAI, Anthropic Constitutional AI, Google PAIR, and agentic AI patterns to inform the interaction model. Competitive analysis of SAP MES and Siemens Opcenter confirmed the pattern: these systems treat data as something to be navigated, not understood.</p>
+
+        <p>I designed a four-agent system built on open metadata and ontology mapping: a Sourcing Agent (detects shortages, recommends alternatives), Risk Agent (monitors signals, calculates risk scores), Planning Agent (tracks demand, models scenarios), and Design Agent (scans BOM for vulnerabilities, finds alternatives).</p>
+
+        <p>The three-tier Executive Swim Lane Framework maps decisions between humans and AI: COO tier (reviews, approves via explainability panels), Human-in-the-Loop tier (category manager, risk manager, supply planner, design engineer), and AI Agent tier (four agents in parallel with human approval gates).</p>
+
+        <div class="inline-image--half">
+          <div>Swim Lane Architecture — Human-AI decision flow</div>
+          <div>AI Canvas — conversational interface with streaming responses</div>
+        </div>
+
+        <p>Trust calibration was the most critical challenge. Every AI action exposes four elements: Intent, Confidence, Provenance, and Alternatives. Progressive disclosure serves 90% of users with a one-line summary, 30% with key factors, and 5% who drill into the full reasoning trace.</p>
+
+        <p>I authored Fabrion's AI Constitution — 7 principles: Human Welfare First, Transparency Over Opacity, User Control Over Automation, Fairness Over Bias, Privacy Over Convenience, Accuracy Over Speed, Auditability Over Secrecy.</p>
+
+        <p>Built an end-to-end token pipeline: Figma Variables → Tokens Plugin → Style Dictionary → Tailwind Config → Storybook → CI/CD.</p>
+
+        <div class="inline-image">Design system — AI-state color semantics and component library</div>
+      </div>
+    </div>
+
+    <!-- IMPACT -->
+    <div id="impact" class="stard-section reveal">
+      <p class="stard-section__overline">Impact</p>
+      <h2 class="stard-section__title">From Zero to Production</h2>
+      <div class="stard-section__body">
+        <p>First AI-native MES for electric vehicle production — 0→1 product launched from concept to production. Comprehensive UX Design Guide v2.0 — 10-chapter document. Complete component library — 50+ components with dark/light mode, AI states, and data visualization patterns. Multi-agent interaction framework with HITL patterns. AI Constitution with audit checklist governing all agent behavior. Token pipeline achieving 1:1 design-to-code fidelity. WCAG 2.2 AA+ compliance across all components.</p>
+
+        <div class="ba-inline">
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--before">Before</p>
+            <p class="ba-inline__text">Legacy MES — navigate dashboards, cross-reference siloed data, wait for reports</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--after">After</p>
+            <p class="ba-inline__text">Fabrion — AI agents surface contextualized decisions with confidence scores and alternatives</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--before">Before</p>
+            <p class="ba-inline__text">No standard for AI behavior, transparency, or human override</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--after">After</p>
+            <p class="ba-inline__text">7-principle AI Constitution with auditable checklist embedded in UX</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFLECTION -->
+    <div id="reflection" class="stard-section reveal">
+      <p class="stard-section__overline">Reflection</p>
+      <h2 class="stard-section__title">Designing the Collaboration Layer</h2>
+      <div class="stard-section__body">
+        <p>Designing for AI agents is fundamentally different from traditional software. The interface isn't just a window into data — it's a collaboration layer between human expertise and machine intelligence.</p>
+
+        <p class="pull-quote">Intent-adaptive, not feature-driven. Transparent reasoning over black-box recommendations. Composable intelligence. Progressive autonomy with an ethical floor.</p>
+
+        <p>Three capabilities that scale: platform thinking (designing for multi-agent systems forces composable architecture), trust-as-design-material (in manufacturing, wrong decisions cost millions — trust is earned through transparency, not accuracy scores), and AI ethics as UX requirement (the Constitution isn't guidelines — it's auditable requirements embedded in the interface).</p>
+      </div>
+    </div>
+
+    <!-- RECOGNITION -->
+    <div id="recognition" class="recognition reveal">
+      <p class="recognition__title">Recognition</p>
+      <ul class="recognition__list">
+        <li>0→1 AI-Native MES</li>
+        <li>UX Design Guide v2.0</li>
+        <li>AI Constitution Framework</li>
+        <li>WCAG 2.2 AA+ Compliance</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== PREV / NEXT ===== -->
+<div class="prev-next reveal">
+  <div class="prev-next__inner">
+    <div></div>
+    <a href="ai-workflow.html" class="prev-next__link prev-next__link--next">
+      <p class="prev-next__label">Next Case Study →</p>
+      <p class="prev-next__title">Design-to-Code in Days, Not Weeks</p>
+    </a>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+</div><!-- end #snow-zone -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script src="../js/scroll-reveal.js" defer></script>
+<script src="../js/weather-hero.js" defer></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
+</body>
+</html>

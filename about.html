@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/footer.css">
+
+  <title>About - Keisuke Shingu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    a:hover {
+      color: var(--ink-60);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(var(--blur));
+      border-bottom: 1px solid var(--rule-40);
+      z-index: 100;
+    }
+
+    nav > div {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink-100);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links 
+
+    .nav-links a.active {
+      color: var(--ink-100);
+    }
+
+    /* Layout */
+    main {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 64px;
+    }
+
+    section {
+      border-top: 1px solid var(--rule-40);
+      padding: 96px 0;
+    }
+
+    section:first-of-type {
+      border-top: none;
+      padding-top: 128px;
+    }
+
+    .overline {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-40);
+      margin-bottom: 16px;
+    }
+
+    .section-heading {
+      font-size: 40px;
+      font-weight: 200;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      color: var(--ink-60);
+    }
+
+    .section-heading .bold {
+      font-weight: 600;
+      color: var(--ink-100);
+    }
+
+    .section-heading + .philosophy-blocks {
+      margin-top: 64px;
+    }
+
+    /* Portrait Section */
+    .portrait-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .portrait-image {
+      width: 280px;
+      height: 350px;
+      background: var(--paper);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-60);
+      font-size: 14px;
+      font-weight: 400;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .portrait-text h1 {
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      color: var(--ink-100);
+      margin-bottom: 8px;
+    }
+
+    .portrait-text .title {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--ink-80);
+      margin-bottom: 4px;
+    }
+
+    .portrait-text .location {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink-60);
+      margin-bottom: 24px;
+    }
+
+    .portrait-text p {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-80);
+    }
+
+    /* Philosophy Section */
+    .philosophy-blocks {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .philosophy-block {
+      border-bottom: 1px solid var(--rule-40);
+      padding-bottom: 48px;
+    }
+
+    .philosophy-block:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .philosophy-block h3 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink-100);
+      margin-bottom: 12px;
+    }
+
+    .philosophy-block p {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-80);
+    }
+
+    /* Timeline Section — Sophisticated vertical line */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+
+    /* Vertical line */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: var(--rule-40);
+    }
+
+    .timeline-entry {
+      position: relative;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 32px;
+      padding: 0 0 48px 0;
+    }
+
+    .timeline-entry:last-child {
+      padding-bottom: 0;
+    }
+
+    /* Dot marker */
+    .timeline-entry::before {
+      content: '';
+      position: absolute;
+      left: -32px;
+      top: 6px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--rule-60);
+      z-index: 1;
+    }
+
+    /* Active dot for current role */
+    .timeline-entry--active::before {
+      background: var(--ink-100);
+      border-color: var(--ink-100);
+    }
+
+    .timeline-date {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-60);
+      line-height: 1.5;
+      padding-top: 2px;
+    }
+
+    .timeline-content {}
+
+    .timeline-company {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-40);
+      margin-bottom: 4px;
+    }
+
+    .timeline-content h4 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink-100);
+      margin-bottom: 8px;
+    }
+
+    .timeline-content p {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--ink-80);
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .timeline-tag {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--ink-60);
+      padding: 3px 10px;
+      border: 1px solid var(--rule-40);
+      border-radius: 100px;
+    }
+
+    /* Clients Grid */
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      background: transparent;
+    }
+
+    .client-item {
+      background: transparent;
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 88px;
+      border-right: 1px solid var(--rule-40);
+      border-bottom: 1px solid var(--rule-40);
+    }
+
+    .client-item img {
+      max-width: 100%;
+      max-height: 32px;
+      opacity: 0.85;
+      transition: opacity 0.3s var(--ease);
+    }
+
+    .client-item:hover img {
+      opacity: 1;
+    }
+
+    .client-item:nth-child(5n) { border-right: none; }
+    .client-item:nth-last-child(-n+5) { border-bottom: none; }
+
+    /* Contact CTA */
+    .contact-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-cta h2 {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      color: var(--ink-100);
+    }
+
+    .contact-cta p {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-80);
+      max-width: 520px;
+      margin-bottom: 24px;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .contact-links 
+
+    .contact-links a:hover {
+      color: var(--ink-100);
+      border-bottom-color: var(--ink-100);
+    }
+
+    /* removed — hover defined above */
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--rule-40);
+    }
+
+    .footer__links 
+
+    .footer__links a:hover {
+      color: var(--ink-100);
+    }
+
+    /* Circular Wave Accent */
+    .wave-accent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 75px;
+      overflow: visible;
+    }
+
+    /* Tighten gap around wave accent */
+    #snow-zone > section:last-child {
+      padding-bottom: 12px;
+    }
+    .wave-accent + section {
+      padding-top: 12px;
+      border-top: none;
+    }
+
+    .wave-rings {
+      width: 45px;
+      height: 45px;
+    }
+
+    .ring {
+      fill: none;
+      stroke: var(--ink-80);
+      stroke-width: 1.2;
+      opacity: 0;
+      transform-origin: center;
+      animation: ripple-out 3.5s ease-out infinite;
+    }
+
+    .ring-1 { animation-delay: 0s; }
+    .ring-2 { animation-delay: 0.4s; }
+    .ring-3 { animation-delay: 0.8s; }
+    .ring-4 { animation-delay: 1.2s; }
+    .ring-5 { animation-delay: 1.6s; }
+    .ring-6 { animation-delay: 2.0s; }
+
+    @keyframes ripple-out {
+      0% {
+        opacity: 0;
+        transform: scale(0.2);
+        stroke-width: 2.5;
+      }
+      15% {
+        opacity: 0.7;
+      }
+      50% {
+        opacity: 0.35;
+        stroke-width: 0.8;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.4);
+        stroke-width: 0.2;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .wave-accent { display: none; }
+    }
+
+    /* Snow zone container */
+    #snow-zone { position: relative; overflow: hidden; }
+
+    /* Protect images from snow overlap */
+    #snow-zone img,
+    #snow-zone .portrait-image,
+    .client-item img {
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .weather-hero { display: none !important; }
+    }
+
+    /* Scroll Reveal */
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 1119px) {
+      main {
+        padding: 0 48px;
+      }
+
+      nav > div {
+        padding: 0 48px;
+      }
+
+      .portrait-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .portrait-image {
+        width: 100%;
+        height: 300px;
+      }
+
+      .clients-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .client-item:nth-child(5n) { border-right: 1px solid var(--rule-40); }
+      .client-item:nth-child(4n) { border-right: none; }
+      .client-item:nth-last-child(-n+5) { border-bottom: 1px solid var(--rule-40); }
+      .client-item:nth-last-child(-n+4) { border-bottom: none; }
+
+      section {
+        padding: 72px 0;
+      }
+    }
+
+    @media (max-width: 767px) {
+      main {
+        padding: 0 24px;
+      }
+
+      nav > div {
+        padding: 0 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-logo {
+        font-size: 14px;
+      }
+
+      .section-heading {
+        font-size: 32px;
+        margin-bottom: 32px;
+      }
+
+      .portrait-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portrait-image {
+        width: 100%;
+        height: 280px;
+      }
+
+      .portrait-text h1 {
+        font-size: 32px;
+      }
+
+      .portrait-text .title {
+        font-size: 16px;
+      }
+
+      .philosophy-block {
+        padding-bottom: 32px;
+      }
+
+      .timeline {
+        padding-left: 24px;
+      }
+
+      .timeline::before {
+        left: 4px;
+      }
+
+      .timeline-entry {
+        grid-template-columns: 1fr;
+        gap: 4px;
+        padding-bottom: 32px;
+      }
+
+      .timeline-entry::before {
+        left: -24px;
+        width: 9px;
+        height: 9px;
+      }
+
+      .timeline-date {
+        font-size: 12px;
+      }
+
+      .timeline-content h4 {
+        font-size: 15px;
+      }
+
+      .timeline-content p {
+        font-size: 13px;
+      }
+
+      .timeline-tags {
+        gap: 4px;
+        margin-top: 8px;
+      }
+
+      .timeline-tag {
+        font-size: 10px;
+        padding: 2px 8px;
+      }
+
+      .clients-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .client-item:nth-child(4n) { border-right: 1px solid var(--rule-40); }
+      .client-item:nth-child(3n) { border-right: none; }
+      .client-item:nth-last-child(-n+4) { border-bottom: 1px solid var(--rule-40); }
+      .client-item:nth-last-child(-n+3) { border-bottom: none; }
+
+      .client-item {
+        padding: 16px 12px;
+        min-height: 72px;
+      }
+
+      .client-item img {
+        max-height: 24px;
+      }
+
+      .contact-cta h2 {
+        font-size: 24px;
+      }
+
+      .contact-cta p {
+        font-size: 16px;
+      }
+
+      .contact-links {
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      section {
+        padding: 48px 0;
+      }
+
+      section:first-of-type {
+        padding-top: 96px;
+      }
+
+    }</style>
+</head></head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div>
+      <a href="index.html" class="nav-logo">Keisuke Shingu</a>
+      <ul class="nav-links">
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="design-thinking.html">Design Thinking</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+  <!-- ===== SNOW CONTAINER (covers portrait + philosophy) ===== -->
+  <div id="snow-zone">
+    <!-- Portrait Section -->
+    <section class="reveal">
+      <div class="portrait-grid">
+        <div class="portrait-image">Portrait photo</div>
+        <div class="portrait-text">
+          <h1>Keisuke Shingu</h1>
+          <p class="title">Product UX Planning & Design Engineering</p>
+          <p class="location">Tokyo / San Francisco</p>
+          <p>My roots trace back to the dawn of desktop publishing — designing with QuarkXPress when pixels were still earning trust over ink. That foundation in craft-level typography and layout carries through two decades of work across every screen: mobile wearables, embedded hardware, tablet, desktop, and 8K living-room interfaces. I've shipped 60+ products, hold a USPTO patent, and led enterprise UX consulting for globally recognized brands including Audi, Rakuten, and Denon&nbsp;Marantz.</p>
+          <p>Beyond product design, I design audiovisual immersive experiences for the music industry — real-time generative visuals, spatial audio installations, and interactive stages for festivals and live events. It's where my craft meets my passion: sound, light, and interaction merging into architecture.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="reveal">
+      <div class="overline">PHILOSOPHY</div>
+      <h2 class="section-heading">Every <span class="bold">new medium</span> deserves <span class="bold">a new interface.</span></h2>
+      <div class="philosophy-blocks">
+        <div class="philosophy-block">
+          <h3>The Medium is the Message — Extensions of Our Senses</h3>
+          <p>Marshall McLuhan saw what most technologists still miss: the medium itself — not the content it carries — reshapes how we see, hear, and feel. Every technology extends a human sense. A 1-inch display with physical buttons extends touch. A voice-controlled speaker extends hearing. An AI agent extends thought itself. When I designed 60+ products across embedded firmware, mobile, and TV interfaces, I wasn't choosing between features — I was deciding which sense to extend, and which to protect. The interface must honor the sense it serves.</p>
+        </div>
+        <div class="philosophy-block">
+          <h3>Human Agency in AI — Storytelling, Guardrails, Trust</h3>
+          <p>AI agents are collaborators that must earn trust through transparent behavior. In my recent AI projects, I designed an AI Constitution: seven principles governing how agents communicate uncertainty, escalate decisions, and defer to human judgment. This draws from Anthropic's Constitutional AI, OpenAI's deliberative alignment, Google PAIR, Apple's HIG for ML, and Microsoft HAX. Every agent needs a story — consistent personality, honest limitations, graceful failure modes. Guardrails are not restrictions. They are the architecture of trust.</p>
+        </div>
+        <div class="philosophy-block">
+          <h3>間 (MA) — Designing the Space Between</h3>
+          <p>In Japanese aesthetics, MA — the interval, the pause, the space between — is not emptiness but potential. The silence between notes that makes the music. The void in a Zen rock garden that gives meaning to the stone. Isao Takahata, co-founder of Studio Ghibli and my professor at film school in Tokyo, taught me that the brush used sparingly stirs the imagination more powerfully than the brush that fills every corner. He also taught me to be my own harshest critic — not a critic of others' work. That discipline opens me to every perspective my teammates bring. I think as the customer, the business owner, the person living with the solution daily. This is not minimalism that merely reduces — it is purposeful emptiness that invites participation. Dieter Rams arrived at the same place from the other direction: as little design as possible. The space between human and machine is not a gap to fill with features, but a space to honor.</p>
+        </div>
+        <div class="philosophy-block">
+          <h3>The Invisible Interface — Designing for Flow</h3>
+          <p>The best tool is one you stop seeing and start being. Csikszentmihalyi called it flow — where skill meets challenge and self-consciousness dissolves. I've lived this as a VJ at EDC and Burning Man, where milliseconds of latency destroy the connection between intention and expression. I've designed for it at Native Instruments, where Traktor must disappear so the DJ thinks in sound and narrative — not buttons. This is MA in motion. Immediate feedback, minimal cognitive overhead, controls that anticipate intent. The best AI interaction feels like thinking alongside a collaborator, not operating a dashboard. When the interface vanishes, the art begins.</p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /snow-zone -->
+
+    <!-- Circular Wave Accent -->
+    <div class="wave-accent" aria-hidden="true">
+      <svg class="wave-rings" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle class="ring ring-1" cx="100" cy="100" r="8" />
+        <circle class="ring ring-2" cx="100" cy="100" r="20" />
+        <circle class="ring ring-3" cx="100" cy="100" r="34" />
+        <circle class="ring ring-4" cx="100" cy="100" r="50" />
+        <circle class="ring ring-5" cx="100" cy="100" r="68" />
+        <circle class="ring ring-6" cx="100" cy="100" r="88" />
+      </svg>
+    </div>
+
+    <!-- Timeline Section -->
+    <section class="reveal">
+      <div class="overline">CAREER HISTORY</div>
+      <div class="timeline">
+        <!-- 1. Fabrion — Current -->
+        <div class="timeline-entry timeline-entry--active">
+          <div class="timeline-date">2025 – Present</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Fabrion</div>
+            <h4>Founding Designer</h4>
+            <p>Designing the first AI-native MES for EV production. Created an AI Constitution framework for ethical agent behavior, 50+ component design system, and multi-agent architecture for autonomous manufacturing workflows.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">AI Agents</span>
+              <span class="timeline-tag">Design System</span>
+              <span class="timeline-tag">Manufacturing</span>
+              <span class="timeline-tag">Ethical AI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. SourceFuse -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2024 – 2025</div>
+          <div class="timeline-content">
+            <div class="timeline-company">SourceFuse</div>
+            <h4>Global Director, Innovation</h4>
+            <p>Led global innovation strategy bridging design thinking with emerging technology. Drove AI-native product concepts and cross-functional innovation programs.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Innovation</span>
+              <span class="timeline-tag">Strategy</span>
+              <span class="timeline-tag">AI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Slalom Build + TDK -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2023 – 2024</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Slalom Build · TDK Corporation</div>
+            <h4>Director of Experience Design · Edge AI Consultant</h4>
+            <p>At Slalom Build, led experience design for enterprise clients including Toyota Woven City. Concurrently consulted for TDK Corporation on edge AI sensor platform UX — CES 2024 Innovation Award.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Experience Design</span>
+              <span class="timeline-tag">Edge AI</span>
+              <span class="timeline-tag">CES 2024</span>
+              <span class="timeline-tag">Enterprise</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Geometry Ogilvy Japan -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2022 – 2023</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Geometry Ogilvy Japan</div>
+            <h4>Head of Technology</h4>
+            <p>Led technology for immersive brand experiences across Japan. Directed Audi immersive launch event with generative visuals, spatial audio, and AR performance — bridging physical and digital experience design.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Immersive</span>
+              <span class="timeline-tag">Generative Visuals</span>
+              <span class="timeline-tag">AR</span>
+              <span class="timeline-tag">Spatial Audio</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Sound United / Denon / Marantz -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2017 – 2021</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Sound United — Denon / Marantz</div>
+            <h4>Director of UX — Visual Design & Design Systems</h4>
+            <p>Transformed UX across two premium audio brands and 60+ products. Led platform migration from bitmap to vector rendering, negotiated Monotype embedded font licensing adopted by Audi, BMW, Porsche. Drove market position from #5 to #1.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">AirPlay 2</span>
+              <span class="timeline-tag">HomeKit</span>
+              <span class="timeline-tag">Qt/QML</span>
+              <span class="timeline-tag">Design System</span>
+              <span class="timeline-tag">Embedded Linux</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Gobbler + Further Future -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2014 – 2017</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Gobbler · Further Future</div>
+            <h4>Director of UX · Director of Technology for Visuals</h4>
+            <p>Led UX for Gobbler's cloud collaboration platform for creative professionals. Concurrently directed immersive technology and real-time visuals at Further Future festival — pioneering the intersection of art, technology, and electronic music.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Cloud Platform</span>
+              <span class="timeline-tag">Festival Tech</span>
+              <span class="timeline-tag">Real-Time Visuals</span>
+              <span class="timeline-tag">Creative Tools</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Miselu -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2012 – 2014</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Miselu, Inc.</div>
+            <h4>Director of Software Products</h4>
+            <p>Led software for the C.24 — a Bluetooth LE MIDI keyboard launched at Google I/O 2012. Invented OS-level audio latency solution (USPTO Patent 9,165,476). Pioneered hardware-software integration for mobile music creation.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Patent</span>
+              <span class="timeline-tag">Bluetooth LE</span>
+              <span class="timeline-tag">Google I/O</span>
+              <span class="timeline-tag">Hardware-Software</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Native Instruments -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2010 – 2012</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Native Instruments</div>
+            <h4>Product Manager, Traktor</h4>
+            <p>Managed product strategy for Traktor DJ software — one of the world's leading digital DJ platforms. Bridged hardware controller design with software feature development across a global engineering team.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">DJ Software</span>
+              <span class="timeline-tag">Product Strategy</span>
+              <span class="timeline-tag">Hardware-Software</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. Beatport -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2008 – 2010</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Beatport</div>
+            <h4>Research Lab</h4>
+            <p>Research lab at the world's largest electronic music distribution platform. Explored next-generation music discovery, playback technologies, and platform innovation during the digital music revolution.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Music Platform</span>
+              <span class="timeline-tag">Digital Distribution</span>
+              <span class="timeline-tag">R&D</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. Pioneer / NHK -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2004 – 2008</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Pioneer Electronics USA · NHK Enterprise</div>
+            <h4>Consultant · PM</h4>
+            <p>Consulted for Pioneer Electronics on DJ product ecosystem. At NHK Enterprise (Japan's national broadcaster), served as PM/Consultant bridging Japanese media technology with international standards.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">DJ Hardware</span>
+              <span class="timeline-tag">Broadcast</span>
+              <span class="timeline-tag">Japan</span>
+              <span class="timeline-tag">Consulting</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. Quark -->
+        <div class="timeline-entry">
+          <div class="timeline-date">1999 – 2004</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Quark</div>
+            <h4>Product Management & UI Group</h4>
+            <p>Joined when QuarkXPress held 95% of the global publishing market — Forbes, Condé Nast, NYT, Rolling Stone. Progressed from visual design to product analysis. Contributed to Quark Interactive Designer, a JavaScript-native non-coding authoring tool for interactive media. Macworld Best of Show.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Publishing</span>
+              <span class="timeline-tag">QuarkXPress</span>
+              <span class="timeline-tag">Interactive Designer</span>
+              <span class="timeline-tag">30+ Languages</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- VJ / Festival — Concurrent thread -->
+        <div class="timeline-entry">
+          <div class="timeline-date">2006 – Present</div>
+          <div class="timeline-content">
+            <div class="timeline-company">Independent</div>
+            <h4>VJ / Creative Technologist — Immersive Experiences</h4>
+            <p>A parallel creative practice spanning two decades — real-time generative visuals and live performance at EDC, Ultra Music Festival, Detroit Movement, Burning Man, and international venues. Blending code, art, and music.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">VJ</span>
+              <span class="timeline-tag">Generative</span>
+              <span class="timeline-tag">EDC</span>
+              <span class="timeline-tag">Burning Man</span>
+              <span class="timeline-tag">Live Performance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clients Grid -->
+    <section class="reveal">
+      <div class="overline">SELECTED CLIENTS & BRANDS</div>
+      <div class="clients-grid">
+        <div class="client-item"><img src="logos/apple.svg" alt="Apple"></div>
+        <div class="client-item"><img src="logos/google.svg" alt="Google"></div>
+        <div class="client-item"><img src="logos/microsoft.svg" alt="Microsoft"></div>
+        <div class="client-item"><img src="logos/linux.svg" alt="Linux"></div>
+        <div class="client-item"><img src="logos/pega.svg" alt="Pega"></div>
+        <div class="client-item"><img src="logos/denon.svg" alt="Denon"></div>
+        <div class="client-item"><img src="logos/marantz.svg" alt="Marantz"></div>
+        <div class="client-item"><img src="logos/dolby.svg" alt="Dolby"></div>
+        <div class="client-item"><img src="logos/dts.svg" alt="DTS"></div>
+        <div class="client-item"><img src="logos/yamaha.svg" alt="Yamaha"></div>
+        <div class="client-item"><img src="logos/audi.svg" alt="Audi"></div>
+        <div class="client-item"><img src="logos/ogilvy.svg" alt="Ogilvy"></div>
+        <div class="client-item"><img src="logos/quark.svg" alt="Quark"></div>
+        <div class="client-item"><img src="logos/adobe.svg" alt="Adobe"></div>
+        <div class="client-item"><img src="logos/slalom.svg" alt="Slalom"></div>
+        <div class="client-item"><img src="logos/nhk.svg" alt="NHK"></div>
+        <div class="client-item"><img src="logos/techcrunch.svg" alt="TechCrunch"></div>
+        <div class="client-item"><img src="logos/nativeinstruments.svg" alt="Native Instruments"></div>
+        <div class="client-item"><img src="logos/beatport.svg" alt="Beatport"></div>
+        <div class="client-item"><img src="logos/pioneerdj.svg" alt="Pioneer DJ"></div>
+        <div class="client-item"><img src="logos/rakuten.svg" alt="Rakuten"></div>
+        <div class="client-item"><img src="logos/monotype.svg" alt="Monotype"></div>
+        <div class="client-item"><img src="logos/qt.svg" alt="Qt"></div>
+        <div class="client-item"><img src="logos/tdk.svg" alt="TDK"></div>
+        <div class="client-item"><img src="logos/fabrion.svg" alt="Fabrion"></div>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="reveal">
+      <div class="contact-cta">
+        <h2>Let's build something together.</h2>
+        <p>I'm open to Staff/Principal Product Design roles where hardware, software, and AI converge.</p>
+        <div class="contact-links">
+          <a href="mailto:keisuke@gmail.com">keisuke@gmail.com</a>
+          <a href="https://linkedin.com">LinkedIn</a>
+          <a href="#">Download Resume (PDF)</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer__inner">
+      <div>
+        <p class="footer__name">Keisuke Shingu</p>
+        <p class="footer__tagline">Creative Technologist · Tokyo / San Francisco</p>
+      </div>
+      <div class="footer__links">
+        <a href="mailto:keisuke@gmail.com">Email</a>
+        <a href="https://linkedin.com">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer__copy">© 2025 Keisuke Shingu. All rights reserved.</div>
+  </footer>
+
+  <script src="js/weather-hero.js"></script>
+  <script src="js/scroll-reveal.js" defer></script>
+</body>
+</html>

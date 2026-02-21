@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+<title>Ogilvy / Audi — Case Study | Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== Design Tokens ===== */
+
+  /* ===== Reset ===== */
+
+  /* ===== Nav ===== */
+
+  /* ===== Case Study Hero ===== */
+
+  /* ===== Hero Image ===== */
+
+  /* ===== Overview Bar ===== */
+
+  /* ===== Tags ===== */
+
+  /* ===== Metrics Grid ===== */
+  .metrics {
+    max-width: var(--max-w); margin: 0 auto; padding: 48px 64px;
+  }
+  .metrics__grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--rule-40); border-bottom: 1px solid var(--rule-40);
+    padding: 32px 0;
+  }
+  .metrics__item { padding: 0 32px; border-left: 1px solid var(--rule-40); }
+  .metrics__item:first-child { border-left: none; padding-left: 0; }
+  .metrics__item:last-child { padding-right: 0; }
+  .metrics__value {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink-100);
+  }
+  .metrics__label {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
+  }
+
+  /* ===== Content Layout (TOC + Body) ===== */
+  .cs-content {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 64px;
+    display: grid; grid-template-columns: 200px 1fr; gap: 64px;
+  }
+
+  /* ===== Table of Contents ===== */
+  .toc { position: sticky; top: 80px; align-self: start; }
+  .toc__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .toc__list { list-style: none; }
+  .toc__list li { margin-top: 12px; }
+  .toc__list a {
+    font-size: 13px; font-weight: 400; color: var(--ink-60);
+    transition: color 0.3s var(--ease);
+  }
+  .toc__list a:hover, .toc__list a.active { color: var(--ink-100); }
+
+  /* ===== STAR-D Sections ===== */
+  .stard-section {
+    padding: 48px 0; border-top: 1px solid var(--rule-40);
+  }
+  .stard-section:first-child { border-top: none; }
+  .stard-section__overline {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
+  }
+  .stard-section__title {
+    font-size: 26px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 24px;
+  }
+  .stard-section__body p {
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-80); margin-top: 16px;
+  }
+  .stard-section__body p:first-child { margin-top: 0; }
+
+  /* ===== Inline Image ===== */
+
+  /* ===== Pull Quote ===== */
+
+  /* ===== Before / After (embedded in flow) ===== */
+  .ba-inline {
+    margin: 32px 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--rule-40); border-radius: 8px; overflow: hidden;
+  }
+  .ba-inline__cell {
+    background: var(--white); padding: 24px;
+  }
+  .ba-inline__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .ba-inline__label--before { color: var(--ink-40); }
+  .ba-inline__label--after { color: var(--ink-100); }
+  .ba-inline__text {
+    font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--ink-80);
+  }
+
+  /* ===== Recognition ===== */
+  .recognition {
+    padding: 48px 0 0; border-top: 1px solid var(--rule-40);
+  }
+  .recognition__title {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .recognition__list {
+    list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px;
+  }
+  .recognition__list li {
+    font-size: 14px; font-weight: 400; color: var(--ink-80);
+  }
+
+  /* ===== Prev / Next Nav ===== */
+
+  /* ===== Footer ===== */
+
+  /* ===== Scroll animations ===== */
+  
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1119px) {
+    .cs-content { grid-template-columns: 1fr; gap: 0; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 32px; border-bottom: 1px solid var(--rule-40); }
+    .toc__label { width: 100%; }
+    .toc__list { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .toc__list li { margin-top: 0; }
+
+  }
+  @media (max-width: 767px) {
+
+    .metrics { padding: 32px 24px; }
+    .metrics__grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .metrics__item { border-left: none; padding: 0; }
+    .cs-content { padding: 0 24px 40px; }
+    .ba-inline { grid-template-columns: 1fr; }
+
+  }
+  /* ===== Animation Layer (v1_animation) ===== */
+  #snow-zone { position: relative; overflow: hidden; }
+  #snow-zone img { position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="../index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../design-thinking.html">Design Thinking</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div id="snow-zone">
+
+<!-- ===== CASE STUDY HERO ===== -->
+<section class="cs-hero">
+  <div class="reveal">
+    <a href="Projects_Preview.html#immersive" class="cs-hero__back">← Projects</a>
+  </div>
+  <div class="reveal" style="transition-delay: 0.05s">
+    <p class="cs-hero__brand">Geometry Ogilvy Japan / Audi</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.1s">
+    <h1 class="cs-hero__title"><span class="bold">Beyond Screens</span> — Immersive Brand <span class="bold">Architecture</span></h1>
+  </div>
+  <div class="reveal" style="transition-delay: 0.15s">
+    <p class="cs-hero__statement">Designing a four-chapter immersive brand experience for the Audi Q4 e-tron Japan launch — combining generative visuals, spatial audio, AR performance, and interactive installations — the project that won Ogilvy the Audi Japan Agency of Record.</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s">
+    <div class="cs-hero__image">Hero image — Shin-Toyosu Brillia Running Stadium installation</div>
+  </div>
+</section>
+
+<!-- ===== OVERVIEW BAR ===== -->
+<div class="overview-bar reveal">
+  <div class="overview-bar__inner">
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Role</p>
+      <p class="overview-bar__value">Head of Technology</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Timeline</p>
+      <p class="overview-bar__value">2022</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Platform</p>
+      <p class="overview-bar__value">Physical installation, generative visuals, spatial audio, AR</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Team</p>
+      <p class="overview-bar__value">Ogilvy creative team + commissioned artists + production partners</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAGS ===== -->
+<div class="tags reveal">
+  <span class="tag">Immersive Experience</span>
+  <span class="tag">Generative Visuals</span>
+  <span class="tag">Spatial Audio</span>
+  <span class="tag">AR Performance</span>
+  <span class="tag">Brand Architecture</span>
+  <span class="tag">Audi</span>
+  <span class="tag">Real-Time Systems</span>
+</div>
+
+<!-- ===== METRICS ===== -->
+<div class="metrics reveal">
+  <div class="metrics__grid">
+    <div class="metrics__item">
+      <p class="metrics__value">4</p>
+      <p class="metrics__label">Experiential chapters</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">AoR</p>
+      <p class="metrics__label">Agency of Record won</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">0</p>
+      <p class="metrics__label">Technical failures (live event)</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">4</p>
+      <p class="metrics__label">Commissioned artists</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOC + CONTENT ===== -->
+<div class="cs-content">
+
+  <!-- Table of Contents -->
+  <aside class="toc reveal">
+    <p class="toc__label">Contents</p>
+    <ul class="toc__list">
+      <li><a href="#context" class="active">Opening Context</a></li>
+      <li><a href="#work">The Work</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+      <li style="margin-top:20px; padding-top:12px; border-top: 1px solid var(--rule-40)"><a href="#recognition">Recognition</a></li>
+    </ul>
+  </aside>
+
+  <!-- Content Body -->
+  <div>
+
+    <!-- OPENING CONTEXT -->
+    <div id="context" class="stard-section reveal">
+      <p class="stard-section__overline">Context</p>
+      <h2 class="stard-section__title">Launch Audi's Electric Future in Japan</h2>
+      <div class="stard-section__body">
+        <p>In November 2022, Audi Japan launched the Q4 e-tron — its first compact electric SUV for the Japanese market. Audi needed more than a press event. They needed an experience communicating four brand pillars — Design, Sustainability, Digitalization, and Performance — in a way that was felt, not just heard. The venue: Shin-Toyosu Brillia Running Stadium in Tokyo.</p>
+        <p>For Geometry Ogilvy Japan, this was the first project with Audi Japan. The relationship had no track record. Every decision would determine whether the agency won long-term trust. As Head of Technology, I was responsible for the full experience design — bridging creative vision with technical execution.</p>
+
+        <p class="pull-quote">The immersive experience needed to be flawless — not just creatively ambitious, but technically reliable in a live event environment where failure is public and immediate.</p>
+
+        <p>The challenge was orchestrating four chapters across a 2000-person venue with zero technical failures. Spatial audio needed to reinforce multiple narratives simultaneously. Generative systems required real-time responsiveness with predictable behavior. AR performance demanded synchronized choreography tracking. Each system — generative, audio, AR, interactive — had to work independently and in concert.</p>
+      </div>
+    </div>
+
+    <!-- THE WORK -->
+    <div id="work" class="stard-section reveal">
+      <p class="stard-section__overline">The Work</p>
+      <h2 class="stard-section__title">Four Chapters of Progress</h2>
+      <div class="stard-section__body">
+        <p>Chapter 1 — Design: "Creating Progress" featured an interactive art installation with four commissioned artists (WOK22, LUISE ONO, KAREZMAD, Tadaomi Shibuya). A real-time generative system blended attendee inputs with artist templates, ensuring every visitor's creation was unique. No two outputs identical. The installation became a participatory statement: design is responsive to human interaction.</p>
+
+        <p>Chapter 2 — Sustainability: "Sustaining Progress" displayed art installations constructed from recycled materials used in the vehicle's construction. The spatial audio environment reinforced the sustainability narrative — sound moving through space, reflecting the journey from material waste to automotive components. Attendees experienced sustainability not as claim but as material reality.</p>
+
+        <div class="inline-image--half">
+          <div>Creating Progress — interactive art installation</div>
+          <div>Sustaining Progress — recycled material art</div>
+        </div>
+
+        <p>Chapter 3 — Digitalization: "Exciting Progress" featured an AR performance with actor-dancer Moriyama Mirai. Real-time AR content synchronized with live choreography, creating a hybrid human-digital presence. Spatial audio moved with the performer, creating three-dimensional narrative space. The performer became a bridge between digital capability and human emotion.</p>
+
+        <p>Chapter 4 — Performance: The test drive program. After three chapters of sensory engagement, attendees experienced the product itself. The narrative arc was deliberate: curiosity → understanding → wonder → ownership. You don't pitch performance; you let people feel it.</p>
+
+        <div class="inline-image">AR performance — Moriyama Mirai with augmented reality overlay</div>
+
+        <p>The technical architecture coordinated five parallel systems: generative visuals (zero-latency audience interaction), spatial audio (multi-channel alignment with visuals), AR performance (camera tracking synchronized with live performer), interactive installations (sensor-based for non-technical attendees), and projection mapping (stadium-scale multi-projector coordination). Each system had independent failsafe logic. If generative visuals failed, installations continued. If AR tracking failed, spatial audio carried narrative. No single point of failure.</p>
+
+        <p>Reliability required redundant hardware, predictive load testing, and live system monitoring. Every component was stress-tested at 300% expected load. Network bandwidth was measured to the millisecond. Spatial audio channels were individually verifiable. The production team had practiced handoff sequences 50+ times before November 17.</p>
+      </div>
+    </div>
+
+    <!-- IMPACT -->
+    <div id="impact" class="stard-section reveal">
+      <p class="stard-section__overline">Impact</p>
+      <h2 class="stard-section__title">Agency of Record</h2>
+      <div class="stard-section__body">
+        <p>The four-chapter immersive launch executed on November 17, 2022 with zero technical failures. All real-time systems performed flawlessly. Attendees reported the experience as "overwhelming in the best way" — sensory engagement that created emotional ownership of the product story.</p>
+
+        <p>The direct outcome: Ogilvy was appointed Audi Japan's Brand & Creative Agency of Record in January 2023. This wasn't incremental — it was category leadership recognition. Press coverage across Car Watch, CAR and DRIVER Japan, EVsmart, and Yahoo News Japan amplified the event's impact beyond attendees.</p>
+
+        <div class="ba-inline">
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--before">Before</p>
+            <p class="ba-inline__text">Standard press event — vehicle reveal, speeches, static displays</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--after">After</p>
+            <p class="ba-inline__text">Four-chapter sensory journey — participation, materials, performance, driving</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--before">Before</p>
+            <p class="ba-inline__text">First project, no track record with Audi Japan</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--after">After</p>
+            <p class="ba-inline__text">Brand & Creative Agency of Record — January 2023</p>
+          </div>
+        </div>
+
+        <p>The experience design methodology proved transferable. The four-chapter narrative structure, the spatial thinking, the emphasis on reliability under pressure — these became templates for subsequent work. Four artists commissioned, zero technical failures, one AoR appointment.</p>
+      </div>
+    </div>
+
+    <!-- REFLECTION -->
+    <div id="reflection" class="stard-section reveal">
+      <p class="stard-section__overline">Reflection</p>
+      <h2 class="stard-section__title">Experiences as Narrative Architecture</h2>
+      <div class="stard-section__body">
+        <p>Every experience tells a story. The four-chapter structure wasn't arbitrary — it was a deliberate narrative arc grounded in how human attention and learning actually work. You don't use AR for sustainability messaging; you use physical materials. You don't use static displays for technological ambition; you use live performance. Medium and message must align.</p>
+
+        <p class="pull-quote">From festival stages to brand experiences to product interfaces — the throughline is real-time, human-centered systems design at scale.</p>
+
+        <p>The skills from immersive experience design transfer directly to digital product work. Spatial audio principles become audio UX. Generative systems become dynamic UI. Audience flow patterns become user journeys. Live reliability requirements become production-grade software standards. Multi-sensory engagement becomes Vision Pro / Quest / ambient computing thinking.</p>
+
+        <p>This project demonstrated that the distinction between "physical" and "digital" is artificial. Immersive experiences are multi-platform systems. They require the same rigor as software — version control, load testing, monitoring, incident response. They require the same empathy as design — understanding how people actually perceive, move, and decide.</p>
+      </div>
+    </div>
+
+    <!-- RECOGNITION -->
+    <div id="recognition" class="recognition reveal">
+      <p class="recognition__title">Recognition</p>
+      <ul class="recognition__list">
+        <li>Audi Japan Agency of Record (Jan 2023)</li>
+        <li>Car Watch / CAR and DRIVER Japan Coverage</li>
+        <li>Zero Technical Failures</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== PREV / NEXT ===== -->
+<div class="prev-next reveal">
+  <div class="prev-next__inner">
+    <a href="ai-workflow.html" class="prev-next__link prev-next__link--prev">
+      <p class="prev-next__label">← Previous Case Study</p>
+      <p class="prev-next__title">Design-to-Code in Days, Not Weeks</p>
+    </a>
+    <a href="slalom.html" class="prev-next__link prev-next__link--next">
+      <p class="prev-next__label">Next Case Study →</p>
+      <p class="prev-next__title">Innovation at the Frontier</p>
+    </a>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+</div><!-- end #snow-zone -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script src="../js/scroll-reveal.js" defer></script>
+<script src="../js/weather-hero.js" defer></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
+</body>
+</html>

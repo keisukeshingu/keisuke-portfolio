@@ -1,0 +1,66 @@
+/* =============================================================
+   FOOTER
+   keisuke-portfolio / css/footer.css
+   ============================================================= */
+
+.footer {
+  border-top: 1px solid var(--rule-40);
+}
+
+.footer__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 40px 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footer__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-100);
+}
+
+.footer__tagline {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--ink-60);
+  margin-top: 4px;
+}
+
+.footer__links {
+  display: flex;
+  gap: 32px;
+}
+
+.footer__links a {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--ink-80);
+  transition: color 0.3s var(--ease);
+}
+
+.footer__links a:hover { color: var(--ink-100); }
+
+.footer__copy {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 64px 40px;
+  border-top: 1px solid var(--rule-40);
+  padding-top: 24px;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--ink-40);
+}
+
+/* Responsive */
+@media (max-width: 1119px) {
+  .footer__inner { padding: 40px; }
+  .footer__copy  { padding: 24px 40px 40px; }
+}
+
+@media (max-width: 767px) {
+  .footer__inner { padding: 32px 24px; flex-direction: column; gap: 24px; }
+  .footer__copy  { padding: 0 24px 32px; }
+}

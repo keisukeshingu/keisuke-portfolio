@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation Debug Test</title>
+<style>
+  body { font-family: -apple-system, sans-serif; padding: 40px; background: #f5f5f7; color: #1d1d1f; }
+  h2 { margin: 30px 0 10px; font-size: 18px; }
+  .test-row { display: flex; gap: 20px; align-items: center; margin: 10px 0; }
+  .test-canvas { border: 2px solid #d2d2d7; background: white; }
+  .status { font-size: 13px; color: #6e6e73; padding: 8px 12px; background: #e8e8ed; border-radius: 6px; margin: 6px 0; }
+  .ok { background: #d4edda; color: #155724; }
+  .err { background: #f8d7da; color: #721c24; }
+  .hero-test { position: relative; width: 100%; height: 300px; background: #fff; overflow: hidden; border: 2px solid #d2d2d7; margin: 10px 0; }
+  .hero-test-content { position: relative; z-index: 1; padding: 40px; }
+  .icon-test-target { display: flex; align-items: center; padding: 12px 20px; background: #fff; border: 1px solid #d2d2d7; border-radius: 8px; margin: 6px 0; font-size: 14px; }
+  .icon-test-target:hover { background: #f0f0f2; }
+  #log { font-family: monospace; font-size: 12px; background: #1d1d1f; color: #86ff86; padding: 16px; border-radius: 8px; max-height: 400px; overflow-y: auto; white-space: pre-wrap; margin: 20px 0; }
+</style>
+</head>
+<body>
+
+<h1>Animation Debug Test</h1>
+
+<div id="log"></div>
+
+<h2>Test 1: MicroAnim Library</h2>
+<div id="t1-status"></div>
+<div class="test-row" id="t1-canvases"></div>
+
+<h2>Test 2: Direct Canvas Drawing (Large)</h2>
+<p>These should show animation #0 (Ripple), #11 (Breathe), #14 (Ensō) at 80px</p>
+<div class="test-row" id="t2-canvases"></div>
+
+<h2>Test 3: Small Canvas Drawing (14px display)</h2>
+<p>Same animations at 14px display size (actual use size)</p>
+<div class="test-row" id="t3-canvases"></div>
+
+<h2>Test 4: CaseStudyIcons.createIcon()</h2>
+<div id="t4-status"></div>
+<div class="test-row" id="t4-canvases"></div>
+
+<h2>Test 5: CaseStudyIcons.place() — Hover to animate</h2>
+<div id="t5-status"></div>
+<div class="icon-test-target test-stat" data-label="stat">#1 — Stats Value</div>
+<div class="icon-test-target test-stat" data-label="stat">60+ — Products</div>
+<div class="icon-test-target test-domain" data-label="domain">AI Systems</div>
+<div class="icon-test-target test-domain" data-label="domain">Premium Audio</div>
+
+<h2>Test 6: WeatherHero Background</h2>
+<div id="t6-status"></div>
+<div class="hero-test" id="hero-container">
+  <div class="hero-test-content">
+    <p style="font-size: 28px; font-weight: 200; color: #86868b;">Snow particles should appear behind this text</p>
+    <p style="margin-top: 12px; font-size: 14px; color: #aeaeb2;">Opacity ~18%, subtle floating snowflakes</p>
+  </div>
+</div>
+
+<script src="micro-anim.js"></script>
+<script src="weather-hero.js"></script>
+<script src="case-study-icons.js"></script>
+<script>
+const logEl = document.getElementById('log');
+function log(msg, type) {
+  const line = document.createElement('div');
+  line.textContent = `[${type || 'INFO'}] ${msg}`;
+  if (type === 'ERR') line.style.color = '#ff8686';
+  if (type === 'OK') line.style.color = '#86ff86';
+  logEl.appendChild(line);
+  console.log(`[${type || 'INFO'}] ${msg}`);
+}
+
+function setStatus(id, ok, msg) {
+  const el = document.getElementById(id);
+  el.className = 'status ' + (ok ? 'ok' : 'err');
+  el.textContent = msg;
+}
+
+// ── Test 1: MicroAnim loaded? ──
+log('--- Test 1: MicroAnim Library ---');
+if (typeof MicroAnim === 'undefined') {
+  log('MicroAnim is UNDEFINED — script failed to load!', 'ERR');
+  setStatus('t1-status', false, 'FAIL: MicroAnim not loaded');
+} else {
+  log('MicroAnim loaded successfully', 'OK');
+  log(`MicroAnim.lib has ${MicroAnim.lib ? MicroAnim.lib.length : 'undefined'} animations`);
+  log(`prefers-reduced-motion: ${window.matchMedia('(prefers-reduced-motion: reduce)').matches}`);
+  log(`devicePixelRatio: ${window.devicePixelRatio}`);
+
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  MicroAnim.init(DPR, 28);
+  log(`MicroAnim.init(${DPR}, 28) called`, 'OK');
+
+  // Draw first 3 anims as proof
+  const container = document.getElementById('t1-canvases');
+  [0, 11, 14].forEach(idx => {
+    const anim = MicroAnim.lib[idx];
+    if (!anim) {
+      log(`Animation index ${idx} does NOT exist!`, 'ERR');
+      return;
+    }
+    const [name, cycleMs, drawFn] = anim;
+    log(`Anim[${idx}] = "${name}", cycle=${cycleMs}ms`, 'OK');
+
+    const cvs = document.createElement('canvas');
+    const size = 28 * DPR;
+    cvs.width = size;
+    cvs.height = size;
+    cvs.style.width = '56px';
+    cvs.style.height = '56px';
+    cvs.className = 'test-canvas';
+    cvs.title = `${idx}: ${name}`;
+
+    const ctx = cvs.getContext('2d');
+    // Draw at t=0.5 (mid-animation)
+    drawFn(ctx, 0.5);
+    container.appendChild(cvs);
+
+    const label = document.createElement('span');
+    label.textContent = `#${idx} ${name}`;
+    label.style.fontSize = '12px';
+    container.appendChild(label);
+  });
+
+  setStatus('t1-status', true, `OK: MicroAnim loaded with ${MicroAnim.lib.length} animations`);
+}
+
+// ── Test 2: Large canvas drawing ──
+log('--- Test 2: Large Canvas Drawing ---');
+if (typeof MicroAnim !== 'undefined') {
+  const container2 = document.getElementById('t2-canvases');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  [0, 11, 14].forEach(idx => {
+    const [name, cycleMs, drawFn] = MicroAnim.lib[idx];
+    const cvs = document.createElement('canvas');
+    const size = 28 * DPR;
+    cvs.width = size;
+    cvs.height = size;
+    cvs.style.width = '80px';
+    cvs.style.height = '80px';
+    cvs.style.imageRendering = 'auto';
+    cvs.className = 'test-canvas';
+
+    const ctx = cvs.getContext('2d');
+
+    // Animate it
+    let startTs = null;
+    function loop(ts) {
+      if (!startTs) startTs = ts;
+      const t = ((ts - startTs) % cycleMs) / cycleMs;
+      ctx.clearRect(0, 0, size, size);
+      drawFn(ctx, t);
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    container2.appendChild(cvs);
+    const label = document.createElement('span');
+    label.textContent = `#${idx} ${name} (80px, animated)`;
+    label.style.fontSize = '12px';
+    container2.appendChild(label);
+  });
+  log('Large canvas animations created', 'OK');
+}
+
+// ── Test 3: Small canvas drawing (14px) ──
+log('--- Test 3: Small Canvas Drawing ---');
+if (typeof MicroAnim !== 'undefined') {
+  const container3 = document.getElementById('t3-canvases');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  [0, 11, 14].forEach(idx => {
+    const [name, cycleMs, drawFn] = MicroAnim.lib[idx];
+    const cvs = document.createElement('canvas');
+    const size = 28 * DPR;
+    cvs.width = size;
+    cvs.height = size;
+    cvs.style.width = '14px';
+    cvs.style.height = '14px';
+    cvs.className = 'test-canvas';
+
+    const ctx = cvs.getContext('2d');
+    drawFn(ctx, 0.5);
+
+    container3.appendChild(cvs);
+    const label = document.createElement('span');
+    label.textContent = `#${idx} ${name} (14px)`;
+    label.style.fontSize = '12px';
+    container3.appendChild(label);
+  });
+  log('Small canvas (14px) drawn', 'OK');
+}
+
+// ── Test 4: CaseStudyIcons.createIcon() ──
+log('--- Test 4: CaseStudyIcons ---');
+if (typeof CaseStudyIcons === 'undefined') {
+  log('CaseStudyIcons is UNDEFINED!', 'ERR');
+  setStatus('t4-status', false, 'FAIL: CaseStudyIcons not loaded');
+} else {
+  CaseStudyIcons.init(28);
+  log('CaseStudyIcons.init(28) called', 'OK');
+
+  const container4 = document.getElementById('t4-canvases');
+  [0, 11, 14].forEach(idx => {
+    const icon = CaseStudyIcons.createIcon(idx, 40, { restT: 0.5 });
+    if (!icon) {
+      log(`createIcon(${idx}) returned null!`, 'ERR');
+      return;
+    }
+    icon.canvas.style.border = '1px solid #d2d2d7';
+    icon.canvas.style.background = '#fff';
+    container4.appendChild(icon.canvas);
+
+    const label = document.createElement('span');
+    label.textContent = `#${idx} ${icon.name} (40px, hover me)`;
+    label.style.fontSize = '12px';
+    container4.appendChild(label);
+  });
+  log('CaseStudyIcons.createIcon() working', 'OK');
+  setStatus('t4-status', true, 'OK: CaseStudyIcons.createIcon() works');
+}
+
+// ── Test 5: CaseStudyIcons.place() ──
+log('--- Test 5: CaseStudyIcons.place() ---');
+if (typeof CaseStudyIcons !== 'undefined') {
+  CaseStudyIcons.place('.test-stat', 0, 18, { parentHover: true, restT: 0.5 });
+  CaseStudyIcons.place('.test-domain', 11, 18, { parentHover: true, restT: 0.25 });
+  log('CaseStudyIcons.place() called for .test-stat and .test-domain', 'OK');
+
+  const placed = document.querySelectorAll('.micro-icon');
+  log(`Found ${placed.length} .micro-icon canvases in DOM`, placed.length > 0 ? 'OK' : 'ERR');
+  setStatus('t5-status', placed.length > 0, placed.length > 0
+    ? `OK: ${placed.length} icons placed. Hover rows to animate.`
+    : 'FAIL: No icons were placed');
+}
+
+// ── Test 6: WeatherHero ──
+log('--- Test 6: WeatherHero ---');
+if (typeof WeatherHero === 'undefined') {
+  log('WeatherHero is UNDEFINED!', 'ERR');
+  setStatus('t6-status', false, 'FAIL: WeatherHero not loaded');
+} else {
+  const heroEl = document.getElementById('hero-container');
+  WeatherHero.init(heroEl);
+  log('WeatherHero.init() called', 'OK');
+
+  // Check if canvases were created
+  setTimeout(() => {
+    const weatherWrapper = heroEl.querySelector('.weather-hero');
+    const canvases = heroEl.querySelectorAll('canvas');
+    if (weatherWrapper) {
+      log(`Weather wrapper found, ${canvases.length} canvases inside hero`, 'OK');
+      setStatus('t6-status', true, `OK: WeatherHero initialized (${canvases.length} canvases)`);
+    } else {
+      log('No .weather-hero wrapper found! Init may have failed.', 'ERR');
+      log(`Hero dimensions: ${heroEl.offsetWidth}x${heroEl.offsetHeight}`, 'INFO');
+      log(`Mobile check (width < 768): ${window.innerWidth < 768}`, 'INFO');
+      setStatus('t6-status', false, 'FAIL: No weather wrapper created. Check mobile/motion prefs.');
+    }
+  }, 500);
+}
+
+log('=== All tests complete ===');
+</script>
+
+</body>
+</html>

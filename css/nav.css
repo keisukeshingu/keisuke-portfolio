@@ -1,0 +1,63 @@
+/* =============================================================
+   NAV — Fixed top navigation bar
+   keisuke-portfolio / css/nav.css
+   ============================================================= */
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  background: var(--nav-bg);
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  border-bottom: 1px solid var(--rule-40);
+}
+
+.nav__inner {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav__logo {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink-100);
+  transition: color 0.3s var(--ease);
+}
+
+.nav__logo:hover { color: var(--ink-60); }
+
+.nav__links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav__links a {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-80);
+  transition: color 0.3s var(--ease);
+}
+
+.nav__links a:hover { color: var(--ink-100); }
+
+/* Responsive */
+@media (max-width: 1119px) {
+  .nav__inner { padding: 0 40px; }
+}
+
+@media (max-width: 767px) {
+  .nav__inner { padding: 0 24px; }
+  .nav__links  { gap: 20px; }
+  .nav__links a { font-size: 12px; }
+}

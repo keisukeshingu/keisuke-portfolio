@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+<title>TDK SensEI — Case Study | Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== Design Tokens ===== */
+
+  /* ===== Reset ===== */
+
+  /* ===== Nav ===== */
+
+  /* ===== Case Study Hero ===== */
+
+  /* ===== Hero Image ===== */
+
+  /* ===== Overview Bar ===== */
+
+  /* ===== Tags ===== */
+
+  /* ===== Brief Narrative ===== */
+
+  /* ===== Key Highlight ===== */
+
+  /* ===== Inline Image ===== */
+
+  /* ===== Pull Quote ===== */
+
+  /* ===== Prev / Next Nav ===== */
+
+  /* ===== Footer ===== */
+
+  /* ===== Scroll animations ===== */
+  
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 767px) {
+
+  }
+  /* ===== Animation Layer (v1_animation) ===== */
+  #snow-zone { position: relative; overflow: hidden; }
+  #snow-zone img { position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="../index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../design-thinking.html">Design Thinking</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div id="snow-zone">
+
+<!-- ===== CASE STUDY HERO ===== -->
+<section class="cs-hero">
+  <div class="reveal">
+    <a href="Projects_Preview.html#ai-systems" class="cs-hero__back">← Projects</a>
+  </div>
+  <div class="reveal" style="transition-delay: 0.05s">
+    <p class="cs-hero__brand">TDK SensEI</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.1s">
+    <h1 class="cs-hero__title"><span class="bold">Three</span> Companies, <span class="bold">One</span> Intelligent <span class="bold">Interface</span></h1>
+  </div>
+  <div class="reveal" style="transition-delay: 0.15s">
+    <p class="cs-hero__statement">Designing the user experience for TDK's edge AI sensor platform — unifying incompatible metadata, sensor data models, and ML capabilities from three merged companies into a single coherent interface for industrial predictive maintenance.</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s">
+    <div class="cs-hero__image">Hero image — edgeRX machine health monitoring dashboard</div>
+  </div>
+</section>
+
+<!-- ===== OVERVIEW BAR ===== -->
+<div class="overview-bar reveal">
+  <div class="overview-bar__inner">
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Role</p>
+      <p class="overview-bar__value">Consultant, Edge AI Platform UX</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Timeline</p>
+      <p class="overview-bar__value">2024</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Platform</p>
+      <p class="overview-bar__value">Web dashboards, edge device interfaces</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAGS ===== -->
+<div class="tags reveal">
+  <span class="tag">Edge AI</span>
+  <span class="tag">Sensor Fusion</span>
+  <span class="tag">Predictive Maintenance</span>
+  <span class="tag">Industrial IoT</span>
+  <span class="tag">Data Visualization</span>
+  <span class="tag">CES 2024</span>
+</div>
+
+<!-- ===== BRIEF NARRATIVE ===== -->
+<div class="brief-content reveal">
+  <p>TDK Corporation launched SensEI — a corporate venture consolidating edge AI capabilities from multiple acquisitions including InvenSense ($1.3B), Qeexo, Micronas, and Chirp Microsystems. The technical assets were world-class. The UX problem: three distinct companies had merged under one AI initiative, and nothing matched — metadata schemas, sensor data formats, ML model outputs all incompatible.</p>
+
+  <p>The flagship product edgeRX needed to present itself as a unified machine health monitoring platform. I joined as UX strategy consultant to define the experience. The design couldn't wait for complete backend unification — that would take years. I designed a presentation layer that normalized the user experience while underlying data architecture was being harmonized.</p>
+
+  <div class="inline-image">Progressive disclosure — Health Score → Sensor Summary → Detailed Analysis</div>
+
+  <p>I created a layered abstraction model: a single 0-100 health score for plant managers, per-sensor summary cards with sparkline trends for reliability engineers, and full domain-specific visualization (FFT spectra, waveforms, time-series) for specialists. This progressive disclosure serves all three user types without forcing anyone into unnecessary complexity.</p>
+
+  <p>The biggest UX failure in predictive maintenance systems is showing that something might go wrong without telling users what to do. I designed actionable prediction cards with four required elements: what's happening (plain language), when it matters (predicted timeline), what to do (specific maintenance action), and business impact (cost of action vs. inaction).</p>
+
+  <p>Rather than forcing immediate data standardization, the UX normalization layer unified alert taxonomy to a consistent 4-level severity system, standardized confidence display across all ML model outputs, and created cross-sensor correlation views that showed three separate alerts from three systems as one correlated insight.</p>
+
+  <p class="pull-quote">The UX normalization layer can ship independently of data standardization — making the product feel unified from Day 1.</p>
+</div>
+
+<!-- ===== KEY HIGHLIGHTS ===== -->
+<div class="key-highlight reveal">
+  <div class="key-highlight__inner">
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">3→1</p>
+      <p class="key-highlight__label">Companies unified into single UX</p>
+    </div>
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">CES</p>
+      <p class="key-highlight__label">2024 Innovation Award</p>
+    </div>
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">4-Level</p>
+      <p class="key-highlight__label">Severity normalization</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PREV / NEXT ===== -->
+<div class="prev-next reveal">
+  <div class="prev-next__inner">
+    <a href="rakuten-fit.html" class="prev-next__link">
+      <p class="prev-next__label">← Previous</p>
+      <p class="prev-next__title">Making Fitness Economically Productive</p>
+    </a>
+    <a href="miselu.html" class="prev-next__link prev-next__link--next">
+      <p class="prev-next__label">Next →</p>
+      <p class="prev-next__title">OS-Level Audio Engineering</p>
+    </a>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+</div><!-- end #snow-zone -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script src="../js/scroll-reveal.js" defer></script>
+<script src="../js/weather-hero.js" defer></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
+</body>
+</html>

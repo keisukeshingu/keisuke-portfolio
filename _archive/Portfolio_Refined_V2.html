@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keisuke Shingu — Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap');
+
+  :root {
+    --white: #FFFFFF;
+    --paper: #F5F5F7;
+    --ink: #1D1D1F;
+    --ink-mid: #6E6E73;
+    --ink-light: #86868B;
+    --ink-faint: #AEAEB2;
+    --rule: #D2D2D7;
+    --rule-light: #E8E8ED;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
+
+  body {
+    font-family: var(--font);
+    background: var(--white);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'ss01' on, 'cv01' on;
+  }
+
+  /* ——— Navigation ——— */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 18px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 100;
+  }
+
+  nav .logo {
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  nav .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  nav .nav-links a {
+    text-decoration: none;
+    color: var(--ink-light);
+    font-size: 13px;
+    font-weight: 400;
+    transition: color 0.3s var(--ease);
+  }
+
+  nav .nav-links a:hover { color: var(--ink); }
+
+  /* ——— Hero ——— */
+  .hero {
+    padding: 192px 64px 0;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-bottom: 80px;
+    border-bottom: 1px solid var(--rule-light);
+  }
+
+  .hero .kicker {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    max-width: 680px;
+    margin-bottom: 32px;
+  }
+
+  .hero h1 .light {
+    font-weight: 200;
+    color: var(--ink-light);
+  }
+
+  .hero .subtitle {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    max-width: 520px;
+  }
+
+  .hero .subtitle em {
+    font-style: normal;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ——— Heritage ——— */
+  .heritage {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 80px 64px;
+    border-bottom: 1px solid var(--rule-light);
+  }
+
+  .heritage-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+    margin-bottom: 48px;
+  }
+
+  .heritage .overline {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+
+  .heritage h2 {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  .heritage h2 .light {
+    font-weight: 200;
+    color: var(--ink-light);
+  }
+
+  .heritage .intro {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    padding-top: 28px;
+  }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule-light);
+  }
+
+  .tl-item {
+    padding: 24px 24px 0 0;
+    position: relative;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    background: var(--ink);
+    border-radius: 50%;
+  }
+
+  .tl-item:not(:first-child) {
+    padding-left: 24px;
+    border-left: 1px solid var(--rule-light);
+  }
+
+  .tl-item .year {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+  }
+
+  .tl-item .domain {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .tl-item .context {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--ink-mid);
+    line-height: 1.5;
+  }
+
+  .tl-item .note {
+    font-size: 10px;
+    color: var(--ink-light);
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+
+  /* ——— Projects ——— */
+  .projects {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 80px 64px 0;
+  }
+
+  .projects .overline {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin-bottom: 0;
+  }
+
+  .project-row {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 0;
+    padding: 56px 0;
+    border-top: 1px solid var(--rule-light);
+    align-items: center;
+  }
+
+  .project-row:first-of-type {
+    margin-top: 48px;
+  }
+
+  .project-row.reverse {
+    grid-template-columns: 1fr 1.15fr;
+  }
+
+  .project-row .image-frame {
+    background: var(--paper);
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .project-row .image-frame .ph {
+    text-align: center;
+    padding: 32px;
+  }
+
+  .project-row .image-frame .ph-icon {
+    font-size: 32px;
+    color: var(--rule);
+    margin-bottom: 12px;
+  }
+
+  .project-row .image-frame .ph-label {
+    font-size: 11px;
+    color: var(--ink-faint);
+    line-height: 1.5;
+  }
+
+  .project-row .text-block {
+    padding: 0 56px;
+  }
+
+  .project-row .meta-line {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .project-row .index {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+  }
+
+  .project-row .tier {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+
+  .project-row h3 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .project-row .brand {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    margin-bottom: 18px;
+  }
+
+  .project-row .blurb {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    margin-bottom: 24px;
+  }
+
+  .tags-minimal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+  }
+
+  .tags-minimal span {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--ink-light);
+  }
+
+  .tags-minimal span::before {
+    content: '·  ';
+    color: var(--rule);
+  }
+
+  .tags-minimal span:first-child::before {
+    content: '';
+  }
+
+  /* ——— Small Grid ——— */
+  .grid-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule-light);
+  }
+
+  .grid-cell {
+    padding: 48px 24px 48px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 240px;
+  }
+
+  .grid-cell:not(:last-child) {
+    border-right: 1px solid var(--rule-light);
+  }
+
+  .grid-cell:not(:first-child) {
+    padding-left: 24px;
+  }
+
+  .grid-cell .meta-line {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .grid-cell .index {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-faint);
+  }
+
+  .grid-cell .tier {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+
+  .grid-cell h4 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+
+  .grid-cell p {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--ink-mid);
+  }
+
+  /* ——— Stats Band (bottom) ——— */
+  .stats-band {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 64px;
+  }
+
+  .stats-inner {
+    padding: 56px 0;
+    border-top: 1px solid var(--rule-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .stat-inline {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .stat-inline .number {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-inline .number .dim {
+    font-weight: 200;
+    color: var(--ink-light);
+  }
+
+  .stat-inline .meta {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-weight: 400;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--rule-light);
+  }
+
+  /* ——— Footer ——— */
+  footer {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 48px 64px 64px;
+    border-top: 1px solid var(--rule-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  footer .name {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  footer .role {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--ink-light);
+    margin-top: 4px;
+  }
+
+  footer .contact a {
+    font-size: 13px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 400;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+    transition: border-color 0.3s var(--ease);
+  }
+
+  footer .contact a:hover {
+    border-color: var(--ink);
+  }
+
+  /* ——— Variant Label ——— */
+  .variant-tag {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: var(--ink);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    z-index: 200;
+    opacity: 0.85;
+  }
+</style>
+</head>
+<body>
+
+<div class="variant-tag">Final — V2</div>
+
+<nav>
+  <div class="logo">Keisuke Shingu</div>
+  <ul class="nav-links">
+    <li><a href="#">Work</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Resume</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="kicker">Creative Technologist</div>
+  <h1>Every new medium<br>deserves a new <span class="light">interface.</span></h1>
+  <p class="subtitle">For 25 years I've followed the frontier — from the page to the stage to the factory floor. Wherever <em>creative tools meet emerging technology</em>, I design the bridge. The last five years: bringing that instinct to <em>enterprise at global scale.</em></p>
+</section>
+
+<section class="heritage">
+  <div class="heritage-header">
+    <div>
+      <div class="overline">A Life at the Frontier</div>
+      <h2>Each era brought<br>a new canvas.<br><span class="light">I designed the tools.</span></h2>
+    </div>
+    <div>
+      <p class="intro">I was part of the core group who built the creative software that defined the Mac. Desktop publishing gave way to music production, music to immersive experience, and experience to the intelligent enterprise. Each leap was a chance to rethink what an interface could be.</p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="year">1999–2007</div>
+      <div class="domain">The Printed Word</div>
+      <div class="context">QuarkXPress</div>
+      <div class="note">Macworld Best of Show<br>95% of global publishing</div>
+    </div>
+    <div class="tl-item">
+      <div class="year">2007–2012</div>
+      <div class="domain">Sound & Signal</div>
+      <div class="context">Traktor · Miselu C.24</div>
+      <div class="note">USPTO Patent · Google I/O<br>Apple-native instruments</div>
+    </div>
+    <div class="tl-item">
+      <div class="year">2012–2016</div>
+      <div class="domain">The Live Stage</div>
+      <div class="context">Beatport · Festivals</div>
+      <div class="note">EDC · Ultra · Burning Man<br>Spatial audio & visuals</div>
+    </div>
+    <div class="tl-item">
+      <div class="year">2017–2021</div>
+      <div class="domain">Enterprise Hardware</div>
+      <div class="context">Denon / Marantz</div>
+      <div class="note">60+ SKUs redesigned<br>50+ Apple-certified products</div>
+    </div>
+    <div class="tl-item">
+      <div class="year">2023–Now</div>
+      <div class="domain">Intelligent Industry</div>
+      <div class="context">Fabrion · TDK</div>
+      <div class="note">AI-native enterprise<br>Edge sensing at scale</div>
+    </div>
+  </div>
+</section>
+
+<section class="projects">
+  <div class="overline">Selected Work</div>
+
+  <div class="project-row">
+    <div class="image-frame">
+      <div class="ph">
+        <div class="ph-icon">&#9834;</div>
+        <div class="ph-label">Marantz Cinema porthole display<br>+ TV GUI before / after</div>
+      </div>
+    </div>
+    <div class="text-block">
+      <div class="meta-line">
+        <span class="index">01</span>
+        <span class="tier">Lead Case Study</span>
+      </div>
+      <h3>Making Premium Audio<br>Feel as Good as It Sounds</h3>
+      <div class="brand">Denon / Marantz</div>
+      <p class="blurb">Two heritage audio brands, 60+ products, four global offices — and an interface stuck in the 8-bit era. I led the UX transformation that unified the entire ecosystem, earned Apple certification for 50+ devices, and moved the company from #5 to #1.</p>
+      <div class="tags-minimal">
+        <span>AirPlay 2</span>
+        <span>HomeKit</span>
+        <span>Embedded Linux</span>
+        <span>Qt/QML</span>
+        <span>Design System</span>
+        <span>Monotype</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-row reverse">
+    <div class="text-block">
+      <div class="meta-line">
+        <span class="index">02</span>
+        <span class="tier">Full Depth</span>
+      </div>
+      <h3>Teaching Machines<br>to Earn Human Trust</h3>
+      <div class="brand">Fabrion</div>
+      <p class="blurb">A clean-sheet enterprise platform where AI agents and factory teams collaborate in real time. As founding designer, I shaped every interaction — from the ethical framework governing multi-agent decisions to the design system scaling across EV production lines.</p>
+      <div class="tags-minimal">
+        <span>Multi-Agent AI</span>
+        <span>Design System</span>
+        <span>Trust Calibration</span>
+        <span>Token Pipeline</span>
+        <span>0→1</span>
+      </div>
+    </div>
+    <div class="image-frame">
+      <div class="ph">
+        <div class="ph-icon">&#9881;</div>
+        <div class="ph-label">Fabrion dashboard<br>+ AI agent swim lanes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-row">
+    <div class="image-frame">
+      <div class="ph">
+        <div class="ph-icon">&#9829;</div>
+        <div class="ph-label">Rakuten Fit screens<br>+ gamification tiers</div>
+      </div>
+    </div>
+    <div class="text-block">
+      <div class="meta-line">
+        <span class="index">03</span>
+        <span class="tier">Supporting</span>
+      </div>
+      <h3>Turning Motion<br>into Currency</h3>
+      <div class="brand">Rakuten Fit</div>
+      <p class="blurb">What if every step you took had economic value? I designed the wearable companion that bridges the physical body to Rakuten's 111-million-member digital economy — where health data becomes a new form of exchange within a B2B super-app ecosystem.</p>
+      <div class="tags-minimal">
+        <span>iOS / Android</span>
+        <span>Wearable</span>
+        <span>Gamification</span>
+        <span>Health Data</span>
+        <span>Ecosystem</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-row">
+    <div class="grid-cell">
+      <div class="meta-line">
+        <span class="index">04</span>
+        <span class="tier">Supporting</span>
+      </div>
+      <h4>Making the Invisible Visible</h4>
+      <p>TDK SensEI — Three merged enterprises, one unified sensor intelligence. Designing the dashboard that turns raw edge data into predictive foresight for industrial B2B clients.</p>
+    </div>
+    <div class="grid-cell">
+      <div class="meta-line">
+        <span class="index">05</span>
+        <span class="tier">Brief Showcase</span>
+      </div>
+      <h4>Brand as Spatial Experience</h4>
+      <p>Ogilvy / Audi — When the Audi Q4 e-tron launched, I designed the immersive event experience. Before that, the festival stages where music became architecture.</p>
+    </div>
+    <div class="grid-cell">
+      <div class="meta-line">
+        <span class="index">06</span>
+        <span class="tier">Brief Showcase</span>
+      </div>
+      <h4>Instruments Without Boundaries</h4>
+      <p>Miselu C.24 — A piano keyboard for the iPad generation. USPTO patent holder, Google I/O stage demo. The belief that creative tools should be as portable as ideas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="stats-band">
+  <div class="stats-inner">
+    <div class="stat-inline">
+      <span class="number">50<span class="dim">+</span></span>
+      <span class="meta">Apple-certified products</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-inline">
+      <span class="number">200<span class="dim">+</span></span>
+      <span class="meta">SKUs unified</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-inline">
+      <span class="number">5<span class="dim">→</span>1</span>
+      <span class="meta">Market position</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-inline">
+      <span class="number">1</span>
+      <span class="meta">USPTO patent</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="name">Keisuke Shingu</div>
+    <div class="role">Creative Technologist — Hardware × Software × AI</div>
+  </div>
+  <div class="contact"><a href="mailto:keisuke@gmail.com">keisuke@gmail.com</a></div>
+</footer>
+
+</body>
+</html>
