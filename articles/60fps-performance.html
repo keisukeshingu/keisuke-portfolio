@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 60fps Imperative — Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===== Design Tokens ===== */
+  :root {
+    --ink-100: #1D1D1F;
+    --ink-80: #6E6E73;
+    --ink-60: #86868B;
+    --ink-40: #AEAEB2;
+    --rule-60: #D2D2D7;
+    --rule-40: #E8E8ED;
+    --paper: #F5F5F7;
+    --white: #FFFFFF;
+    --shu: #B33A3A;
+    --nav-bg: rgba(255,255,255,0.92);
+    --blur: 20px;
+    --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+    --max-w: 1120px;
+  }
+
+  /* ===== Reset ===== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--ink-100);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'ss01' on, 'cv01' on;
+  }
+  a { text-decoration: none; color: inherit; }
+
+  /* ===== Reading Progress Bar ===== */
+  .article-progress {
+    position: fixed; top: 0; left: 0; z-index: 101;
+    width: 0%; height: 2px;
+    background: var(--shu);
+    transition: width 0.1s linear;
+    pointer-events: none;
+  }
+
+  /* ===== Nav ===== */
+  .nav {
+    position: fixed; top: 2px; left: 0; right: 0; z-index: 100;
+    height: 56px; display: flex; align-items: center;
+    background: var(--nav-bg);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    border-bottom: 1px solid var(--rule-40);
+  }
+  .nav__inner {
+    width: 100%; max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav__logo { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink-100); }
+  .nav__links { display: flex; gap: 32px; list-style: none; }
+  .nav__links a { font-size: 13px; font-weight: 400; color: var(--ink-80); transition: color 0.3s var(--ease); }
+  .nav__links a:hover { color: var(--ink-100); }
+  .nav__links a.active { color: var(--ink-100); font-weight: 500; }
+
+  /* ===== Article Hero ===== */
+  .article-hero {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 140px 64px 0;
+  }
+  .article-hero__back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 400; color: var(--ink-60);
+    margin-bottom: 48px; transition: color 0.3s var(--ease);
+  }
+  .article-hero__back:hover { color: var(--ink-100); }
+  .article-hero__back svg { width: 14px; height: 14px; }
+  .article-hero__category {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .article-hero__title {
+    font-size: 48px; font-weight: 200; line-height: 1.1;
+    letter-spacing: -0.035em; color: var(--ink-60);
+    max-width: 800px; margin-bottom: 24px;
+  }
+  .article-hero__title .bold { font-weight: 600; color: var(--ink-100); }
+  .article-hero__byline {
+    font-size: 14px; font-weight: 300; color: var(--ink-60);
+    margin-bottom: 48px;
+  }
+  .article-hero__byline .dot { margin: 0 8px; color: var(--ink-40); }
+  .article-hero__image {
+    width: 100%; aspect-ratio: 16/9; border-radius: 12px;
+    overflow: hidden; margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--paper) 0%, var(--rule-40) 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .article-hero__image img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .article-hero__image-placeholder {
+    font-size: 14px; color: var(--ink-40); font-weight: 300;
+  }
+  .article-hero__caption {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    margin-bottom: 64px;
+  }
+
+  /* ===== Article Layout (Content + TOC Sidebar) ===== */
+  .article-layout {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 80px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* ===== Table of Contents ===== */
+  .article-toc {
+    position: sticky; top: 80px;
+    padding-top: 8px;
+  }
+  .article-toc__label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .article-toc__list { list-style: none; }
+  .article-toc__item { margin-bottom: 10px; }
+  .article-toc__link {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    line-height: 1.4; display: block;
+    transition: color 0.3s var(--ease);
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+  }
+  .article-toc__link:hover { color: var(--ink-100); }
+  .article-toc__link.active {
+    color: var(--ink-100); font-weight: 400;
+    border-left-color: var(--ink-100);
+  }
+
+  /* ===== Article Body ===== */
+  .article-body {
+    max-width: 640px;
+  }
+  .article-body p {
+    font-size: 16px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-100); margin-bottom: 20px;
+  }
+  .article-body h2 {
+    font-size: 28px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100);
+    margin-top: 56px; margin-bottom: 20px;
+    scroll-margin-top: 80px;
+  }
+  .article-body h3 {
+    font-size: 20px; font-weight: 500; line-height: 1.3;
+    letter-spacing: -0.01em; color: var(--ink-100);
+    margin-top: 36px; margin-bottom: 12px;
+  }
+  .article-body strong { font-weight: 500; }
+  .article-body a {
+    color: var(--ink-80);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--rule-60);
+    transition: text-decoration-color 0.3s var(--ease);
+  }
+  .article-body a:hover { text-decoration-color: var(--ink-100); }
+
+  /* Pull Quote */
+  .pull-quote {
+    font-size: 18px; font-weight: 300; font-style: italic;
+    line-height: 1.6; color: var(--ink-60);
+    border-left: 3px solid var(--rule-60);
+    padding: 20px 0 20px 24px;
+    margin: 36px 0;
+    background: var(--paper);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* Inline Figure */
+  .article-figure {
+    margin: 40px 0;
+  }
+  .article-figure__image {
+    width: 100%; border-radius: 12px;
+    background: linear-gradient(135deg, var(--paper) 0%, var(--rule-40) 100%);
+    aspect-ratio: 16/10;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .article-figure__image img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .article-figure__placeholder {
+    font-size: 13px; color: var(--ink-40); font-weight: 300;
+  }
+  .article-figure__caption {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    margin-top: 10px; line-height: 1.5;
+  }
+
+  /* Video Embed */
+  .article-video {
+    margin: 40px 0;
+  }
+  .article-video__embed {
+    width: 100%; aspect-ratio: 16/9;
+    border-radius: 12px; overflow: hidden;
+    background: var(--ink-100);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .article-video__embed iframe {
+    width: 100%; height: 100%; border: none;
+    border-radius: 12px;
+  }
+  .article-video__placeholder {
+    color: var(--ink-40); font-size: 14px; font-weight: 300;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .article-video__placeholder svg { opacity: 0.5; }
+  .article-video__caption {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    margin-top: 10px;
+  }
+
+  /* ===== Author Bio ===== */
+  .article-author {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px;
+  }
+  .article-author__inner {
+    border-top: 1px solid var(--rule-40);
+    border-bottom: 1px solid var(--rule-40);
+    padding: 40px 0;
+    display: grid; grid-template-columns: 64px 1fr;
+    gap: 24px; align-items: start;
+    max-width: 640px;
+    margin-left: 264px;
+  }
+  .article-author__avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--paper); overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .article-author__avatar svg { color: var(--ink-40); }
+  .article-author__name {
+    font-size: 16px; font-weight: 600; color: var(--ink-100);
+    margin-bottom: 2px;
+  }
+  .article-author__role {
+    font-size: 14px; font-weight: 300; color: var(--ink-60);
+    margin-bottom: 8px;
+  }
+  .article-author__bio {
+    font-size: 14px; font-weight: 300; line-height: 1.6;
+    color: var(--ink-80); margin-bottom: 12px;
+  }
+  .article-author__links { display: flex; gap: 16px; }
+  .article-author__links a {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    transition: color 0.3s var(--ease);
+  }
+  .article-author__links a:hover { color: var(--ink-100); }
+
+  /* ===== Related Articles ===== */
+  .article-related {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 64px 64px 0;
+  }
+  .article-related__heading {
+    font-size: 26px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100);
+    margin-bottom: 32px;
+  }
+  .article-related__grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .dt-card {
+    display: block; border-radius: 12px; overflow: hidden;
+    background: var(--paper);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .dt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 32px rgba(0,0,0,0.05);
+  }
+  .dt-card__image-wrap {
+    width: 100%; aspect-ratio: 4/3; overflow: hidden;
+    background: linear-gradient(135deg, var(--rule-40) 0%, var(--paper) 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dt-card__image-placeholder {
+    font-size: 13px; color: var(--ink-40); font-weight: 300;
+  }
+  .dt-card__body { padding: 20px 24px 24px; }
+  .dt-card__meta {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
+  }
+  .dt-card__meta .dot { margin: 0 6px; }
+  .dt-card__title {
+    font-size: 18px; font-weight: 600; line-height: 1.25;
+    letter-spacing: -0.01em; color: var(--ink-100); margin-bottom: 8px;
+  }
+  .dt-card__excerpt {
+    font-size: 13px; font-weight: 300; line-height: 1.5;
+    color: var(--ink-80);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ===== Prev/Next Nav ===== */
+  .article-nav {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 64px 64px 0;
+  }
+  .article-nav__inner {
+    display: flex; justify-content: space-between;
+    border-top: 1px solid var(--rule-40);
+    padding-top: 32px;
+  }
+  .article-nav__link {
+    transition: opacity 0.3s var(--ease);
+    max-width: 45%;
+  }
+  .article-nav__link:hover { opacity: 0.6; }
+  .article-nav__link--next { text-align: right; margin-left: auto; }
+  .article-nav__label {
+    font-size: 12px; font-weight: 400; color: var(--ink-60);
+    margin-bottom: 6px;
+  }
+  .article-nav__title {
+    font-size: 16px; font-weight: 500; color: var(--ink-100);
+    line-height: 1.3;
+  }
+
+  /* ===== Spacer ===== */
+  .spacer { height: 80px; }
+
+  /* ===== Footer ===== */
+  .footer { border-top: 1px solid var(--rule-40); }
+  .footer__inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 40px 64px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .footer__name { font-size: 14px; font-weight: 500; color: var(--ink-100); }
+  .footer__tagline { font-size: 13px; font-weight: 300; color: var(--ink-60); margin-top: 4px; }
+  .footer__links { display: flex; gap: 32px; }
+  .footer__links a { font-size: 13px; font-weight: 300; color: var(--ink-80); transition: color 0.3s; }
+  .footer__links a:hover { color: var(--ink-100); }
+  .footer__copy {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 64px 40px;
+    border-top: 1px solid var(--rule-40); padding-top: 24px;
+    font-size: 12px; font-weight: 300; color: var(--ink-40);
+  }
+
+  /* ===== Scroll Animations ===== */
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1119px) {
+    .article-layout {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .article-toc {
+      position: relative; top: auto;
+      margin-bottom: 40px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--rule-40);
+    }
+    .article-toc__list {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .article-toc__item { margin-bottom: 0; }
+    .article-toc__link {
+      border-left: none; padding-left: 0;
+      padding: 4px 12px; border-radius: 100px;
+      border: 1px solid var(--rule-40);
+      font-size: 12px;
+    }
+    .article-toc__link.active {
+      border-color: var(--ink-100);
+      background: var(--ink-100); color: var(--white);
+      border-left: none;
+    }
+    .article-author__inner { margin-left: 0; }
+    .article-related__grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 767px) {
+    .article-hero { padding: 120px 24px 0; }
+    .article-hero__title { font-size: 32px; }
+    .article-hero__back { margin-bottom: 32px; }
+    .article-hero__byline { margin-bottom: 32px; }
+    .article-hero__caption { margin-bottom: 40px; }
+    .nav__inner { padding: 0 24px; }
+    .nav__links { display: none; }
+    .article-layout { padding: 0 24px 48px; }
+    .article-body h2 { font-size: 24px; margin-top: 40px; }
+    .article-body h3 { font-size: 18px; }
+    .article-author { padding: 0 24px; }
+    .article-author__inner {
+      grid-template-columns: 1fr; gap: 16px;
+    }
+    .article-related { padding: 48px 24px 0; }
+    .article-related__grid { grid-template-columns: 1fr; }
+    .article-nav { padding: 48px 24px 0; }
+    .article-nav__inner { flex-direction: column; gap: 24px; }
+    .article-nav__link { max-width: 100%; }
+    .article-nav__link--next { text-align: left; }
+    .footer__inner { padding: 32px 24px; flex-direction: column; gap: 24px; }
+    .footer__copy { padding: 0 24px 32px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .article-progress { transition: none; }
+    .dt-card { transition: none; }
+  }
+</style>
+
+</head>
+<body>
+<div class="article-progress" id="readingProgress"></div>
+<header class="nav"><nav class="nav__inner"><a href="../index.html" class="nav__logo">Keisuke Shingu</a><ul class="nav__links"><li><a href="../projects.html" >Projects</a></li><li><a href="../design-thinking.html" class="active">Design Thinking</a></li><li><a href="../about.html" >About</a></li><li><a href="../contact.html" >Contact</a></li></ul></nav></header>
+
+<article>
+  <header class="article-hero">
+    <a href="../design-thinking.html" class="article-hero__back">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2L4 7l5 5"/></svg>
+      Design Thinking
+    </a>
+    <p class="article-hero__category">Engineering</p>
+    <h1 class="article-hero__title">
+      <span class="bold">The 60fps Imperative</span> — Performance as a Design Decision
+    </h1>
+    <p class="article-hero__byline">
+      Keisuke Shingu<span class="dot">·</span>November 12, 2025<span class="dot">·</span>6 min read
+    </p>
+    <div class="article-hero__image">
+      <span class="article-hero__image-placeholder">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><polyline points="4,36 12,28 20,32 28,20 36,24 44,12" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="4" y1="40" x2="44" y2="40" stroke="currentColor" stroke-width="1"/></svg>
+      </span>
+    </div>
+    <p class="article-hero__caption">
+      Performance timeline showing the perceptual threshold where interface interactions transition from "instant" to "noticeable" to "broken."
+    </p>
+  </header>
+
+  <div class="article-layout">
+    <aside class="article-toc" id="articleToc">
+      <p class="article-toc__label">On This Page</p>
+      <ol class="article-toc__list">
+        <li class="article-toc__item"><a href="#perception-threshold" class="article-toc__link active">The Perception Threshold</a></li>
+        <li class="article-toc__item"><a href="#trust-equation" class="article-toc__link">The Trust Equation</a></li>
+        <li class="article-toc__item"><a href="#premium-signal" class="article-toc__link">Performance as Premium Signal</a></li>
+        <li class="article-toc__item"><a href="#audio-lesson" class="article-toc__link">Lessons from Audio</a></li>
+        <li class="article-toc__item"><a href="#design-performance" class="article-toc__link">Designing for Performance</a></li>
+      </ol>
+    </aside>
+
+    <div class="article-body" id="articleBody">
+
+      <p>
+        There's a number that every interface designer should internalize: 16.67 milliseconds. That's the budget for a single frame at 60 frames per second. Miss it, and the human eye perceives the disruption — not as a technical failure, but as a quality judgment. The interface feels cheap, unreliable, wrong.
+      </p>
+
+      <p>
+        Most design conversations treat performance as an engineering concern — something to optimize after the design is finalized. But after years of building interfaces for premium audio products at Denon and Marantz, I've come to see frame rate not as a technical constraint but as a <strong>design material</strong>, as fundamental as color or typography.
+      </p>
+
+      <h2 id="perception-threshold">The Perception Threshold</h2>
+
+      <p>
+        Human perception is extraordinarily sensitive to temporal disruption. Research in perceptual psychology shows that we can detect frame drops as small as 8 milliseconds in smooth animations. We can't articulate what's wrong — we don't think "that animation dropped to 45fps" — but we <strong>feel</strong> it. The experience registers as a subtle wrongness, a micro-erosion of trust.
+      </p>
+
+      <p>
+        This matters because modern interfaces are increasingly animated. Scroll physics, page transitions, gesture responses, loading states, micro-interactions — the temporal dimension of design is now as rich as the spatial dimension. And every one of these temporal elements has a performance budget.
+      </p>
+
+      <div class="pull-quote">
+        Users can't tell you why a 30fps interface feels cheap. But they can tell you it doesn't feel like a product they'd pay premium for. Frame rate is a subliminal quality signal.
+      </div>
+
+      <h2 id="trust-equation">The Trust Equation</h2>
+
+      <p>
+        Performance builds trust through a mechanism psychologists call "processing fluency." When information is presented smoothly — when animations don't stutter, when scrolling responds instantly, when transitions feel weightless — the brain processes the content more easily. And we attribute that ease of processing to the <strong>quality of the content itself</strong>.
+      </p>
+
+      <p>
+        The inverse is equally powerful. A dashboard that stutters during a critical data refresh undermines confidence in the data, even if the data is perfectly accurate. A trading interface with 200ms of input latency feels untrustworthy, regardless of its analytical sophistication. Performance problems become credibility problems.
+      </p>
+
+      <figure class="article-figure">
+        <div class="article-figure__image">
+          <span class="article-figure__placeholder">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="4" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><polyline points="8,36 16,20 24,28 32,12 40,16" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><line x1="8" y1="40" x2="40" y2="40" stroke="var(--ink-40)" stroke-width="0.5"/></svg>
+          </span>
+        </div>
+        <figcaption class="article-figure__caption">
+          The trust-performance curve: user confidence in content accuracy drops sharply when interface performance falls below the 60fps threshold, even when underlying data quality remains constant.
+        </figcaption>
+      </figure>
+
+      <h2 id="premium-signal">Performance as Premium Signal</h2>
+
+      <p>
+        In the luxury goods market, quality is communicated through subtlety. The weight of a watch, the click of a car door, the texture of leather — these aren't functional requirements, they're quality signals. Digital interfaces have an equivalent: the fluidity of interaction.
+      </p>
+
+      <p>
+        Apple understood this decades ago. The original iPhone's scroll physics weren't just smooth — they were <strong>physically modeled</strong>, with momentum, friction, and bounce that made the virtual surface feel tangible. The engineering investment was enormous. The design payoff was that the entire product felt premium before you'd read a single word on screen.
+      </p>
+
+      <h2 id="audio-lesson">Lessons from Audio</h2>
+
+      <p>
+        At Denon and Marantz, we designed control interfaces for amplifiers that cost thousands of dollars. The hardware was impeccable — hand-wound transformers, gold-plated connectors, machined aluminum. If the app controlling this hardware stuttered while adjusting volume, the entire premium experience shattered.
+      </p>
+
+      <p>
+        We adopted a rule: every user-initiated interaction must complete its visual response within one frame. Volume knob rotation, EQ adjustment, source switching — zero perceptible latency. This wasn't a "nice to have." It was a design requirement equal in importance to the visual design itself.
+      </p>
+
+      <div class="pull-quote">
+        You can't put a $3,000 amplifier behind a 24fps interface. The software has to be as precise as the hardware, or the hardware's quality becomes invisible.
+      </div>
+
+      <p>
+        The discipline this required transformed how we designed. We stopped creating animations and asking engineering to "make them smooth." Instead, we designed <strong>within the performance budget</strong> from the start. Every visual effect had a measured cost. Every transition was prototyped at frame level before being approved.
+      </p>
+
+      <h2 id="design-performance">Designing for Performance</h2>
+
+      <p>
+        Treating performance as a design material means changing when performance enters the design process. Not at the end ("can engineering optimize this?") but at the beginning ("what can we achieve within 16.67ms?").
+      </p>
+
+      <p>
+        This means understanding what's cheap and what's expensive in rendering terms. CSS transforms and opacity changes are GPU-accelerated and nearly free. Layout recalculations are expensive. Blur filters are beautiful but costly. Knowing these costs doesn't limit creativity — it redirects it toward solutions that are both beautiful and achievable.
+      </p>
+
+      <figure class="article-figure">
+        <div class="article-figure__image">
+          <span class="article-figure__placeholder">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><line x1="8" y1="24" x2="40" y2="24" stroke="var(--ink-40)" stroke-width="0.5" stroke-dasharray="2 2"/><rect x="12" y="14" width="8" height="8" rx="1" stroke="var(--ink-40)" stroke-width="1" fill="none"/><rect x="12" y="28" width="24" height="6" rx="1" stroke="var(--ink-40)" stroke-width="1" fill="none"/></svg>
+          </span>
+        </div>
+        <figcaption class="article-figure__caption">
+          The performance budget framework: allocating rendering time across layout, paint, composite, and JavaScript execution within the 16.67ms frame window.
+        </figcaption>
+      </figure>
+
+      <p>
+        The 60fps imperative isn't about technical purity. It's about recognizing that time is a design dimension — that the quality of an interface is judged not just by how it looks, but by how it <strong>moves</strong>. Frame rate is invisible when it's right and devastating when it's wrong. Designing for it isn't optimization. It's craft.
+      </p>
+
+    </div>
+  </div>
+</article>
+
+<section class="article-author reveal">
+  <div class="article-author__inner">
+    <div class="article-author__avatar"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="currentColor" stroke-width="1.5"/></svg></div>
+    <div>
+      <p class="article-author__name">Keisuke Shingu</p>
+      <p class="article-author__role">Product Designer & Design Systems Architect</p>
+      <p class="article-author__bio">Designing AI-native interfaces for multi-agent systems. Previously led design engineering at Denon/Marantz, Slalom Consulting, and Rakuten. Focused on the intersection of human judgment and machine intelligence.</p>
+      <div class="article-author__links"><a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a><a href="../contact.html" >Contact</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="article-related reveal">
+  <h2 class="article-related__heading">Continue Reading</h2>
+  <div class="article-related__grid">
+    <a href="design-tokens.html" class="dt-card"><div class="dt-card__image-wrap"><span class="dt-card__image-placeholder"><svg width="32" height="32" viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></span></div><div class="dt-card__body"><p class="dt-card__meta">Design Systems<span class="dot">·</span>Dec 2025</p><h3 class="dt-card__title">Design Tokens Are Not Enough</h3><p class="dt-card__excerpt">Why most design systems fail at the seams and a framework for building living systems.</p></div></a>
+    <a href="confidence-calibration.html" class="dt-card"><div class="dt-card__image-wrap"><span class="dt-card__image-placeholder"><svg width="32" height="32" viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></span></div><div class="dt-card__body"><p class="dt-card__meta">AI & UX<span class="dot">·</span>Oct 2025</p><h3 class="dt-card__title">Confidence Calibration</h3><p class="dt-card__excerpt">The most important UX pattern in AI isn't showing answers — it's communicating uncertainty.</p></div></a>
+    <a href="agents-cognitive-prosthetics.html" class="dt-card"><div class="dt-card__image-wrap"><span class="dt-card__image-placeholder"><svg width="32" height="32" viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></span></div><div class="dt-card__body"><p class="dt-card__meta">AI & UX<span class="dot">·</span>Feb 2026</p><h3 class="dt-card__title">Agents as Cognitive Prosthetics</h3><p class="dt-card__excerpt">The most powerful AI systems aren't replacements — they're extensions of human judgment.</p></div></a>
+  </div>
+</section>
+
+<nav class="article-nav">
+  <div class="article-nav__inner">
+    <a href="design-tokens.html" class="article-nav__link article-nav__link--prev"><p class="article-nav__label">← Previous Article</p><p class="article-nav__title">Design Tokens Are Not Enough</p></a>
+    <a href="confidence-calibration.html" class="article-nav__link article-nav__link--next"><p class="article-nav__label">Next Article →</p><p class="article-nav__title">Confidence Calibration</p></a>
+  </div>
+</nav>
+
+<div class="spacer"></div>
+<footer class="footer"><div class="footer__inner"><div><p class="footer__name">Keisuke Shingu</p><p class="footer__tagline">Product UX Planning & Design Engineering</p></div><div class="footer__links"><a href="../about.html" >About</a><a href="../contact.html" >Contact</a><a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a></div></div><p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p></footer>
+
+<script>
+  const observer=new IntersectionObserver((e)=>{e.forEach((e)=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.1,rootMargin:'-40px'});document.querySelectorAll('.reveal').forEach((e)=>observer.observe(e));
+  const progressBar=document.getElementById('readingProgress'),articleBody=document.getElementById('articleBody');function updateProgress(){const r=articleBody.getBoundingClientRect(),t=r.top+window.scrollY,h=r.height,s=window.scrollY-t;progressBar.style.width=Math.max(0,Math.min(100,(s/h)*100))+'%'}window.addEventListener('scroll',()=>requestAnimationFrame(updateProgress));updateProgress();
+  const tocLinks=document.querySelectorAll('.article-toc__link'),secs=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1),s=document.getElementById(id);if(s)secs.push({el:s,link:l})});const tocObs=new IntersectionObserver((e)=>{e.forEach(en=>{if(en.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));const m=secs.find(s=>s.el===en.target);if(m)m.link.classList.add('active')}})},{threshold:0,rootMargin:'-80px 0px -70% 0px'});secs.forEach(s=>tocObs.observe(s.el));
+</script>
+</body>
+</html>
