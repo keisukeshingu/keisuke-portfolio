@@ -21,13 +21,17 @@
 
   /* ===== Case Study Hero ===== */
 
-  /* ── Robot Heart hero: desert red glow ── */
   .hero-glow {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 480px; height: 480px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(179,58,58,0.25) 0%, transparent 68%);
-    pointer-events: none; z-index: 0;
+    background: radial-gradient(circle, rgba(179,58,58,0.22) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-bus-label {
+    position: absolute; bottom: 28px; left: 32px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.28);
   }
 
   /* ===== Overview Bar ===== */
@@ -75,10 +79,9 @@
   <h1 class="cs-hero__title">The Bus That <span class="bold">Became a World</span></h1>
   <p class="cs-hero__role">Lead Visual Artist · 2011 – Present</p>
 
-  <div class="cs-hero__image" data-kanji="心" style="background: linear-gradient(160deg, #120808 0%, #200A0A 100%);">
-      <img src="https://dusttoashes.com/wp-content/uploads/2025/11/Robot-Heart-and-The-Man.jpg" alt="Robot Heart 1972 Leyland bus art installation — Burning Man Black Rock City" loading="eager">
-        <span class="hero-glow"></span>
-    <span class="cs-hero__image-label">Robot Heart · 1972 Leyland · Black Rock City</span>
+  <div class="cs-hero__image">
+    <span class="hero-glow"></span>
+    <span class="hero-bus-label">Robot Heart · 1972 Leyland · Black Rock City</span>
   </div>
 </div>
 
