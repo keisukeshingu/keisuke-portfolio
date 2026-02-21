@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agents as Cognitive Prosthetics — Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===== Design Tokens ===== */
+  :root {
+    --ink-100: #1D1D1F;
+    --ink-80: #6E6E73;
+    --ink-60: #86868B;
+    --ink-40: #AEAEB2;
+    --rule-60: #D2D2D7;
+    --rule-40: #E8E8ED;
+    --paper: #F5F5F7;
+    --white: #FFFFFF;
+    --shu: #B33A3A;
+    --nav-bg: rgba(255,255,255,0.92);
+    --blur: 20px;
+    --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+    --max-w: 1120px;
+  }
+
+  /* ===== Reset ===== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--ink-100);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'ss01' on, 'cv01' on;
+  }
+  a { text-decoration: none; color: inherit; }
+
+  /* ===== Reading Progress Bar ===== */
+  .article-progress {
+    position: fixed; top: 0; left: 0; z-index: 101;
+    width: 0%; height: 2px;
+    background: var(--shu);
+    transition: width 0.1s linear;
+    pointer-events: none;
+  }
+
+  /* ===== Nav ===== */
+  .nav {
+    position: fixed; top: 2px; left: 0; right: 0; z-index: 100;
+    height: 56px; display: flex; align-items: center;
+    background: var(--nav-bg);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    border-bottom: 1px solid var(--rule-40);
+  }
+  .nav__inner {
+    width: 100%; max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav__logo { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink-100); }
+  .nav__links { display: flex; gap: 32px; list-style: none; }
+  .nav__links a { font-size: 13px; font-weight: 400; color: var(--ink-80); transition: color 0.3s var(--ease); }
+  .nav__links a:hover { color: var(--ink-100); }
+  .nav__links a.active { color: var(--ink-100); font-weight: 500; }
+
+  /* ===== Article Hero ===== */
+  .article-hero {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 140px 64px 0;
+  }
+  .article-hero__back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 400; color: var(--ink-60);
+    margin-bottom: 48px; transition: color 0.3s var(--ease);
+  }
+  .article-hero__back:hover { color: var(--ink-100); }
+  .article-hero__back svg { width: 14px; height: 14px; }
+  .article-hero__category {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .article-hero__title {
+    font-size: 48px; font-weight: 200; line-height: 1.1;
+    letter-spacing: -0.035em; color: var(--ink-60);
+    max-width: 800px; margin-bottom: 24px;
+  }
+  .article-hero__title .bold { font-weight: 600; color: var(--ink-100); }
+  .article-hero__byline {
+    font-size: 14px; font-weight: 300; color: var(--ink-60);
+    margin-bottom: 48px;
+  }
+  .article-hero__byline .dot { margin: 0 8px; color: var(--ink-40); }
+  .article-hero__image {
+    width: 100%; aspect-ratio: 16/9; border-radius: 12px;
+    overflow: hidden; margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--paper) 0%, var(--rule-40) 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .article-hero__image img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .article-hero__image-placeholder {
+    font-size: 14px; color: var(--ink-40); font-weight: 300;
+  }
+  .article-hero__caption {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    margin-bottom: 64px;
+  }
+
+  /* ===== Article Layout (Content + TOC Sidebar) ===== */
+  .article-layout {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 80px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* ===== Table of Contents ===== */
+  .article-toc {
+    position: sticky; top: 80px;
+    padding-top: 8px;
+  }
+  .article-toc__label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .article-toc__list { list-style: none; }
+  .article-toc__item { margin-bottom: 10px; }
+  .article-toc__link {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    line-height: 1.4; display: block;
+    transition: color 0.3s var(--ease);
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+  }
+  .article-toc__link:hover { color: var(--ink-100); }
+  .article-toc__link.active {
+    color: var(--ink-100); font-weight: 400;
+    border-left-color: var(--ink-100);
+  }
+
+  /* ===== Article Body ===== */
+  .article-body {
+    max-width: 640px;
+  }
+  .article-body p {
+    font-size: 16px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-100); margin-bottom: 20px;
+  }
+  .article-body h2 {
+    font-size: 28px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100);
+    margin-top: 56px; margin-bottom: 20px;
+    scroll-margin-top: 80px;
+  }
+  .article-body h3 {
+    font-size: 20px; font-weight: 500; line-height: 1.3;
+    letter-spacing: -0.01em; color: var(--ink-100);
+    margin-top: 36px; margin-bottom: 12px;
+  }
+  .article-body strong { font-weight: 500; }
+  .article-body a {
+    color: var(--ink-80);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--rule-60);
+    transition: text-decoration-color 0.3s var(--ease);
+  }
+  .article-body a:hover { text-decoration-color: var(--ink-100); }
+
+  /* Pull Quote */
+  .pull-quote {
+    font-size: 18px; font-weight: 300; font-style: italic;
+    line-height: 1.6; color: var(--ink-60);
+    border-left: 3px solid var(--rule-60);
+    padding: 20px 0 20px 24px;
+    margin: 36px 0;
+    background: var(--paper);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* Inline Figure */
+  .article-figure {
+    margin: 40px 0;
+  }
+  .article-figure__image {
+    width: 100%; border-radius: 12px;
+    background: linear-gradient(135deg, var(--paper) 0%, var(--rule-40) 100%);
+    aspect-ratio: 16/10;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .article-figure__image img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .article-figure__placeholder {
+    font-size: 13px; color: var(--ink-40); font-weight: 300;
+  }
+  .article-figure__caption {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    margin-top: 10px; line-height: 1.5;
+  }
+
+  /* Video Embed */
+  .article-video {
+    margin: 40px 0;
+  }
+  .article-video__embed {
+    width: 100%; aspect-ratio: 16/9;
+    border-radius: 12px; overflow: hidden;
+    background: var(--ink-100);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .article-video__embed iframe {
+    width: 100%; height: 100%; border: none;
+    border-radius: 12px;
+  }
+  .article-video__placeholder {
+    color: var(--ink-40); font-size: 14px; font-weight: 300;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .article-video__placeholder svg { opacity: 0.5; }
+  .article-video__caption {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    margin-top: 10px;
+  }
+
+  /* ===== Author Bio ===== */
+  .article-author {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px;
+  }
+  .article-author__inner {
+    border-top: 1px solid var(--rule-40);
+    border-bottom: 1px solid var(--rule-40);
+    padding: 40px 0;
+    display: grid; grid-template-columns: 64px 1fr;
+    gap: 24px; align-items: start;
+    max-width: 640px;
+    margin-left: 264px;
+  }
+  .article-author__avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--paper); overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .article-author__avatar svg { color: var(--ink-40); }
+  .article-author__name {
+    font-size: 16px; font-weight: 600; color: var(--ink-100);
+    margin-bottom: 2px;
+  }
+  .article-author__role {
+    font-size: 14px; font-weight: 300; color: var(--ink-60);
+    margin-bottom: 8px;
+  }
+  .article-author__bio {
+    font-size: 14px; font-weight: 300; line-height: 1.6;
+    color: var(--ink-80); margin-bottom: 12px;
+  }
+  .article-author__links { display: flex; gap: 16px; }
+  .article-author__links a {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    transition: color 0.3s var(--ease);
+  }
+  .article-author__links a:hover { color: var(--ink-100); }
+
+  /* ===== Related Articles ===== */
+  .article-related {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 64px 64px 0;
+  }
+  .article-related__heading {
+    font-size: 26px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100);
+    margin-bottom: 32px;
+  }
+  .article-related__grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .dt-card {
+    display: block; border-radius: 12px; overflow: hidden;
+    background: var(--paper);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .dt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 32px rgba(0,0,0,0.05);
+  }
+  .dt-card__image-wrap {
+    width: 100%; aspect-ratio: 4/3; overflow: hidden;
+    background: linear-gradient(135deg, var(--rule-40) 0%, var(--paper) 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dt-card__image-placeholder {
+    font-size: 13px; color: var(--ink-40); font-weight: 300;
+  }
+  .dt-card__body { padding: 20px 24px 24px; }
+  .dt-card__meta {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
+  }
+  .dt-card__meta .dot { margin: 0 6px; }
+  .dt-card__title {
+    font-size: 18px; font-weight: 600; line-height: 1.25;
+    letter-spacing: -0.01em; color: var(--ink-100); margin-bottom: 8px;
+  }
+  .dt-card__excerpt {
+    font-size: 13px; font-weight: 300; line-height: 1.5;
+    color: var(--ink-80);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ===== Prev/Next Nav ===== */
+  .article-nav {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 64px 64px 0;
+  }
+  .article-nav__inner {
+    display: flex; justify-content: space-between;
+    border-top: 1px solid var(--rule-40);
+    padding-top: 32px;
+  }
+  .article-nav__link {
+    transition: opacity 0.3s var(--ease);
+    max-width: 45%;
+  }
+  .article-nav__link:hover { opacity: 0.6; }
+  .article-nav__link--next { text-align: right; margin-left: auto; }
+  .article-nav__label {
+    font-size: 12px; font-weight: 400; color: var(--ink-60);
+    margin-bottom: 6px;
+  }
+  .article-nav__title {
+    font-size: 16px; font-weight: 500; color: var(--ink-100);
+    line-height: 1.3;
+  }
+
+  /* ===== Spacer ===== */
+  .spacer { height: 80px; }
+
+  /* ===== Footer ===== */
+  .footer { border-top: 1px solid var(--rule-40); }
+  .footer__inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 40px 64px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .footer__name { font-size: 14px; font-weight: 500; color: var(--ink-100); }
+  .footer__tagline { font-size: 13px; font-weight: 300; color: var(--ink-60); margin-top: 4px; }
+  .footer__links { display: flex; gap: 32px; }
+  .footer__links a { font-size: 13px; font-weight: 300; color: var(--ink-80); transition: color 0.3s; }
+  .footer__links a:hover { color: var(--ink-100); }
+  .footer__copy {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 64px 40px;
+    border-top: 1px solid var(--rule-40); padding-top: 24px;
+    font-size: 12px; font-weight: 300; color: var(--ink-40);
+  }
+
+  /* ===== Scroll Animations ===== */
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1119px) {
+    .article-layout {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .article-toc {
+      position: relative; top: auto;
+      margin-bottom: 40px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--rule-40);
+    }
+    .article-toc__list {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .article-toc__item { margin-bottom: 0; }
+    .article-toc__link {
+      border-left: none; padding-left: 0;
+      padding: 4px 12px; border-radius: 100px;
+      border: 1px solid var(--rule-40);
+      font-size: 12px;
+    }
+    .article-toc__link.active {
+      border-color: var(--ink-100);
+      background: var(--ink-100); color: var(--white);
+      border-left: none;
+    }
+    .article-author__inner { margin-left: 0; }
+    .article-related__grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 767px) {
+    .article-hero { padding: 120px 24px 0; }
+    .article-hero__title { font-size: 32px; }
+    .article-hero__back { margin-bottom: 32px; }
+    .article-hero__byline { margin-bottom: 32px; }
+    .article-hero__caption { margin-bottom: 40px; }
+    .nav__inner { padding: 0 24px; }
+    .nav__links { display: none; }
+    .article-layout { padding: 0 24px 48px; }
+    .article-body h2 { font-size: 24px; margin-top: 40px; }
+    .article-body h3 { font-size: 18px; }
+    .article-author { padding: 0 24px; }
+    .article-author__inner {
+      grid-template-columns: 1fr; gap: 16px;
+    }
+    .article-related { padding: 48px 24px 0; }
+    .article-related__grid { grid-template-columns: 1fr; }
+    .article-nav { padding: 48px 24px 0; }
+    .article-nav__inner { flex-direction: column; gap: 24px; }
+    .article-nav__link { max-width: 100%; }
+    .article-nav__link--next { text-align: left; }
+    .footer__inner { padding: 32px 24px; flex-direction: column; gap: 24px; }
+    .footer__copy { padding: 0 24px 32px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .article-progress { transition: none; }
+    .dt-card { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== READING PROGRESS ===== -->
+<div class="article-progress" id="readingProgress"></div>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="../index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="../projects.html" >Projects</a></li>
+      <li><a href="../design-thinking.html" class="active">Design Thinking</a></li>
+      <li><a href="../about.html" >About</a></li>
+      <li><a href="../contact.html" >Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== ARTICLE HERO ===== -->
+<article>
+  <header class="article-hero">
+    <a href="../design-thinking.html" class="article-hero__back">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M9 2L4 7l5 5"/>
+      </svg>
+      Design Thinking
+    </a>
+
+    <p class="article-hero__category">AI & UX</p>
+
+    <h1 class="article-hero__title">
+      <span class="bold">Agents as Cognitive Prosthetics</span> — Designing AI That Extends Human Judgment
+    </h1>
+
+    <p class="article-hero__byline">
+      Keisuke Shingu<span class="dot">·</span>February 19, 2026<span class="dot">·</span>12 min read
+    </p>
+
+    <div class="article-hero__image" data-placeholder="hero-agent-stories">
+      <span class="article-hero__image-placeholder">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="18" height="14" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <rect x="26" y="8" width="18" height="14" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <rect x="4" y="26" width="18" height="14" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <rect x="26" y="26" width="18" height="14" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+        </svg>
+        <!-- PLACEHOLDER: Replace with Agent Stories hero screenshot from Figma -->
+        <!-- <img src="images/dt-hero-agent-stories.png" alt="Agent Stories — AI agent system design wireframes"> -->
+      </span>
+    </div>
+    <p class="article-hero__caption">
+      Multi-agent system interface showing confidence calibration and decision provenance for quality control — from the AI Agent system design project.
+    </p>
+  </header>
+
+  <!-- ===== ARTICLE LAYOUT (TOC + BODY) ===== -->
+  <div class="article-layout">
+
+    <!-- TOC Sidebar -->
+    <aside class="article-toc" id="articleToc">
+      <p class="article-toc__label">On This Page</p>
+      <ol class="article-toc__list">
+        <li class="article-toc__item">
+          <a href="#replacement-fallacy" class="article-toc__link active">The Replacement Fallacy</a>
+        </li>
+        <li class="article-toc__item">
+          <a href="#cognitive-complementarity" class="article-toc__link">Cognitive Complementarity</a>
+        </li>
+        <li class="article-toc__item">
+          <a href="#four-principles" class="article-toc__link">Four Design Principles</a>
+        </li>
+        <li class="article-toc__item">
+          <a href="#case-in-practice" class="article-toc__link">A Case in Practice</a>
+        </li>
+        <li class="article-toc__item">
+          <a href="#beyond-manufacturing" class="article-toc__link">Beyond Manufacturing</a>
+        </li>
+        <li class="article-toc__item">
+          <a href="#what-comes-next" class="article-toc__link">What Comes Next</a>
+        </li>
+      </ol>
+    </aside>
+
+    <!-- Article Content -->
+    <div class="article-body" id="articleBody">
+
+      <p>
+        There is a prevailing assumption in most AI product design: that the goal of artificial intelligence is to replace human decision-making. We see it everywhere — auto-complete that writes your emails, recommendation engines that choose your entertainment, and autonomous systems that drive your car. The implicit promise is that machines will do it better, faster, and without the messy unpredictability of human judgment.
+      </p>
+
+      <p>
+        But after three years of designing AI-native interfaces — first at Slalom Consulting for clients like Toyota and NVIDIA, then leading an AI Agent system design project — I've come to believe this framing is fundamentally wrong. The most powerful AI systems aren't replacements. They're <strong>extensions</strong>.
+      </p>
+
+      <h2 id="replacement-fallacy">The Replacement Fallacy</h2>
+
+      <p>
+        The replacement model assumes a zero-sum relationship between human and machine intelligence. As machines get better, humans become less necessary. This creates interfaces built around a single interaction pattern: the machine decides, the human approves (or ignores).
+      </p>
+
+      <p>
+        Think about how most AI-powered dashboards work. The system processes data, generates a recommendation, and presents it with a confidence score. The human's role is reduced to binary acceptance: "Do you agree with the AI's suggestion?" This isn't collaboration — it's rubber-stamping.
+      </p>
+
+      <div class="pull-quote">
+        The most dangerous AI interfaces are the ones that feel the most effortless — they optimize for speed at the cost of understanding, making humans faster at decisions they no longer comprehend.
+      </div>
+
+      <p>
+        The problem compounds over time. As users learn to trust the system's recommendations without engaging their own judgment, their domain expertise atrophies. They become dependent on the machine not because it's genuinely better, but because they've lost the capacity to evaluate whether it's right. This is the automation paradox: the more reliable the system appears, the less capable users become of catching its failures.
+      </p>
+
+      <h2 id="cognitive-complementarity">Cognitive Complementarity</h2>
+
+      <p>
+        A more productive framing starts with a question: what are humans genuinely better at than machines, and vice versa? Not in theory, but in the specific context of a particular domain and decision type.
+      </p>
+
+      <figure class="article-figure">
+        <div class="article-figure__image" data-placeholder="agent-stories">
+          <span class="article-figure__placeholder">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="8" width="18" height="14" rx="3" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/>
+              <rect x="26" y="8" width="18" height="14" rx="3" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/>
+              <rect x="4" y="26" width="18" height="14" rx="3" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/>
+              <rect x="26" y="26" width="18" height="14" rx="3" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/>
+              <circle cx="13" cy="15" r="2" fill="var(--ink-40)"/>
+              <circle cx="35" cy="15" r="2" fill="var(--ink-40)"/>
+            </svg>
+            <!-- PLACEHOLDER: Replace with Agent Stories screenshot from Figma -->
+            <!-- <img src="images/dt-agent-stories.png" alt="Agent Stories — user story cards for AI agent behaviors and decision patterns"> -->
+          </span>
+        </div>
+        <figcaption class="article-figure__caption">
+          Agent Stories: mapping cognitive complementarity through user story cards — where human judgment excels (contextual reasoning, ethical nuance, novel situations) versus machine intelligence (pattern detection at scale, consistency, multi-variable correlation).
+        </figcaption>
+      </figure>
+
+      <p>
+        Machines excel at processing vast quantities of data, detecting subtle statistical patterns, and maintaining consistency across thousands of decisions. Humans excel at contextual reasoning, ethical judgment, handling novel situations, and integrating knowledge that hasn't been formalized into data.
+      </p>
+
+      <p>
+        The interesting space — and the one most AI interfaces ignore — is the overlap. Decisions where both human context and machine pattern-recognition contribute meaningfully. In manufacturing quality control, this includes judgments like "this sensor reading is technically within tolerance, but given what we know about this supplier's recent batch quality, it warrants closer inspection."
+      </p>
+
+      <h2 id="four-principles">Four Design Principles</h2>
+
+      <p>
+        Through iterating on an AI Agent system design project — a multi-agent platform for industrial applications — we developed four design principles for AI interfaces that extend rather than replace human judgment:
+      </p>
+
+      <h3>1. Intent Transparency</h3>
+      <p>
+        Every AI recommendation should expose <strong>why</strong> it was generated — not as a post-hoc explanation, but as a first-class element of the interface. Users should see which data sources influenced the decision, which factors were weighted most heavily, and what assumptions the model made. This isn't about trust — it's about enabling the human to contribute their own contextual knowledge to the decision.
+      </p>
+
+      <h3>2. Confidence Calibration</h3>
+      <p>
+        AI systems should communicate not just what they think, but <strong>how sure they are</strong>. More importantly, the visual treatment of uncertainty should scale with its magnitude. A recommendation with 95% confidence deserves a fundamentally different interface treatment than one at 60%. Most AI interfaces treat all recommendations identically — a missed opportunity to direct human attention where it's most needed.
+      </p>
+
+      <h3>3. Decision Provenance</h3>
+      <p>
+        Every decision in the system should maintain a traceable lineage: which agent proposed it, what data informed it, which human approved or modified it, and what happened as a result. This creates accountability loops that prevent the "nobody knows why we do it this way" drift that plagues organizations using opaque AI systems.
+      </p>
+
+      <h3>4. Alternative Surfacing</h3>
+      <p>
+        The system should proactively surface alternatives to its primary recommendation — not as an afterthought, but as a structural element of the decision interface. Showing the second and third best options, along with their trade-offs, transforms the user from a passive approver into an active decision-maker exercising genuine judgment.
+      </p>
+
+      <h2 id="case-in-practice">A Case in Practice</h2>
+
+      <p>
+        In a recent AI Agent system design project, we applied these principles to a multi-agent system managing quality control across manufacturing facilities. Each agent specializes in a different aspect of quality assessment — visual inspection, sensor data analysis, historical pattern matching, supplier risk profiling.
+      </p>
+
+      <figure class="article-figure">
+        <div class="article-figure__image" data-placeholder="swarm-lane-wireframe">
+          <span class="article-figure__placeholder">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="8" width="40" height="32" rx="4" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/>
+              <line x1="18" y1="8" x2="18" y2="40" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2"/>
+              <line x1="32" y1="8" x2="32" y2="40" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2"/>
+              <circle cx="11" cy="18" r="2" fill="var(--ink-40)"/>
+              <circle cx="25" cy="24" r="2" fill="var(--ink-40)"/>
+              <circle cx="39" cy="20" r="2" fill="var(--ink-40)"/>
+              <path d="M13 18h10l2 6h10" stroke="var(--ink-40)" stroke-width="1" fill="none"/>
+            </svg>
+            <!-- PLACEHOLDER: Replace with Swarm Lane / LangChain Wireframe screenshot -->
+            <!-- <img src="images/dt-swarm-lane-wireframe.png" alt="Swarm lane diagram showing multi-agent orchestration flow"> -->
+          </span>
+        </div>
+        <figcaption class="article-figure__caption">
+          Swarm lane wireframe: multi-agent orchestration flow showing how specialized agents coordinate across decision points in the quality control pipeline.
+        </figcaption>
+      </figure>
+
+      <p>
+        The interface doesn't present a single "pass/fail" verdict. Instead, it shows each agent's assessment as a distinct voice in a deliberation. The visual inspection agent might flag a cosmetic anomaly with moderate confidence. The sensor analysis agent reports all measurements within tolerance. The historical pattern agent notes that similar anomalies from this supplier preceded a batch recall six months ago.
+      </p>
+
+      <p>
+        The human operator sees all three perspectives simultaneously, with clear visual hierarchy based on confidence levels and risk severity. They can drill into any agent's reasoning, compare alternative assessments, and make a final judgment that incorporates their own knowledge of the current production context — knowledge that no model has access to.
+      </p>
+
+      <div class="pull-quote">
+        The best AI interfaces don't make decisions faster — they make the decision-making process legible, so humans can exercise judgment where it matters most.
+      </div>
+
+      <h2 id="beyond-manufacturing">Beyond Manufacturing</h2>
+
+      <p>
+        These patterns aren't unique to manufacturing. In healthcare, diagnostic AI could surface differential diagnoses with calibrated confidence rather than presenting a single prediction. In financial services, risk assessment tools could show the provenance of each risk factor rather than outputting an opaque score. In creative tools, generative AI could present its suggestions alongside the reasoning that produced them, enabling artists to understand and build upon the machine's process.
+      </p>
+
+      <figure class="article-figure">
+        <div class="article-figure__image" data-placeholder="langchain-wireframe">
+          <span class="article-figure__placeholder">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="16" r="4" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/>
+              <circle cx="36" cy="16" r="4" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/>
+              <circle cx="24" cy="32" r="4" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/>
+              <path d="M16 16h16M14 19l8 10M34 19l-8 10" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/>
+            </svg>
+            <!-- PLACEHOLDER: Replace with LangChain Wireframe screenshot from Figma -->
+            <!-- <img src="images/dt-langchain-wireframe.png" alt="LangChain agent orchestration wireframe showing node connections and data flow"> -->
+          </span>
+        </div>
+        <figcaption class="article-figure__caption">
+          LangChain agent orchestration wireframe: applying the cognitive prosthetic framework across domains — showing how specialized agents chain together for healthcare diagnostics, financial risk assessment, and creative generation workflows.
+        </figcaption>
+      </figure>
+
+      <p>
+        The common thread is a shift in the designer's fundamental question. Instead of "how do we automate this decision?" we ask "how do we make this decision <strong>more legible</strong> so that humans and machines can contribute their respective strengths?"
+      </p>
+
+      <h2 id="what-comes-next">What Comes Next</h2>
+
+      <p>
+        The next frontier is multi-agent orchestration — systems where multiple AI agents with different specializations collaborate on complex decisions, with humans participating as peers in the deliberation rather than as final approvers. This requires entirely new interaction patterns: interfaces for managing agent attention, mediating disagreements between agents, and delegating authority dynamically based on context.
+      </p>
+
+      <p>
+        The UX challenge here is immense. How do you design an interface where a human can meaningfully participate in a conversation between four specialized agents processing thousands of data points per second? The answer, I believe, lies in the same principles we've explored: transparency, calibrated confidence, traceable provenance, and structured alternatives. Applied not just to individual agent outputs, but to the orchestration layer itself.
+      </p>
+
+      <p>
+        This is the work we're doing now. The work is early, messy, and constantly surprising. But the fundamental insight holds: the goal isn't to replace human judgment. It's to give human judgment superpowers.
+      </p>
+
+    </div>
+  </div>
+</article>
+
+<!-- ===== AUTHOR BIO ===== -->
+<section class="article-author reveal">
+  <div class="article-author__inner">
+    <div class="article-author__avatar">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div>
+      <p class="article-author__name">Keisuke Shingu</p>
+      <p class="article-author__role">Product Designer & Design Systems Architect</p>
+      <p class="article-author__bio">
+        Designing AI-native interfaces for multi-agent systems. Previously led design engineering at Denon/Marantz, Slalom Consulting, and Rakuten. Focused on the intersection of human judgment and machine intelligence.
+      </p>
+      <div class="article-author__links">
+        <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="../contact.html" >Contact</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RELATED ARTICLES ===== -->
+<section class="article-related reveal">
+  <h2 class="article-related__heading">Continue Reading</h2>
+  <div class="article-related__grid">
+
+    <a href="ma-negative-space.html" class="dt-card">
+      <div class="dt-card__image-wrap">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/RyoanJi-Dry_garden.jpg" alt="Ryoanji zen garden negative space Japanese aesthetics Ma" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+      </div>
+      <div class="dt-card__body">
+        <p class="dt-card__meta">Japanese Aesthetics<span class="dot">·</span>Jan 2026</p>
+        <h3 class="dt-card__title">Ma — The Power of Negative Space in Digital Interfaces</h3>
+        <p class="dt-card__excerpt">In Japanese aesthetics, the space between elements carries as much meaning as the elements themselves.</p>
+      </div>
+    </a>
+
+    <a href="confidence-calibration.html" class="dt-card">
+      <div class="dt-card__image-wrap">
+        <img src="https://www.tdk.com/system/files/featured_stories/machine_learning_categorization_en.jpg" alt="AI confidence calibration uncertainty ML decision" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+      </div>
+      <div class="dt-card__body">
+        <p class="dt-card__meta">AI & UX<span class="dot">·</span>Oct 2025</p>
+        <h3 class="dt-card__title">Confidence Calibration — When AI Should Say "I Don't Know"</h3>
+        <p class="dt-card__excerpt">The most important UX pattern in AI isn't showing answers — it's communicating uncertainty.</p>
+      </div>
+    </a>
+
+    <a href="design-tokens.html" class="dt-card">
+      <div class="dt-card__image-wrap">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Font_Manager_Palette_in_QuarkXPress_2024.png" alt="Design tokens QuarkXPress font palette typography living systems" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+      </div>
+      <div class="dt-card__body">
+        <p class="dt-card__meta">Design Systems<span class="dot">·</span>Dec 2025</p>
+        <h3 class="dt-card__title">Design Tokens Are Not Enough — Building Living Systems</h3>
+        <p class="dt-card__excerpt">Why most design systems fail at the seams. A framework for creating systems that evolve gracefully.</p>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ===== PREV/NEXT NAV ===== -->
+<nav class="article-nav">
+  <div class="article-nav__inner">
+    <div></div>
+    <a href="ma-negative-space.html" class="article-nav__link article-nav__link--next">
+      <p class="article-nav__label">Next Article →</p>
+      <p class="article-nav__title">Ma — The Power of Negative Space in Digital Interfaces</p>
+    </a>
+  </div>
+</nav>
+
+<div class="spacer"></div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html" >About</a>
+      <a href="../contact.html" >Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script>
+  // Scroll Reveal
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '-40px' }
+  );
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+  // Reading Progress Bar
+  const progressBar = document.getElementById('readingProgress');
+  const articleBody = document.getElementById('articleBody');
+
+  function updateProgress() {
+    const rect = articleBody.getBoundingClientRect();
+    const articleTop = rect.top + window.scrollY;
+    const articleHeight = rect.height;
+    const scrolled = window.scrollY - articleTop;
+    const progress = Math.max(0, Math.min(100, (scrolled / articleHeight) * 100));
+    progressBar.style.width = progress + '%';
+  }
+
+  window.addEventListener('scroll', () => requestAnimationFrame(updateProgress));
+  updateProgress();
+
+  // TOC Active State
+  const tocLinks = document.querySelectorAll('.article-toc__link');
+  const sections = [];
+
+  tocLinks.forEach(link => {
+    const id = link.getAttribute('href').slice(1);
+    const section = document.getElementById(id);
+    if (section) sections.push({ el: section, link: link });
+  });
+
+  const tocObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const match = sections.find(s => s.el === entry.target);
+          if (match) match.link.classList.add('active');
+        }
+      });
+    },
+    { threshold: 0, rootMargin: '-80px 0px -70% 0px' }
+  );
+
+  sections.forEach(s => tocObserver.observe(s.el));
+</script>
+
+</body>
+</html>
