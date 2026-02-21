@@ -177,7 +177,7 @@
 <!-- ===== CASE STUDY HERO ===== -->
 <section class="cs-hero">
   <div class="reveal">
-    <a href="Projects_Preview.html#audio" class="cs-hero__back">← Projects</a>
+    <a href="../projects.html" class="cs-hero__back">← Projects</a>
   </div>
   <div class="reveal" style="transition-delay: 0.05s">
     <p class="cs-hero__brand">Denon / Marantz</p>
@@ -189,7 +189,10 @@
     <p class="cs-hero__statement">Transforming the UX of two premium audio brands across 60+ products — from 8-bit-era bitmap displays to a modern, vector-based, multi-language design system — driving Denon/Marantz from #5 to #1 market position.</p>
   </div>
   <div class="reveal" style="transition-delay: 0.2s">
-    <div class="cs-hero__image">Hero image — Marantz Cinema porthole display</div>
+    <div class="cs-hero__image" data-kanji="音" style="background:linear-gradient(160deg, #040404 0%, #0A0A0A 100%); --hero-kanji-color:rgba(255,255,255,0.04);">
+      <img src="https://www.denon.com/on/demandware.static/-/Sites-site-catalog-denon-us/default/dw66c13fcd/navImages/Nav_AV-Receivers_AVR-A1H.jpg" alt="Denon AVR-A1H flagship AV receiver — Director of UX Denon Marantz" loading="eager">
+      <span class="cs-hero__image-label" style="">Marantz Cinema · Premium Audio · Porthole Display System</span>
+    </div>
   </div>
 </section>
 
@@ -273,7 +276,9 @@
         <p>In 2017, Denon and Marantz sat at #5 in the premium home audio market. The products were acclaimed for sound quality — audiophiles trusted the engineering. But product reviews averaged 3.5 stars. The gap between sonic excellence and user experience was costing market position.</p>
         <p>The embedded display system across products was a relic — the TV GUI had the visual quality of an 8-bit Nintendo game. Bitmap graphics rendering with no structured file system. Every string of text and icon was a rasterized image baked at a fixed resolution. This created three cascading failures: resolution ceiling as the industry moved toward 4K/8K, localization paralysis requiring separate bitmaps per language, and consistency impossibility across 60+ products.</p>
 
-        <div class="inline-image">Before — 480p bitmap TV GUI overlay</div>
+        <div class="inline-image" data-kanji="旧" data-label="Before — 480p Bitmap TV GUI Overlay on Premium Hardware">
+      <span class="inline-image__label">Before — 480p Bitmap TV GUI Overlay on Premium Hardware</span>
+    </div>
 
         <p>Meanwhile, leadership wanted to compete with Sonos, Apple, Google, and Amazon in smart home and wireless streaming through the HEOS multi-room audio platform. But HEOS was not fully integrated with the core audio products. The competitive benchmark wasn't other AV receiver brands — it was software-first companies resetting user expectations entirely.</p>
 
@@ -301,7 +306,9 @@
 
         <p>For the constrained 1-3 inch hardware displays, I developed a typographic system optimized for small-screen legibility with custom font selection prioritizing x-height and stroke consistency. Navigation relied on physical buttons and knobs — not touch — requiring a fundamentally different interaction model than mobile apps.</p>
 
-        <div class="inline-image">Constrained display typography — 1-3 inch embedded screens</div>
+        <div class="inline-image inline-image--dark" data-kanji="字" data-label="Constrained Display Typography · 1–3 Inch Embedded Screens">
+      <span class="inline-image__label">Constrained Display Typography · 1–3 Inch Embedded Screens</span>
+    </div>
 
         <p>Created comprehensive HEOS Ecosystem Design Guidelines covering brand design language for both Denon (modern, approachable) and Marantz (premium, refined), cross-platform typography scales, iconography library in SVG, and multi-language specification with CJK support.</p>
 
@@ -380,9 +387,12 @@
 <!-- ===== PREV / NEXT ===== -->
 <div class="prev-next reveal">
   <div class="prev-next__inner">
-    <div></div>
-    <a href="fabrion.html" class="prev-next__link prev-next__link--next">
-      <p class="prev-next__label">Next Case Study →</p>
+    <a href="slalom.html" class="prev-next__item">
+      <p class="prev-next__dir">← Previous</p>
+      <p class="prev-next__title">Designing the World Fans Step Into</p>
+    </a>
+    <a href="fabrion.html" class="prev-next__item prev-next__item--next">
+      <p class="prev-next__dir">Next →</p>
       <p class="prev-next__title">Teaching Machines to Earn Human Trust</p>
     </a>
   </div>
