@@ -86,11 +86,33 @@
   .dt-featured__link:hover .dt-featured__image-wrap img {
     transform: scale(1.03);
   }
-  .dt-featured__image-placeholder {
+  .dt-featured__image-placeholder,
+  .dt-card__image-placeholder {
     width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; color: var(--ink-40); font-weight: 300;
+    position: relative;
+    display: flex; align-items: flex-end; justify-content: flex-start;
+    padding: 16px 20px;
   }
+  .dt-featured__image-placeholder .ph-kanji,
+  .dt-card__image-placeholder .ph-kanji {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 200; font-size: 80px; line-height: 1;
+    color: rgba(255, 255, 255, 0.08);
+    pointer-events: none;
+  }
+  .dt-featured__image-placeholder .ph-label,
+  .dt-card__image-placeholder .ph-label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.10em;
+    text-transform: uppercase; color: rgba(255,255,255,0.28);
+    z-index: 1; position: relative;
+  }
+  /* Light backgrounds need dark text */
+  .dt-featured__image-placeholder.ph--light .ph-kanji { color: rgba(0,0,0,0.07); }
+  .dt-featured__image-placeholder.ph--light .ph-label { color: rgba(0,0,0,0.28); }
+  .dt-card__image-placeholder.ph--light .ph-kanji { color: rgba(0,0,0,0.07); }
+  .dt-card__image-placeholder.ph--light .ph-label { color: rgba(0,0,0,0.28); }
   .dt-featured__body { padding: 32px 36px 36px; }
   .dt-featured__met
   .dt-featured__meta .dot { margin: 0 8px; }
@@ -136,11 +158,7 @@
   .dt-card:hover .dt-card__image-wrap img {
     transform: scale(1.05);
   }
-  .dt-card__image-placeholder {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; color: var(--ink-40); font-weight: 300;
-  }
+  /* .dt-card__image-placeholder styles merged above */
   .dt-card__body { padding: 24px 28px 28px; }
   .dt-card__met
   .dt-card__meta .dot { margin: 0 6px; }
@@ -248,12 +266,9 @@
 <div class="dt-featured reveal" data-category="ai-ux">
   <a href="DT_Example.html" class="dt-featured__link">
     <div class="dt-featured__image-wrap">
-      <div class="dt-featured__image-placeholder">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        </svg>
+      <div class="dt-featured__image-placeholder" style="background:linear-gradient(135deg, #020A14 0%, #061828 100%);">
+        <span class="ph-kanji">知</span>
+        <span class="ph-label">AI & UX · Agents as Cognitive Prosthetics</span>
       </div>
     </div>
     <div class="dt-featured__body">
@@ -283,12 +298,9 @@
 
   <a href="DT_Ma.html" class="dt-card reveal" data-category="japanese-aesthetics">
     <div class="dt-card__image-wrap">
-      <div class="dt-card__image-placeholder">
-        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        </svg>
+      <div class="dt-card__image-placeholder ph--light" style="background:linear-gradient(135deg, #F5F0E8 0%, #E8DDD0 100%);">
+        <span class="ph-kanji">間</span>
+        <span class="ph-label">Japanese Aesthetics · Ma · Negative Space</span>
       </div>
     </div>
     <div class="dt-card__body">
@@ -305,12 +317,9 @@
 
   <a href="DT_DesignTokens.html" class="dt-card reveal" data-category="design-systems">
     <div class="dt-card__image-wrap">
-      <div class="dt-card__image-placeholder">
-        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        </svg>
+      <div class="dt-card__image-placeholder" style="background:linear-gradient(135deg, #080810 0%, #12121E 100%);">
+        <span class="ph-kanji">系</span>
+        <span class="ph-label">Design Systems · Living Tokens</span>
       </div>
     </div>
     <div class="dt-card__body">
@@ -327,12 +336,9 @@
 
   <a href="DT_60fps.html" class="dt-card reveal" data-category="engineering">
     <div class="dt-card__image-wrap">
-      <div class="dt-card__image-placeholder">
-        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        </svg>
+      <div class="dt-card__image-placeholder" style="background:linear-gradient(135deg, #04060C 0%, #080C18 100%);">
+        <span class="ph-kanji">速</span>
+        <span class="ph-label">Engineering · 60fps Performance</span>
       </div>
     </div>
     <div class="dt-card__body">
@@ -349,12 +355,9 @@
 
   <a href="DT_Confidence.html" class="dt-card reveal" data-category="ai-ux">
     <div class="dt-card__image-wrap">
-      <div class="dt-card__image-placeholder">
-        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        </svg>
+      <div class="dt-card__image-placeholder" style="background:linear-gradient(135deg, #140A04 0%, #201008 100%);">
+        <span class="ph-kanji">信</span>
+        <span class="ph-label">AI & UX · Confidence Calibration</span>
       </div>
     </div>
     <div class="dt-card__body">

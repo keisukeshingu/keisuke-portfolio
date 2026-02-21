@@ -21,24 +21,20 @@
 
   /* ===== Case Study Hero ===== */
 
+  /* ── TechCrunch hero: tech grid + emerald glow ── */
   .hero-grid {
     position: absolute; inset: 0;
     background-image:
       linear-gradient(rgba(0,200,120,0.08) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,200,120,0.08) 1px, transparent 1px);
-    background-size: 48px 48px;
+    background-size: 48px 48px; z-index: 0;
   }
   .hero-glow-tc {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 480px; height: 240px; border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(0,200,120,0.16) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-city-label {
-    position: absolute; bottom: 28px; left: 32px;
-    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: rgba(255,255,255,0.28);
+    background: radial-gradient(ellipse, rgba(0,200,120,0.18) 0%, transparent 68%);
+    pointer-events: none; z-index: 0;
   }
 
   /* ===== Overview Bar ===== */
@@ -88,10 +84,10 @@
   <h1 class="cs-hero__title">Giving a Conference Its <span class="bold">Visual Voice</span></h1>
   <p class="cs-hero__role">Visual Artist / Creative Director · 2016 · San Francisco</p>
 
-  <div class="cs-hero__image">
+  <div class="cs-hero__image" data-kanji="革" style="background: linear-gradient(160deg, #050D18 0%, #0A1830 100%);">
     <div class="hero-grid"></div>
     <div class="hero-glow-tc"></div>
-    <span class="hero-city-label">TechCrunch Disrupt SF · Moscone Center · 2016</span>
+    <span class="cs-hero__image-label">TechCrunch Disrupt SF · Moscone Center · 2016</span>
   </div>
 </div>
 
