@@ -307,12 +307,14 @@
     display: flex;
     gap: 14px;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow: hidden;
     margin-top: 14px;
   }
   .heritage-card__logo {
-    height: 15px;
+    height: 18px;
     width: auto;
+    flex-shrink: 0;
     display: block;
     opacity: 0.3;
     transition: opacity 0.35s var(--ease);
