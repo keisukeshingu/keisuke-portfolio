@@ -74,7 +74,7 @@
 <!-- ===== CASE STUDY HERO ===== -->
 <section class="cs-hero">
   <div class="reveal">
-    <a href="../projects.html" class="cs-hero__back">← Projects</a>
+    <a href="Projects_Preview.html#invention" class="cs-hero__back">← Projects</a>
   </div>
   <div class="reveal" style="transition-delay: 0.05s">
     <p class="cs-hero__brand">Miselu C.24</p>
@@ -86,10 +86,7 @@
     <p class="cs-hero__statement">A Bluetooth LE MIDI keyboard controller with a USPTO patent — reducing Android audio latency from 250ms to under 10ms and making real-time musical performance possible on Android for the first time.</p>
   </div>
   <div class="reveal" style="transition-delay: 0.2s">
-    <div class="cs-hero__image" data-kanji="奏" style="background:linear-gradient(160deg, #E4E4E8 0%, #CECECE 100%); --hero-kanji-color:rgba(0,0,0,0.05);">
-      <img src="https://s.yimg.com/ny/api/res/1.2/5pCym4IeWhXagfJtXpfvfw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTYzNw--/https://s.yimg.com/uu/api/res/1.2/accx1tCvc5pvzE80CcT9Ug--~B/aD00MTE7dz02MTk7YXBwaWQ9eXRhY2h5b24-/https://www.blogcdn.com/www.engadget.com/media/2013/07/miseluc24keyboardlead01.jpg" alt="Miselu C.24 wireless Bluetooth MIDI keyboard for iPad — Engadget hands-on" loading="eager">
-      <span class="cs-hero__image-label" style="color: rgba(0,0,0,0.35);">Miselu C.24 · iPad MIDI Keyboard · Hardware Invention</span>
-    </div>
+    <div class="cs-hero__image">Hero image — Miselu C.24 Bluetooth MIDI keyboard</div>
   </div>
 </section>
 
@@ -128,10 +125,7 @@
 
   <p>The stock Android audio stack in 2012 had approximately 250ms of latency — a quarter-second delay between pressing a key and hearing sound. For reference, anything above 10ms is perceptible to musicians and makes real-time performance impossible. I forked the Android audio pipeline, bypassing the high-level audio framework to communicate directly with the hardware audio layer. This required deep OS-level engineering — understanding the Linux kernel's audio subsystem, the Android HAL (Hardware Abstraction Layer), and the timing characteristics of specific audio chipsets.</p>
 
-  <div class="inline-image" data-kanji="鍵" data-label="C.24 Hardware Prototype · iPad Dock & Keyboard Geometry">
-      <img src="https://s.yimg.com/ny/api/res/1.2/wfMZkadaV0EpupZ6iKeD4Q--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU0MA--/https://o.aolcdn.com/images/dar/5845cadfecd996e0372f/84767bd0f8aa32f8e235409ea5f2aa243dd52fc9/aHR0cDovL3d3dy5ibG9nY2RuLmNvbS93d3cuZW5nYWRnZXQuY29tL21lZGlhLzIwMTMvMDcvbWlzZWx1YzI0a2V5Ym9hcmRsZWFkMDIuanBn" alt="Miselu C.24 hardware prototype iPad dock keyboard geometry BLE MIDI" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0.9;" loading="lazy">
-      <span class="inline-image__label">C.24 Hardware Prototype · iPad Dock & Keyboard Geometry</span>
-    </div>
+  <div class="inline-image">Latency comparison — 250ms stock Android vs. sub-10ms Miselu pipeline</div>
 
   <p>The result: sub-10ms latency on Android — a breakthrough that made the C.24 the first viable real-time MIDI controller for the Android platform. The C.24 and the Neiro music creation app were demonstrated at Google I/O 2012, showcasing the latency breakthrough to thousands of developers.</p>
 
@@ -161,12 +155,12 @@
 <!-- ===== PREV / NEXT ===== -->
 <div class="prev-next reveal">
   <div class="prev-next__inner">
-    <a href="ogilvy.html" class="prev-next__item">
-      <p class="prev-next__dir">← Previous</p>
+    <a href="ogilvy.html" class="prev-next__link">
+      <p class="prev-next__label">← Previous</p>
       <p class="prev-next__title">Beyond Screens</p>
     </a>
-    <a href="beatport-ni.html" class="prev-next__item prev-next__item--next">
-      <p class="prev-next__dir">Next →</p>
+    <a href="beatport-ni.html" class="prev-next__link prev-next__link--next">
+      <p class="prev-next__label">Next →</p>
       <p class="prev-next__title">Digital Music Distribution & DJ Software</p>
     </a>
   </div>
