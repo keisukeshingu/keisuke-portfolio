@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>Image Library — Keisuke Shingu Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0D0D0F; --card-bg: #16161A; --card-hover: #1E1E24;
+    --ink-100: #F5F5F7; --ink-80: #C5C5CA; --ink-60: #8E8E96;
+    --ink-40: #5A5A62; --shu: #B33A3A; --accent: #4A9EFF;
+    --border: #2A2A30;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink-100); font-family: 'Inter', system-ui, sans-serif; }
+
+  /* Header */
+  .header { padding: 48px 48px 32px; max-width: 1400px; margin: 0 auto; }
+  .header h1 { font-size: 32px; font-weight: 200; letter-spacing: -0.03em; color: var(--ink-60); }
+  .header h1 strong { font-weight: 600; color: var(--ink-100); }
+  .header p { font-size: 14px; color: var(--ink-40); margin-top: 8px; font-weight: 300; }
+  .stats { display: flex; gap: 32px; margin-top: 20px; padding: 16px 0; border-top: 1px solid var(--border); }
+  .stat { text-align: left; }
+  .stat__num { font-size: 28px; font-weight: 200; color: var(--shu); }
+  .stat__label { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-40); margin-top: 2px; }
+
+  /* Filter bar */
+  .filter-bar { padding: 0 48px; max-width: 1400px; margin: 0 auto 24px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-btn { background: transparent; border: 1px solid var(--border); color: var(--ink-60); padding: 6px 14px;
+    border-radius: 20px; font-size: 12px; font-weight: 400; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+  .filter-btn:hover { border-color: var(--ink-40); color: var(--ink-80); }
+  .filter-btn.active { background: var(--shu); border-color: var(--shu); color: #fff; }
+
+  /* Chapter sections */
+  .chapter { padding: 0 48px; max-width: 1400px; margin: 0 auto 48px; }
+  .chapter__header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .chapter__num { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--shu); }
+  .chapter__title { font-size: 20px; font-weight: 500; color: var(--ink-100); }
+  .chapter__sub { font-size: 13px; font-weight: 300; color: var(--ink-40); }
+
+  /* Project sub-headers */
+  .project-label { font-size: 11px; font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: var(--ink-40);
+    margin: 24px 0 12px; padding-left: 4px; }
+
+  /* Image grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .card { background: var(--card-bg); border-radius: 10px; overflow: hidden; cursor: pointer; transition: all 0.25s;
+    border: 1px solid transparent; position: relative; }
+  .card:hover { background: var(--card-hover); border-color: var(--border); transform: translateY(-2px); }
+  .card__img-wrap { aspect-ratio: 4/3; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center; }
+  .card__img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+  .card:hover .card__img-wrap img { transform: scale(1.04); }
+  .card__img-wrap .placeholder { font-size: 11px; color: var(--ink-40); text-align: center; padding: 16px; }
+  .card__id { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.75); color: var(--shu); font-size: 11px;
+    font-weight: 600; padding: 3px 8px; border-radius: 4px; font-variant-numeric: tabular-nums; z-index: 2; }
+  .card__info { padding: 10px 12px 12px; }
+  .card__name { font-size: 12px; font-weight: 400; color: var(--ink-80); line-height: 1.4; }
+  .card__project { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-40); margin-top: 4px; }
+
+  /* Lightbox */
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000;
+    align-items: center; justify-content: center; flex-direction: column; padding: 32px; }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 75vh; object-fit: contain; border-radius: 8px; }
+  .lightbox__info { margin-top: 16px; text-align: center; }
+  .lightbox__id { font-size: 14px; font-weight: 600; color: var(--shu); }
+  .lightbox__caption { font-size: 14px; color: var(--ink-80); margin-top: 4px; font-weight: 300; }
+  .lightbox__close { position: absolute; top: 24px; right: 32px; font-size: 28px; color: var(--ink-60); cursor: pointer;
+    background: none; border: none; font-family: inherit; }
+  .lightbox__close:hover { color: var(--ink-100); }
+  .lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); font-size: 36px; color: var(--ink-60);
+    cursor: pointer; background: none; border: none; padding: 16px; }
+  .lightbox__nav:hover { color: var(--ink-100); }
+  .lightbox__nav--prev { left: 16px; }
+  .lightbox__nav--next { right: 16px; }
+
+  /* Instructions banner */
+  .banner { margin: 0 48px 32px; max-width: 1304px; background: #1A1A1F; border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
+  .banner__icon { font-size: 18px; }
+  .banner__text { font-size: 13px; color: var(--ink-60); font-weight: 300; }
+  .banner__text code { background: #222; padding: 2px 8px; border-radius: 4px; font-size: 12px; color: var(--accent); }
+
+  @media (max-width: 768px) {
+    .header, .chapter, .filter-bar { padding-left: 20px; padding-right: 20px; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><strong>Image Library</strong> — Keisuke Shingu Portfolio</h1>
+  <p>Reference images for case study pages · Design & human-centered cultural context</p>
+  <div class="stats">
+    <div class="stat"><div class="stat__num">142</div><div class="stat__label">Images</div></div>
+    <div class="stat"><div class="stat__num">14</div><div class="stat__label">Projects</div></div>
+    <div class="stat"><div class="stat__num">6</div><div class="stat__label">Chapters</div></div>
+  </div>
+</div>
+
+<div class="banner">
+  <span class="banner__icon">⚡</span>
+  <span class="banner__text">First run <code>chmod +x download-images.sh && ./download-images.sh</code> in the portfolio folder to download all images locally.</span>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All (142)</button>
+  <button class="filter-btn" data-filter="kyoto">Kyoto Archive (20)</button>
+  <button class="filter-btn" data-filter="quark">QuarkXPress / DTP (37)</button>
+  <button class="filter-btn" data-filter="fabrion">Fabrion (7)</button>
+  <button class="filter-btn" data-filter="tdk">TDK SensEI (6)</button>
+  <button class="filter-btn" data-filter="ai-workflow">AI Workflow (7)</button>
+  <button class="filter-btn" data-filter="rakuten">Rakuten Fit (5)</button>
+  <button class="filter-btn" data-filter="ogilvy">Ogilvy / Audi (6)</button>
+  <button class="filter-btn" data-filter="slalom">Gundam Metaverse (9)</button>
+  <button class="filter-btn" data-filter="denon">Denon / Marantz (10)</button>
+  <button class="filter-btn" data-filter="miselu">Miselu C.24 (10)</button>
+  <button class="filter-btn" data-filter="beatport">Beatport / NI (6)</button>
+  <button class="filter-btn" data-filter="robot-heart">Robot Heart (6)</button>
+  <button class="filter-btn" data-filter="techcrunch">TechCrunch (5)</button>
+  <button class="filter-btn" data-filter="festivals">Festivals (8)</button>
+</div>
+
+<!-- ═══════ CH5 — KYOTO ARCHIVE ═══════ -->
+<div class="chapter" data-chapter="kyoto">
+  <div class="chapter__header">
+    <span class="chapter__num">Ch 5</span>
+    <span class="chapter__title">Kyoto Archive</span>
+    <span class="chapter__sub">京都 · Kunichika Digital Archive</span>
+  </div>
+
+  <div class="project-label">Temples & Architecture</div>
+  <div class="grid">
+    <div class="card" data-project="kyoto" data-id="001"><span class="card__id">001</span><div class="card__img-wrap"><img src="img/library/kyoto/001-kinkakuji-golden-pavilion.jpg" alt=""></div><div class="card__info"><div class="card__name">Kinkaku-ji Golden Pavilion</div><div class="card__project">Kyoto</div></div></div>
+    <div class="card" data-project="kyoto" data-id="002"><span class="card__id">002</span><div class="card__img-wrap"><img src="img/library/kyoto/002-fushimi-inari-torii.jpg" alt=""></div><div class="card__info"><div class="card__name">Fushimi Inari Torii Gates</div><div class="card__project">Kyoto</div></div></div>
+    <div class="card" data-project="kyoto" data-id="003"><span class="card__id">003</span><div class="card__img-wrap"><img src="img/library/kyoto/003-arashiyama-bamboo.jpg" alt=""></div><div class="card__info"><div class="card__name">Arashiyama Bamboo Grove</div><div class="card__project">Kyoto</div></div></div>
+    <div class="card" data-project="kyoto" data-id="004"><span class="card__id">004</span><div class="card__img-wrap"><img src="img/library/kyoto/004-ryoanji-rock-garden.jpg" alt=""></div><div class="card__info"><div class="card__name">Ryōan-ji Zen Rock Garden</div><div class="card__project">Kyoto</div></div></div>
+    <div class="card" data-project="kyoto" data-id="005"><span class="card__id">005</span><div class="card__img-wrap"><img src="img/library/kyoto/005-itsukushima-noh-stage.jpg" alt=""></div><div class="card__info"><div class="card__name">Itsukushima Noh Stage</div><div class="card__project">Kyoto</div></div></div>
+    <div class="card" data-project="kyoto" data-id="006"><span class="card__id">006</span><div class="card__img-wrap"><img src="img/library/kyoto/006-itsukushima-floating-shrine.jpg" alt=""></div><div class="card__info"><div class="card__name">Itsukushima Floating Shrine</div><div class="card__project">Kyoto</div></div></div>
+    <div class="card" data-project="kyoto" data-id="007"><span class="card__id">007</span><div class="card__img-wrap"><img src="img/library/kyoto/007-itsukushima-dusk.jpg" alt=""></div><div class="card__info"><div class="card__name">Itsukushima Shrine at Dusk</div><div class="card__project">Kyoto</div></div></div>
+    <div class="card" data-project="kyoto" data-id="008"><span class="card__id">008</span><div class="card__img-wrap"><img src="img/library/kyoto/008-kyoto-station-interior.jpg" alt=""></div><div class="card__info"><div class="card__name">Kyoto Station Interior</div><div class="card__project">Kyoto</div></div></div>
+  </div>
+
+  <div class="project-label">Ukiyo-e & Woodblock Prints</div>
+  <div class="grid">
+    <div class="card" data-project="kyoto" data-id="009"><span class="card__id">009</span><div class="card__img-wrap"><img src="img/library/kyoto/009-hokusai-great-wave.jpg" alt=""></div><div class="card__info"><div class="card__name">Hokusai — Great Wave off Kanagawa</div><div class="card__project">Kyoto · Ukiyo-e</div></div></div>
+    <div class="card" data-project="kyoto" data-id="010"><span class="card__id">010</span><div class="card__img-wrap"><img src="img/library/kyoto/010-kunichika-kabuki-actor.jpg" alt=""></div><div class="card__info"><div class="card__name">Kunichika — Kabuki Actor Portrait</div><div class="card__project">Kyoto · Ukiyo-e</div></div></div>
+    <div class="card" data-project="kyoto" data-id="011"><span class="card__id">011</span><div class="card__img-wrap"><img src="img/library/kyoto/011-hiroshige-plum-garden.jpg" alt=""></div><div class="card__info"><div class="card__name">Hiroshige — Plum Garden Kameido</div><div class="card__project">Kyoto · Ukiyo-e</div></div></div>
+    <div class="card" data-project="kyoto" data-id="012"><span class="card__id">012</span><div class="card__img-wrap"><img src="img/library/kyoto/012-kunichika-ichikawa-danjuro.jpg" alt=""></div><div class="card__info"><div class="card__name">Kunichika — Ichikawa Danjūrō IX</div><div class="card__project">Kyoto · Ukiyo-e</div></div></div>
+    <div class="card" data-project="kyoto" data-id="013"><span class="card__id">013</span><div class="card__img-wrap"><img src="img/library/kyoto/013-hokusai-fuji-red.jpg" alt=""></div><div class="card__info"><div class="card__name">Hokusai — Fine Wind, Clear Morning (Red Fuji)</div><div class="card__project">Kyoto · Ukiyo-e</div></div></div>
+  </div>
+
+  <div class="project-label">Japanese Cultural Heritage</div>
+  <div class="grid">
+    <div class="card" data-project="kyoto" data-id="014"><span class="card__id">014</span><div class="card__img-wrap"><img src="img/library/kyoto/014-noh-mask-traditional.jpg" alt=""></div><div class="card__info"><div class="card__name">Traditional Noh Mask</div><div class="card__project">Kyoto · Culture</div></div></div>
+    <div class="card" data-project="kyoto" data-id="015"><span class="card__id">015</span><div class="card__img-wrap"><img src="img/library/kyoto/015-tea-ceremony-chanoyu.jpg" alt=""></div><div class="card__info"><div class="card__name">Tea Ceremony (Chanoyu)</div><div class="card__project">Kyoto · Culture</div></div></div>
+    <div class="card" data-project="kyoto" data-id="016"><span class="card__id">016</span><div class="card__img-wrap"><img src="img/library/kyoto/016-zen-garden-tofukuji.jpg" alt=""></div><div class="card__info"><div class="card__name">Tōfuku-ji Zen Garden</div><div class="card__project">Kyoto · Culture</div></div></div>
+    <div class="card" data-project="kyoto" data-id="017"><span class="card__id">017</span><div class="card__img-wrap"><img src="img/library/kyoto/017-japanese-calligraphy.png" alt=""></div><div class="card__info"><div class="card__name">Japanese Calligraphy (Shodō)</div><div class="card__project">Kyoto · Culture</div></div></div>
+    <div class="card" data-project="kyoto" data-id="018"><span class="card__id">018</span><div class="card__img-wrap"><img src="img/library/kyoto/018-machiya-kyoto-street.jpg" alt=""></div><div class="card__info"><div class="card__name">Ninenzaka Machiya Street</div><div class="card__project">Kyoto · Culture</div></div></div>
+    <div class="card" data-project="kyoto" data-id="019"><span class="card__id">019</span><div class="card__img-wrap"><img src="img/library/kyoto/019-kabuki-stage-performance.jpg" alt=""></div><div class="card__info"><div class="card__name">Kabuki Stage Performance</div><div class="card__project">Kyoto · Culture</div></div></div>
+    <div class="card" data-project="kyoto" data-id="020"><span class="card__id">020</span><div class="card__img-wrap"><img src="img/library/kyoto/020-kimono-textile-pattern.jpg" alt=""></div><div class="card__info"><div class="card__name">Kimono Textile Detail</div><div class="card__project">Kyoto · Culture</div></div></div>
+  </div>
+</div>
+
+<!-- ═══════ CH6 — QUARKXPRESS / DTP ═══════ -->
+<div class="chapter" data-chapter="quark">
+  <div class="chapter__header">
+    <span class="chapter__num">Ch 6</span>
+    <span class="chapter__title">QuarkXPress / DTP Culture</span>
+    <span class="chapter__sub">Desktop Publishing Revolution · Design Heritage</span>
+  </div>
+
+  <div class="project-label">Swiss Typography / International Style</div>
+  <div class="grid">
+    <div class="card" data-project="quark" data-id="021"><span class="card__id">021</span><div class="card__img-wrap"><img src="img/library/quark/021-muller-brockmann-beethoven.jpg" alt=""></div><div class="card__info"><div class="card__name">Müller-Brockmann — Beethoven (1955)</div><div class="card__project">QuarkXPress · Swiss</div></div></div>
+    <div class="card" data-project="quark" data-id="022"><span class="card__id">022</span><div class="card__img-wrap"><img src="img/library/quark/022-muller-brockmann-der-film.jpg" alt=""></div><div class="card__info"><div class="card__name">Müller-Brockmann — Der Film (1960)</div><div class="card__project">QuarkXPress · Swiss</div></div></div>
+    <div class="card" data-project="quark" data-id="023"><span class="card__id">023</span><div class="card__img-wrap"><img src="img/library/quark/023-typographische-monatsblatter.jpg" alt=""></div><div class="card__info"><div class="card__name">Typographische Monatsblätter (1961)</div><div class="card__project">QuarkXPress · Swiss</div></div></div>
+    <div class="card" data-project="quark" data-id="024"><span class="card__id">024</span><div class="card__img-wrap"><img src="img/library/quark/024-helvetica-specimen.svg" alt=""></div><div class="card__info"><div class="card__name">Helvetica Typeface Specimen</div><div class="card__project">QuarkXPress · Typography</div></div></div>
+    <div class="card" data-project="quark" data-id="025"><span class="card__id">025</span><div class="card__img-wrap"><img src="img/library/quark/025-helvetica-neue-specimen.svg" alt=""></div><div class="card__info"><div class="card__name">Helvetica Neue Specimen</div><div class="card__project">QuarkXPress · Typography</div></div></div>
+    <div class="card" data-project="quark" data-id="026"><span class="card__id">026</span><div class="card__img-wrap"><img src="img/library/quark/026-akzidenz-grotesk.svg" alt=""></div><div class="card__info"><div class="card__name">Akzidenz-Grotesk Variations</div><div class="card__project">QuarkXPress · Typography</div></div></div>
+    <div class="card" data-project="quark" data-id="027"><span class="card__id">027</span><div class="card__img-wrap"><img src="img/library/quark/027-univers-specimen.svg" alt=""></div><div class="card__info"><div class="card__name">Univers — Frutiger (1957)</div><div class="card__project">QuarkXPress · Typography</div></div></div>
+    <div class="card" data-project="quark" data-id="043"><span class="card__id">043</span><div class="card__img-wrap"><img src="img/library/quark/043-futura-specimen.svg" alt=""></div><div class="card__info"><div class="card__name">Futura — Paul Renner</div><div class="card__project">QuarkXPress · Typography</div></div></div>
+    <div class="card" data-project="quark" data-id="044"><span class="card__id">044</span><div class="card__img-wrap"><img src="img/library/quark/044-neue-haas-grotesk.svg" alt=""></div><div class="card__info"><div class="card__name">Neue Haas Grotesk (proto-Helvetica)</div><div class="card__project">QuarkXPress · Typography</div></div></div>
+    <div class="card" data-project="quark" data-id="045"><span class="card__id">045</span><div class="card__img-wrap"><img src="img/library/quark/045-gill-sans-specimen.svg" alt=""></div><div class="card__info"><div class="card__name">Gill Sans — Eric Gill</div><div class="card__project">QuarkXPress · Typography</div></div></div>
+  </div>
+
+  <div class="project-label">NASA Graphics Standards</div>
+  <div class="grid">
+    <div class="card" data-project="quark" data-id="028"><span class="card__id">028</span><div class="card__img-wrap"><img src="img/library/quark/028-nasa-worm-logo.svg" alt=""></div><div class="card__info"><div class="card__name">NASA Worm Logo</div><div class="card__project">QuarkXPress · NASA</div></div></div>
+    <div class="card" data-project="quark" data-id="029"><span class="card__id">029</span><div class="card__img-wrap"><img src="img/library/quark/029-nasa-worm-black.svg" alt=""></div><div class="card__info"><div class="card__name">NASA Worm Logo (Black)</div><div class="card__project">QuarkXPress · NASA</div></div></div>
+    <div class="card" data-project="quark" data-id="030"><span class="card__id">030</span><div class="card__img-wrap"><img src="img/library/quark/030-nasa-meatball-logo.svg" alt=""></div><div class="card__info"><div class="card__name">NASA Meatball Insignia</div><div class="card__project">QuarkXPress · NASA</div></div></div>
+    <div class="card" data-project="quark" data-id="031"><span class="card__id">031</span><div class="card__img-wrap"><img src="img/library/quark/031-shuttle-patch.svg" alt=""></div><div class="card__info"><div class="card__name">Space Shuttle Program Patch</div><div class="card__project">QuarkXPress · NASA</div></div></div>
+  </div>
+
+  <div class="project-label">Desktop Publishing Revolution</div>
+  <div class="grid">
+    <div class="card" data-project="quark" data-id="033"><span class="card__id">033</span><div class="card__img-wrap"><img src="img/library/quark/033-macintosh-128k.png" alt=""></div><div class="card__info"><div class="card__name">Macintosh 128K (1984)</div><div class="card__project">QuarkXPress · DTP</div></div></div>
+    <div class="card" data-project="quark" data-id="035"><span class="card__id">035</span><div class="card__img-wrap"><img src="img/library/quark/035-quarkxpress-font-manager.png" alt=""></div><div class="card__info"><div class="card__name">QuarkXPress 2024 Font Manager</div><div class="card__project">QuarkXPress · DTP</div></div></div>
+    <div class="card" data-project="quark" data-id="041"><span class="card__id">041</span><div class="card__img-wrap"><img src="img/library/quark/041-apple-laserwriter.jpg" alt=""></div><div class="card__info"><div class="card__name">Apple LaserWriter</div><div class="card__project">QuarkXPress · DTP</div></div></div>
+    <div class="card" data-project="quark" data-id="042"><span class="card__id">042</span><div class="card__img-wrap"><img src="img/library/quark/042-heidelberg-offset-press.jpg" alt=""></div><div class="card__info"><div class="card__name">Heidelberg Offset Press</div><div class="card__project">QuarkXPress · DTP</div></div></div>
+  </div>
+
+  <div class="project-label">Design Culture Icons</div>
+  <div class="grid">
+    <div class="card" data-project="quark" data-id="034"><span class="card__id">034</span><div class="card__img-wrap"><img src="img/library/quark/034-vignelli-subway-map.jpg" alt=""></div><div class="card__info"><div class="card__name">Vignelli — NYC Subway Map (1972)</div><div class="card__project">QuarkXPress · Icons</div></div></div>
+    <div class="card" data-project="quark" data-id="036"><span class="card__id">036</span><div class="card__img-wrap"><img src="img/library/quark/036-ibm-logo-paul-rand.svg" alt=""></div><div class="card__info"><div class="card__name">IBM Logo — Paul Rand</div><div class="card__project">QuarkXPress · Icons</div></div></div>
+    <div class="card" data-project="quark" data-id="037"><span class="card__id">037</span><div class="card__img-wrap"><img src="img/library/quark/037-ups-logo-paul-rand.svg" alt=""></div><div class="card__info"><div class="card__name">UPS Logo — Paul Rand (1961)</div><div class="card__project">QuarkXPress · Icons</div></div></div>
+    <div class="card" data-project="quark" data-id="038"><span class="card__id">038</span><div class="card__img-wrap"><img src="img/library/quark/038-abc-logo-paul-rand.svg" alt=""></div><div class="card__info"><div class="card__name">ABC Logo — Paul Rand (1962)</div><div class="card__project">QuarkXPress · Icons</div></div></div>
+    <div class="card" data-project="quark" data-id="039"><span class="card__id">039</span><div class="card__img-wrap"><img src="img/library/quark/039-bauhaus-dessau.jpg" alt=""></div><div class="card__info"><div class="card__name">Bauhaus Building — Dessau</div><div class="card__project">QuarkXPress · Icons</div></div></div>
+    <div class="card" data-project="quark" data-id="040"><span class="card__id">040</span><div class="card__img-wrap"><img src="img/library/quark/040-braun-sk4-dieter-rams.jpg" alt=""></div><div class="card__info"><div class="card__name">Dieter Rams — Braun SK4 (1956)</div><div class="card__project">QuarkXPress · Icons</div></div></div>
+  </div>
+
+  <div class="project-label">Newspapers · Magazines · Print Ads</div>
+  <div class="grid">
+    <div class="card" data-project="quark" data-id="131"><span class="card__id">131</span><div class="card__img-wrap"><img src="images/external/800px-musica_viva._mueller-brockmann.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Müller-Brockmann — Musica Viva (1958)</div><div class="card__project">QuarkXPress · Swiss Poster</div></div></div>
+    <div class="card" data-project="quark" data-id="132"><span class="card__id">132</span><div class="card__img-wrap"><img src="images/external/800px-1959_-kunsthalle_basel-_4_bildhauer.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Armin Hofmann — Kunsthalle Basel (1959)</div><div class="card__project">QuarkXPress · Swiss Poster</div></div></div>
+    <div class="card" data-project="quark" data-id="133"><span class="card__id">133</span><div class="card__img-wrap"><img src="images/external/800px-tm_typographische_monatsblaetter_1961_01.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Emil Ruder — TM Typographische Monatsblätter (1961)</div><div class="card__project">QuarkXPress · Swiss Magazine</div></div></div>
+    <div class="card" data-project="quark" data-id="134"><span class="card__id">134</span><div class="card__img-wrap"><img src="images/external/800px-ernst_keller_image3.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Ernst Keller — Swiss Grid Poster</div><div class="card__project">QuarkXPress · Swiss Poster</div></div></div>
+    <div class="card" data-project="quark" data-id="135"><span class="card__id">135</span><div class="card__img-wrap"><img src="images/external/800px-tokyo_asahi_shinbun_1922-01-27_01.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Asahi Shimbun — Front Page (1922)</div><div class="card__project">QuarkXPress · Japanese Newspaper</div></div></div>
+    <div class="card" data-project="quark" data-id="136"><span class="card__id">136</span><div class="card__img-wrap"><img src="images/external/800px-asahi_shimbun_1941-08-26_1.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Asahi Shimbun — Vertical Layout (1941)</div><div class="card__project">QuarkXPress · Japanese Newspaper</div></div></div>
+    <div class="card" data-project="quark" data-id="137"><span class="card__id">137</span><div class="card__img-wrap"><img src="images/external/800px-asahi_shimbun_evening_edition_newspaper_clipping__2814_july_1959_issue_29." alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Asahi Evening Edition — Clipping (1959)</div><div class="card__project">QuarkXPress · Japanese Newspaper</div></div></div>
+    <div class="card" data-project="quark" data-id="138"><span class="card__id">138</span><div class="card__img-wrap"><img src="images/external/800px-iht_masthead.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">International Herald Tribune — Masthead</div><div class="card__project">QuarkXPress · Newspaper</div></div></div>
+    <div class="card" data-project="quark" data-id="139"><span class="card__id">139</span><div class="card__img-wrap"><img src="images/external/800px-anatomy_of_a_murder_poster.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Saul Bass — Anatomy of a Murder (1959)</div><div class="card__project">QuarkXPress · Print Ad</div></div></div>
+    <div class="card" data-project="quark" data-id="140"><span class="card__id">140</span><div class="card__img-wrap"><img src="images/external/800px-the_man_with_the_golden_arm_poster.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Saul Bass — The Man with the Golden Arm (1955)</div><div class="card__project">QuarkXPress · Print Ad</div></div></div>
+    <div class="card" data-project="quark" data-id="141"><span class="card__id">141</span><div class="card__img-wrap"><img src="images/external/800px-linotype_machine_1.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Linotype Machine — Pre-Digital Typesetting</div><div class="card__project">QuarkXPress · Print Era</div></div></div>
+    <div class="card" data-project="quark" data-id="142"><span class="card__id">142</span><div class="card__img-wrap"><img src="images/external/800px-all-round_phototypesetter_mc-6.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></div><div class="card__info"><div class="card__name">Morisawa MC-6 — Japanese Phototypesetter</div><div class="card__project">QuarkXPress · Japanese DTP</div></div></div>
+  </div>
+</div>
+
+<!-- ═══════ CH1 — AI SYSTEMS ═══════ -->
+<div class="chapter" data-chapter="ai">
+  <div class="chapter__header">
+    <span class="chapter__num">Ch 1</span>
+    <span class="chapter__title">AI Systems</span>
+    <span class="chapter__sub">Fabrion · TDK SensEI · AI Workflow</span>
+  </div>
+
+  <div class="project-label">Fabrion — Industrial IoT</div>
+  <div class="grid">
+    <div class="card" data-project="fabrion" data-id="046"><span class="card__id">046</span><div class="card__img-wrap"><img src="img/library/fabrion/046-industrial-robot-arm.jpg" alt=""></div><div class="card__info"><div class="card__name">Industrial Robot Arm (Foundry)</div><div class="card__project">Fabrion</div></div></div>
+    <div class="card" data-project="fabrion" data-id="047"><span class="card__id">047</span><div class="card__img-wrap"><img src="img/library/fabrion/047-fanuc-assembly-line.jpg" alt=""></div><div class="card__info"><div class="card__name">FANUC Robot Assembly Line</div><div class="card__project">Fabrion</div></div></div>
+    <div class="card" data-project="fabrion" data-id="048"><span class="card__id">048</span><div class="card__img-wrap"><img src="img/library/fabrion/048-iot-sensor-board.jpg" alt=""></div><div class="card__info"><div class="card__name">IoT Sensor Board (Intel Edison)</div><div class="card__project">Fabrion</div></div></div>
+    <div class="card" data-project="fabrion" data-id="049"><span class="card__id">049</span><div class="card__img-wrap"><img src="img/library/fabrion/049-smart-factory-automated.jpg" alt=""></div><div class="card__info"><div class="card__name">Smart Factory — Automated Line</div><div class="card__project">Fabrion</div></div></div>
+    <div class="card" data-project="fabrion" data-id="050"><span class="card__id">050</span><div class="card__img-wrap"><img src="img/library/fabrion/050-raspberry-pi-edge.jpg" alt=""></div><div class="card__info"><div class="card__name">Raspberry Pi — Edge Computing</div><div class="card__project">Fabrion</div></div></div>
+    <div class="card" data-project="fabrion" data-id="051"><span class="card__id">051</span><div class="card__img-wrap"><img src="img/library/fabrion/051-cnc-precision-machining.jpg" alt=""></div><div class="card__info"><div class="card__name">CNC Precision Machining</div><div class="card__project">Fabrion</div></div></div>
+    <div class="card" data-project="fabrion" data-id="052"><span class="card__id">052</span><div class="card__img-wrap"><img src="img/library/fabrion/052-circuit-board-macro.jpg" alt=""></div><div class="card__info"><div class="card__name">Circuit Board Macro</div><div class="card__project">Fabrion</div></div></div>
+  </div>
+
+  <div class="project-label">TDK SensEI — Sensor Intelligence</div>
+  <div class="grid">
+    <div class="card" data-project="tdk" data-id="053"><span class="card__id">053</span><div class="card__img-wrap"><img src="img/library/tdk/053-mems-gyroscope.jpg" alt=""></div><div class="card__info"><div class="card__name">MEMS Gyroscope Sensor</div><div class="card__project">TDK</div></div></div>
+    <div class="card" data-project="tdk" data-id="054"><span class="card__id">054</span><div class="card__img-wrap"><img src="img/library/tdk/054-mems-accelerometer.jpg" alt=""></div><div class="card__info"><div class="card__name">MEMS Accelerometer Surface</div><div class="card__project">TDK</div></div></div>
+    <div class="card" data-project="tdk" data-id="055"><span class="card__id">055</span><div class="card__img-wrap"><img src="img/library/tdk/055-silicon-chip-3d.png" alt=""></div><div class="card__info"><div class="card__name">Silicon Chip 3D Rendering</div><div class="card__project">TDK</div></div></div>
+    <div class="card" data-project="tdk" data-id="056"><span class="card__id">056</span><div class="card__img-wrap"><img src="img/library/tdk/056-wearable-fitness-sensor.jpg" alt=""></div><div class="card__info"><div class="card__name">Wearable Fitness Sensor</div><div class="card__project">TDK</div></div></div>
+    <div class="card" data-project="tdk" data-id="057"><span class="card__id">057</span><div class="card__img-wrap"><img src="img/library/tdk/057-cleanroom-semiconductor.jpg" alt=""></div><div class="card__info"><div class="card__name">Semiconductor Cleanroom</div><div class="card__project">TDK</div></div></div>
+    <div class="card" data-project="tdk" data-id="058"><span class="card__id">058</span><div class="card__img-wrap"><img src="img/library/tdk/058-tdk-logo.svg" alt=""></div><div class="card__info"><div class="card__name">TDK Corporation Logo</div><div class="card__project">TDK</div></div></div>
+  </div>
+
+  <div class="project-label">AI Workflow — Design Intelligence</div>
+  <div class="grid">
+    <div class="card" data-project="ai-workflow" data-id="059"><span class="card__id">059</span><div class="card__img-wrap"><img src="img/library/ai-workflow/059-neural-network.svg" alt=""></div><div class="card__info"><div class="card__name">Neural Network Diagram</div><div class="card__project">AI Workflow</div></div></div>
+    <div class="card" data-project="ai-workflow" data-id="060"><span class="card__id">060</span><div class="card__img-wrap"><img src="img/library/ai-workflow/060-deep-learning-layers.png" alt=""></div><div class="card__info"><div class="card__name">Deep Learning Network</div><div class="card__project">AI Workflow</div></div></div>
+    <div class="card" data-project="ai-workflow" data-id="061"><span class="card__id">061</span><div class="card__img-wrap"><img src="img/library/ai-workflow/061-transformer-architecture.png" alt=""></div><div class="card__info"><div class="card__name">Transformer Architecture</div><div class="card__project">AI Workflow</div></div></div>
+    <div class="card" data-project="ai-workflow" data-id="062"><span class="card__id">062</span><div class="card__img-wrap"><img src="img/library/ai-workflow/062-gradient-descent.svg" alt=""></div><div class="card__info"><div class="card__name">Gradient Descent Visualization</div><div class="card__project">AI Workflow</div></div></div>
+    <div class="card" data-project="ai-workflow" data-id="063"><span class="card__id">063</span><div class="card__img-wrap"><img src="img/library/ai-workflow/063-gan-architecture.svg" alt=""></div><div class="card__info"><div class="card__name">GAN Architecture</div><div class="card__project">AI Workflow</div></div></div>
+    <div class="card" data-project="ai-workflow" data-id="064"><span class="card__id">064</span><div class="card__img-wrap"><img src="img/library/ai-workflow/064-kernel-machine.png" alt=""></div><div class="card__info"><div class="card__name">ML Kernel Diagram</div><div class="card__project">AI Workflow</div></div></div>
+    <div class="card" data-project="ai-workflow" data-id="065"><span class="card__id">065</span><div class="card__img-wrap"><img src="img/library/ai-workflow/065-attention-mechanism.png" alt=""></div><div class="card__info"><div class="card__name">Attention Mechanism</div><div class="card__project">AI Workflow</div></div></div>
+  </div>
+</div>
+
+<!-- ═══════ CH2 — AGENCY ═══════ -->
+<div class="chapter" data-chapter="agency">
+  <div class="chapter__header">
+    <span class="chapter__num">Ch 2</span>
+    <span class="chapter__title">Agency</span>
+    <span class="chapter__sub">Rakuten Fit · Ogilvy / Audi · Slalom / Gundam</span>
+  </div>
+
+  <div class="project-label">Rakuten Fit — Health & Wellness</div>
+  <div class="grid">
+    <div class="card" data-project="rakuten" data-id="066"><span class="card__id">066</span><div class="card__img-wrap"><img src="img/library/rakuten/066-rakuten-logo.svg" alt=""></div><div class="card__info"><div class="card__name">Rakuten Global Brand Logo</div><div class="card__project">Rakuten</div></div></div>
+    <div class="card" data-project="rakuten" data-id="067"><span class="card__id">067</span><div class="card__img-wrap"><img src="img/library/rakuten/067-smartwatch-health.jpg" alt=""></div><div class="card__info"><div class="card__name">Smartwatch Health Interface</div><div class="card__project">Rakuten</div></div></div>
+    <div class="card" data-project="rakuten" data-id="068"><span class="card__id">068</span><div class="card__img-wrap"><img src="img/library/rakuten/068-nanzenji-zen-garden.jpg" alt=""></div><div class="card__info"><div class="card__name">Nanzen-ji Zen Garden</div><div class="card__project">Rakuten · Wellness</div></div></div>
+    <div class="card" data-project="rakuten" data-id="069"><span class="card__id">069</span><div class="card__img-wrap"><img src="img/library/rakuten/069-kusatsu-onsen.jpg" alt=""></div><div class="card__info"><div class="card__name">Kusatsu Onsen Hot Spring</div><div class="card__project">Rakuten · Wellness</div></div></div>
+    <div class="card" data-project="rakuten" data-id="070"><span class="card__id">070</span><div class="card__img-wrap"><img src="img/library/rakuten/070-running-track-wellness.jpg" alt=""></div><div class="card__info"><div class="card__name">Running Track — Wellness</div><div class="card__project">Rakuten</div></div></div>
+  </div>
+
+  <div class="project-label">Ogilvy / Audi — Automotive UX</div>
+  <div class="grid">
+    <div class="card" data-project="ogilvy" data-id="071"><span class="card__id">071</span><div class="card__img-wrap"><img src="img/library/ogilvy/071-audi-logo.svg" alt=""></div><div class="card__info"><div class="card__name">Audi Rings Logo</div><div class="card__project">Ogilvy / Audi</div></div></div>
+    <div class="card" data-project="ogilvy" data-id="072"><span class="card__id">072</span><div class="card__img-wrap"><img src="img/library/ogilvy/072-audi-etron-quattro.jpg" alt=""></div><div class="card__info"><div class="card__name">Audi e-tron 55 quattro</div><div class="card__project">Ogilvy / Audi</div></div></div>
+    <div class="card" data-project="ogilvy" data-id="073"><span class="card__id">073</span><div class="card__img-wrap"><img src="img/library/ogilvy/073-audi-virtual-cockpit.jpg" alt=""></div><div class="card__info"><div class="card__name">Audi Virtual Cockpit Interior</div><div class="card__project">Ogilvy / Audi</div></div></div>
+    <div class="card" data-project="ogilvy" data-id="074"><span class="card__id">074</span><div class="card__img-wrap"><img src="img/library/ogilvy/074-david-ogilvy-portrait.jpg" alt=""></div><div class="card__info"><div class="card__name">David Ogilvy Portrait</div><div class="card__project">Ogilvy / Audi</div></div></div>
+    <div class="card" data-project="ogilvy" data-id="075"><span class="card__id">075</span><div class="card__img-wrap"><img src="img/library/ogilvy/075-hud-display.jpg" alt=""></div><div class="card__info"><div class="card__name">Heads-Up Display (HUD)</div><div class="card__project">Ogilvy / Audi</div></div></div>
+    <div class="card" data-project="ogilvy" data-id="076"><span class="card__id">076</span><div class="card__img-wrap"><img src="img/library/ogilvy/076-automotive-design-studio.jpg" alt=""></div><div class="card__info"><div class="card__name">Automotive Design Studio</div><div class="card__project">Ogilvy / Audi</div></div></div>
+  </div>
+
+  <div class="project-label">Slalom / Gundam Metaverse</div>
+  <div class="grid">
+    <div class="card" data-project="slalom" data-id="077"><span class="card__id">077</span><div class="card__img-wrap"><img src="img/library/slalom/077-unicorn-gundam-odaiba.jpg" alt=""></div><div class="card__info"><div class="card__name">Unicorn Gundam — Odaiba</div><div class="card__project">Gundam Metaverse</div></div></div>
+    <div class="card" data-project="slalom" data-id="078"><span class="card__id">078</span><div class="card__img-wrap"><img src="img/library/slalom/078-moving-gundam-yokohama.jpg" alt=""></div><div class="card__info"><div class="card__name">Moving Gundam — Yokohama</div><div class="card__project">Gundam Metaverse</div></div></div>
+    <div class="card" data-project="slalom" data-id="079"><span class="card__id">079</span><div class="card__img-wrap"><img src="img/library/slalom/079-gunpla-rx78-2.jpg" alt=""></div><div class="card__info"><div class="card__name">Gunpla RX-78-2 Model Kit</div><div class="card__project">Gundam Metaverse</div></div></div>
+    <div class="card" data-project="slalom" data-id="080"><span class="card__id">080</span><div class="card__img-wrap"><img src="img/library/slalom/080-vr-headset.jpg" alt=""></div><div class="card__info"><div class="card__name">VR Headset — Metaverse</div><div class="card__project">Gundam Metaverse</div></div></div>
+    <div class="card" data-project="slalom" data-id="081"><span class="card__id">081</span><div class="card__img-wrap"><img src="img/library/slalom/081-bandai-namco-logo.svg" alt=""></div><div class="card__info"><div class="card__name">Bandai Namco Logo</div><div class="card__project">Gundam Metaverse</div></div></div>
+    <div class="card" data-project="slalom" data-id="082"><span class="card__id">082</span><div class="card__img-wrap"><img src="img/library/slalom/082-akihabara-neon.jpg" alt=""></div><div class="card__info"><div class="card__name">Akihabara Neon District</div><div class="card__project">Gundam · Culture</div></div></div>
+    <div class="card" data-project="slalom" data-id="083"><span class="card__id">083</span><div class="card__img-wrap"><img src="img/library/slalom/083-rx78-original-exhibit.jpg" alt=""></div><div class="card__info"><div class="card__name">RX-78 Original Gundam</div><div class="card__project">Gundam Metaverse</div></div></div>
+    <div class="card" data-project="slalom" data-id="084"><span class="card__id">084</span><div class="card__img-wrap"><img src="img/library/slalom/084-shibuya-crossing-night.jpg" alt=""></div><div class="card__info"><div class="card__name">Shibuya Crossing at Night</div><div class="card__project">Gundam · Culture</div></div></div>
+    <div class="card" data-project="slalom" data-id="085"><span class="card__id">085</span><div class="card__img-wrap"><img src="img/library/slalom/085-shinjuku-skyline.jpg" alt=""></div><div class="card__info"><div class="card__name">Shinjuku Skyline</div><div class="card__project">Gundam · Culture</div></div></div>
+  </div>
+</div>
+
+<!-- ═══════ CH3 — AUDIO ═══════ -->
+<div class="chapter" data-chapter="audio">
+  <div class="chapter__header">
+    <span class="chapter__num">Ch 3</span>
+    <span class="chapter__title">Audio</span>
+    <span class="chapter__sub">Denon / Marantz · Miselu C.24</span>
+  </div>
+
+  <div class="project-label">Denon / Marantz — Premium Audio</div>
+  <div class="grid">
+    <div class="card" data-project="denon" data-id="086"><span class="card__id">086</span><div class="card__img-wrap"><img src="img/library/denon/086-denon-turntable.jpg" alt=""></div><div class="card__info"><div class="card__name">Denon DP-300F Turntable</div><div class="card__project">Denon</div></div></div>
+    <div class="card" data-project="denon" data-id="087"><span class="card__id">087</span><div class="card__img-wrap"><img src="img/library/denon/087-vinyl-record-closeup.jpg" alt=""></div><div class="card__info"><div class="card__name">Vinyl Record Close-up</div><div class="card__project">Denon · Heritage</div></div></div>
+    <div class="card" data-project="denon" data-id="088"><span class="card__id">088</span><div class="card__img-wrap"><img src="img/library/denon/088-bw-speakers.jpg" alt=""></div><div class="card__info"><div class="card__name">Bowers & Wilkins Speakers</div><div class="card__project">Denon · Audio</div></div></div>
+    <div class="card" data-project="denon" data-id="089"><span class="card__id">089</span><div class="card__img-wrap"><img src="img/library/denon/089-vacuum-tube-kt88.jpg" alt=""></div><div class="card__info"><div class="card__name">Vacuum Tube (KT88)</div><div class="card__project">Denon · Heritage</div></div></div>
+    <div class="card" data-project="denon" data-id="090"><span class="card__id">090</span><div class="card__img-wrap"><img src="img/library/denon/090-analog-vu-meters.jpg" alt=""></div><div class="card__info"><div class="card__name">Analog VU Meters</div><div class="card__project">Denon · Heritage</div></div></div>
+    <div class="card" data-project="denon" data-id="091"><span class="card__id">091</span><div class="card__img-wrap"><img src="img/library/denon/091-sawtooth-synthesis.svg" alt=""></div><div class="card__info"><div class="card__name">Sound Wave — Sawtooth</div><div class="card__project">Denon · Technical</div></div></div>
+    <div class="card" data-project="denon" data-id="092"><span class="card__id">092</span><div class="card__img-wrap"><img src="img/library/denon/092-revox-reel-to-reel.jpg" alt=""></div><div class="card__info"><div class="card__name">Revox Reel-to-Reel</div><div class="card__project">Denon · Heritage</div></div></div>
+    <div class="card" data-project="denon" data-id="093"><span class="card__id">093</span><div class="card__img-wrap"><img src="img/library/denon/093-sennheiser-hd600.jpg" alt=""></div><div class="card__info"><div class="card__name">Sennheiser HD600 Headphones</div><div class="card__project">Denon · Audio</div></div></div>
+    <div class="card" data-project="denon" data-id="094"><span class="card__id">094</span><div class="card__img-wrap"><img src="img/library/denon/094-frequency-bandwidth.svg" alt=""></div><div class="card__info"><div class="card__name">Audio Bandwidth Diagram</div><div class="card__project">Denon · Technical</div></div></div>
+    <div class="card" data-project="denon" data-id="095"><span class="card__id">095</span><div class="card__img-wrap"><img src="img/library/denon/095-marantz-logo.svg" alt=""></div><div class="card__info"><div class="card__name">Marantz Logo</div><div class="card__project">Marantz</div></div></div>
+  </div>
+
+  <div class="project-label">Miselu C.24 — Bluetooth MIDI</div>
+  <div class="grid">
+    <div class="card" data-project="miselu" data-id="096"><span class="card__id">096</span><div class="card__img-wrap"><img src="img/library/miselu/096-korg-midi-keyboard.jpg" alt=""></div><div class="card__info"><div class="card__name">MIDI Keyboard (Korg)</div><div class="card__project">Miselu</div></div></div>
+    <div class="card" data-project="miselu" data-id="097"><span class="card__id">097</span><div class="card__img-wrap"><img src="img/library/miselu/097-daw-ardour.png" alt=""></div><div class="card__info"><div class="card__name">Digital Audio Workstation</div><div class="card__project">Miselu</div></div></div>
+    <div class="card" data-project="miselu" data-id="098"><span class="card__id">098</span><div class="card__img-wrap"><img src="img/library/miselu/098-modular-synth-moog.jpg" alt=""></div><div class="card__info"><div class="card__name">Modular Synth (Moog/Buchla)</div><div class="card__project">Miselu · Culture</div></div></div>
+    <div class="card" data-project="miselu" data-id="099"><span class="card__id">099</span><div class="card__img-wrap"><img src="img/library/miselu/099-ipad-mobile-music.png" alt=""></div><div class="card__info"><div class="card__name">iPad — Mobile Music</div><div class="card__project">Miselu</div></div></div>
+    <div class="card" data-project="miselu" data-id="100"><span class="card__id">100</span><div class="card__img-wrap"><img src="img/library/miselu/100-bluetooth-logo.svg" alt=""></div><div class="card__info"><div class="card__name">Bluetooth Logo</div><div class="card__project">Miselu · Tech</div></div></div>
+    <div class="card" data-project="miselu" data-id="101"><span class="card__id">101</span><div class="card__img-wrap"><img src="img/library/miselu/101-ces-convention.jpg" alt=""></div><div class="card__info"><div class="card__name">CES Convention Center</div><div class="card__project">Miselu · Launch</div></div></div>
+    <div class="card" data-project="miselu" data-id="102"><span class="card__id">102</span><div class="card__img-wrap"><img src="img/library/miselu/102-piano-keys.jpg" alt=""></div><div class="card__info"><div class="card__name">Piano Keys</div><div class="card__project">Miselu</div></div></div>
+    <div class="card" data-project="miselu" data-id="103"><span class="card__id">103</span><div class="card__img-wrap"><img src="img/library/miselu/103-recording-studio.jpg" alt=""></div><div class="card__info"><div class="card__name">Recording Studio</div><div class="card__project">Miselu · Culture</div></div></div>
+    <div class="card" data-project="miselu" data-id="104"><span class="card__id">104</span><div class="card__img-wrap"><img src="img/library/miselu/104-teensy-microcontroller.jpg" alt=""></div><div class="card__info"><div class="card__name">Teensy Microcontroller</div><div class="card__project">Miselu · Hardware</div></div></div>
+    <div class="card" data-project="miselu" data-id="105"><span class="card__id">105</span><div class="card__img-wrap"><img src="img/library/miselu/105-midi-din5-connectors.jpg" alt=""></div><div class="card__info"><div class="card__name">MIDI DIN-5 Connectors</div><div class="card__project">Miselu · Hardware</div></div></div>
+  </div>
+</div>
+
+<!-- ═══════ CH4 — MUSIC & EVENTS ═══════ -->
+<div class="chapter" data-chapter="music">
+  <div class="chapter__header">
+    <span class="chapter__num">Ch 4</span>
+    <span class="chapter__title">Music & Events</span>
+    <span class="chapter__sub">Beatport / NI · Robot Heart · TechCrunch · Festivals</span>
+  </div>
+
+  <div class="project-label">Beatport / Native Instruments — DJ Culture</div>
+  <div class="grid">
+    <div class="card" data-project="beatport" data-id="106"><span class="card__id">106</span><div class="card__img-wrap"><img src="img/library/beatport/106-pioneer-cdj-djm.jpg" alt=""></div><div class="card__info"><div class="card__name">Pioneer CDJ-2000 + DJM-900</div><div class="card__project">Beatport</div></div></div>
+    <div class="card" data-project="beatport" data-id="107"><span class="card__id">107</span><div class="card__img-wrap"><img src="img/library/beatport/107-turntables-mixer.jpg" alt=""></div><div class="card__info"><div class="card__name">DJ Turntables & Mixer</div><div class="card__project">Beatport</div></div></div>
+    <div class="card" data-project="beatport" data-id="108"><span class="card__id">108</span><div class="card__img-wrap"><img src="img/library/beatport/108-vinyl-record-store.jpg" alt=""></div><div class="card__info"><div class="card__name">Vinyl Record Store</div><div class="card__project">Beatport · Culture</div></div></div>
+    <div class="card" data-project="beatport" data-id="109"><span class="card__id">109</span><div class="card__img-wrap"><img src="img/library/beatport/109-dj-booth-live.jpg" alt=""></div><div class="card__info"><div class="card__name">Nightclub DJ Booth</div><div class="card__project">Beatport</div></div></div>
+    <div class="card" data-project="beatport" data-id="110"><span class="card__id">110</span><div class="card__img-wrap"><img src="img/library/beatport/110-waveforms.svg" alt=""></div><div class="card__info"><div class="card__name">Electronic Waveforms</div><div class="card__project">Beatport · Technical</div></div></div>
+    <div class="card" data-project="beatport" data-id="111"><span class="card__id">111</span><div class="card__img-wrap"><img src="img/library/beatport/111-technics-sl1200.jpg" alt=""></div><div class="card__info"><div class="card__name">Technics SL-1200 MK2</div><div class="card__project">Beatport · Icon</div></div></div>
+  </div>
+
+  <div class="project-label">Robot Heart — Burning Man</div>
+  <div class="grid">
+    <div class="card" data-project="robot-heart" data-id="112"><span class="card__id">112</span><div class="card__img-wrap"><img src="img/library/robot-heart/112-burning-man-temple.jpg" alt=""></div><div class="card__info"><div class="card__name">Burning Man Temple</div><div class="card__project">Robot Heart</div></div></div>
+    <div class="card" data-project="robot-heart" data-id="113"><span class="card__id">113</span><div class="card__img-wrap"><img src="img/library/robot-heart/113-black-rock-city-aerial.jpg" alt=""></div><div class="card__info"><div class="card__name">Black Rock City Aerial</div><div class="card__project">Robot Heart</div></div></div>
+    <div class="card" data-project="robot-heart" data-id="114"><span class="card__id">114</span><div class="card__img-wrap"><img src="img/library/robot-heart/114-mutant-vehicle.jpg" alt=""></div><div class="card__info"><div class="card__name">Mutant Vehicle / Art Car</div><div class="card__project">Robot Heart</div></div></div>
+    <div class="card" data-project="robot-heart" data-id="115"><span class="card__id">115</span><div class="card__img-wrap"><img src="img/library/robot-heart/115-burning-man-desert.jpg" alt=""></div><div class="card__info"><div class="card__name">Burning Man Desert Scene</div><div class="card__project">Robot Heart</div></div></div>
+    <div class="card" data-project="robot-heart" data-id="116"><span class="card__id">116</span><div class="card__img-wrap"><img src="img/library/robot-heart/116-the-man-burns.jpg" alt=""></div><div class="card__info"><div class="card__name">The Man Burns</div><div class="card__project">Robot Heart</div></div></div>
+    <div class="card" data-project="robot-heart" data-id="117"><span class="card__id">117</span><div class="card__img-wrap"><img src="img/library/robot-heart/117-concert-speakers.jpg" alt=""></div><div class="card__info"><div class="card__name">Concert Speaker Wall</div><div class="card__project">Robot Heart · Sound</div></div></div>
+  </div>
+
+  <div class="project-label">TechCrunch Disrupt — Startup Culture</div>
+  <div class="grid">
+    <div class="card" data-project="techcrunch" data-id="118"><span class="card__id">118</span><div class="card__img-wrap"><img src="img/library/techcrunch/118-techcrunch-disrupt-sf.jpg" alt=""></div><div class="card__info"><div class="card__name">TechCrunch Disrupt SF</div><div class="card__project">TechCrunch</div></div></div>
+    <div class="card" data-project="techcrunch" data-id="119"><span class="card__id">119</span><div class="card__img-wrap"><img src="img/library/techcrunch/119-disrupt-stage-2013.jpg" alt=""></div><div class="card__info"><div class="card__name">Disrupt Stage (2013)</div><div class="card__project">TechCrunch</div></div></div>
+    <div class="card" data-project="techcrunch" data-id="120"><span class="card__id">120</span><div class="card__img-wrap"><img src="img/library/techcrunch/120-san-francisco-skyline.jpg" alt=""></div><div class="card__info"><div class="card__name">San Francisco Skyline</div><div class="card__project">TechCrunch · Culture</div></div></div>
+    <div class="card" data-project="techcrunch" data-id="121"><span class="card__id">121</span><div class="card__img-wrap"><img src="img/library/techcrunch/121-hackathon-coding.jpg" alt=""></div><div class="card__info"><div class="card__name">Hackathon Coding Session</div><div class="card__project">TechCrunch · Culture</div></div></div>
+    <div class="card" data-project="techcrunch" data-id="122"><span class="card__id">122</span><div class="card__img-wrap"><img src="img/library/techcrunch/122-silicon-valley-sign.jpg" alt=""></div><div class="card__info"><div class="card__name">Silicon Valley Road Sign</div><div class="card__project">TechCrunch · Culture</div></div></div>
+  </div>
+
+  <div class="project-label">Festival Visuals — Stage & Light Design</div>
+  <div class="grid">
+    <div class="card" data-project="festivals" data-id="123"><span class="card__id">123</span><div class="card__img-wrap"><img src="img/library/festivals/123-coachella-stage.jpg" alt=""></div><div class="card__info"><div class="card__name">Coachella Festival Stage</div><div class="card__project">Festivals</div></div></div>
+    <div class="card" data-project="festivals" data-id="124"><span class="card__id">124</span><div class="card__img-wrap"><img src="img/library/festivals/124-festival-crowd-aerial.jpg" alt=""></div><div class="card__info"><div class="card__name">Festival Crowd Aerial</div><div class="card__project">Festivals</div></div></div>
+    <div class="card" data-project="festivals" data-id="125"><span class="card__id">125</span><div class="card__img-wrap"><img src="img/library/festivals/125-tomorrowland-mainstage.jpg" alt=""></div><div class="card__info"><div class="card__name">Tomorrowland Mainstage</div><div class="card__project">Festivals</div></div></div>
+    <div class="card" data-project="festivals" data-id="126"><span class="card__id">126</span><div class="card__img-wrap"><img src="img/library/festivals/126-stage-lighting-led.jpg" alt=""></div><div class="card__info"><div class="card__name">Stage Lighting LED</div><div class="card__project">Festivals · Technical</div></div></div>
+    <div class="card" data-project="festivals" data-id="127"><span class="card__id">127</span><div class="card__img-wrap"><img src="img/library/festivals/127-fuji-rock-festival.jpg" alt=""></div><div class="card__info"><div class="card__name">Fuji Rock Festival</div><div class="card__project">Festivals · Japan</div></div></div>
+    <div class="card" data-project="festivals" data-id="128"><span class="card__id">128</span><div class="card__img-wrap"><img src="img/library/festivals/128-projection-mapping.jpg" alt=""></div><div class="card__info"><div class="card__name">Projection Mapping Art</div><div class="card__project">Festivals · Visual</div></div></div>
+    <div class="card" data-project="festivals" data-id="129"><span class="card__id">129</span><div class="card__img-wrap"><img src="img/library/festivals/129-coachella-grounds.jpg" alt=""></div><div class="card__info"><div class="card__name">Coachella Grounds</div><div class="card__project">Festivals</div></div></div>
+    <div class="card" data-project="festivals" data-id="130"><span class="card__id">130</span><div class="card__img-wrap"><img src="img/library/festivals/130-laser-show-concert.jpg" alt=""></div><div class="card__info"><div class="card__name">Laser Show Concert</div><div class="card__project">Festivals · Visual</div></div></div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox__close" onclick="closeLightbox()">&times;</button>
+  <button class="lightbox__nav lightbox__nav--prev" onclick="navLightbox(-1)">&lsaquo;</button>
+  <button class="lightbox__nav lightbox__nav--next" onclick="navLightbox(1)">&rsaquo;</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lightbox__info">
+    <span class="lightbox__id" id="lb-id"></span>
+    <div class="lightbox__caption" id="lb-caption"></div>
+  </div>
+</div>
+
+<script>
+  // Filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card');
+  const chapters = document.querySelectorAll('.chapter');
+  const projectLabels = document.querySelectorAll('.project-label');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+
+      if (filter === 'all') {
+        cards.forEach(c => c.style.display = '');
+        chapters.forEach(c => c.style.display = '');
+        projectLabels.forEach(l => l.style.display = '');
+      } else {
+        cards.forEach(c => {
+          c.style.display = c.dataset.project === filter ? '' : 'none';
+        });
+        chapters.forEach(ch => {
+          const hasVisible = [...ch.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+          ch.style.display = hasVisible ? '' : 'none';
+        });
+        projectLabels.forEach(l => {
+          const grid = l.nextElementSibling;
+          if (grid) {
+            const hasVisible = [...grid.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+            l.style.display = hasVisible ? '' : 'none';
+          }
+        });
+      }
+    });
+  });
+
+  // Lightbox
+  const allCards = [...document.querySelectorAll('.card')];
+  let currentIdx = 0;
+
+  allCards.forEach((card, idx) => {
+    card.addEventListener('click', () => {
+      currentIdx = idx;
+      showLightbox(card);
+    });
+  });
+
+  function showLightbox(card) {
+    const img = card.querySelector('img');
+    const id = card.dataset.id;
+    const name = card.querySelector('.card__name').textContent;
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb-id').textContent = '#' + id;
+    document.getElementById('lb-caption').textContent = name;
+    document.getElementById('lightbox').classList.add('active');
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+
+  function navLightbox(dir) {
+    const visible = allCards.filter(c => c.style.display !== 'none');
+    const currVisible = visible.indexOf(allCards[currentIdx]);
+    const nextVisible = (currVisible + dir + visible.length) % visible.length;
+    const nextCard = visible[nextVisible];
+    currentIdx = allCards.indexOf(nextCard);
+    showLightbox(nextCard);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navLightbox(-1);
+    if (e.key === 'ArrowRight') navLightbox(1);
+  });
+
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  });
+</script>
+</body>
+</html>
