@@ -86,6 +86,8 @@
   }
   .stard-section__body p:first-child { margin-top: 0; }
 
+  /* ===== Inline Image ===== */
+
   /* ===== Pull Quote ===== */
 
   /* ===== Before / After (embedded in flow) ===== */
@@ -122,103 +124,12 @@
     font-size: 14px; font-weight: 400; color: var(--ink-80);
   }
 
-  /* ===== Circular Flow Icons ===== */
-  .flow-icon {
-    display: flex; justify-content: center; align-items: flex-start;
-    margin: 40px 0; padding: 16px 0;
-  }
-  .flow-node {
-    display: flex; flex-direction: column; align-items: center; gap: 16px;
-  }
-  .flow-node__disc {
-    position: relative; width: 120px; height: 120px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .flow-node__ring-outer {
-    position: absolute; inset: 0; border-radius: 50%;
-    border: 1px solid var(--rule-40);
-    animation: ring-outer 4s ease-in-out infinite;
-  }
-  .flow-node__ring-inner {
-    position: absolute; inset: 14px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.12);
-    animation: ring-inner 6s linear infinite;
-  }
-  .flow-node__kanji {
-    font-size: 32px; font-weight: 200; color: var(--ink-60);
-    letter-spacing: -0.02em; line-height: 1;
-    position: relative; z-index: 1;
-    animation: kanji-breathe 4s ease-in-out infinite;
-  }
-  .flow-node__icon {
-    width: 36px; height: 36px;
-    position: relative; z-index: 1;
-    animation: kanji-breathe 4s ease-in-out infinite;
-    display: block;
-  }
-  .flow-node__label {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--ink-40); text-align: center;
-  }
-  .flow-node__sublabel {
-    font-size: 11px; font-weight: 300; color: var(--ink-60);
-    text-align: center; margin-top: -8px;
-  }
-
-  /* Pipeline (3 nodes) */
-  .flow-pipeline {
-    display: flex; justify-content: center; align-items: flex-start;
-    gap: 0; margin: 48px 0;
-  }
-  .flow-pipeline .flow-node__disc {
-    width: 100px; height: 100px;
-  }
-  .flow-pipeline .flow-node__kanji {
-    font-size: 26px;
-  }
-  .flow-connector {
-    display: flex; align-items: center; padding: 0 8px;
-    margin-top: 50px; /* vertically center with disc */
-    gap: 6px;
-  }
-  .flow-dot {
-    width: 4px; height: 4px; border-radius: 50%;
-    background: var(--ink-40); display: block;
-  }
-  .flow-dot:nth-child(1) { animation: dot-flow 1.8s ease-in-out 0s infinite; }
-  .flow-dot:nth-child(2) { animation: dot-flow 1.8s ease-in-out 0.3s infinite; }
-  .flow-dot:nth-child(3) { animation: dot-flow 1.8s ease-in-out 0.6s infinite; }
-  .flow-dot:nth-child(4) { animation: dot-flow 1.8s ease-in-out 0.9s infinite; }
-  .flow-dot:nth-child(5) { animation: dot-flow 1.8s ease-in-out 1.2s infinite; }
-
-  /* Staggered animation delays per node */
-  .flow-pipeline .flow-node:nth-child(1) .flow-node__ring-outer { animation-delay: 0s; }
-  .flow-pipeline .flow-node:nth-child(3) .flow-node__ring-outer { animation-delay: 0.6s; }
-  .flow-pipeline .flow-node:nth-child(5) .flow-node__ring-outer { animation-delay: 1.2s; }
-
-  @keyframes ring-outer {
-    0%, 100% { transform: scale(1); opacity: 0.3; }
-    50% { transform: scale(1.08); opacity: 0.7; }
-  }
-  @keyframes ring-inner {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  @keyframes kanji-breathe {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-  }
-  @keyframes dot-flow {
-    0%, 100% { opacity: 0.2; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.3); }
-  }
-
   /* ===== Prev / Next Nav ===== */
 
   /* ===== Footer ===== */
 
   /* ===== Scroll animations ===== */
-
+  
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* ===== Responsive ===== */
@@ -228,25 +139,22 @@
     .toc__label { width: 100%; }
     .toc__list { display: flex; flex-wrap: wrap; gap: 8px 24px; }
     .toc__list li { margin-top: 0; }
+
   }
   @media (max-width: 767px) {
+
     .metrics { padding: 32px 24px; }
     .metrics__grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
     .metrics__item { border-left: none; padding: 0; }
     .cs-content { padding: 0 24px 40px; }
     .ba-inline { grid-template-columns: 1fr; }
-    .flow-pipeline { flex-wrap: wrap; gap: 24px; }
-    .flow-connector { display: none; }
+
   }
   /* ===== Animation Layer (v1_animation) ===== */
   #snow-zone { position: relative; overflow: hidden; }
   #snow-zone img { position: relative; z-index: 2; }
   @media (prefers-reduced-motion: reduce) {
     .weather-hero { display: none !important; }
-    .flow-node__ring-outer,
-    .flow-node__ring-inner,
-    .flow-node__kanji,
-    .flow-dot { animation: none !important; opacity: 0.6; }
   }
 </style>
 </head>
@@ -269,22 +177,19 @@
 <!-- ===== CASE STUDY HERO ===== -->
 <section class="cs-hero">
   <div class="reveal">
-    <a href="../projects.html" class="cs-hero__back">← Projects</a>
+    <a href="Projects_Preview.html#workflow" class="cs-hero__back">← Projects</a>
   </div>
   <div class="reveal" style="transition-delay: 0.05s">
     <p class="cs-hero__brand">AI-Native Workflow</p>
   </div>
   <div class="reveal" style="transition-delay: 0.1s">
-    <h1 class="cs-hero__title"><span class="bold">Design-to-Code</span> Without the <span class="bold">Handoff</span></h1>
+    <h1 class="cs-hero__title"><span class="bold">Design-to-Code</span> in Days, Not <span class="bold">Weeks</span></h1>
   </div>
   <div class="reveal" style="transition-delay: 0.15s">
-    <p class="cs-hero__statement">The boundaries between PM, UX, and engineering are blurring — and the most important workflow design today isn't about tools. It's about how we communicate: openly, transparently, without silos. Over the last six months, every project I've shipped has run through a pipeline where Figma MCP, Claude Code, and Google Antigravity collapse the gap between design intent and working code — and change who stays in the conversation.</p>
+    <p class="cs-hero__statement">Building an AI-native design workflow that collapses the design-to-development gap — combining Claude Code, Google Antigravity, and Figma MCP Server to go from high-fidelity design to functional proof-of-concept in hours instead of weeks.</p>
   </div>
   <div class="reveal" style="transition-delay: 0.2s">
-    <div class="cs-hero__image" data-kanji="流" style="background:linear-gradient(160deg, #020A14 0%, #051020 100%); --hero-kanji-color:rgba(255,255,255,0.04); padding:0;">
-      <img src="../img/library/ai-workflow/antigravity-screenshot.png" alt="Google Antigravity IDE — orchestration-ui project, Solar Array job card built with Figma MCP and Claude Code" loading="eager" style="object-fit:cover; width:100%; height:100%;">
-
-    </div>
+    <div class="cs-hero__image">Hero image — Figma → MCP → AI agents → functional code pipeline</div>
   </div>
 </section>
 
@@ -301,11 +206,11 @@
     </div>
     <div class="overview-bar__item">
       <p class="overview-bar__label">Platform</p>
-      <p class="overview-bar__value">Figma MCP · Claude Code · Google Antigravity</p>
+      <p class="overview-bar__value">Cross-platform development</p>
     </div>
     <div class="overview-bar__item">
-      <p class="overview-bar__label">Scope</p>
-      <p class="overview-bar__value">Every project — last 6 months</p>
+      <p class="overview-bar__label">Team</p>
+      <p class="overview-bar__value">Personal project / Workflow R&D</p>
     </div>
   </div>
 </div>
@@ -319,27 +224,26 @@
   <span class="tag">Design Systems</span>
   <span class="tag">Design-to-Code</span>
   <span class="tag">Agentic Development</span>
-  <span class="tag">PM · UX · Engineering</span>
 </div>
 
 <!-- ===== METRICS ===== -->
 <div class="metrics reveal">
   <div class="metrics__grid">
     <div class="metrics__item">
-      <p class="metrics__value">Design → PoC</p>
-      <p class="metrics__label">PoC as part of design delivery — no separate sprint</p>
+      <p class="metrics__value">Days</p>
+      <p class="metrics__label">Design-to-POC time (from weeks)</p>
     </div>
     <div class="metrics__item">
       <p class="metrics__value">1:1</p>
-      <p class="metrics__label">Design-to-code fidelity — intent preserved</p>
+      <p class="metrics__label">Design-to-code fidelity</p>
     </div>
     <div class="metrics__item">
-      <p class="metrics__value">3 Tools</p>
-      <p class="metrics__label">One pipeline — zero traditional handoff steps</p>
+      <p class="metrics__value">3</p>
+      <p class="metrics__label">AI platforms integrated</p>
     </div>
     <div class="metrics__item">
-      <p class="metrics__value">20+ Yrs</p>
-      <p class="metrics__label">PM / UX — now the biggest personal shift</p>
+      <p class="metrics__value">0</p>
+      <p class="metrics__label">Manual handoff steps</p>
     </div>
   </div>
 </div>
@@ -351,9 +255,9 @@
   <aside class="toc reveal">
     <p class="toc__label">Contents</p>
     <ul class="toc__list">
-      <li><a href="#context" class="active">The Blurry Boundaries</a></li>
-      <li><a href="#work">Three Tools, One Conversation</a></li>
-      <li><a href="#impact">The Artifact Is the Conversation</a></li>
+      <li><a href="#context" class="active">Opening Context</a></li>
+      <li><a href="#work">The Work</a></li>
+      <li><a href="#impact">Impact</a></li>
       <li><a href="#reflection">Reflection</a></li>
       <li style="margin-top:20px; padding-top:12px; border-top: 1px solid var(--rule-40)"><a href="#recognition">Recognition</a></li>
     </ul>
@@ -362,184 +266,90 @@
   <!-- Content Body -->
   <div>
 
-    <!-- OPENING CONTEXT -->
+    <!-- OPENING CONTEXT (S+T combined) -->
     <div id="context" class="stard-section reveal">
       <p class="stard-section__overline">Opening Context</p>
-      <h2 class="stard-section__title">The Boundaries Are Getting Blurry</h2>
+      <h2 class="stard-section__title">The Industry's Oldest Frustration</h2>
       <div class="stard-section__body">
-        <p>The lines between product manager, UX designer, and software engineer have always been somewhat artificial. The best builders I've worked with over 20+ years were never purely one thing. But the workflow infrastructure enforced the silos anyway: requirements documents went one direction, design files went another, code reviews happened somewhere else entirely. Communication was batched, one-way, and filtered through artifacts that represented decisions rather than enabling conversations.</p>
+        <p>The traditional product design workflow has a structural inefficiency: designers create static artifacts, then developers reinterpret them into code. Every handoff introduces translation loss — spacing shifts, interactions get simplified, animations get cut. The gap between "what was designed" and "what shipped" is the industry's oldest frustration.</p>
 
-        <p>I spent those 20 years doing exactly what a PM/UX person is supposed to do: writing market analysis, preparing user stories, building wireframes, crafting clickable prototypes — all of it designed to communicate design intent to engineers in a form they could act on. The craft was real. But the communication was still indirect. A developer interpreting a prototype. A QA engineer interpreting a spec. Each step introduced drift between what I intended and what shipped.</p>
+        <p>I'm building a workflow that collapses this gap by combining the most advanced AI development platforms with Figma's design ecosystem.</p>
 
-        <p>What's changing now isn't the importance of that craft. It's the channel. When the design can become a working proof-of-concept in hours rather than weeks, the conversation changes entirely. You're not explaining what you meant. You're showing it, running, and asking what needs to change.</p>
+        <p class="pull-quote">Many designers talk about AI-native workflows. I'm building one — with the most advanced tools available.</p>
 
-        <p class="pull-quote">The most important workflow design today isn't about tools. It's about how we communicate — openly, transparently, without the silos that filtered intent out of every handoff.</p>
-
-        <!-- Circular icon: communication -->
-        <div class="flow-icon">
-          <div class="flow-node">
-            <div class="flow-node__disc">
-              <div class="flow-node__ring-outer"></div>
-              <div class="flow-node__ring-inner"></div>
-              <span class="flow-node__kanji">話</span>
-            </div>
-            <div class="flow-node__label">Communication</div>
-            <div class="flow-node__sublabel">Open · Transparent · Honest</div>
-          </div>
-        </div>
-
+        <div class="inline-image">Inline image placeholder — Traditional workflow timeline vs. AI-native workflow timeline</div>
       </div>
     </div>
 
     <!-- THE WORK -->
     <div id="work" class="stard-section reveal">
       <p class="stard-section__overline">The Work</p>
-      <h2 class="stard-section__title">Three Tools, One Conversation</h2>
+      <h2 class="stard-section__title">Three Platforms, One Pipeline</h2>
       <div class="stard-section__body">
+        <p>Google Antigravity (launched November 2025) — Google's cross-platform IDE with autonomous AI agents. Multi-model support (Gemini 3 Pro/Flash + Claude Sonnet). Figma MCP Server integration for automated extraction of design tokens, component specs, and image assets.</p>
 
-        <!-- Three-node pipeline -->
-        <div class="flow-pipeline">
-          <div class="flow-node">
-            <div class="flow-node__disc">
-              <div class="flow-node__ring-outer"></div>
-              <div class="flow-node__ring-inner"></div>
-              <!-- Figma mark -->
-              <svg class="flow-node__icon" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Figma">
-                <path fill="#FF7262" d="M9.5 0C4.253 0 0 4.253 0 9.5S4.253 19 9.5 19H28.5C33.747 19 38 14.747 38 9.5S33.747 0 28.5 0H9.5Z"/>
-                <path fill="#A259FF" d="M0 28.5C0 23.253 4.253 19 9.5 19H19V38H9.5C4.253 38 0 33.747 0 28.5Z"/>
-                <circle fill="#1ABCFE" cx="28.5" cy="28.5" r="9.5"/>
-                <path fill="#0ACF83" d="M9.5 38H19V47.5C19 52.747 14.747 57 9.5 57S0 52.747 0 47.5 4.253 38 9.5 38Z"/>
-              </svg>
-            </div>
-            <div class="flow-node__label">Figma MCP</div>
-            <div class="flow-node__sublabel">Extract · Bridge</div>
-          </div>
-          <div class="flow-connector">
-            <span class="flow-dot"></span>
-            <span class="flow-dot"></span>
-            <span class="flow-dot"></span>
-            <span class="flow-dot"></span>
-            <span class="flow-dot"></span>
-          </div>
-          <div class="flow-node">
-            <div class="flow-node__disc">
-              <div class="flow-node__ring-outer"></div>
-              <div class="flow-node__ring-inner"></div>
-              <!-- Claude asterisk mark -->
-              <svg class="flow-node__icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Claude Code">
-                <line x1="16" y1="2"    x2="16" y2="11"   stroke="#D97706" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="16" y1="21"   x2="16" y2="30"   stroke="#D97706" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="2"  y1="16"   x2="11" y2="16"   stroke="#D97706" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="21" y1="16"   x2="30" y2="16"   stroke="#D97706" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="5.5"  y1="5.5"  x2="11.9" y2="11.9" stroke="#D97706" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="20.1" y1="20.1" x2="26.5" y2="26.5" stroke="#D97706" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="26.5" y1="5.5"  x2="20.1" y2="11.9" stroke="#D97706" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="11.9" y1="20.1" x2="5.5"  y2="26.5" stroke="#D97706" stroke-width="3.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="flow-node__label">Claude Code</div>
-            <div class="flow-node__sublabel">Understand · Build</div>
-          </div>
-          <div class="flow-connector">
-            <span class="flow-dot"></span>
-            <span class="flow-dot"></span>
-            <span class="flow-dot"></span>
-            <span class="flow-dot"></span>
-            <span class="flow-dot"></span>
-          </div>
-          <div class="flow-node">
-            <div class="flow-node__disc">
-              <div class="flow-node__ring-outer"></div>
-              <div class="flow-node__ring-inner"></div>
-              <!-- Antigravity arch mark -->
-              <svg class="flow-node__icon" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Google Antigravity">
-                <defs>
-                  <linearGradient id="ag-grad" x1="0" y1="76" x2="100" y2="76" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%"   stop-color="#4FC3F7"/>
-                    <stop offset="30%"  stop-color="#29B6F6"/>
-                    <stop offset="55%"  stop-color="#EF5350"/>
-                    <stop offset="78%"  stop-color="#FFA726"/>
-                    <stop offset="100%" stop-color="#66BB6A"/>
-                  </linearGradient>
-                </defs>
-                <path fill="url(#ag-grad)" d="
-                  M 4 76 C 4 76 4 4 50 4 C 96 4 96 76 96 76
-                  L 78 76 C 78 76 78 22 50 22 C 22 22 22 76 22 76 Z
-                "/>
-              </svg>
-            </div>
-            <div class="flow-node__label">Antigravity</div>
-            <div class="flow-node__sublabel">Scaffold · Ship</div>
-          </div>
+        <p>Claude Code — terminal-based agentic coding with deep contextual understanding. Excels at nuanced design-to-code translation — understanding design intent, not just specs. Iterative refinement through multi-turn conversations.</p>
+
+        <p>Figma MCP Server — the critical bridge: reads design files programmatically, exports tokens, extracts component hierarchies, generates image assets.</p>
+
+        <div class="inline-image--half">
+          <div>Google Antigravity — agentic development IDE</div>
+          <div>Claude Code — design intent interpretation</div>
         </div>
 
-        <p><strong>Figma MCP Server</strong> is the bridge that turns a design file into structured data an AI can act on directly. Design tokens, component hierarchies, image assets — extracted programmatically in minutes, not hours of redlining. The output isn't a PDF annotation for a developer to interpret. It's structured specification that removes the first translation step entirely.</p>
+        <p>The workflow phases:</p>
+        <p>1. Design: Figma high-fidelity designs (same as traditional)<br>
+        2. Specification: Figma MCP auto-extracts tokens, specs, assets (minutes vs. hours)<br>
+        3. Scaffolding: Antigravity agents scaffold from Figma data (minutes vs. hours-days)<br>
+        4. Component build: Claude Code builds from design intent + tokens (hours vs. days)<br>
+        5. Integration: Claude Code implements full interaction logic (hours vs. days)<br>
+        6. Refinement: Side-by-side comparison, iterative AI refinement (minutes vs. days)</p>
 
-        <p><strong>Claude Code</strong> is where design intent becomes code. When I pass a token set and component hierarchy from Figma MCP, it doesn't generate boilerplate — it reads the relationship between spacing tokens and layout intent, between color roles and interaction states. Refinement happens in conversation. Not in JIRA tickets sent across a wall.</p>
-
-        <p><strong>Google Antigravity</strong> — Google's cross-platform agentic IDE, launched November 2025 — handles multi-platform scaffolding with Gemini model support alongside Claude. It completes the stack: MCP extracts the design language, Antigravity builds the application structure, Claude Code fills in interaction logic and component detail.</p>
-
-        <p>The pipeline in practice: Figma design → MCP extraction → Antigravity scaffolding → Claude Code component build → side-by-side refinement. The PoC is part of the design process itself — not a separate phase handed off to engineering. The designer stays in the conversation from ideation to working code, no handoff, no drift.</p>
+        <div class="inline-image">Inline image placeholder — Side-by-side Figma design vs. AI-generated functional component</div>
       </div>
     </div>
 
     <!-- IMPACT -->
     <div id="impact" class="stard-section reveal">
       <p class="stard-section__overline">Impact</p>
-      <h2 class="stard-section__title">The Artifact Is the Conversation</h2>
+      <h2 class="stard-section__title">Gap Eliminated</h2>
       <div class="stard-section__body">
-        <p>The most specific outcome I can point to: a client-approved functional prototype, built from a high-fidelity Figma design, delivered as part of design — not as a downstream engineering artifact. No separate sprint. No QA cycle. The client reviewed working code, not a mockup. They approved it on the first review. That conversation — where both sides are looking at the same running software — is qualitatively different from any conversation you can have over a static prototype. It's not "does this look right?" It's "does this work?"</p>
-
-        <p>You're looking at a second outcome right now. This portfolio — its design system, its case study templates, its interactive components — was built entirely through this pipeline. The design existed in Figma. The code was generated and iterated through Claude Code. The gap between what I designed and what you're reading is zero.</p>
+        <p>Designers can validate their own work in code without waiting for engineering sprints. Design reviews happen on functional prototypes, not static mockups. Iteration speed collapses from weekly cycles to same-day refinement. Design intent is preserved because AI understands the relationship between tokens, components, and interactions.</p>
 
         <div class="ba-inline">
           <div class="ba-inline__cell">
             <p class="ba-inline__label ba-inline__label--before">Before</p>
-            <p class="ba-inline__text">Requirements → wireframes → clickable prototype → dev sprint → QA → 2–4 weeks. Each step a silo. Each handoff a translation.</p>
+            <p class="ba-inline__text">Design → manual redlines → developer interprets → QA cycle → 2-4 weeks</p>
           </div>
           <div class="ba-inline__cell">
             <p class="ba-inline__label ba-inline__label--after">After</p>
-            <p class="ba-inline__text">Design → MCP extraction → AI build → working prototype — part of one design delivery. One conversation, no handoffs, intent preserved.</p>
+            <p class="ba-inline__text">Design → MCP extraction → AI scaffolding → AI component build → hours</p>
           </div>
           <div class="ba-inline__cell">
             <p class="ba-inline__label ba-inline__label--before">Before</p>
-            <p class="ba-inline__text">Design intent filtered through each interpreter — developer, QA, PM. "This doesn't match the design" was a post-ship conversation.</p>
+            <p class="ba-inline__text">Design intent lost in translation — "this doesn't match the design"</p>
           </div>
           <div class="ba-inline__cell">
             <p class="ba-inline__label ba-inline__label--after">After</p>
-            <p class="ba-inline__text">Designer stays in the loop from Figma to code. Drift is caught in real time against the original design, not after sprint review.</p>
+            <p class="ba-inline__text">1:1 fidelity — AI understands tokens, components, and interactions holistically</p>
           </div>
         </div>
 
-        <!-- Circular icon: convergence -->
-        <div class="flow-icon">
-          <div class="flow-node">
-            <div class="flow-node__disc">
-              <div class="flow-node__ring-outer"></div>
-              <div class="flow-node__ring-inner"></div>
-              <span class="flow-node__kanji">一</span>
-            </div>
-            <div class="flow-node__label">Zero Gap</div>
-            <div class="flow-node__sublabel">Design Intent → Shipped Code</div>
-          </div>
-        </div>
-
-        <p>The career progression has a logic. At Denon/Marantz, brand guidelines were interpreted by platform teams — inconsistency was structural, built into the process. At Fabrion, I built a token pipeline (Figma → Style Dictionary → Tailwind → Storybook) that reduced translation loss significantly. A manual handoff step remained. This workflow eliminates it. Each phase in my career closed the gap a little more. This one closes it.</p>
+        <p>The career progression tells a story:</p>
+        <p>Denon/Marantz: Brand guidelines interpreted by platform teams → inconsistency<br>
+        Fabrion: Token pipeline Figma → Style Dictionary → Tailwind → Storybook → manual handoff still required<br>
+        AI-Native Workflow: Figma → MCP → AI agents → functional code → gap eliminated</p>
       </div>
     </div>
 
     <!-- REFLECTION -->
     <div id="reflection" class="stard-section reveal">
       <p class="stard-section__overline">Reflection</p>
-      <h2 class="stard-section__title">The Role Isn't Changing. The Conversation Is.</h2>
+      <h2 class="stard-section__title">The Future of Design Engineering</h2>
       <div class="stard-section__body">
-        <p>After 20+ years as a PM and UX person, what strikes me most about this workflow isn't the speed — it's what it changes about who can be in the room. The traditional pipeline created expertise silos by necessity: you needed a developer to build anything testable, a QA engineer to validate it, a PM to manage the translation across those boundaries. The boundaries weren't just organizational. They were built into the tools.</p>
+        <p>This workflow represents a fundamental shift in how design teams can operate. It's the natural evolution of every design system I've built. Each career phase reduced the distance between design intent and shipped product. The current workflow eliminates it entirely.</p>
 
-        <p>What I'm experiencing now is the biggest personal shift in how I work: I can bring a proof-of-concept into a client meeting instead of a mockup. I can show a working prototype to a stakeholder who doesn't read Figma files. I can make a change during a conversation and show the result before the meeting ends. The conversation is different when both sides are looking at the same running software — more honest, more specific, more productive.</p>
-
-        <p>The craft of PM and UX — deep user research, rigorous requirement analysis, clear systems thinking — doesn't change. If anything it matters more, because the distance between a decision and its implementation is now hours, not weeks. Bad decisions ship faster. Good decisions ship better. The judgment still lives with the person doing the work. The workflow just removes the friction that used to slow it down.</p>
-
-        <p class="pull-quote">From guidelines to tokens to AI-mediated implementation. Each career phase reduced the distance between design intent and shipped product. This workflow eliminates it — and opens the conversation to everyone in the room.</p>
+        <p class="pull-quote">From guidelines to tokens to AI-mediated implementation. Each step reduced the distance between design intent and shipped product. The current workflow eliminates it.</p>
       </div>
     </div>
 
@@ -547,10 +357,9 @@
     <div id="recognition" class="recognition reveal">
       <p class="recognition__title">Recognition</p>
       <ul class="recognition__list">
-        <li>Active — 6 months, every project</li>
-        <li>This portfolio — designed in Figma, built through this pipeline</li>
-        <li>Client-approved prototype — part of design delivery, first review</li>
-        <li>Claude Code · Figma MCP Server · Google Antigravity</li>
+        <li>Active R&D Project</li>
+        <li>Cross-Platform AI Integration</li>
+        <li>Design-to-Code Pipeline</li>
       </ul>
     </div>
 
@@ -560,12 +369,12 @@
 <!-- ===== PREV / NEXT ===== -->
 <div class="prev-next reveal">
   <div class="prev-next__inner">
-    <a href="denon-marantz.html" class="prev-next__item">
-      <p class="prev-next__dir">← Previous Case Study</p>
-      <p class="prev-next__title">Making Premium Audio Feel as Good as It Sounds</p>
+    <a href="fabrion.html" class="prev-next__link">
+      <p class="prev-next__label">← Previous Case Study</p>
+      <p class="prev-next__title">Teaching Machines to Earn Human Trust</p>
     </a>
-    <a href="ogilvy.html" class="prev-next__item prev-next__item--next">
-      <p class="prev-next__dir">Next Case Study →</p>
+    <a href="ogilvy.html" class="prev-next__link prev-next__link--next">
+      <p class="prev-next__label">Next Case Study →</p>
       <p class="prev-next__title">Beyond Screens</p>
     </a>
   </div>
