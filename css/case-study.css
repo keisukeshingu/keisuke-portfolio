@@ -389,6 +389,72 @@
 }
 .inline-image--half .inline-image { margin-top: 0; }
 
+/* ── Partner Logos Block ──────────────────────────────── */
+/*
+ * Usage:
+ *   <div class="partner-logos-block">
+ *     <p class="partner-logos-block__label">Partner Ecosystem</p>
+ *     <div class="partner-logos-block__grid">
+ *       <div class="partner-logo-item"><!-- SVG logo --></div>
+ *       …
+ *     </div>
+ *   </div>
+ *
+ * Grid auto-sizes to the number of items via repeat(auto-fit).
+ * Override column count inline if needed:
+ *   style="grid-template-columns: repeat(4, 1fr)"
+ */
+.partner-logos-block {
+  margin: 32px 0;
+  padding: 28px 32px;
+  border: 1px solid var(--rule-40);
+  border-radius: 10px;
+  background: var(--paper);
+}
+
+.partner-logos-block__label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-40);
+  margin-bottom: 24px;
+}
+
+.partner-logos-block__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  align-items: center;
+}
+
+.partner-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  border-right: 1px solid var(--rule-40);
+  color: var(--ink-60);
+  transition: color 0.3s var(--ease);
+}
+.partner-logo-item:last-child { border-right: none; }
+.partner-logo-item:hover { color: var(--ink-100); }
+.partner-logo-item svg {
+  width: 100%;
+  max-width: 100px;
+  height: 44px;
+}
+
+@media (max-width: 767px) {
+  .partner-logos-block__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .partner-logo-item:nth-child(3n) { border-right: none; }
+  .partner-logo-item:nth-child(-n+3) {
+    border-bottom: 1px solid var(--rule-40);
+  }
+}
+
 /* ── Prev / Next Navigation ───────────────────────────── */
 .prev-next {
   padding: 48px 64px;
