@@ -18,11 +18,12 @@
 
   /* ===== Nav ===== */
 
+  .nav__links 
   .nav__links a:hover { color: var(--ink-100); }
 
   /* ===== Hero ===== */
   .hero {
-    padding: 96px 64px 0;
+    padding: 192px 64px 48px;
     max-width: var(--max-w); margin: 0 auto;
   }
   .hero__kicker {
@@ -54,7 +55,7 @@
   .section--bordered { border-top: 1px solid var(--rule-40); }
   .section__overline {
     font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--ink-40); margin-bottom: 0;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
   }
   .section__heading {
     font-size: 32px; font-weight: 600; line-height: 1.2;
@@ -69,10 +70,10 @@
   .heritage-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 0; background: transparent;
-    margin-top: 16px;
+    margin-top: 48px;
   }
   .heritage-card {
-    background: transparent; padding: 20px 32px 32px;
+    background: transparent; padding: 32px;
     cursor: pointer; transition: background 0.3s var(--ease);
     border-right: 1px solid var(--rule-40);
     border-bottom: 1px solid var(--rule-40);
@@ -98,11 +99,27 @@
   .heritage-card__highlights {
     list-style: none; margin-top: 16px;
   }
+  .heritage-card__sense {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-100);
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--rule-40);
+  }
   .heritage-card__highlights li {
     font-size: 12px; font-weight: 300; color: var(--ink-60);
     margin-top: 6px;
   }
 
+  /* ===== Heritage Card Icon Canvas ===== */
+  .heritage-card__icon {
+    width: 40px; height: 40px;
+    margin-bottom: 12px;
+    opacity: 0.35;
+    transition: opacity 0.5s var(--ease);
+  }
+  .heritage-card:hover .heritage-card__icon {
+    opacity: 0.7;
+  }
 
   /* ===== Kanji Accents ===== */
   .kanji-accent {
@@ -122,7 +139,7 @@
     font-weight: 200;
     font-size: 13px;
     color: var(--shu-10);
-    margin-top: 20px;
+    margin-top: 32px;
     letter-spacing: 0.3em;
   }
   .section__kanji {
@@ -140,7 +157,7 @@
     justify-content: center;
     align-items: center;
     gap: 24px;
-    padding: 4px 0;
+    padding: 12px 0;
     max-width: var(--max-w);
     margin: 0 auto;
   }
@@ -198,46 +215,31 @@
     opacity: 0.15;
   }
 
-  /* ===== Logo Marquee ===== */
-  .logo-marquee {
-    padding: 0 0 32px;
-    overflow: hidden;
-    position: relative;
+  /* ===== Stats Band ===== */
+  .stats {
+    background: rgba(245, 245, 247, 0.4); padding: 48px 64px;
   }
-  .logo-marquee::before,
-  .logo-marquee::after {
-    content: '';
-    position: absolute; top: 0; bottom: 0; width: 80px;
-    z-index: 2; pointer-events: none;
+  .stats__inner {
+    max-width: var(--max-w); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
   }
-  .logo-marquee::before { left: 0; background: linear-gradient(to right, var(--bg, #fff), transparent); }
-  .logo-marquee::after  { right: 0; background: linear-gradient(to left, var(--bg, #fff), transparent); }
-  .logo-marquee__track {
-    display: flex;
-    align-items: center;
-    gap: 56px;
-    width: max-content;
-    animation: marquee 80s linear infinite;
+  .stats__item {
+    padding: 0 32px;
+    border-left: 1px solid var(--rule-40);
   }
-  .logo-marquee__track img {
-    height: 28px;
-    width: auto;
-    opacity: 0.35;
-    filter: grayscale(1);
-    transition: opacity 0.3s ease, filter 0.3s ease;
-    flex-shrink: 0;
+  .stats__item:first-child { border-left: none; padding-left: 0; }
+  .stats__item:last-child { padding-right: 0; }
+  .stats__value {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em;
+    color: var(--ink-100);
   }
-  .logo-marquee__track img:hover {
-    opacity: 0.8;
-    filter: grayscale(0);
-  }
-  @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+  .stats__label {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
   }
 
   /* ===== Footer ===== */
 
+  .footer__links 
   .footer__links a:hover { color: var(--ink-100); }
 
   /* ===== Scroll animations ===== */
@@ -253,16 +255,16 @@
     .heritage-card:nth-last-child(-n+2) { border-bottom: none; }
   }
   @media (max-width: 767px) {
-    .hero { padding: 80px 24px 48px; }
+    .hero { padding: 140px 24px 48px; }
     .hero__heading { font-size: 36px; }
     .section { padding: 48px 24px; }
 
     .heritage-grid { grid-template-columns: 1fr; }
     .heritage-card:nth-child(n) { border-right: none; border-bottom: 1px solid var(--rule-40); }
     .heritage-card:last-child { border-bottom: none; }
-    .logo-marquee { padding: 24px 0; }
-    .logo-marquee__track { gap: 40px; }
-    .logo-marquee__track img { height: 18px; }
+    .stats { padding: 32px 24px; }
+    .stats__inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .stats__item { border-left: none; padding: 0; }
 
   }
 
@@ -276,25 +278,10 @@
     z-index: 2;
   }
 
-
-
-  /* ===== Heritage Card Preview ===== */
-  .heritage-card__preview {
-    width: 100%;
-    aspect-ratio: 16/9;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 16px;
-    border: 1px solid rgba(255,255,255,0.06);
-  }
-  .heritage-card__preview svg { width: 100%; height: 100%; display: block; }
-
-
-
-    @media (prefers-reduced-motion: reduce) {
+  @media (prefers-reduced-motion: reduce) {
     .weather-hero { display: none !important; }
   }</style>
-</head>
+</head></head>
 <body>
 
 <!-- ===== NAV ===== -->
@@ -348,7 +335,7 @@
 </div>
 
 <!-- ===== HERITAGE ===== -->
-<section class="section" style="padding-top:12px;">
+<section class="section">
   <!-- B. Margin accent — floats in left gutter -->
   <div class="margin-accent" style="top: 24px;">
     <canvas class="margin-anim" data-anim="15"></canvas>
@@ -356,6 +343,7 @@
 
   <div class="reveal">
     <p class="section__overline">Career History<span class="section__kanji">経歴</span></p>
+    <h2 class="section__heading">Each Medium Extended a Different Sense</h2>
   </div>
 
   <div class="heritage-grid">
@@ -363,64 +351,52 @@
     <div class="grid-dot" style="left: calc(33.333% - 8px); top: calc(50% - 8px);"><canvas class="grid-anim" data-anim="0"></canvas></div>
     <div class="grid-dot" style="left: calc(66.666% - 8px); top: calc(50% - 8px);"><canvas class="grid-anim" data-anim="4"></canvas></div>
     <a href="projects.html#ai-systems" class="heritage-card reveal" style="transition-delay: 0.05s">
-
+      <canvas class="heritage-card__icon" data-anim="43"></canvas>
       <p class="heritage-card__period">2023 – Present</p>
       <p class="heritage-card__domain">AI Systems<span class="heritage-card__kanji">思考</span></p>
-      <h3 class="heritage-card__headline">TDK → Design Engineering</h3>
+      <h3 class="heritage-card__headline">TDK → Fabrion</h3>
       <p class="heritage-card__narrative">Edge AI sensors at TDK (CES 2024 Innovation Award). Then Fabrion — designing the first AI-native MES where AI agents earn human trust through transparency, guardrails, and constitutional AI principles.</p>
-      
-      <div class="heritage-card__preview">
-<img src="img/library/ai-workflow/antigravity-screenshot.png" alt="Google Antigravity IDE — orchestration-ui, AI-native design-to-code workflow" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
-</div>
+      <p class="heritage-card__sense">Extension of Thought</p>
     </a>
     <a href="projects.html#immersive" class="heritage-card reveal" style="transition-delay: 0.1s">
+      <canvas class="heritage-card__icon" data-anim="18"></canvas>
       <p class="heritage-card__period">2022 – 2023</p>
       <p class="heritage-card__domain">Agency & Consulting<span class="heritage-card__kanji">知覚</span></p>
       <h3 class="heritage-card__headline">Ogilvy → Slalom</h3>
       <p class="heritage-card__narrative">Generative visuals, spatial audio, and AR for Audi at Ogilvy Japan. Then innovation strategy at Slalom Build — experience design for Toyota Woven City, Gundam Metaverse, and NVIDIA collaborations.</p>
-      
-      <div class="heritage-card__preview">
-<img src="img/library/ogilvy/audi-experience-journey.png" alt="Audi Q4 e-tron experience journey map — Ogilvy Japan" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
-</div>
+      <p class="heritage-card__sense">Extension of Perception</p>
     </a>
     <a href="projects.html#audio" class="heritage-card reveal" style="transition-delay: 0.15s">
+      <canvas class="heritage-card__icon" data-anim="35"></canvas>
       <p class="heritage-card__period">2017 – 2021</p>
       <p class="heritage-card__domain">Premium Audio<span class="heritage-card__kanji">聴覚</span></p>
       <h3 class="heritage-card__headline">Director of UX — Denon / Marantz</h3>
       <p class="heritage-card__narrative">Unified the UX of two premium audio brands across 60+ products and 50+ Apple-certified devices. Replaced 8-bit bitmap displays with a modern vector design system. Moved market position from #5 to #1.</p>
-      
-      <div class="heritage-card__preview">
-<img src="https://www.denon.com/on/demandware.static/-/Sites-site-catalog-denon-us/default/dw66c13fcd/navImages/Nav_AV-Receivers_AVR-A1H.jpg" alt="Denon AVR-A1H premium AV receiver flagship" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
-</div>
+      <p class="heritage-card__sense">Extension of Hearing</p>
     </a>
     <a href="projects.html#invention" class="heritage-card reveal" style="transition-delay: 0.2s">
+      <canvas class="heritage-card__icon" data-anim="49"></canvas>
       <p class="heritage-card__period">2011 – 2013</p>
       <p class="heritage-card__domain">Hardware Invention<span class="heritage-card__kanji">触感</span></p>
       <h3 class="heritage-card__headline">Miselu C.24</h3>
       <p class="heritage-card__narrative">Patented a BLE MIDI controller that cut Android audio latency from 250ms to under 10ms. Demoed at Google I/O 2012 and TechCrunch Disrupt. Partnerships with KORG and Yamaha.</p>
-      <div class="heritage-card__preview">
-<img src="img/library/miselu-patent.jpg" alt="Miselu C.24 patent Figure 2 — keyboard hardware layout, US9165476B2" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
-</div>
+      <p class="heritage-card__sense">Extension of Touch & Sound</p>
     </a>
     <a href="projects.html#music" class="heritage-card reveal" style="transition-delay: 0.25s">
+      <canvas class="heritage-card__icon" data-anim="38"></canvas>
       <p class="heritage-card__period">2007 – 2016</p>
       <p class="heritage-card__domain">Music & Live Performance<span class="heritage-card__kanji">流動</span></p>
       <h3 class="heritage-card__headline">Beatport → Native Instruments</h3>
       <p class="heritage-card__narrative">Digital music distribution, DJ software, and real-time generative visuals. VJ performances at EDC, Ultra, Detroit Movement, Burning Man, and Further Future.</p>
-      
-      <div class="heritage-card__preview">
-<img src="https://www.native-instruments.com/typo3temp/pics/img-welcome-hero-traktor-pro-4-hero-updated-8886c1ee796862446eab18ae20d52d3f-d@2x.jpg" alt="Traktor Pro 4 DJ software Native Instruments" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
-</div>
+      <p class="heritage-card__sense">Extension of Creative Flow</p>
     </a>
     <a href="projects.html#publishing" class="heritage-card reveal" style="transition-delay: 0.3s">
+      <canvas class="heritage-card__icon" data-anim="31"></canvas>
       <p class="heritage-card__period">1999 – 2007</p>
       <p class="heritage-card__domain">Print & Digital Publishing<span class="heritage-card__kanji">視覚</span></p>
       <h3 class="heritage-card__headline">QuarkXPress</h3>
       <p class="heritage-card__narrative">Joined when QuarkXPress held 95% of global publishing — Forbes, Condé Nast, NYT, Rolling Stone. Pioneered Quark Interactive Designer, a JavaScript-native non-coding authoring tool.</p>
-      
-      <div class="heritage-card__preview">
-<img src="img/quarkxpress-hero.jpg" alt="QuarkXPress application — fashion magazine layout with Font Manager palette" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
-</div>
+      <p class="heritage-card__sense">Extension of the Eye</p>
     </a>
   </div>
 
@@ -431,60 +407,30 @@
   </div>
 </section>
 
-<!-- ===== LOGO MARQUEE ===== -->
-<section class="logo-marquee">
-  <div class="logo-marquee__track">
-    <img src="logos/apple.svg" alt="Apple">
-    <img src="logos/google.svg" alt="Google">
-    <img src="logos/microsoft.svg" alt="Microsoft">
-    <img src="logos/adobe.svg" alt="Adobe">
-    <img src="logos/tdk.svg" alt="TDK">
-    <img src="logos/fabrion.svg" alt="Fabrion">
-    <img src="logos/denon.svg" alt="Denon">
-    <img src="logos/marantz.svg" alt="Marantz">
-    <img src="logos/dolby.svg" alt="Dolby">
-    <img src="logos/dts.svg" alt="DTS">
-    <img src="logos/yamaha.svg" alt="Yamaha">
-    <img src="logos/audi.svg" alt="Audi">
-    <img src="logos/ogilvy.svg" alt="Ogilvy">
-    <img src="logos/slalom.svg" alt="Slalom">
-    <img src="logos/rakuten.svg" alt="Rakuten">
-    <img src="logos/pega.svg" alt="Pega">
-    <img src="logos/linux.svg" alt="Linux">
-    <img src="logos/monotype.svg" alt="Monotype">
-    <img src="logos/nativeinstruments.svg" alt="Native Instruments">
-    <img src="logos/beatport.svg" alt="Beatport">
-    <img src="logos/pioneerdj.svg" alt="Pioneer DJ">
-    <img src="logos/nhk.svg" alt="NHK">
-    <img src="logos/techcrunch.svg" alt="TechCrunch">
-    <img src="logos/quark.svg" alt="Quark">
-    <img src="logos/qt.svg" alt="Qt">
-    <!-- duplicate set for seamless loop -->
-    <img src="logos/apple.svg" alt="Apple">
-    <img src="logos/google.svg" alt="Google">
-    <img src="logos/microsoft.svg" alt="Microsoft">
-    <img src="logos/adobe.svg" alt="Adobe">
-    <img src="logos/tdk.svg" alt="TDK">
-    <img src="logos/fabrion.svg" alt="Fabrion">
-    <img src="logos/denon.svg" alt="Denon">
-    <img src="logos/marantz.svg" alt="Marantz">
-    <img src="logos/dolby.svg" alt="Dolby">
-    <img src="logos/dts.svg" alt="DTS">
-    <img src="logos/yamaha.svg" alt="Yamaha">
-    <img src="logos/audi.svg" alt="Audi">
-    <img src="logos/ogilvy.svg" alt="Ogilvy">
-    <img src="logos/slalom.svg" alt="Slalom">
-    <img src="logos/rakuten.svg" alt="Rakuten">
-    <img src="logos/pega.svg" alt="Pega">
-    <img src="logos/linux.svg" alt="Linux">
-    <img src="logos/monotype.svg" alt="Monotype">
-    <img src="logos/nativeinstruments.svg" alt="Native Instruments">
-    <img src="logos/beatport.svg" alt="Beatport">
-    <img src="logos/pioneerdj.svg" alt="Pioneer DJ">
-    <img src="logos/nhk.svg" alt="NHK">
-    <img src="logos/techcrunch.svg" alt="TechCrunch">
-    <img src="logos/quark.svg" alt="Quark">
-    <img src="logos/qt.svg" alt="Qt">
+<!-- C. Section separator: Ensō between Heritage and Stats -->
+<div class="section-separator reveal">
+  <canvas class="separator-anim" data-anim="15"></canvas>
+</div>
+
+<!-- ===== STATS BAND ===== -->
+<section class="stats">
+  <div class="stats__inner reveal">
+    <div class="stats__item">
+      <p class="stats__value">#1</p>
+      <p class="stats__label">Market position (Denon/Marantz, from #5)</p>
+    </div>
+    <div class="stats__item">
+      <p class="stats__value">60+</p>
+      <p class="stats__label">Products with unified design system</p>
+    </div>
+    <div class="stats__item">
+      <p class="stats__value">50+</p>
+      <p class="stats__label">Apple-certified audio products</p>
+    </div>
+    <div class="stats__item">
+      <p class="stats__value">1</p>
+      <p class="stats__label">USPTO Patent (Miselu C.24)</p>
+    </div>
   </div>
 </section>
 
@@ -547,6 +493,7 @@
   }
 
   // Heritage card icons (40px)
+  initGroup('.heritage-card__icon[data-anim]', 40);
   // A. Divider strip animations (20px)
   initGroup('.strip-anim[data-anim]', 20);
   // B. Margin accent animations (28px)
