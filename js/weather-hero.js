@@ -42,8 +42,8 @@ const WeatherHero = (function () {
 
   // ── Config ──
   const CFG = {
-    maxP: 50,                // moderate particle count
-    spawnRate: 0.35,          // gentle spawning
+    maxP: 61,               // 15% reduction from 72
+    spawnRate: 0.46,         // proportional reduction
     maxShu: 2,
     shuChance: 0.08,
     faceHitChance: 0.04,
@@ -94,7 +94,7 @@ const WeatherHero = (function () {
   }
 
   // ── Object Pools ──
-  var POOL_SIZE = 60;   // headroom for 50 max
+  var POOL_SIZE = 68;  // headroom for 61 max
   var particlePool = [];
   var activeParticles = [];
   var RIPPLE_POOL_SIZE = 32;
@@ -113,9 +113,6 @@ const WeatherHero = (function () {
       windAngle: 0,         // unique drift angle (radians)
       windStrength: 0,      // unique drift strength
       windShiftRate: 0,     // how fast this particle's wind changes
-      // Per-particle pulse — gentle fade in/out
-      pulsePhase: 0,        // offset so particles don't pulse in sync
-      pulseSpeed: 0,        // how fast this particle breathes
     };
   }
   function createRipple() {
@@ -227,7 +224,7 @@ const WeatherHero = (function () {
       // Wider spread — more spacing between particles
       var a = Math.random() * TAU;
       var r = Math.sqrt(Math.random());
-      var rx = 1000, ry = 800;
+      var rx = 700, ry = 580;
       p.wx = Math.cos(a) * r * rx + (Math.random() - 0.5) * rx * 0.5;
       p.wy = Math.sin(a) * r * ry + (Math.random() - 0.5) * ry * 0.5;
     }
@@ -254,10 +251,6 @@ const WeatherHero = (function () {
     p.windAngle = Math.random() * TAU;
     p.windStrength = 0.008 + Math.random() * 0.018;
     p.windShiftRate = 0.15 + Math.random() * 0.6; // how fast wind direction drifts
-
-    // Pulse — each particle fades in and out at its own rhythm
-    p.pulsePhase = Math.random() * TAU;
-    p.pulseSpeed = 0.3 + Math.random() * 0.6; // 0.3–0.9 radians/sec
 
     var sizeRand = Math.pow(Math.random(), CFG.sizeWeightPow);
     p.baseSize = CFG.baseSize[0] + sizeRand * CFG.baseSize[1];
@@ -435,9 +428,7 @@ const WeatherHero = (function () {
     var size = p.baseSize * proj.s * 2 * sizeMult * dofBlur;
     if (size < 0.08) return;
 
-    // Pulse: gentle fade in/out per particle
-    var pulse = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(globalTime * p.pulseSpeed + p.pulsePhase));
-    var a = p.opacity * pulse;
+    var a = p.opacity;
 
     // ── Color computation ──
     // Shu particles: always vivid red from birth
@@ -471,8 +462,8 @@ const WeatherHero = (function () {
     } else {
       // Ink dot — feathered with DOF
       var fr = size * (p.isFaceHit ? 3.5 : 2.5) * dofBlur;
-      var coreA = p.isFaceHit ? 0.1 : 0.14;
-      var edgeA = p.isFaceHit ? 0.03 : 0.04;
+      var coreA = p.isFaceHit ? 0.05 : 0.07;
+      var edgeA = p.isFaceHit ? 0.015 : 0.02;
       var grad = ctx.createRadialGradient(0, 0, 0, 0, 0, fr);
       grad.addColorStop(0, 'rgba(0,0,0,' + (a * coreA / dofBlur) + ')');
       grad.addColorStop(0.35, 'rgba(0,0,0,' + (a * edgeA / dofBlur) + ')');
@@ -483,7 +474,7 @@ const WeatherHero = (function () {
       ctx.fill();
 
       if (!p.isFaceHit || p.wz > 80) {
-        ctx.fillStyle = 'rgba(0,0,0,' + (a * 0.16 / dofBlur) + ')';
+        ctx.fillStyle = 'rgba(0,0,0,' + (a * 0.08 / dofBlur) + ')';
         ctx.beginPath();
         ctx.arc(0, 0, size * 0.5, 0, TAU);
         ctx.fill();
@@ -670,7 +661,7 @@ const WeatherHero = (function () {
       });
 
       // Pre-seed particles across depth — snow visible on first frame
-      for (var i = 0; i < 15; i++) {
+      for (var i = 0; i < 20; i++) {
         var p = acquireParticle();
         if (!p) break;
         var z = 100 + Math.random() * (Z_FAR + 300);
@@ -678,8 +669,8 @@ const WeatherHero = (function () {
         if (isShu) activeShuCount++;
         var a = Math.random() * TAU;
         var r = Math.sqrt(Math.random());
-        p.wx = Math.cos(a) * r * 1000;
-        p.wy = Math.sin(a) * r * 800;
+        p.wx = Math.cos(a) * r * 700;
+        p.wy = Math.sin(a) * r * 580;
         p.wz = z;
         p.vx = (Math.random() - 0.5) * 0.4;
         p.vy = (Math.random() - 0.5) * 0.4;
@@ -693,8 +684,6 @@ const WeatherHero = (function () {
         p.windAngle = Math.random() * TAU;
         p.windStrength = 0.008 + Math.random() * 0.018;
         p.windShiftRate = 0.15 + Math.random() * 0.6;
-        p.pulsePhase = Math.random() * TAU;
-        p.pulseSpeed = 0.3 + Math.random() * 0.6;
         var sizeRand = Math.pow(Math.random(), CFG.sizeWeightPow);
         p.baseSize = CFG.baseSize[0] + sizeRand * CFG.baseSize[1];
         p.opacity = 0.5 + Math.random() * 0.5;
