@@ -204,26 +204,42 @@
     opacity: 0.15;
   }
 
-  /* ===== Stats Band ===== */
-  .stats {
-    background: rgba(245, 245, 247, 0.4); padding: 48px 64px;
+  /* ===== Logo Marquee ===== */
+  .logo-marquee {
+    padding: 32px 0;
+    overflow: hidden;
+    position: relative;
   }
-  .stats__inner {
-    max-width: var(--max-w); margin: 0 auto;
-    display: grid; grid-template-columns: repeat(4, 1fr);
+  .logo-marquee::before,
+  .logo-marquee::after {
+    content: '';
+    position: absolute; top: 0; bottom: 0; width: 80px;
+    z-index: 2; pointer-events: none;
   }
-  .stats__item {
-    padding: 0 32px;
-    border-left: 1px solid var(--rule-40);
+  .logo-marquee::before { left: 0; background: linear-gradient(to right, var(--bg, #fff), transparent); }
+  .logo-marquee::after  { right: 0; background: linear-gradient(to left, var(--bg, #fff), transparent); }
+  .logo-marquee__track {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    width: max-content;
+    animation: marquee 40s linear infinite;
   }
-  .stats__item:first-child { border-left: none; padding-left: 0; }
-  .stats__item:last-child { padding-right: 0; }
-  .stats__value {
-    font-size: 28px; font-weight: 600; letter-spacing: -0.03em;
-    color: var(--ink-100);
+  .logo-marquee__track img {
+    height: 22px;
+    width: auto;
+    opacity: 0.35;
+    filter: grayscale(1);
+    transition: opacity 0.3s ease, filter 0.3s ease;
+    flex-shrink: 0;
   }
-  .stats__label {
-    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
+  .logo-marquee__track img:hover {
+    opacity: 0.8;
+    filter: grayscale(0);
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
 
   /* ===== Footer ===== */
@@ -250,9 +266,9 @@
     .heritage-grid { grid-template-columns: 1fr; }
     .heritage-card:nth-child(n) { border-right: none; border-bottom: 1px solid var(--rule-40); }
     .heritage-card:last-child { border-bottom: none; }
-    .stats { padding: 32px 24px; }
-    .stats__inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .stats__item { border-left: none; padding: 0; }
+    .logo-marquee { padding: 24px 0; }
+    .logo-marquee__track { gap: 40px; }
+    .logo-marquee__track img { height: 18px; }
 
   }
 
@@ -459,25 +475,60 @@
   <canvas class="separator-anim" data-anim="15"></canvas>
 </div>
 
-<!-- ===== STATS BAND ===== -->
-<section class="stats">
-  <div class="stats__inner reveal">
-    <div class="stats__item">
-      <p class="stats__value">#1</p>
-      <p class="stats__label">Market position (Denon/Marantz, from #5)</p>
-    </div>
-    <div class="stats__item">
-      <p class="stats__value">60+</p>
-      <p class="stats__label">Products with unified design system</p>
-    </div>
-    <div class="stats__item">
-      <p class="stats__value">50+</p>
-      <p class="stats__label">Apple-certified audio products</p>
-    </div>
-    <div class="stats__item">
-      <p class="stats__value">1</p>
-      <p class="stats__label">USPTO Patent (Miselu C.24)</p>
-    </div>
+<!-- ===== LOGO MARQUEE ===== -->
+<section class="logo-marquee">
+  <div class="logo-marquee__track">
+    <img src="logos/apple.svg" alt="Apple">
+    <img src="logos/google.svg" alt="Google">
+    <img src="logos/microsoft.svg" alt="Microsoft">
+    <img src="logos/adobe.svg" alt="Adobe">
+    <img src="logos/tdk.svg" alt="TDK">
+    <img src="logos/fabrion.svg" alt="Fabrion">
+    <img src="logos/denon.svg" alt="Denon">
+    <img src="logos/marantz.svg" alt="Marantz">
+    <img src="logos/dolby.svg" alt="Dolby">
+    <img src="logos/dts.svg" alt="DTS">
+    <img src="logos/yamaha.svg" alt="Yamaha">
+    <img src="logos/audi.svg" alt="Audi">
+    <img src="logos/ogilvy.svg" alt="Ogilvy">
+    <img src="logos/slalom.svg" alt="Slalom">
+    <img src="logos/rakuten.svg" alt="Rakuten">
+    <img src="logos/pega.svg" alt="Pega">
+    <img src="logos/linux.svg" alt="Linux">
+    <img src="logos/monotype.svg" alt="Monotype">
+    <img src="logos/nativeinstruments.svg" alt="Native Instruments">
+    <img src="logos/beatport.svg" alt="Beatport">
+    <img src="logos/pioneerdj.svg" alt="Pioneer DJ">
+    <img src="logos/nhk.svg" alt="NHK">
+    <img src="logos/techcrunch.svg" alt="TechCrunch">
+    <img src="logos/quark.svg" alt="Quark">
+    <img src="logos/qt.svg" alt="Qt">
+    <!-- duplicate set for seamless loop -->
+    <img src="logos/apple.svg" alt="Apple">
+    <img src="logos/google.svg" alt="Google">
+    <img src="logos/microsoft.svg" alt="Microsoft">
+    <img src="logos/adobe.svg" alt="Adobe">
+    <img src="logos/tdk.svg" alt="TDK">
+    <img src="logos/fabrion.svg" alt="Fabrion">
+    <img src="logos/denon.svg" alt="Denon">
+    <img src="logos/marantz.svg" alt="Marantz">
+    <img src="logos/dolby.svg" alt="Dolby">
+    <img src="logos/dts.svg" alt="DTS">
+    <img src="logos/yamaha.svg" alt="Yamaha">
+    <img src="logos/audi.svg" alt="Audi">
+    <img src="logos/ogilvy.svg" alt="Ogilvy">
+    <img src="logos/slalom.svg" alt="Slalom">
+    <img src="logos/rakuten.svg" alt="Rakuten">
+    <img src="logos/pega.svg" alt="Pega">
+    <img src="logos/linux.svg" alt="Linux">
+    <img src="logos/monotype.svg" alt="Monotype">
+    <img src="logos/nativeinstruments.svg" alt="Native Instruments">
+    <img src="logos/beatport.svg" alt="Beatport">
+    <img src="logos/pioneerdj.svg" alt="Pioneer DJ">
+    <img src="logos/nhk.svg" alt="NHK">
+    <img src="logos/techcrunch.svg" alt="TechCrunch">
+    <img src="logos/quark.svg" alt="Quark">
+    <img src="logos/qt.svg" alt="Qt">
   </div>
 </section>
 
