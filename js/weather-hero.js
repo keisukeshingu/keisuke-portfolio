@@ -42,8 +42,8 @@ const WeatherHero = (function () {
 
   // ── Config ──
   const CFG = {
-    maxP: 61,               // 15% reduction from 72
-    spawnRate: 0.46,         // proportional reduction
+    maxP: 100,               // more particles for denser field
+    spawnRate: 0.7,           // faster spawning
     maxShu: 2,
     shuChance: 0.08,
     faceHitChance: 0.04,
@@ -94,7 +94,7 @@ const WeatherHero = (function () {
   }
 
   // ── Object Pools ──
-  var POOL_SIZE = 68;  // headroom for 61 max
+  var POOL_SIZE = 110;  // headroom for 100 max
   var particlePool = [];
   var activeParticles = [];
   var RIPPLE_POOL_SIZE = 32;
@@ -224,7 +224,7 @@ const WeatherHero = (function () {
       // Wider spread — more spacing between particles
       var a = Math.random() * TAU;
       var r = Math.sqrt(Math.random());
-      var rx = 700, ry = 580;
+      var rx = 1000, ry = 800;
       p.wx = Math.cos(a) * r * rx + (Math.random() - 0.5) * rx * 0.5;
       p.wy = Math.sin(a) * r * ry + (Math.random() - 0.5) * ry * 0.5;
     }
@@ -462,8 +462,8 @@ const WeatherHero = (function () {
     } else {
       // Ink dot — feathered with DOF
       var fr = size * (p.isFaceHit ? 3.5 : 2.5) * dofBlur;
-      var coreA = p.isFaceHit ? 0.05 : 0.07;
-      var edgeA = p.isFaceHit ? 0.015 : 0.02;
+      var coreA = p.isFaceHit ? 0.1 : 0.14;
+      var edgeA = p.isFaceHit ? 0.03 : 0.04;
       var grad = ctx.createRadialGradient(0, 0, 0, 0, 0, fr);
       grad.addColorStop(0, 'rgba(0,0,0,' + (a * coreA / dofBlur) + ')');
       grad.addColorStop(0.35, 'rgba(0,0,0,' + (a * edgeA / dofBlur) + ')');
@@ -474,7 +474,7 @@ const WeatherHero = (function () {
       ctx.fill();
 
       if (!p.isFaceHit || p.wz > 80) {
-        ctx.fillStyle = 'rgba(0,0,0,' + (a * 0.08 / dofBlur) + ')';
+        ctx.fillStyle = 'rgba(0,0,0,' + (a * 0.16 / dofBlur) + ')';
         ctx.beginPath();
         ctx.arc(0, 0, size * 0.5, 0, TAU);
         ctx.fill();
@@ -661,7 +661,7 @@ const WeatherHero = (function () {
       });
 
       // Pre-seed particles across depth — snow visible on first frame
-      for (var i = 0; i < 20; i++) {
+      for (var i = 0; i < 35; i++) {
         var p = acquireParticle();
         if (!p) break;
         var z = 100 + Math.random() * (Z_FAR + 300);
@@ -669,8 +669,8 @@ const WeatherHero = (function () {
         if (isShu) activeShuCount++;
         var a = Math.random() * TAU;
         var r = Math.sqrt(Math.random());
-        p.wx = Math.cos(a) * r * 700;
-        p.wy = Math.sin(a) * r * 580;
+        p.wx = Math.cos(a) * r * 1000;
+        p.wy = Math.sin(a) * r * 800;
         p.wz = z;
         p.vx = (Math.random() - 0.5) * 0.4;
         p.vy = (Math.random() - 0.5) * 0.4;
