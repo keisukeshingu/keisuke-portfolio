@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="620" height="530"
+font-family="DejaVu Sans" font-size="16" font-stretch="condensed" text-anchor="middle">
+<switch transform="translate(560 38)">
+	<text systemLanguage="ca">Sinusoidal</text>
+	<text systemLanguage="de">Sinus</text>
+	<text systemLanguage="en">Sine</text>
+	<text systemLanguage="es">Seno</text>
+	<text systemLanguage="et">Sinusoid</text>
+	<text systemLanguage="fr">Sinusoïdale</text>
+	<text systemLanguage="id">Sinus</text>
+	<text systemLanguage="it">Sinusoidale</text>
+	<text systemLanguage="jv">Sinus</text>
+	<text systemLanguage="mk">синусен</text>
+	<text systemLanguage="pl">Sinusoidalna</text>
+	<text systemLanguage="ru">Синусоида</text>
+	<text systemLanguage="sv">Sinus</text>
+	<text systemLanguage="tr">Sin&#xFC;s</text>
+	<text systemLanguage="uk">Синусоїда</text>
+	<text>Sine</text>
+</switch>
+
+<switch transform="translate(560 168)">
+	<text systemLanguage="ca">Quadrada</text>
+	<text systemLanguage="de">Rechteck</text>
+	<text systemLanguage="en">Square</text>
+	<text systemLanguage="es">Cuadrada</text>
+	<text systemLanguage="et">Nelinurklaine</text>
+	<text systemLanguage="fr">Carrée</text>
+	<text systemLanguage="id">Persegi</text>
+	<text systemLanguage="it">Quadra</text>
+	<text systemLanguage="jv">Pasagi</text>
+	<text systemLanguage="mk">квадратен</text>
+	<text systemLanguage="pl">Prostokątna</text>
+	<text systemLanguage="ru">Меандр</text>
+	<text systemLanguage="sv">Fyrkant</text>
+	<text systemLanguage="tr">Kare</text>
+	<text systemLanguage="uk">Прямокутник</text>
+	<text>Square</text>
+</switch>
+
+<switch transform="translate(560 298)">
+	<text systemLanguage="ca">Triangular</text>
+	<text systemLanguage="de">Dreieck</text>
+	<text systemLanguage="en">Triangle</text>
+	<text systemLanguage="es">Triangular</text>
+	<text systemLanguage="et">Kolmnurk-<tspan x="0" y="16">laine</tspan></text>
+	<text systemLanguage="fr">Triangulaire</text>
+	<text systemLanguage="id">Segitiga</text>
+	<text systemLanguage="it">Triangolare</text>
+	<text systemLanguage="jv">Maju-telu</text>
+	<text systemLanguage="mk">триаголен</text>
+	<text systemLanguage="pl">Trójkątna</text>
+	<text systemLanguage="ru">Треугольная</text>
+	<text systemLanguage="sv">Triangel</text>
+	<text systemLanguage="tr">Üçgen</text>
+	<text systemLanguage="uk">Трикутник</text>
+	<text>Triangle</text>
+</switch>
+
+<switch transform="translate(560 428)">
+	<text systemLanguage="ca">De serra</text>
+	<text systemLanguage="de">Sägezahn</text>
+	<text systemLanguage="en">Sawtooth</text>
+	<text systemLanguage="es">Dientes<tspan x="0" y="16">de sierra</tspan></text>
+	<text systemLanguage="et">Saehammas-<tspan x="0" y="16">laine</tspan></text>
+	<text systemLanguage="fr">Dents de scie</text>
+	<text systemLanguage="id">Gigi gergaji</text>
+	<text systemLanguage="it">Dente<tspan x="0" y="16">di sega</tspan></text>
+	<text systemLanguage="jv">Untu graji</text>
+	<text systemLanguage="mk">назабен</text>
+	<text systemLanguage="pl">Piłokształtna</text>
+	<text systemLanguage="ru">Пила</text>
+	<text systemLanguage="sv">Sågtand</text>
+	<text systemLanguage="tr">Testere dişi</text>
+	<text systemLanguage="uk">Пилкоподібна</text>
+	<text>Sawtooth</text>
+</switch>
+
+<g id="b" fill="none" stroke-linecap="round" stroke-linejoin="round"><g id="a">
+	<path stroke="#222" stroke-dasharray="2,4" stroke-width=".5"
+	d="m10,30h501m99,40H10m0,40h600M110,10v120m100,0V10m100,0v120m100,0V10m100,0v120"/>
+	<rect x="10" y="10" width="600" height="120" stroke="#666" stroke-width="1.5"/>
+</g>
+<use transform="translate(0,130)" xlink:href="#a"/></g>
+<use transform="translate(0,260)" xlink:href="#b"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="#f00">
+	<path d="m10 70c15-20 30-40 50-40 40 0 60 80 100 80s60-80 100-80 60 80 100 80 60-80 100-80 60 80 100 80c20 0 35-20 50-40"/>
+	<path d="m10 160h100v80h100v-80h100v80h100v-80h100v80h100" stroke="#090"/>
+	<path d="m10 330 50-40 100 80 100-80 100 80 100-80 100 80 50-40" stroke="#33f"/>
+	<path d="m10 460 100-40v80l200-80v80l200-80v80l100-40" stroke="#c0c"/>
+</g>
+</svg>

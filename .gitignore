@@ -1,3 +1,6 @@
 .DS_Store
 Thumbs.db
 *.log
+
+# Large files exceeding GitHub 100MB limit
+img/library/quark/045-gill-sans-specimen.svg
