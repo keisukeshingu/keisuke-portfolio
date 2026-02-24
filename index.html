@@ -276,41 +276,58 @@
   }
 
   /* ===== Logo Marquee ===== */
-  .logo-marquee {
-    padding: 0 0 32px;
-    overflow: hidden;
-    position: relative;
+  /* ===== Logo Grid ===== */
+  .logo-grid {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 64px 48px;
   }
-  .logo-marquee::before,
-  .logo-marquee::after {
-    content: '';
-    position: absolute; top: 0; bottom: 0; width: 80px;
-    z-index: 2; pointer-events: none;
+  .logo-grid__label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-40);
+    margin-bottom: 24px;
   }
-  .logo-marquee::before { left: 0; background: linear-gradient(to right, var(--bg, #FAFBFC), transparent); }
-  .logo-marquee::after  { right: 0; background: linear-gradient(to left, var(--bg, #FAFBFC), transparent); }
-  .logo-marquee__track {
+  .logo-grid__table {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-top: 1px solid var(--rule-40);
+    border-left: 1px solid var(--rule-40);
+  }
+  .logo-grid__cell {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 56px;
-    width: max-content;
-    animation: marquee 80s linear infinite;
+    justify-content: center;
+    gap: 10px;
+    padding: 24px 12px;
+    border-right: 1px solid var(--rule-40);
+    border-bottom: 1px solid var(--rule-40);
+    transition: background 0.3s var(--ease);
   }
-  .logo-marquee__track img {
-    height: 28px;
+  .logo-grid__cell:hover {
+    background: rgba(245, 245, 247, 0.6);
+  }
+  .logo-grid__cell img {
+    height: 24px;
     width: auto;
-    opacity: 0.35;
+    opacity: 0.4;
     filter: grayscale(1);
     transition: opacity 0.3s ease, filter 0.3s ease;
-    flex-shrink: 0;
   }
-  .logo-marquee__track img:hover {
-    opacity: 0.8;
+  .logo-grid__cell:hover img {
+    opacity: 0.85;
     filter: grayscale(0);
   }
-  @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+  .logo-grid__cell span {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--ink-40);
+    text-align: center;
+    line-height: 1.3;
   }
 
   /* ===== Footer ===== */
@@ -337,9 +354,10 @@
     .heritage-grid { grid-template-columns: 1fr; }
     .heritage-card:nth-child(n) { border-right: none; border-bottom: 1px solid var(--rule-40); }
     .heritage-card:last-child { border-bottom: none; }
-    .logo-marquee { padding: 24px 0; }
-    .logo-marquee__track { gap: 40px; }
-    .logo-marquee__track img { height: 18px; }
+    .logo-grid { padding: 0 24px 32px; }
+    .logo-grid__table { grid-template-columns: repeat(3, 1fr); }
+    .logo-grid__cell img { height: 18px; }
+    .logo-grid__cell span { font-size: 9px; }
 
   }
 
@@ -508,60 +526,35 @@
   </div>
 </section>
 
-<!-- ===== LOGO MARQUEE ===== -->
-<section class="logo-marquee">
-  <div class="logo-marquee__track">
-    <img src="logos/apple.svg" alt="Apple">
-    <img src="logos/google.svg" alt="Google">
-    <img src="logos/microsoft.svg" alt="Microsoft">
-    <img src="logos/adobe.svg" alt="Adobe">
-    <img src="logos/tdk.svg" alt="TDK">
-    <img src="logos/fabrion.svg" alt="Fabrion">
-    <img src="logos/denon.svg" alt="Denon">
-    <img src="logos/marantz.svg" alt="Marantz">
-    <img src="logos/dolby.svg" alt="Dolby">
-    <img src="logos/dts.svg" alt="DTS">
-    <img src="logos/yamaha.svg" alt="Yamaha">
-    <img src="logos/audi.svg" alt="Audi">
-    <img src="logos/ogilvy.svg" alt="Ogilvy">
-    <img src="logos/slalom.svg" alt="Slalom">
-    <img src="logos/rakuten.svg" alt="Rakuten">
-    <img src="logos/pega.svg" alt="Pega">
-    <img src="logos/linux.svg" alt="Linux">
-    <img src="logos/monotype.svg" alt="Monotype">
-    <img src="logos/nativeinstruments.svg" alt="Native Instruments">
-    <img src="logos/beatport.svg" alt="Beatport">
-    <img src="logos/pioneerdj.svg" alt="Pioneer DJ">
-    <img src="logos/nhk.svg" alt="NHK">
-    <img src="logos/techcrunch.svg" alt="TechCrunch">
-    <img src="logos/quark.svg" alt="Quark">
-    <img src="logos/qt.svg" alt="Qt">
-    <!-- duplicate set for seamless loop -->
-    <img src="logos/apple.svg" alt="Apple">
-    <img src="logos/google.svg" alt="Google">
-    <img src="logos/microsoft.svg" alt="Microsoft">
-    <img src="logos/adobe.svg" alt="Adobe">
-    <img src="logos/tdk.svg" alt="TDK">
-    <img src="logos/fabrion.svg" alt="Fabrion">
-    <img src="logos/denon.svg" alt="Denon">
-    <img src="logos/marantz.svg" alt="Marantz">
-    <img src="logos/dolby.svg" alt="Dolby">
-    <img src="logos/dts.svg" alt="DTS">
-    <img src="logos/yamaha.svg" alt="Yamaha">
-    <img src="logos/audi.svg" alt="Audi">
-    <img src="logos/ogilvy.svg" alt="Ogilvy">
-    <img src="logos/slalom.svg" alt="Slalom">
-    <img src="logos/rakuten.svg" alt="Rakuten">
-    <img src="logos/pega.svg" alt="Pega">
-    <img src="logos/linux.svg" alt="Linux">
-    <img src="logos/monotype.svg" alt="Monotype">
-    <img src="logos/nativeinstruments.svg" alt="Native Instruments">
-    <img src="logos/beatport.svg" alt="Beatport">
-    <img src="logos/pioneerdj.svg" alt="Pioneer DJ">
-    <img src="logos/nhk.svg" alt="NHK">
-    <img src="logos/techcrunch.svg" alt="TechCrunch">
-    <img src="logos/quark.svg" alt="Quark">
-    <img src="logos/qt.svg" alt="Qt">
+<!-- ===== LOGO GRID ===== -->
+<section class="logo-grid reveal">
+  <p class="logo-grid__label">Companies & Partners</p>
+  <div class="logo-grid__table">
+    <div class="logo-grid__cell"><img src="logos/apple.svg" alt="Apple"><span>Apple</span></div>
+    <div class="logo-grid__cell"><img src="logos/google.svg" alt="Google"><span>Google</span></div>
+    <div class="logo-grid__cell"><img src="logos/microsoft.svg" alt="Microsoft"><span>Microsoft</span></div>
+    <div class="logo-grid__cell"><img src="logos/adobe.svg" alt="Adobe"><span>Adobe</span></div>
+    <div class="logo-grid__cell"><img src="logos/tdk.svg" alt="TDK"><span>TDK</span></div>
+    <div class="logo-grid__cell"><img src="logos/toyota.svg" alt="Toyota"><span>Toyota</span></div>
+    <div class="logo-grid__cell"><img src="logos/audi.svg" alt="Audi"><span>Audi</span></div>
+    <div class="logo-grid__cell"><img src="logos/rakuten.svg" alt="Rakuten"><span>Rakuten</span></div>
+    <div class="logo-grid__cell"><img src="logos/denon.svg" alt="Denon"><span>Denon</span></div>
+    <div class="logo-grid__cell"><img src="logos/marantz.svg" alt="Marantz"><span>Marantz</span></div>
+    <div class="logo-grid__cell"><img src="logos/dolby.svg" alt="Dolby"><span>Dolby</span></div>
+    <div class="logo-grid__cell"><img src="logos/dts.svg" alt="DTS"><span>DTS</span></div>
+    <div class="logo-grid__cell"><img src="logos/yamaha.svg" alt="Yamaha"><span>Yamaha</span></div>
+    <div class="logo-grid__cell"><img src="logos/ogilvy.svg" alt="Ogilvy"><span>Ogilvy</span></div>
+    <div class="logo-grid__cell"><img src="logos/slalom.svg" alt="Slalom"><span>Slalom</span></div>
+    <div class="logo-grid__cell"><img src="logos/quark.svg" alt="Quark"><span>QuarkXPress</span></div>
+    <div class="logo-grid__cell"><img src="logos/monotype.svg" alt="Monotype"><span>Monotype</span></div>
+    <div class="logo-grid__cell"><img src="logos/nativeinstruments.svg" alt="Native Instruments"><span>Native Instruments</span></div>
+    <div class="logo-grid__cell"><img src="logos/beatport.svg" alt="Beatport"><span>Beatport</span></div>
+    <div class="logo-grid__cell"><img src="logos/pioneerdj.svg" alt="Pioneer DJ"><span>Pioneer DJ</span></div>
+    <div class="logo-grid__cell"><img src="logos/nhk.svg" alt="NHK"><span>NHK</span></div>
+    <div class="logo-grid__cell"><img src="logos/techcrunch.svg" alt="TechCrunch"><span>TechCrunch</span></div>
+    <div class="logo-grid__cell"><img src="logos/fabrion.svg" alt="Fabrion"><span>Fabrion</span></div>
+    <div class="logo-grid__cell"><img src="logos/linux.svg" alt="Linux"><span>Linux</span></div>
+    <div class="logo-grid__cell"><img src="logos/qt.svg" alt="Qt"><span>Qt</span></div>
   </div>
 </section>
 
