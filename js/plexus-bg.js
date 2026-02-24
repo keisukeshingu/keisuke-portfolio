@@ -152,15 +152,25 @@ const PlexusBg = (() => {
   }
 
   /* ---------- Resize ---------- */
+  function getViewportHeight() {
+    /* On mobile, use visualViewport for accurate height after address bar hides */
+    if (window.visualViewport) return Math.ceil(window.visualViewport.height);
+    return window.innerHeight;
+  }
+
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = window.innerWidth;
-    H = window.innerHeight;
+    H = getViewportHeight();
+    /* Add buffer for mobile address bar transitions */
+    var canvasH = isMobile ? Math.max(H, window.screen.height) : H;
     canvas.width  = W * dpr;
-    canvas.height = H * dpr;
+    canvas.height = canvasH * dpr;
     canvas.style.width  = W + 'px';
-    canvas.style.height = H + 'px';
+    canvas.style.height = canvasH + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    /* Update particle bounds to full canvas */
+    H = canvasH;
   }
 
   /* ---------- Init ---------- */
@@ -189,6 +199,10 @@ const PlexusBg = (() => {
 
     /* Events */
     window.addEventListener('resize', resize);
+    /* Mobile: viewport changes when address bar hides/shows */
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', resize);
+    }
 
     /* Mouse (desktop) */
     document.addEventListener('mousemove', e => {
