@@ -150,6 +150,38 @@
     .ba-inline { grid-template-columns: 1fr; }
 
   }
+  /* ===== Lightbox ===== */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.88); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center; cursor: zoom-out;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox__img {
+    max-width: 90vw; max-height: 90vh; object-fit: contain;
+    border-radius: 8px; box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    cursor: default; animation: lb-in 0.2s ease;
+  }
+  @keyframes lb-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .lightbox__close {
+    position: fixed; top: 24px; right: 28px;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+    color: #fff; font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s; z-index: 10000;
+  }
+  .lightbox__close:hover { background: rgba(255,255,255,0.24); }
+  .lightbox__hint {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em;
+    pointer-events: none;
+  }
+  .inline-image img, .cs-hero__image img { cursor: zoom-in; }
+
   /* ===== Animation Layer (v1_animation) ===== */
   #snow-zone { position: relative; overflow: hidden; }
   #snow-zone img { position: relative; z-index: 2; }
@@ -411,6 +443,13 @@
   <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
 </footer>
 
+<!-- ===== Lightbox ===== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox__close" id="lightbox-close" aria-label="Close">✕</button>
+  <img class="lightbox__img" id="lightbox-img" src="" alt="">
+  <p class="lightbox__hint">ESC or click outside to close</p>
+</div>
+
 <!-- ===== Scripts ===== -->
 <script src="../js/scroll-reveal.js" defer></script>
 <script src="../js/weather-hero.js" defer></script>
@@ -418,6 +457,52 @@
 (function () {
   var snowZone = document.getElementById('snow-zone');
   if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
+<script>
+(function () {
+  var lightbox = document.getElementById('lightbox');
+  var lbImg    = document.getElementById('lightbox-img');
+  var lbClose  = document.getElementById('lightbox-close');
+
+  function openLightbox(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
+
+  // Wire up all inline images
+  document.querySelectorAll('.inline-image img').forEach(function (img) {
+    img.addEventListener('click', function (e) {
+      e.stopPropagation();
+      openLightbox(this.src, this.alt);
+    });
+  });
+
+  // Wire up hero image
+  var heroImg = document.querySelector('.cs-hero__image img');
+  if (heroImg) {
+    heroImg.addEventListener('click', function (e) {
+      e.stopPropagation();
+      openLightbox(this.src, this.alt);
+    });
+  }
+
+  // Close: button, backdrop click, Escape key
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
 })();
 </script>
 </body>
