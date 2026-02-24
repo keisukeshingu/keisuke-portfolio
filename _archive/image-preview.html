@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>Image Discovery — All Projects</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',-apple-system,sans-serif;background:#0D0D0F;color:#E8E8ED;line-height:1.5}
+  .container{max-width:1200px;margin:0 auto;padding:48px 40px 80px}
+  h1{font-size:32px;font-weight:200;letter-spacing:-0.03em;color:#fff;margin-bottom:8px}
+  .subtitle{font-size:14px;font-weight:300;color:#86868B;margin-bottom:12px}
+  .instructions{font-size:13px;font-weight:300;color:#6E6E73;padding:16px 20px;background:rgba(179,58,58,0.08);border:1px solid rgba(179,58,58,0.15);border-radius:8px;margin-bottom:56px}
+  .instructions code{background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;font-size:12px}
+  .section{margin-bottom:64px}
+  .section-label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#B33A3A;margin-bottom:8px}
+  .section-title{font-size:22px;font-weight:300;color:#fff;margin-bottom:24px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid--2col{grid-template-columns:repeat(2,1fr)}
+  .grid--4col{grid-template-columns:repeat(4,1fr)}
+  .card{border-radius:10px;overflow:hidden;background:#1A1A1F;border:1px solid rgba(255,255,255,0.06);transition:border-color .3s,transform .3s;cursor:pointer}
+  .card:hover{border-color:rgba(179,58,58,0.3);transform:translateY(-2px)}
+  .card__img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:#111;min-height:160px}
+  .card__info{padding:14px 16px}
+  .card__name{font-size:13px;font-weight:500;color:#fff;margin-bottom:4px}
+  .card__desc{font-size:12px;font-weight:300;color:#86868B;line-height:1.5}
+  .card__source{font-size:11px;font-weight:300;color:#6E6E73;margin-top:6px}
+  .card__source a{color:#B33A3A;text-decoration:none}
+  .card__source a:hover{text-decoration:underline}
+  .card__tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#B33A3A;background:rgba(179,58,58,0.1);border-radius:4px;padding:2px 8px;margin-top:8px}
+  .divider{border:none;border-top:1px solid rgba(255,255,255,0.06);margin:48px 0}
+  .note{font-size:13px;font-weight:300;color:#6E6E73;padding:14px 18px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.04);margin-bottom:20px}
+  .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:1000;align-items:center;justify-content:center;cursor:zoom-out}
+  .lightbox.active{display:flex}
+  .lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px}
+  @media(max-width:768px){.grid,.grid--4col{grid-template-columns:1fr}.grid--2col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Image Discovery — All Projects</h1>
+<p class="subtitle">Curated reference images for every case study. Click to enlarge.</p>
+<div class="instructions">
+  <strong>First run:</strong> Open Terminal in the portfolio folder and run <code>./download-images.sh</code> to download all images locally. Then reload this page.
+</div>
+
+<!-- ============================================================ -->
+<!-- CH 6 · KYOTO ARCHIVE -->
+<!-- ============================================================ -->
+<div class="section">
+  <p class="section-label">Ch 6 · Kyoto University of the Arts</p>
+  <h2 class="section-title">Noh Stage &amp; Shrine Architecture</h2>
+  <p class="note">Itsukushima Shrine — the most famous outdoor Noh stage in Japan. Visual parallel to the rooftop 楽心荘 at Kyoto University of the Arts.</p>
+  <div class="grid">
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/kyoto/itsukushima-noh-stage.jpg" alt="Itsukushima Noh stage">
+      <div class="card__info">
+        <p class="card__name">厳島神社 能舞台 — Noh Stage</p>
+        <p class="card__desc">Floating open-air Noh stage, Miyajima. Spiritual zen atmosphere.</p>
+        <p class="card__source"><a href="https://commons.wikimedia.org/wiki/Category:N%C5%8D_stage,_Itsukushima_Shinto_Shrine" target="_blank">Wikimedia Commons</a></p>
+        <span class="card__tag">Hero candidate</span>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/kyoto/itsukushima-floating-shrine.jpg" alt="Itsukushima floating shrine">
+      <div class="card__info">
+        <p class="card__name">厳島 — Floating Shrine Complex</p>
+        <p class="card__desc">Full walkway view. Traditional architecture meeting water and sky.</p>
+        <p class="card__source"><a href="https://commons.wikimedia.org/wiki/Itsukushima_Shrine" target="_blank">Wikimedia Commons</a></p>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/kyoto/itsukushima-dusk.jpg" alt="Itsukushima at dusk">
+      <div class="card__info">
+        <p class="card__name">厳島 — Shrine at Dusk</p>
+        <p class="card__desc">Atmospheric evening light. Zen ambience, warm tones.</p>
+        <p class="card__source"><a href="https://commons.wikimedia.org/wiki/Category:Itsukushima_Shinto_Shrine" target="_blank">Wikimedia Commons</a></p>
+        <span class="card__tag">Hero candidate</span>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:20px">Campus architecture — visit these links directly for stunning professional photos:</p>
+  <div class="grid grid--2col">
+    <div class="card">
+      <div class="card__img" style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a1f,#252530);color:#86868B;padding:24px;text-align:center;gap:10px;font-size:13px">
+        <span style="font-size:32px;opacity:0.3">創書館</span>
+        <span>Takenaka 2024 · 33 photos</span>
+        <a href="https://www.archdaily.com/1030320/sosho-kan-at-kyoto-university-of-the-arts-takenaka-corporation" target="_blank" style="color:#B33A3A;font-weight:500">Open ArchDaily →</a>
+      </div>
+      <div class="card__info">
+        <p class="card__name">創書館 Sosho-Kan — Futuristic Zen Atrium</p>
+        <p class="card__desc">Glass-block skylight, 4-story atrium, brick walls. Photos by Taizo Furukawa.</p>
+        <span class="card__tag">Hero candidate</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__img" style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a1f,#252530);color:#86868B;padding:24px;text-align:center;gap:10px;font-size:13px">
+        <span style="font-size:32px;opacity:0.3">至誠館</span>
+        <span>Kengo Kuma 2008 · 9 photos</span>
+        <a href="https://www.archdaily.com/199896/shiseikan-kengo-kuma-associates" target="_blank" style="color:#B33A3A;font-weight:500">Open ArchDaily →</a>
+      </div>
+      <div class="card__info">
+        <p class="card__name">至誠館 Shisei-kan — Kengo Kuma</p>
+        <p class="card__desc">Granite louvered façade, 67 earth anchors into cliff. Material zen.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- CH 6 · QUARKXPRESS -->
+<!-- ============================================================ -->
+<div class="section">
+  <p class="section-label">Ch 6 · QuarkXPress Era</p>
+  <h2 class="section-title">Grid Systems &amp; Swiss Typography</h2>
+  <p class="note">The visual DNA of desktop publishing — Müller-Brockmann's grid systems, the philosophy QuarkXPress was built to serve.</p>
+  <div class="grid">
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/quark/muller-brockmann-der-film.jpg" alt="Der Film poster 1960">
+      <div class="card__info">
+        <p class="card__name">Müller-Brockmann — "Der Film" (1960)</p>
+        <p class="card__desc">Iconic Swiss grid poster. Typographic hierarchy, geometric composition.</p>
+        <p class="card__source"><a href="https://commons.wikimedia.org/wiki/File:Josef_M%C3%BCller-Brockmann_der_Film.jpg" target="_blank">Wikimedia</a> · Public Domain</p>
+        <span class="card__tag">Inline image</span>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/quark/muller-brockmann-beethoven.jpg" alt="Beethoven poster 1955">
+      <div class="card__info">
+        <p class="card__name">Müller-Brockmann — Beethoven (1955)</p>
+        <p class="card__desc">His most famous poster. Geometric arcs + Akzidenz-Grotesk.</p>
+        <p class="card__source"><a href="https://commons.wikimedia.org/wiki/File:Josef_M%C3%BCller-Brockmann._beethoven_poster(1955).jpg" target="_blank">Wikimedia</a> · Public Domain</p>
+        <span class="card__tag">Inline image</span>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/quark/typographische-monatsblatter-1961.jpg" alt="TM 1961">
+      <div class="card__info">
+        <p class="card__name">Typographische Monatsblätter (1961)</p>
+        <p class="card__desc">Swiss typography journal by Emil Ruder. Univers typeface.</p>
+        <p class="card__source"><a href="https://commons.wikimedia.org/wiki/File:TM_Typographische_Monatsbl%C3%A4tter_1961_01.jpg" target="_blank">Wikimedia</a> · Public Domain</p>
+        <span class="card__tag">Inline image</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">NASA Graphics Standards &amp; Vignelli</h2>
+  <div class="grid">
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/quark/nasa-worm-logo.png" alt="NASA Worm" style="object-fit:contain;background:#fff;padding:32px">
+      <div class="card__info">
+        <p class="card__name">NASA "Worm" — Danne &amp; Blackburn (1975)</p>
+        <p class="card__desc">The gold standard of systematic grid-based design.</p>
+        <p class="card__source"><a href="https://upload.wikimedia.org/wikipedia/commons/0/0d/NASA_Graphics_Standards_Manual.pdf" target="_blank">Full 60-page PDF →</a></p>
+        <span class="card__tag">Inline image</span>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/quark/vignelli-subway-map.jpg" alt="Vignelli Subway Map">
+      <div class="card__info">
+        <p class="card__name">Massimo Vignelli — NYC Subway (1972)</p>
+        <p class="card__desc">45/90° grid logic applied to transit. MoMA collection.</p>
+        <p class="card__source"><a href="https://commons.wikimedia.org/wiki/File:1972_Massimo_Vignelli_Subway_Map.jpg" target="_blank">Wikimedia</a></p>
+        <span class="card__tag">Inline image</span>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/quark/quarkxpress-2024-font-manager.png" alt="QuarkXPress 2024">
+      <div class="card__info">
+        <p class="card__name">QuarkXPress 2024 — Font Manager</p>
+        <p class="card__desc">Modern interface. Grid paper → digital layout engine.</p>
+        <p class="card__source"><a href="https://commons.wikimedia.org/wiki/File:Font_Manager_Palette_in_QuarkXPress_2024.png" target="_blank">Wikimedia</a> · CC BY-SA 4.0</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- CH 1 · AI SYSTEMS -->
+<!-- ============================================================ -->
+<div class="section">
+  <p class="section-label">Ch 1 · Current Exploration &amp; AI Systems</p>
+  <h2 class="section-title">Fabrion · TDK SensEI · AI Workflow</h2>
+  <div class="grid">
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/fabrion/tdk-motor-monitoring.jpg" alt="Fabrion manufacturing">
+      <div class="card__info">
+        <p class="card__name">Fabrion — Manufacturing AI</p>
+        <p class="card__desc">Motor monitoring demonstration. AI agent decision intelligence.</p>
+        <p class="card__source"><a href="https://www.tdk.com/en/featured_stories" target="_blank">TDK Featured Stories</a></p>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/tdk/tdk-machine-management.jpg" alt="TDK SensEI">
+      <div class="card__info">
+        <p class="card__name">TDK SensEI — Machine Management</p>
+        <p class="card__desc">Edge AI factory management. CES 2024 Innovation Award.</p>
+        <p class="card__source"><a href="https://www.tdk.com/en/featured_stories" target="_blank">TDK Featured Stories</a></p>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/slalom/gundam-metaverse-platform.png" alt="AI platform">
+      <div class="card__info">
+        <p class="card__name">AI-Native Workflow — Platform Reference</p>
+        <p class="card__desc">Digital platform architecture reference image.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- CH 2 · AGENCY & CONSULTING -->
+<!-- ============================================================ -->
+<div class="section">
+  <p class="section-label">Ch 2 · Agency &amp; Consulting</p>
+  <h2 class="section-title">Rakuten Fit · Audi Q4 · Gundam Metaverse</h2>
+  <div class="grid">
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/rakuten/apple-watch-fitness.jpg" alt="Rakuten Fit wearable">
+      <div class="card__info">
+        <p class="card__name">Rakuten Fit — Wearable Fitness</p>
+        <p class="card__desc">Apple Watch health ecosystem. 111M member gamification.</p>
+        <p class="card__source"><a href="https://www.apple.com/newsroom/" target="_blank">Apple Newsroom</a></p>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/ogilvy/audi-q4-hud.jpg" alt="Audi Q4 e-tron HUD">
+      <div class="card__info">
+        <p class="card__name">Audi Q4 e-tron — AR Head-Up Display</p>
+        <p class="card__desc">Augmented reality HUD technology. Geometry Ogilvy Japan.</p>
+        <p class="card__source"><a href="https://www.audi-technology-portal.de/" target="_blank">Audi Technology Portal</a></p>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/slalom/gundam-metaverse-kv.jpg" alt="Gundam Metaverse">
+      <div class="card__info">
+        <p class="card__name">Gundam Metaverse — SIDE-G</p>
+        <p class="card__desc">Virtual space colony. Bandai Namco · Slalom Consulting.</p>
+        <p class="card__source"><a href="https://gmpj.bn-ent.net/en/" target="_blank">Gundam Metaverse Project</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- CH 3 · PREMIUM AUDIO -->
+<!-- ============================================================ -->
+<div class="section">
+  <p class="section-label">Ch 3 · Premium Audio &amp; Hardware</p>
+  <h2 class="section-title">Denon / Marantz · Miselu C.24</h2>
+  <div class="grid grid--2col">
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/denon/denon-avr-a1h.jpg" alt="Denon AVR-A1H">
+      <div class="card__info">
+        <p class="card__name">Denon AVR-A1H — Flagship Receiver</p>
+        <p class="card__desc">Premium audio hardware. 60+ products, AirPlay 2, HomeKit.</p>
+        <p class="card__source"><a href="https://www.denon.com/" target="_blank">Denon</a></p>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/miselu/miselu-c24.jpg" alt="Miselu C.24">
+      <div class="card__info">
+        <p class="card__name">Miselu C.24 — BLE MIDI Keyboard</p>
+        <p class="card__desc">USPTO Patent. Google I/O 2012. TechCrunch Disrupt.</p>
+        <p class="card__source"><a href="https://www.engadget.com/" target="_blank">Engadget</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- CH 4 · MUSIC & LIVE -->
+<!-- ============================================================ -->
+<div class="section">
+  <p class="section-label">Ch 4 · Music &amp; Live Performance</p>
+  <h2 class="section-title">Beatport · Robot Heart · TechCrunch · Festivals</h2>
+  <div class="grid grid--2col">
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/beatport/traktor-pro-4.jpg" alt="Traktor Pro 4">
+      <div class="card__info">
+        <p class="card__name">Traktor Pro 4 — Native Instruments</p>
+        <p class="card__desc">Professional DJ software. Beatport → NI pipeline.</p>
+        <p class="card__source"><a href="https://www.native-instruments.com/en/products/traktor/" target="_blank">Native Instruments</a></p>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/robot-heart/robot-heart-burning-man.jpg" alt="Robot Heart Burning Man">
+      <div class="card__info">
+        <p class="card__name">Robot Heart — Burning Man</p>
+        <p class="card__desc">LED art car installation. Desert night. 2011–Present.</p>
+        <p class="card__source"><a href="https://dusttoashes.com/" target="_blank">Dust to Ashes</a></p>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/techcrunch/disrupt-sf-2016.jpg" alt="TechCrunch Disrupt SF">
+      <div class="card__info">
+        <p class="card__name">TechCrunch Disrupt SF 2016</p>
+        <p class="card__desc">Startup Battlefield. Stage visuals &amp; event branding.</p>
+        <p class="card__source"><a href="https://techcrunch.com/events/disrupt-sf-2016/" target="_blank">TechCrunch</a></p>
+      </div>
+    </div>
+    <div class="card" onclick="openLightbox(this)">
+      <img class="card__img" src="img/discovery/festivals/edc-las-vegas.jpg" alt="EDC Las Vegas">
+      <div class="card__info">
+        <p class="card__name">EDC Las Vegas 2022</p>
+        <p class="card__desc">Electric Daisy Carnival. Real-time generative visuals.</p>
+        <p class="card__source"><a href="https://lasvegas.electricdaisycarnival.com/" target="_blank">Insomniac Events</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<!-- DTP CULTURE REFERENCES -->
+<!-- ============================================================ -->
+<div class="section">
+  <p class="section-label">Reference Archives</p>
+  <h2 class="section-title">DTP Culture — Emigre &amp; Ray Gun</h2>
+  <div class="grid grid--2col">
+    <div class="card">
+      <div class="card__img" style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a1f,#252530);color:#86868B;padding:24px;text-align:center;gap:10px;font-size:13px">
+        <span style="font-size:28px;font-weight:200;letter-spacing:0.2em;opacity:0.5">EMIGRE</span>
+        <span>69 issues (1984–2005)</span>
+        <a href="https://letterformarchive.org/news/new-in-the-archive-complete-emigre-magazine/" target="_blank" style="color:#B33A3A;font-weight:500">Letterform Archive →</a>
+      </div>
+      <div class="card__info">
+        <p class="card__name">Emigre — VanderLans &amp; Licko</p>
+        <p class="card__desc">The bible of DTP culture. All 69 issues digitized.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__img" style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a1f,#252530);color:#86868B;padding:24px;text-align:center;gap:10px;font-size:13px">
+        <span style="font-size:28px;font-weight:600;letter-spacing:-0.02em;opacity:0.5">RAY GUN</span>
+        <span>David Carson (1992–2000)</span>
+        <a href="https://peoplesgdarchive.org/item/17298/ray-gun-andnbsp-issue-3" target="_blank" style="color:#B33A3A;font-weight:500">People's GD Archive →</a>
+      </div>
+      <div class="card__info">
+        <p class="card__name">Ray Gun — David Carson</p>
+        <p class="card__desc">Broke every grid rule. Proved DTP could do order and chaos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="Preview">
+</div>
+
+<script>
+function openLightbox(card){
+  var img=card.querySelector('.card__img');
+  if(!img||img.tagName!=='IMG')return;
+  document.getElementById('lightbox-img').src=img.src;
+  document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('active')}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox()});
+</script>
+</body>
+</html>
