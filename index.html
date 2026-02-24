@@ -18,12 +18,11 @@
 
   /* ===== Nav ===== */
 
-  .nav__links 
   .nav__links a:hover { color: var(--ink-100); }
 
   /* ===== Hero ===== */
   .hero {
-    padding: 192px 64px 48px;
+    padding: 192px 64px 24px;
     max-width: var(--max-w); margin: 0 auto;
   }
   .hero__kicker {
@@ -239,7 +238,6 @@
 
   /* ===== Footer ===== */
 
-  .footer__links 
   .footer__links a:hover { color: var(--ink-100); }
 
   /* ===== Scroll animations ===== */
@@ -278,10 +276,46 @@
     z-index: 2;
   }
 
-  @media (prefers-reduced-motion: reduce) {
+
+
+  /* ===== Heritage Card Preview ===== */
+  .heritage-card__preview {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .heritage-card__preview svg { width: 100%; height: 100%; display: block; }
+
+
+  /* ===== Heritage Card Logo Strip ===== */
+  .heritage-card__logos {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    margin-top: 14px;
+  }
+  .heritage-card__logo {
+    height: 18px;
+    width: auto;
+    flex-shrink: 0;
+    display: block;
+    opacity: 0.3;
+    transition: opacity 0.35s var(--ease);
+    filter: none;
+  }
+  .heritage-card:hover .heritage-card__logo {
+    opacity: 0.6;
+  }
+
+    @media (prefers-reduced-motion: reduce) {
     .weather-hero { display: none !important; }
   }</style>
-</head></head>
+</head>
 <body>
 
 <!-- ===== NAV ===== -->
@@ -354,9 +388,14 @@
       <canvas class="heritage-card__icon" data-anim="43"></canvas>
       <p class="heritage-card__period">2023 – Present</p>
       <p class="heritage-card__domain">AI Systems<span class="heritage-card__kanji">思考</span></p>
-      <h3 class="heritage-card__headline">TDK → Fabrion</h3>
+      <h3 class="heritage-card__headline">TDK → Design Engineering</h3>
       <p class="heritage-card__narrative">Edge AI sensors at TDK (CES 2024 Innovation Award). Then Fabrion — designing the first AI-native MES where AI agents earn human trust through transparency, guardrails, and constitutional AI principles.</p>
+      
+      <div class="heritage-card__preview">
+<img src="img/library/ai-workflow/antigravity-screenshot.png" alt="Google Antigravity IDE — orchestration-ui, AI-native design-to-code workflow" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
+</div>
       <p class="heritage-card__sense">Extension of Thought</p>
+      <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/tdk.svg" alt="TDK" loading="lazy"><img class="heritage-card__logo" src="logos/fabrion.svg" alt="Fabrion" loading="lazy"></div>
     </a>
     <a href="projects.html#immersive" class="heritage-card reveal" style="transition-delay: 0.1s">
       <canvas class="heritage-card__icon" data-anim="18"></canvas>
@@ -364,7 +403,12 @@
       <p class="heritage-card__domain">Agency & Consulting<span class="heritage-card__kanji">知覚</span></p>
       <h3 class="heritage-card__headline">Ogilvy → Slalom</h3>
       <p class="heritage-card__narrative">Generative visuals, spatial audio, and AR for Audi at Ogilvy Japan. Then innovation strategy at Slalom Build — experience design for Toyota Woven City, Gundam Metaverse, and NVIDIA collaborations.</p>
+      
+      <div class="heritage-card__preview">
+<img src="img/library/ogilvy/audi-experience-journey.png" alt="Audi Q4 e-tron experience journey map — Ogilvy Japan" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
+</div>
       <p class="heritage-card__sense">Extension of Perception</p>
+      <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/ogilvy.svg" alt="Ogilvy" loading="lazy"><img class="heritage-card__logo" src="logos/audi.svg" alt="Audi" loading="lazy"><img class="heritage-card__logo" src="logos/slalom.svg" alt="Slalom" loading="lazy"></div>
     </a>
     <a href="projects.html#audio" class="heritage-card reveal" style="transition-delay: 0.15s">
       <canvas class="heritage-card__icon" data-anim="35"></canvas>
@@ -372,7 +416,12 @@
       <p class="heritage-card__domain">Premium Audio<span class="heritage-card__kanji">聴覚</span></p>
       <h3 class="heritage-card__headline">Director of UX — Denon / Marantz</h3>
       <p class="heritage-card__narrative">Unified the UX of two premium audio brands across 60+ products and 50+ Apple-certified devices. Replaced 8-bit bitmap displays with a modern vector design system. Moved market position from #5 to #1.</p>
+      
+      <div class="heritage-card__preview">
+<img src="https://www.denon.com/on/demandware.static/-/Sites-site-catalog-denon-us/default/dw66c13fcd/navImages/Nav_AV-Receivers_AVR-A1H.jpg" alt="Denon AVR-A1H premium AV receiver flagship" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
+</div>
       <p class="heritage-card__sense">Extension of Hearing</p>
+      <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/denon.svg" alt="Denon" loading="lazy"><img class="heritage-card__logo" src="logos/marantz.svg" alt="Marantz" loading="lazy"></div>
     </a>
     <a href="projects.html#invention" class="heritage-card reveal" style="transition-delay: 0.2s">
       <canvas class="heritage-card__icon" data-anim="49"></canvas>
@@ -380,7 +429,11 @@
       <p class="heritage-card__domain">Hardware Invention<span class="heritage-card__kanji">触感</span></p>
       <h3 class="heritage-card__headline">Miselu C.24</h3>
       <p class="heritage-card__narrative">Patented a BLE MIDI controller that cut Android audio latency from 250ms to under 10ms. Demoed at Google I/O 2012 and TechCrunch Disrupt. Partnerships with KORG and Yamaha.</p>
+      <div class="heritage-card__preview">
+<img src="img/library/miselu-patent.jpg" alt="Miselu C.24 patent Figure 2 — keyboard hardware layout, US9165476B2" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
+</div>
       <p class="heritage-card__sense">Extension of Touch & Sound</p>
+      <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/yamaha.svg" alt="Yamaha" loading="lazy"><img class="heritage-card__logo" src="logos/techcrunch.svg" alt="TechCrunch" loading="lazy"></div>
     </a>
     <a href="projects.html#music" class="heritage-card reveal" style="transition-delay: 0.25s">
       <canvas class="heritage-card__icon" data-anim="38"></canvas>
@@ -388,7 +441,12 @@
       <p class="heritage-card__domain">Music & Live Performance<span class="heritage-card__kanji">流動</span></p>
       <h3 class="heritage-card__headline">Beatport → Native Instruments</h3>
       <p class="heritage-card__narrative">Digital music distribution, DJ software, and real-time generative visuals. VJ performances at EDC, Ultra, Detroit Movement, Burning Man, and Further Future.</p>
+      
+      <div class="heritage-card__preview">
+<img src="https://www.native-instruments.com/typo3temp/pics/img-welcome-hero-traktor-pro-4-hero-updated-8886c1ee796862446eab18ae20d52d3f-d@2x.jpg" alt="Traktor Pro 4 DJ software Native Instruments" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
+</div>
       <p class="heritage-card__sense">Extension of Creative Flow</p>
+      <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/beatport.svg" alt="Beatport" loading="lazy"><img class="heritage-card__logo" src="logos/nativeinstruments.svg" alt="Native Instruments" loading="lazy"><img class="heritage-card__logo" src="logos/pioneerdj.svg" alt="Pioneer DJ" loading="lazy"></div>
     </a>
     <a href="projects.html#publishing" class="heritage-card reveal" style="transition-delay: 0.3s">
       <canvas class="heritage-card__icon" data-anim="31"></canvas>
@@ -396,7 +454,12 @@
       <p class="heritage-card__domain">Print & Digital Publishing<span class="heritage-card__kanji">視覚</span></p>
       <h3 class="heritage-card__headline">QuarkXPress</h3>
       <p class="heritage-card__narrative">Joined when QuarkXPress held 95% of global publishing — Forbes, Condé Nast, NYT, Rolling Stone. Pioneered Quark Interactive Designer, a JavaScript-native non-coding authoring tool.</p>
+      
+      <div class="heritage-card__preview">
+<img src="img/quarkxpress-hero.jpg" alt="QuarkXPress application — fashion magazine layout with Font Manager palette" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
+</div>
       <p class="heritage-card__sense">Extension of the Eye</p>
+      <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/quark.svg" alt="Quark" loading="lazy"><img class="heritage-card__logo" src="logos/adobe.svg" alt="Adobe" loading="lazy"></div>
     </a>
   </div>
 
