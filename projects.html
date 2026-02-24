@@ -12,7 +12,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Noto+Serif+JP:wght@200;300&display=swap" rel="stylesheet">
-<style>/* ===== Design Tokens ===== */
+<style>
+  /* ===== Page Background ===== */
+  body { background: #FAFBFC; }
+
+  /* ===== Design Tokens ===== */
 
   /* ===== Reset ===== */
 
@@ -70,13 +74,68 @@
     border: 1px solid var(--rule-40);
     border-radius: 12px;
     cursor: pointer;
-    background: var(--white);
+    background: transparent;
     transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
   }
   .case-entry:hover {
-    background: rgba(245, 245, 247, 0.55);
+    background: rgba(245, 245, 247, 0.18);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     transform: translateY(-2px);
+  }
+
+  /* ===== NDA-locked card ===== */
+  .case-entry--nda {
+    cursor: default;
+    position: relative;
+  }
+  .case-entry--nda:hover {
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+  }
+  .case-entry--nda .case-entry__top,
+  .case-entry--nda .case-entry__tags,
+  .case-entry--nda .case-entry__image {
+    opacity: 0.55;
+  }
+  .case-entry__nda-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-60);
+    background: rgba(0,0,0,0.05);
+    border: 1px solid var(--rule-40);
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ===== NDA Toast ===== */
+  .nda-toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(29, 29, 31, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #F5F5F7;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 12px 24px;
+    border-radius: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+  }
+  .nda-toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 
   .case-entry__top {
@@ -167,7 +226,7 @@
     margin: 0 auto;
   }
   .divider-strip canvas {
-    width: 20px; height: 20px;
+    width: 36px; height: 36px;
     opacity: 0.18;
   }
   .divider-strip .divider-dot {
@@ -198,7 +257,7 @@
     margin: 0 auto;
   }
   .section-separator canvas {
-    width: 48px; height: 48px;
+    width: 72px; height: 72px;
     opacity: 0.2;
     transition: opacity 0.6s var(--ease);
   }
@@ -284,11 +343,11 @@
 
 <!-- A. Divider strip: Hero → Projects -->
 <div class="divider-strip reveal" style="transition-delay: 0.1s">
-  <canvas class="strip-anim" data-anim="26"></canvas>
+  <canvas class="strip-anim" data-anim="24"></canvas>
   <div class="divider-dot"></div>
-  <canvas class="strip-anim" data-anim="5"></canvas>
+  <canvas class="strip-anim" data-anim="24"></canvas>
   <div class="divider-dot"></div>
-  <canvas class="strip-anim" data-anim="26"></canvas>
+  <canvas class="strip-anim" data-anim="24"></canvas>
 </div>
 
 <!-- ===== AI SYSTEMS ===== -->
@@ -336,24 +395,6 @@
       </div>
     </a>
 
-  </div>
-</section>
-
-<!-- C. Ensō separator: AI Systems → Agency -->
-<div class="section-separator reveal">
-  <canvas class="separator-anim" data-anim="15"></canvas>
-</div>
-
-<!-- ===== INNOVATION & IMMERSIVE ===== -->
-<section id="immersive" class="era reveal">
-  <div class="era__header">
-    <span class="era__label">Agency & Consulting</span>
-    <span class="era__period">2022 – 2023</span>
-    <span class="era__kanji">知覚</span>
-    <span class="era-dot"><canvas class="era-dot-anim" data-anim="4"></canvas></span>
-  </div>
-
-  <div class="era__grid">
     <a href="case-studies/rakuten-fit.html" class="case-entry">
       <div class="case-entry__top">
         <h2 class="case-entry__title">Fitness Meets the Rakuten Ecosystem</h2>
@@ -369,9 +410,27 @@
       </div>
     </a>
 
-    <a href="case-studies/ogilvy.html" class="case-entry">
+  </div>
+</section>
+
+<!-- C. Ensō separator: AI Systems → Agency -->
+<div class="section-separator reveal">
+  <canvas class="separator-anim" data-anim="24"></canvas>
+</div>
+
+<!-- ===== INNOVATION & IMMERSIVE ===== -->
+<section id="immersive" class="era reveal">
+  <div class="era__header">
+    <span class="era__label">Agency & Consulting</span>
+    <span class="era__period">2022 – 2023</span>
+    <span class="era__kanji">知覚</span>
+    <span class="era-dot"><canvas class="era-dot-anim" data-anim="4"></canvas></span>
+  </div>
+
+  <div class="era__grid">
+    <div class="case-entry case-entry--nda" onclick="showNdaToast()">
       <div class="case-entry__top">
-        <h2 class="case-entry__title">Beyond Screens</h2>
+        <h2 class="case-entry__title">Beyond Screens<span class="case-entry__nda-badge">NDA</span></h2>
         <p class="case-entry__brand">Audi Q4 e-tron · Geometry Ogilvy Japan</p>
         <p class="case-entry__role">Head of Technology</p>
       </div>
@@ -382,11 +441,11 @@
         <img src="img/library/ogilvy/audi-experience-journey.png" alt="Audi Q4 e-tron experience journey map — Ogilvy Japan" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.85;" loading="lazy">
         <canvas class="case-entry__anim" data-anim="18" width="120" height="120"></canvas>
       </div>
-    </a>
+    </div>
 
-    <a href="case-studies/slalom.html" class="case-entry">
+    <div class="case-entry case-entry--nda" onclick="showNdaToast()">
       <div class="case-entry__top">
-        <h2 class="case-entry__title">Frontier Design Where Heritage Meets Disruption</h2>
+        <h2 class="case-entry__title">Frontier Design Where Heritage Meets Disruption<span class="case-entry__nda-badge">NDA</span></h2>
         <p class="case-entry__brand">Slalom Build · Tokyo, Japan</p>
         <p class="case-entry__role">Director of Experience Design</p>
       </div>
@@ -397,13 +456,13 @@
         <img src="img/library/slalom/085-shinjuku-skyline.jpg" alt="Tokyo skyline — Slalom Build Japan practice" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.85;" loading="lazy">
         <canvas class="case-entry__anim" data-anim="21" width="120" height="120"></canvas>
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
 <!-- C. Ensō separator: Agency → Audio -->
 <div class="section-separator reveal">
-  <canvas class="separator-anim" data-anim="15"></canvas>
+  <canvas class="separator-anim" data-anim="24"></canvas>
 </div>
 
 <!-- ===== PREMIUM AUDIO & HARDWARE INVENTION ===== -->
@@ -526,7 +585,7 @@
 
 <!-- C. Ensō separator: Music → Publishing -->
 <div class="section-separator reveal">
-  <canvas class="separator-anim" data-anim="15"></canvas>
+  <canvas class="separator-anim" data-anim="24"></canvas>
 </div>
 
 <!-- ===== PUBLISHING ===== -->
@@ -576,11 +635,11 @@
 
 <!-- A. Divider strip: Projects → Footer -->
 <div class="divider-strip">
-  <canvas class="strip-anim" data-anim="16"></canvas>
+  <canvas class="strip-anim" data-anim="24"></canvas>
   <div class="divider-dot"></div>
-  <canvas class="strip-anim" data-anim="0"></canvas>
+  <canvas class="strip-anim" data-anim="24"></canvas>
   <div class="divider-dot"></div>
-  <canvas class="strip-anim" data-anim="16"></canvas>
+  <canvas class="strip-anim" data-anim="24"></canvas>
 </div>
 
 <div class="spacer"></div>
@@ -634,12 +693,12 @@
 
   // Project image placeholder animations (60px)
   initGroup('.case-entry__anim[data-anim]', 60);
-  // A. Divider strip animations (20px)
-  initGroup('.strip-anim[data-anim]', 20);
+  // A. Divider strip animations (36px)
+  initGroup('.strip-anim[data-anim]', 36);
   // B. Margin accent animations (28px)
   initGroup('.margin-anim[data-anim]', 28);
-  // C. Section separator — Ensō (48px)
-  initGroup('.separator-anim[data-anim]', 48);
+  // C. Section separator — Fusion (72px)
+  initGroup('.separator-anim[data-anim]', 72);
   // D. Era header dot accents (16px)
   initGroup('.era-dot-anim[data-anim]', 16);
 
@@ -658,7 +717,10 @@
 })();
 </script>
 
-<!-- ===== Animation Layer — Pluggable Weather System ===== -->
+<!-- =====================================================
+     SNOW ANIMATION — disabled on Projects (plexus is default bg)
+     To re-enable: uncomment the 2 script lines below
+     =====================================================
 <script src="js/weather-hero.js"></script>
 <script>
 (function () {
@@ -670,6 +732,25 @@
     WeatherHero.init(snowZone);
   }
 })();
+</script>
+-->
+
+<!-- =====================================================
+     PLEXUS BACKGROUND — comment out the 2 lines below to disable
+     ===================================================== -->
+<script src="js/plexus-bg.js"></script>
+<script>if (typeof PlexusBg !== 'undefined') PlexusBg.init(document.body);</script>
+<!-- ===== /Plexus Background ===== -->
+
+<!-- NDA Toast -->
+<div class="nda-toast" id="nda-toast">This case study is under NDA — content coming soon</div>
+<script>
+function showNdaToast() {
+  var t = document.getElementById('nda-toast');
+  t.classList.add('visible');
+  clearTimeout(window._ndaTimer);
+  window._ndaTimer = setTimeout(function() { t.classList.remove('visible'); }, 2400);
+}
 </script>
 
 </body>

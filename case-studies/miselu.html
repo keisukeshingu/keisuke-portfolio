@@ -39,15 +39,99 @@
 
   /* ===== Footer ===== */
 
+  /* ===== Metrics Grid ===== */
+  .metrics {
+    max-width: var(--max-w); margin: 0 auto; padding: 48px 64px;
+  }
+  .metrics__grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--rule-40); border-bottom: 1px solid var(--rule-40);
+    padding: 32px 0;
+  }
+  .metrics__item { padding: 0 32px; border-left: 1px solid var(--rule-40); }
+  .metrics__item:first-child { border-left: none; padding-left: 0; }
+  .metrics__item:last-child { padding-right: 0; }
+  .metrics__value {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink-100);
+  }
+  .metrics__label {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
+  }
+
+  /* ===== Content Layout (TOC + Body) ===== */
+  .cs-content {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 64px;
+    display: grid; grid-template-columns: 200px 1fr; gap: 64px;
+  }
+
+  /* ===== Table of Contents ===== */
+  .toc { position: sticky; top: 80px; align-self: start; }
+  .toc__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .toc__list { list-style: none; }
+  .toc__list li { margin-top: 12px; }
+  .toc__list a {
+    font-size: 13px; font-weight: 400; color: var(--ink-60);
+    transition: color 0.3s var(--ease);
+  }
+  .toc__list a:hover, .toc__list a.active { color: var(--ink-100); }
+
+  /* ===== STAR-D Sections ===== */
+  .stard-section {
+    padding: 48px 0; border-top: 1px solid var(--rule-40);
+  }
+  .stard-section:first-child { border-top: none; }
+  .stard-section__overline {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
+  }
+  .stard-section__title {
+    font-size: 26px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 24px;
+  }
+  .stard-section__body p {
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-80); margin-top: 16px;
+  }
+  .stard-section__body p:first-child { margin-top: 0; }
+
+  /* ===== Recognition ===== */
+  .recognition {
+    padding: 48px 0 0; border-top: 1px solid var(--rule-40);
+  }
+  .recognition__title {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .recognition__list {
+    list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px;
+  }
+  .recognition__list li {
+    font-size: 14px; font-weight: 400; color: var(--ink-80);
+  }
+
   /* ===== Scroll animations ===== */
-  
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* ===== Responsive ===== */
-  @media (max-width: 767px) {
-
+  @media (max-width: 1119px) {
+    .cs-content { grid-template-columns: 1fr; gap: 0; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 32px; border-bottom: 1px solid var(--rule-40); }
+    .toc__label { width: 100%; }
+    .toc__list { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .toc__list li { margin-top: 0; }
   }
-  /* ===== Animation Layer (v1_animation) ===== */
+  @media (max-width: 767px) {
+    .metrics { padding: 32px 24px; }
+    .metrics__grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .metrics__item { border-left: none; padding: 0; }
+    .cs-content { padding: 0 24px 40px; }
+  }
+
+  /* ===== Animation Layer ===== */
   #snow-zone { position: relative; overflow: hidden; }
   #snow-zone img { position: relative; z-index: 2; }
   @media (prefers-reduced-motion: reduce) {
@@ -74,7 +158,7 @@
 <!-- ===== CASE STUDY HERO ===== -->
 <section class="cs-hero">
   <div class="reveal">
-    <a href="Projects_Preview.html#invention" class="cs-hero__back">← Projects</a>
+    <a href="../projects.html" class="cs-hero__back">← Projects</a>
   </div>
   <div class="reveal" style="transition-delay: 0.05s">
     <p class="cs-hero__brand">Miselu C.24</p>
@@ -86,7 +170,10 @@
     <p class="cs-hero__statement">A Bluetooth LE MIDI keyboard controller with a USPTO patent — reducing Android audio latency from 250ms to under 10ms and making real-time musical performance possible on Android for the first time.</p>
   </div>
   <div class="reveal" style="transition-delay: 0.2s">
-    <div class="cs-hero__image">Hero image — Miselu C.24 Bluetooth MIDI keyboard</div>
+    <div class="cs-hero__image" data-kanji="奏" style="background:linear-gradient(160deg, #E4E4E8 0%, #CECECE 100%); --hero-kanji-color:rgba(0,0,0,0.05);">
+      <img src="../img/library/miselu-hero.jpg" alt="Miselu Neiro synth at Google I/O — Engadget exclusive, Korg and Yamaha partnership" loading="eager" style="object-fit:cover;width:100%;height:100%;">
+      <span class="cs-hero__image-label" style="color: rgba(0,0,0,0.35);">Miselu C.24 · iPad MIDI Keyboard · Hardware Invention</span>
+    </div>
   </div>
 </section>
 
@@ -119,49 +206,116 @@
   <span class="tag">Yamaha</span>
 </div>
 
-<!-- ===== BRIEF NARRATIVE ===== -->
-<div class="brief-content reveal">
-  <p>The Miselu C.24 was a portable, wireless musical instrument that connected to smartphones and tablets via Bluetooth Low Energy. As Director of Software Products, I designed and built the software ecosystem that made the hardware perform — and solved a platform-level problem that no one else had cracked.</p>
-
-  <p>The stock Android audio stack in 2012 had approximately 250ms of latency — a quarter-second delay between pressing a key and hearing sound. For reference, anything above 10ms is perceptible to musicians and makes real-time performance impossible. I forked the Android audio pipeline, bypassing the high-level audio framework to communicate directly with the hardware audio layer. This required deep OS-level engineering — understanding the Linux kernel's audio subsystem, the Android HAL (Hardware Abstraction Layer), and the timing characteristics of specific audio chipsets.</p>
-
-  <div class="inline-image">Latency comparison — 250ms stock Android vs. sub-10ms Miselu pipeline</div>
-
-  <p>The result: sub-10ms latency on Android — a breakthrough that made the C.24 the first viable real-time MIDI controller for the Android platform. The C.24 and the Neiro music creation app were demonstrated at Google I/O 2012, showcasing the latency breakthrough to thousands of developers.</p>
-
-  <p>I am a named inventor on US Patent 9,165,476 — covering the wireless MIDI controller technology that enabled low-latency musical instrument communication over Bluetooth Low Energy. I also established partnerships with KORG and Yamaha, validating the technology and opening distribution channels in the professional music industry.</p>
-
-  <p class="pull-quote">A USPTO patent, a Google I/O demo, and partnerships with KORG and Yamaha — from a startup that dared to fork Android's audio pipeline to make music happen in real time.</p>
+<!-- ===== METRICS ===== -->
+<div class="metrics reveal">
+  <div class="metrics__grid">
+    <div class="metrics__item">
+      <p class="metrics__value">&lt;10ms</p>
+      <p class="metrics__label">Android audio latency — down from 250ms</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">1</p>
+      <p class="metrics__label">USPTO Patent — US9165476B2</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">2012</p>
+      <p class="metrics__label">Google I/O demonstration</p>
+    </div>
+  </div>
 </div>
 
-<!-- ===== KEY HIGHLIGHTS ===== -->
-<div class="key-highlight reveal">
-  <div class="key-highlight__inner">
-    <div class="key-highlight__item">
-      <p class="key-highlight__value">&lt;10ms</p>
-      <p class="key-highlight__label">Android audio latency (from 250ms)</p>
+<!-- ===== CONTENT: TOC + BODY ===== -->
+<div class="cs-content">
+
+  <!-- Table of Contents -->
+  <aside class="toc reveal">
+    <p class="toc__label">Contents</p>
+    <ul class="toc__list">
+      <li><a href="#context" class="active">Opening Context</a></li>
+      <li><a href="#work">The Work</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+      <li style="margin-top:20px; padding-top:12px; border-top: 1px solid var(--rule-40)"><a href="#recognition">Recognition</a></li>
+    </ul>
+  </aside>
+
+  <!-- Content Body -->
+  <div>
+
+    <!-- OPENING CONTEXT -->
+    <div id="context" class="stard-section reveal">
+      <p class="stard-section__overline">Context</p>
+      <h2 class="stard-section__title">The Latency Wall</h2>
+      <div class="stard-section__body">
+        <p>In 2012, Android controlled a growing share of the global smartphone market — but it was categorically unusable for musical performance. The stock Android audio stack carried approximately 250ms of latency between input and output: a quarter-second delay that made real-time performance impossible. For context, 10ms is already perceptible to trained musicians. At 250ms, a pianist pressing a key and hearing the resulting note are two separate events. The instrument becomes unplayable.</p>
+        <p>Miselu was building the C.24 — a portable Bluetooth LE MIDI keyboard designed to turn smartphones and tablets into musical instruments. The hardware was elegant. The software problem was existential: without solving Android latency, the product had no market.</p>
+      </div>
     </div>
-    <div class="key-highlight__item">
-      <p class="key-highlight__value">1</p>
-      <p class="key-highlight__label">USPTO Patent (US9165476B2)</p>
+
+    <!-- THE WORK -->
+    <div id="work" class="stard-section reveal">
+      <p class="stard-section__overline">The Work</p>
+      <h2 class="stard-section__title">Forking the Audio Pipeline</h2>
+      <div class="stard-section__body">
+        <p>As Director of Software Products, I designed and built the software ecosystem that made the hardware perform. The solution required bypassing Android's high-level audio framework entirely and communicating directly with the hardware audio layer — a fork of the Android audio pipeline that had never been done for a consumer MIDI product.</p>
+        <p>This required deep OS-level engineering: understanding the Linux kernel's audio subsystem, the Android HAL (Hardware Abstraction Layer), the timing characteristics of specific audio chipsets, and the Bluetooth LE protocol stack well enough to drive MIDI data with sub-10ms round-trip timing. The work lived at the intersection of hardware, firmware, and operating system — not at the application layer where most software products exist.</p>
+
+        <div class="inline-image" data-kanji="鍵" data-label="Miselu C.24 Patent Diagram · US9165476B2">
+          <img src="../img/library/miselu-patent.jpg" alt="Miselu C.24 patent Figure 2 — keyboard hardware layout, US9165476B2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0.9;" loading="lazy">
+          <span class="inline-image__label">Miselu C.24 · Patent Figure 2 · US9165476B2</span>
+        </div>
+
+        <p>The C.24 and the companion Neiro music creation app were demonstrated at Google I/O 2012 — the annual developer conference where Google introduces new platform capabilities to thousands of engineers. Demoing an audio latency breakthrough to developers and hardware partners at that scale was both a technical validation and a market signal: Android could host professional musical instruments.</p>
+        <p>I also established partnerships with KORG and Yamaha — two of the most respected names in professional musical instruments — who recognized the technology's validity and opened distribution pathways into the professional music market that a hardware startup could not have reached independently.</p>
+      </div>
     </div>
-    <div class="key-highlight__item">
-      <p class="key-highlight__value">2012</p>
-      <p class="key-highlight__label">Google I/O demonstration</p>
+
+    <!-- IMPACT -->
+    <div id="impact" class="stard-section reveal">
+      <p class="stard-section__overline">Impact</p>
+      <h2 class="stard-section__title">First Viable Real-Time MIDI on Android</h2>
+      <div class="stard-section__body">
+        <p>The result was sub-10ms Android audio latency — a 96% reduction from the 250ms baseline — making the C.24 the first viable real-time MIDI controller for the Android platform. A platform-level constraint that the entire industry had accepted as a given was removed through OS-level intervention.</p>
+        <p>I am a named inventor on US Patent 9,165,476 (US9165476B2), covering the wireless MIDI controller technology that enabled low-latency musical instrument communication over Bluetooth Low Energy. The patent recognizes the specific technical approach — not just the product category — as a genuine invention.</p>
+        <p class="pull-quote">A USPTO patent, a Google I/O demo, and partnerships with KORG and Yamaha — from a startup that dared to fork Android's audio pipeline to make music happen in real time.</p>
+      </div>
     </div>
+
+    <!-- REFLECTION -->
+    <div id="reflection" class="stard-section reveal">
+      <p class="stard-section__overline">Reflection</p>
+      <h2 class="stard-section__title">Platform Constraints as Design Problems</h2>
+      <div class="stard-section__body">
+        <p>Miselu taught me that the most important design problems are often platform problems — constraints so foundational that everyone in the industry treats them as fixed. Audio latency on Android wasn't a Miselu problem. It was an Android problem. The entire mobile music ecosystem had simply decided to not build for Android because of it. Treating that constraint as solvable rather than given was the prerequisite for everything else.</p>
+        <p>The other lesson was about the relationship between software depth and product quality. Most product roles operate at the application layer — building on top of platforms rather than inside them. Working at the OS level gave me a model for how systems actually perform: timing, hardware abstraction, driver constraints. That understanding shows up in every subsequent project where performance is a design material, from the real-time audio-reactive systems at Robot Heart to the frame-rate discipline at Denon/Marantz.</p>
+      </div>
+    </div>
+
+    <!-- RECOGNITION -->
+    <div id="recognition" class="recognition reveal">
+      <p class="recognition__title">Recognition</p>
+      <ul class="recognition__list">
+        <li>USPTO Patent US9165476B2</li>
+        <li>Google I/O 2012 — Platform Demo</li>
+        <li>KORG Partnership</li>
+        <li>Yamaha Partnership</li>
+        <li>TechCrunch Disrupt SF 2013</li>
+      </ul>
+    </div>
+
   </div>
 </div>
 
 <!-- ===== PREV / NEXT ===== -->
 <div class="prev-next reveal">
   <div class="prev-next__inner">
-    <a href="ogilvy.html" class="prev-next__link">
-      <p class="prev-next__label">← Previous</p>
-      <p class="prev-next__title">Beyond Screens</p>
+    <a href="beatport-ni.html" class="prev-next__item">
+      <p class="prev-next__dir">← Previous</p>
+      <p class="prev-next__title">Building the Supply Side of Electronic Music</p>
     </a>
-    <a href="beatport-ni.html" class="prev-next__link prev-next__link--next">
-      <p class="prev-next__label">Next →</p>
-      <p class="prev-next__title">Digital Music Distribution & DJ Software</p>
+    <a href="techcrunch.html" class="prev-next__item prev-next__item--next">
+      <p class="prev-next__dir">Next →</p>
+      <p class="prev-next__title">Giving a Conference Its Visual Voice</p>
     </a>
   </div>
 </div>

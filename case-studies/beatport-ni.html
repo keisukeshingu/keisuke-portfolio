@@ -40,7 +40,7 @@
   /* ===== Footer ===== */
 
   /* ===== Scroll animations ===== */
-  
+
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* ===== Responsive ===== */
@@ -74,19 +74,22 @@
 <!-- ===== CASE STUDY HERO ===== -->
 <section class="cs-hero">
   <div class="reveal">
-    <a href="Projects_Preview.html#music" class="cs-hero__back">← Projects</a>
+    <a href="../projects.html" class="cs-hero__back">← Projects</a>
   </div>
   <div class="reveal" style="transition-delay: 0.05s">
     <p class="cs-hero__brand">Beatport → Native Instruments</p>
   </div>
   <div class="reveal" style="transition-delay: 0.1s">
-    <h1 class="cs-hero__title"><span class="bold">Digital Music</span> Distribution & <span class="bold">DJ Software</span></h1>
+    <h1 class="cs-hero__title">Building the <span class="bold">Supply Side</span> of Electronic Music</h1>
   </div>
   <div class="reveal" style="transition-delay: 0.15s">
-    <p class="cs-hero__statement">From the world's leading electronic music distribution platform to the ecosystem connecting music producers, DJs, and listeners — building fluency across content creation, distribution, and performance technology.</p>
+    <p class="cs-hero__statement">I built the supply-side infrastructure for Beatport's label portal, then moved to Native Instruments to work on Traktor — closing the loop from distribution to live performance.</p>
   </div>
   <div class="reveal" style="transition-delay: 0.2s">
-    <div class="cs-hero__image">Hero image — Beatport platform and Traktor DJ interface</div>
+    <div class="cs-hero__image" data-kanji="律" style="background:linear-gradient(160deg, #060606 0%, #0e0e0e 100%); --hero-kanji-color:rgba(255,255,255,0.03); padding:0;">
+      <div style="width:100%;min-height:420px;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+      <span class="cs-hero__image-label">Beatport Platform · Label Portal · Native Instruments Traktor</span>
+    </div>
   </div>
 </section>
 
@@ -95,15 +98,19 @@
   <div class="overview-bar__inner">
     <div class="overview-bar__item">
       <p class="overview-bar__label">Role</p>
-      <p class="overview-bar__value">Research Lab (Beatport), Product Manager (Traktor)</p>
+      <p class="overview-bar__value">Platform Strategy (Beatport) · Product Manager (Traktor)</p>
     </div>
     <div class="overview-bar__item">
       <p class="overview-bar__label">Timeline</p>
       <p class="overview-bar__value">2007–2016</p>
     </div>
     <div class="overview-bar__item">
-      <p class="overview-bar__label">Platform</p>
-      <p class="overview-bar__value">Digital distribution, DJ software, MIDI controllers</p>
+      <p class="overview-bar__label">Scope</p>
+      <p class="overview-bar__value">B2B Label Portal · Digital Distribution · DJ Software</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Output</p>
+      <p class="overview-bar__value">Label CMS · Market Expansion · Traktor Integration</p>
     </div>
   </div>
 </div>
@@ -111,43 +118,80 @@
 <!-- ===== TAGS ===== -->
 <div class="tags reveal">
   <span class="tag">Beatport</span>
+  <span class="tag">Label Portal</span>
+  <span class="tag">B2B Platform</span>
+  <span class="tag">Supply-Side Strategy</span>
+  <span class="tag">Digital Distribution</span>
+  <span class="tag">Content Management</span>
   <span class="tag">Native Instruments</span>
   <span class="tag">Traktor</span>
   <span class="tag">Electronic Music</span>
-  <span class="tag">Content Distribution</span>
-  <span class="tag">Creator Economy</span>
-  <span class="tag">DJ Technology</span>
+  <span class="tag">Creator Marketplace</span>
+  <span class="tag">Market Expansion</span>
 </div>
 
 <!-- ===== BRIEF NARRATIVE ===== -->
 <div class="brief-content reveal">
-  <p>Beatport is the world's leading electronic music distribution platform — the definitive digital storefront for electronic music, serving the global DJ community with curated content, genre-specific discovery, and high-quality audio distribution. Working inside this ecosystem gave me deep understanding of content creator ecosystems, digital distribution platforms, and the music technology stack.</p>
 
-  <p>My career across the music ecosystem spans the complete technology platform: content creation (Ableton, Logic, synthesis), distribution (Beatport platform, digital content delivery), performance (Traktor by Native Instruments, MIDI controllers, the Miselu C.24), visual production (generative visuals, projection mapping), and venue-scale installation design. I also managed audio and visual software integrations between Traktor and major real-time visual platforms such as Resolume and TouchDesigner — solutions adopted by top DJs in festival environments, as well as by internationally renowned artists including Radiohead and Nine Inch Nails for their live concert productions.</p>
+  <h3>The Platform</h3>
+  <p>Beatport is the definitive distribution platform for electronic music, where every major and independent label needed to exist in the professional DJ ecosystem. At its peak, Beatport wasn't competing for the market — it was the market.</p>
 
-  <div class="inline-image">Music technology stack — creation to distribution to performance</div>
+  <p>The critical challenge was the supply side: the infrastructure that powers what the storefront shows. You can't sell what isn't uploaded correctly, can't surface releases without proper metadata, and can't build a market with broken label tools.</p>
 
-  <p>This background built a unique skill set sitting at the intersection of visual design, real-time systems, live performance, and audience experience at massive scale. The same multi-input, real-time, human-in-the-loop design thinking directly parallels the AI agent interfaces and streaming data systems I design today.</p>
+  <h3>The Label Portal</h3>
+  <p>I led product on Beatport's B2B label portal — the CMS that labels use to upload audio, set pricing, manage metadata, and track catalogue performance. Major labels like Toolroom, Defected, and Bedrock, along with thousands of independent operations, managed their entire supply relationship through this system.</p>
 
-  <p>Understanding creator workflows, marketplace UX, content discovery patterns, and the economics of digital distribution — these capabilities transfer directly to platform design for any content-driven ecosystem, from app stores to streaming services to AI marketplaces.</p>
+  <p>Supply-side product challenges differ fundamentally from consumer UX: labels need high-volume batch operations, complex metadata, audio validation, and business-critical release timing. The portal had to serve both sophisticated major-label teams and solo operators working from laptops.</p>
 
-  <p class="pull-quote">From content creation through distribution to live performance — fluency across a complete technology platform.</p>
+  <div class="inline-image inline-image--dark" data-kanji="盤" data-label="Technics SL-1200 · The Record That Started the Supply Chain">
+      <div style="position:absolute;inset:0;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:2;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+      <span class="inline-image__label">Technics SL-1200 · The Record That Started the Supply Chain</span>
+    </div>
+
+  <h3>Platform Strategy</h3>
+  <p>Platform strategy meant expanding from the supply side: increasing content volume and quality, bringing in new label categories, and making Beatport the priority in distribution decisions. Tool structure shapes user behavior and downstream market outcomes.</p>
+
+  <p>Every decision about the portal cascades through the ecosystem: affecting what gets distributed, how it's priced, what audiences discover, and what DJs play. Understanding these feedback loops became my core lens for platform design.</p>
+
+  <p class="pull-quote">Beatport is where DJs buy music. I built the other side — the system that gets it there.</p>
+
+  <div class="inline-image" data-kanji="盤" data-label="Beatport · Electronic Music · DJ Culture · The Platform Ecosystem">
+    <div style="position:absolute;inset:0;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:2;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+    <span class="inline-image__label">Beatport Platform · DJ Culture · Electronic Music Ecosystem</span>
+  </div>
+
+  <h3>Native Instruments → Traktor</h3>
+  <p>Beatport and Native Instruments were deeply intertwined — Beatport was the distribution, Traktor was the performance software. Moving to Native Instruments as Product Manager completed the loop from distribution infrastructure to live performance software.</p>
+
+  <p>Traktor is professional DJ software requiring fluency in audio architecture and professional DJ workflows: cueing, transitions, waveform displays, and controller mappings. I'd been running real-time audio-visual systems at festivals while working on this — the two were never separate.</p>
+
+  <div class="inline-image" data-kanji="波" data-label="Audio Waveforms · The Signal From Beatport to Traktor to Room">
+      <div style="position:absolute;inset:0;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:2;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+      <span class="inline-image__label">Audio Waveforms · The Signal From Beatport to Traktor to Room</span>
+    </div>
+
+  <p>Working across the full stack — supply infrastructure, distribution mechanics, creator tooling, and performance software — provides a platform design model few product roles offer. Every decision cascades through the ecosystem.</p>
+
 </div>
 
 <!-- ===== KEY HIGHLIGHTS ===== -->
 <div class="key-highlight reveal">
   <div class="key-highlight__inner">
     <div class="key-highlight__item">
+      <p class="key-highlight__value">Label Portal</p>
+      <p class="key-highlight__label">B2B CMS — supply-side infrastructure for the world's #1 electronic music platform</p>
+    </div>
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">#1 Platform</p>
+      <p class="key-highlight__label">Beatport — definitive distribution platform for electronic music</p>
+    </div>
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">Full Loop</p>
+      <p class="key-highlight__label">Distribution (Beatport) → Performance (Traktor) — same content lifecycle</p>
+    </div>
+    <div class="key-highlight__item">
       <p class="key-highlight__value">9 Years</p>
-      <p class="key-highlight__label">Music technology ecosystem</p>
-    </div>
-    <div class="key-highlight__item">
-      <p class="key-highlight__value">#1</p>
-      <p class="key-highlight__label">Electronic music distribution platform</p>
-    </div>
-    <div class="key-highlight__item">
-      <p class="key-highlight__value">Full Stack</p>
-      <p class="key-highlight__label">Creation → Distribution → Performance</p>
+      <p class="key-highlight__label">Music technology ecosystem — platform, software, live performance</p>
     </div>
   </div>
 </div>
@@ -155,13 +199,13 @@
 <!-- ===== PREV / NEXT ===== -->
 <div class="prev-next reveal">
   <div class="prev-next__inner">
-    <a href="miselu.html" class="prev-next__link">
-      <p class="prev-next__label">← Previous</p>
-      <p class="prev-next__title">OS-Level Audio Engineering</p>
+    <a href="kyoto-archive.html" class="prev-next__item">
+      <p class="prev-next__dir">← Previous</p>
+      <p class="prev-next__title">Bringing 1,000 Lost Prints Back to Life</p>
     </a>
-    <a href="festivals.html" class="prev-next__link prev-next__link--next">
-      <p class="prev-next__label">Next →</p>
-      <p class="prev-next__title">Real-Time Visuals at Scale</p>
+    <a href="miselu.html" class="prev-next__item prev-next__item--next">
+      <p class="prev-next__dir">Next →</p>
+      <p class="prev-next__title">OS-Level Audio Engineering</p>
     </a>
   </div>
 </div>

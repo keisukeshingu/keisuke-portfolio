@@ -21,17 +21,13 @@
 
   /* ===== Case Study Hero ===== */
 
+  /* ── Robot Heart hero: desert red glow ── */
   .hero-glow {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 480px; height: 480px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(179,58,58,0.22) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-bus-label {
-    position: absolute; bottom: 28px; left: 32px;
-    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: rgba(255,255,255,0.28);
+    background: radial-gradient(circle, rgba(179,58,58,0.25) 0%, transparent 68%);
+    pointer-events: none; z-index: 0;
   }
 
   /* ===== Overview Bar ===== */
@@ -48,12 +44,100 @@
 
   /* ===== Footer ===== */
 
+  /* ===== Metrics Grid ===== */
+  .metrics {
+    max-width: var(--max-w); margin: 0 auto; padding: 48px 64px;
+  }
+  .metrics__grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--rule-40); border-bottom: 1px solid var(--rule-40);
+    padding: 32px 0;
+  }
+  .metrics__item { padding: 0 32px; border-left: 1px solid var(--rule-40); }
+  .metrics__item:first-child { border-left: none; padding-left: 0; }
+  .metrics__item:last-child { padding-right: 0; }
+  .metrics__value {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink-100);
+  }
+  .metrics__label {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
+  }
+
+  /* ===== Content Layout (TOC + Body) ===== */
+  .cs-content {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 64px;
+    display: grid; grid-template-columns: 200px 1fr; gap: 64px;
+  }
+
+  /* ===== Table of Contents ===== */
+  .toc { position: sticky; top: 80px; align-self: start; }
+  .toc__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .toc__list { list-style: none; }
+  .toc__list li { margin-top: 12px; }
+  .toc__list a {
+    font-size: 13px; font-weight: 400; color: var(--ink-60);
+    transition: color 0.3s var(--ease);
+  }
+  .toc__list a:hover, .toc__list a.active { color: var(--ink-100); }
+
+  /* ===== STAR-D Sections ===== */
+  .stard-section {
+    padding: 48px 0; border-top: 1px solid var(--rule-40);
+  }
+  .stard-section:first-child { border-top: none; }
+  .stard-section__overline {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
+  }
+  .stard-section__title {
+    font-size: 26px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 24px;
+  }
+  .stard-section__body p {
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-80); margin-top: 16px;
+  }
+  .stard-section__body p:first-child { margin-top: 0; }
+
+  /* ===== Recognition ===== */
+  .recognition {
+    padding: 48px 0 0; border-top: 1px solid var(--rule-40);
+  }
+  .recognition__title {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .recognition__list {
+    list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px;
+  }
+  .recognition__list li {
+    font-size: 14px; font-weight: 400; color: var(--ink-80);
+  }
+
+  /* ===== Animation Layer ===== */
+  #snow-zone { position: relative; overflow: hidden; }
+  #snow-zone img { position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }
+
   /* ===== Responsive ===== */
   @media (max-width: 1119px) {
-
+    .cs-content { grid-template-columns: 1fr; gap: 0; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 32px; border-bottom: 1px solid var(--rule-40); }
+    .toc__label { width: 100%; }
+    .toc__list { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .toc__list li { margin-top: 0; }
   }
   @media (max-width: 767px) {
-
+    .metrics { padding: 32px 24px; }
+    .metrics__grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .metrics__item { border-left: none; padding: 0; }
+    .cs-content { padding: 0 24px 40px; }
   }
 </style>
 </head>
@@ -72,6 +156,8 @@
   </nav>
 </header>
 
+<div id="snow-zone">
+
 <!-- Hero -->
 <div class="cs-hero">
   <a href="../projects.html" class="cs-hero__back">← All Projects</a>
@@ -79,9 +165,10 @@
   <h1 class="cs-hero__title">The Bus That <span class="bold">Became a World</span></h1>
   <p class="cs-hero__role">Lead Visual Artist · 2011 – Present</p>
 
-  <div class="cs-hero__image">
-    <span class="hero-glow"></span>
-    <span class="hero-bus-label">Robot Heart · 1972 Leyland · Black Rock City</span>
+  <div class="cs-hero__image" data-kanji="心" style="background: linear-gradient(160deg, #120808 0%, #200A0A 100%);">
+      <img src="https://dusttoashes.com/wp-content/uploads/2025/11/Robot-Heart-and-The-Man.jpg" alt="Robot Heart 1972 Leyland bus art installation — Burning Man Black Rock City" loading="eager">
+        <span class="hero-glow"></span>
+    <span class="cs-hero__image-label">Robot Heart · 1972 Leyland · Black Rock City</span>
   </div>
 </div>
 
@@ -117,69 +204,118 @@
   </div>
 </div>
 
-<!-- Key Stats -->
-<div class="key-highlight">
-  <div class="key-highlight__inner">
-    <div class="key-highlight__stat">
-      <span class="key-highlight__value">10,000+</span>
-      <span class="key-highlight__label">Peak Crowd</span>
+<!-- Metrics -->
+<div class="metrics">
+  <div class="metrics__grid">
+    <div class="metrics__item">
+      <p class="metrics__value">10,000+</p>
+      <p class="metrics__label">Peak crowd — Burning Man sunrise sets</p>
     </div>
-    <div class="key-highlight__stat">
-      <span class="key-highlight__value">2011</span>
-      <span class="key-highlight__label">Year Joined</span>
+    <div class="metrics__item">
+      <p class="metrics__value">70kW</p>
+      <p class="metrics__label">Sound system peak — desert-floor scale</p>
     </div>
-    <div class="key-highlight__stat">
-      <span class="key-highlight__value">70K</span>
-      <span class="key-highlight__label">Watts Peak</span>
+    <div class="metrics__item">
+      <p class="metrics__value">2011</p>
+      <p class="metrics__label">Year joined as Lead Visual Artist</p>
     </div>
   </div>
 </div>
 
-<!-- Narrative Content -->
-<section class="brief-content">
+<!-- Content: TOC + Body -->
+<div class="cs-content">
 
-    <div class="content-section">
-      <p class="content-section__overline">01 — Context</p>
-      <h2 class="content-section__heading">The Mythology of the Bus</h2>
-      <p class="content-section__body">Robot Heart's 1972 Leyland double-decker bus was never designed to be a stage. It was purchased by founder George Mueller — a lighting pioneer who co-invented the LED systems on the Empire State Building — and driven into Black Rock City in 2008 with a handmade sound system bolted to its roof. When Keisuke joined as Lead Visual Artist in 2011, the bus had already earned a mythology on the playa: the place where sunrise happened, where 10,000 people stood in the dust as the light broke.</p>
-      <div class="inline-image inline-image--full inline-image--dark" data-kanji="機械">
-        <span class="inline-image__label">Robot Heart · 1972 Leyland · Black Rock City</span>
+  <!-- Table of Contents -->
+  <aside class="toc reveal">
+    <p class="toc__label">Contents</p>
+    <ul class="toc__list">
+      <li><a href="#context" class="active">Opening Context</a></li>
+      <li><a href="#work">The Work</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+      <li style="margin-top:20px; padding-top:12px; border-top: 1px solid var(--rule-40)"><a href="#recognition">Recognition</a></li>
+    </ul>
+  </aside>
+
+  <!-- Content Body -->
+  <div>
+
+    <!-- OPENING CONTEXT -->
+    <div id="context" class="stard-section reveal">
+      <p class="stard-section__overline">Context</p>
+      <h2 class="stard-section__title">The Mythology of the Bus</h2>
+      <div class="stard-section__body">
+        <p>Robot Heart's 1972 Leyland double-decker bus was never designed to be a stage. It was purchased by founder George Mueller — a lighting pioneer who co-invented the LED systems on the Empire State Building — and driven into Black Rock City in 2008 with a handmade sound system bolted to its roof. Within a few years it had earned an unrepeatable reputation on the playa: the place where sunrise happened, where 10,000 people stood in the dust as the light broke over the Nevada desert.</p>
+        <p>When I joined as Lead Visual Artist in 2011, the challenge wasn't to create spectacle. The bus already was spectacle. The challenge was to create a visual language worthy of what it meant to people — one that extended the emotional register of the music rather than competing with it.</p>
+
+        <div class="inline-image inline-image--full inline-image--dark" data-kanji="心">
+          <img src="https://dusttoashes.com/wp-content/uploads/2025/11/Robot-Heart-and-The-Man.jpg" alt="Robot Heart 1972 Leyland bus art installation Black Rock City Burning Man" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0.9;" loading="lazy">
+          <span class="inline-image__label">Robot Heart · 1972 Leyland · Black Rock City</span>
+        </div>
       </div>
     </div>
 
-    <div class="content-section">
-      <p class="content-section__overline">02 — Visual System</p>
-      <h2 class="content-section__heading">Designing for Transcendence</h2>
-      <p class="content-section__body">At 10,000 capacity with a 70,000-watt sound system rattling the desert floor, the visual work had to match the scale without competing with it. The challenge was creating a live visual language that felt organic to the playa — reading the DJ's arc, the crowd's energy, and the quality of the light as dawn approached. Not spectacle. Presence. LED arrays, generative canvas animations, and real-time VJ programming built into a system that could respond in the moment, shaping the emotional topology of a six-hour sunrise set.</p>
-    </div>
+    <!-- THE WORK -->
+    <div id="work" class="stard-section reveal">
+      <p class="stard-section__overline">The Work</p>
+      <h2 class="stard-section__title">Designing for Transcendence</h2>
+      <div class="stard-section__body">
+        <p>At 10,000 capacity with a 70,000-watt sound system rattling the desert floor, the visual work had to match the scale without overwhelming it. I built a live visual system using LED arrays, generative canvas animations, and real-time VJ programming — a pipeline designed to read the DJ's arc, the crowd's energy density, and the quality of the light as dawn approached. The visual language was responsive, not scripted: audio-reactive in the frequencies that mattered, with enough manual control to follow the emotional arc of a six-hour sunrise set.</p>
+        <p>In 2015 and 2016, the Robot Heart collective organized Further Future — a curated luxury desert festival on the Moapa River Indian Reservation near Las Vegas. The visual system had to carry the same emotional DNA as Burning Man but adapt to permanent structures, architectural staging, and a different audience context. I rebuilt the pipeline for the new format while preserving the essential quality that made Robot Heart's sunrises irreplaceable: the sense that the light, the sound, and the visuals were a single continuous thing.</p>
 
-    <div class="content-section">
-      <p class="content-section__overline">03 — Further Future</p>
-      <h2 class="content-section__heading">Extending the Language Beyond the Playa</h2>
-      <p class="content-section__body">In 2015 and 2016, the Robot Heart collective organized Further Future — a luxury desert festival on the Moapa River Indian Reservation near Las Vegas. The visual identity had to carry the same emotional register as Burning Man but adapt to a different context: curated attendance, architectural stages, structured programming. The visual system was rebuilt for permanent structures rather than an art car, while preserving the essential quality that made Robot Heart's sunrises irreplaceable: the sense that the light, the sound, and the visuals were one continuous thing.</p>
-      <div class="inline-image" data-kanji="未来">
-        <span class="inline-image__label">Further Future · Moapa River · 2015–2016</span>
+        <div class="inline-image" data-kanji="未来">
+          <img src="https://dusttoashes.com/wp-content/uploads/2025/11/Robot-Heart-and-The-Man.jpg" alt="Further Future festival Moapa River Nevada 2015–2016 generative visual installation" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0.9;" loading="lazy">
+          <span class="inline-image__label">Further Future · Moapa River · 2015–2016</span>
+        </div>
       </div>
     </div>
 
-    <div class="content-section">
-      <p class="content-section__overline">04 — Philosophy</p>
-      <h2 class="content-section__heading">The Thread</h2>
-      <p class="content-section__body">DJs like Diplo, Above & Beyond, Lee Burridge, and Rüfüs Du Sol have described Robot Heart as the most sought-after place to play on the playa — not because of the equipment, but because of what the environment allows. The visual work was always in service of that. A visual system at scale is most powerful when it disappears into the experience — when the crowd stops noticing the screen and starts feeling the light as part of something larger than a stage. That philosophy runs through every project in this portfolio, from the Gundam Metaverse's world logic to the Kunichika archive's color system. Honour what already exists before you design around it.</p>
+    <!-- IMPACT -->
+    <div id="impact" class="stard-section reveal">
+      <p class="stard-section__overline">Impact</p>
+      <h2 class="stard-section__title">The Most Sought-After Sunrise on the Playa</h2>
+      <div class="stard-section__body">
+        <p>DJs including Diplo, Above &amp; Beyond, Lee Burridge, and Rüfüs Du Sol have described Robot Heart as the most sought-after place to play at Burning Man — not because of the technical equipment, but because of what the environment makes possible. The visual system contributed to that: a sunrise set where the light feels like it's doing what the music does, rather than illustrating it from the outside.</p>
+        <p>Further Future brought the Robot Heart aesthetic to a broader audience and a higher production level — proving the visual language was not specific to the playa but was portable to any context where music and visual experience were being taken seriously as a unified thing.</p>
+      </div>
     </div>
 
-</section>
+    <!-- REFLECTION -->
+    <div id="reflection" class="stard-section reveal">
+      <p class="stard-section__overline">Reflection</p>
+      <h2 class="stard-section__title">The Discipline of Disappearing</h2>
+      <div class="stard-section__body">
+        <p>A visual system at scale is most powerful when it disappears into the experience — when the crowd stops noticing the screen and starts feeling the light as part of something larger than a stage. This is the hardest thing to design for, because every instinct in visual work pushes toward visibility, novelty, and effect. The Robot Heart context demanded the opposite: restraint, responsiveness, and service to the music.</p>
+        <p>That discipline carries through everything in this portfolio. Whether it's designing for the Gundam Metaverse — where the visual language has to honour 45 years of fan mythology before it introduces anything new — or for AI interfaces at Fabrion, where the interface has to earn human trust before it earns human attention. Honour what already exists before you design around it.</p>
+      </div>
+    </div>
+
+    <!-- RECOGNITION -->
+    <div id="recognition" class="recognition reveal">
+      <p class="recognition__title">Recognition</p>
+      <ul class="recognition__list">
+        <li>Robot Heart — Lead Visual Artist · 2011–Present</li>
+        <li>Further Future 2015 &amp; 2016 — Visual System Design</li>
+        <li>Burning Man Black Rock City — Annual Residence</li>
+        <li>Played by Diplo, Above &amp; Beyond, Lee Burridge, Rüfüs Du Sol</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- end #snow-zone -->
 
 <!-- Prev / Next -->
 <div class="prev-next">
   <div class="prev-next__inner">
-    <a href="beatport-ni.html" class="prev-next__item">
+    <a href="techcrunch.html" class="prev-next__item">
       <span class="prev-next__dir">← Previous</span>
-      <span class="prev-next__title">Beatport → Native Instruments</span>
+      <span class="prev-next__title">Giving a Conference Its Visual Voice</span>
     </a>
-    <a href="techcrunch.html" class="prev-next__item prev-next__item--next">
+    <a href="festivals.html" class="prev-next__item prev-next__item--next">
       <span class="prev-next__dir">Next →</span>
-      <span class="prev-next__title">TechCrunch Disrupt</span>
+      <span class="prev-next__title">Music and Light as One Language</span>
     </a>
   </div>
 </div>
@@ -187,10 +323,27 @@
 <!-- Footer -->
 <footer class="footer">
   <div class="footer__inner">
-    <span class="footer__copy">© 2024 Keisuke Shingu. All rights reserved.</span>
-    <a href="../index.html" class="footer__copy" style="color: var(--ink-80);">Back to Portfolio</a>
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
   </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
 </footer>
+
+<script src="../js/scroll-reveal.js" defer></script>
+<script src="../js/weather-hero.js" defer></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
 
 </body>
 </html>

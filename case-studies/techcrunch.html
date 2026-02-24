@@ -21,24 +21,20 @@
 
   /* ===== Case Study Hero ===== */
 
+  /* ── TechCrunch hero: tech grid + emerald glow ── */
   .hero-grid {
     position: absolute; inset: 0;
     background-image:
       linear-gradient(rgba(0,200,120,0.08) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,200,120,0.08) 1px, transparent 1px);
-    background-size: 48px 48px;
+    background-size: 48px 48px; z-index: 0;
   }
   .hero-glow-tc {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 480px; height: 240px; border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(0,200,120,0.16) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-city-label {
-    position: absolute; bottom: 28px; left: 32px;
-    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: rgba(255,255,255,0.28);
+    background: radial-gradient(ellipse, rgba(0,200,120,0.18) 0%, transparent 68%);
+    pointer-events: none; z-index: 0;
   }
 
   /* ===== Overview Bar ===== */
@@ -57,12 +53,100 @@
 
   /* ===== Footer ===== */
 
+  /* ===== Metrics Grid ===== */
+  .metrics {
+    max-width: var(--max-w); margin: 0 auto; padding: 48px 64px;
+  }
+  .metrics__grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--rule-40); border-bottom: 1px solid var(--rule-40);
+    padding: 32px 0;
+  }
+  .metrics__item { padding: 0 32px; border-left: 1px solid var(--rule-40); }
+  .metrics__item:first-child { border-left: none; padding-left: 0; }
+  .metrics__item:last-child { padding-right: 0; }
+  .metrics__value {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink-100);
+  }
+  .metrics__label {
+    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
+  }
+
+  /* ===== Content Layout (TOC + Body) ===== */
+  .cs-content {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 64px;
+    display: grid; grid-template-columns: 200px 1fr; gap: 64px;
+  }
+
+  /* ===== Table of Contents ===== */
+  .toc { position: sticky; top: 80px; align-self: start; }
+  .toc__label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .toc__list { list-style: none; }
+  .toc__list li { margin-top: 12px; }
+  .toc__list a {
+    font-size: 13px; font-weight: 400; color: var(--ink-60);
+    transition: color 0.3s var(--ease);
+  }
+  .toc__list a:hover, .toc__list a.active { color: var(--ink-100); }
+
+  /* ===== STAR-D Sections ===== */
+  .stard-section {
+    padding: 48px 0; border-top: 1px solid var(--rule-40);
+  }
+  .stard-section:first-child { border-top: none; }
+  .stard-section__overline {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
+  }
+  .stard-section__title {
+    font-size: 26px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 24px;
+  }
+  .stard-section__body p {
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-80); margin-top: 16px;
+  }
+  .stard-section__body p:first-child { margin-top: 0; }
+
+  /* ===== Recognition ===== */
+  .recognition {
+    padding: 48px 0 0; border-top: 1px solid var(--rule-40);
+  }
+  .recognition__title {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .recognition__list {
+    list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px;
+  }
+  .recognition__list li {
+    font-size: 14px; font-weight: 400; color: var(--ink-80);
+  }
+
+  /* ===== Animation Layer ===== */
+  #snow-zone { position: relative; overflow: hidden; }
+  #snow-zone img { position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .weather-hero { display: none !important; }
+  }
+
   /* ===== Responsive ===== */
   @media (max-width: 1119px) {
-
+    .cs-content { grid-template-columns: 1fr; gap: 0; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 32px; border-bottom: 1px solid var(--rule-40); }
+    .toc__label { width: 100%; }
+    .toc__list { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .toc__list li { margin-top: 0; }
   }
   @media (max-width: 767px) {
-
+    .metrics { padding: 32px 24px; }
+    .metrics__grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .metrics__item { border-left: none; padding: 0; }
+    .cs-content { padding: 0 24px 40px; }
   }
 </style>
 </head>
@@ -81,6 +165,8 @@
   </nav>
 </header>
 
+<div id="snow-zone">
+
 <!-- Hero -->
 <div class="cs-hero">
   <a href="../projects.html" class="cs-hero__back">← All Projects</a>
@@ -88,10 +174,11 @@
   <h1 class="cs-hero__title">Giving a Conference Its <span class="bold">Visual Voice</span></h1>
   <p class="cs-hero__role">Visual Artist / Creative Director · 2016 · San Francisco</p>
 
-  <div class="cs-hero__image">
-    <div class="hero-grid"></div>
+  <div class="cs-hero__image" data-kanji="革" style="background: linear-gradient(160deg, #050D18 0%, #0A1830 100%);">
+      <div style="width:100%;min-height:420px;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+        <div class="hero-grid"></div>
     <div class="hero-glow-tc"></div>
-    <span class="hero-city-label">TechCrunch Disrupt SF · Moscone Center · 2016</span>
+    <span class="cs-hero__image-label">TechCrunch Disrupt SF · Moscone Center · 2016</span>
   </div>
 </div>
 
@@ -127,73 +214,121 @@
   </div>
 </div>
 
-<!-- Key Stats -->
-<div class="key-highlight">
-  <div class="key-highlight__inner">
-    <div class="key-highlight__stat">
-      <span class="key-highlight__value">3</span>
-      <span class="key-highlight__label">Days</span>
+<!-- Metrics -->
+<div class="metrics">
+  <div class="metrics__grid">
+    <div class="metrics__item">
+      <p class="metrics__value">3 Days</p>
+      <p class="metrics__label">Moscone Center — every screen, every stage</p>
     </div>
-    <div class="key-highlight__stat">
-      <span class="key-highlight__value">2016</span>
-      <span class="key-highlight__label">Year</span>
+    <div class="metrics__item">
+      <p class="metrics__value">10,000+</p>
+      <p class="metrics__label">Attendees — VCs, founders, and press</p>
     </div>
-    <div class="key-highlight__stat">
-      <span class="key-highlight__value">10,000+</span>
-      <span class="key-highlight__label">Attendees</span>
+    <div class="metrics__item">
+      <p class="metrics__value">2016</p>
+      <p class="metrics__label">San Francisco · Studio ZIRO</p>
     </div>
   </div>
 </div>
 
-<!-- Narrative Content -->
-<section class="brief-content">
+<!-- Content: TOC + Body -->
+<div class="cs-content">
 
-    <div class="content-section">
-      <p class="content-section__overline">01 — Context</p>
-      <h2 class="content-section__heading">The Conference That Needed to Look Like Its Own Future</h2>
-      <p class="content-section__body">TechCrunch Disrupt is the flagship event for the global startup and venture capital ecosystem — three days at Moscone Center in San Francisco where product launches, billion-dollar funding announcements, and Startup Battlefield finals all compete for the same audience attention. In 2016, Keisuke Shingu and Kyle Gordon of Studio ZIRO were brought in to create the visual identity that would run across every stage, every keynote, and every branded moment throughout the event. The brief was simple and almost impossible: give this conference a visual system that looks as forward-thinking as the companies on stage.</p>
-      <div class="inline-image inline-image--dark" data-kanji="技">
-        <span class="inline-image__label">TechCrunch Disrupt SF · Moscone Center · Stage Visuals</span>
+  <!-- Table of Contents -->
+  <aside class="toc reveal">
+    <p class="toc__label">Contents</p>
+    <ul class="toc__list">
+      <li><a href="#context" class="active">Opening Context</a></li>
+      <li><a href="#work">The Work</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+      <li style="margin-top:20px; padding-top:12px; border-top: 1px solid var(--rule-40)"><a href="#recognition">Recognition</a></li>
+    </ul>
+  </aside>
+
+  <!-- Content Body -->
+  <div>
+
+    <!-- OPENING CONTEXT -->
+    <div id="context" class="stard-section reveal">
+      <p class="stard-section__overline">Context</p>
+      <h2 class="stard-section__title">The Conference That Needed to Look Like Its Own Future</h2>
+      <div class="stard-section__body">
+        <p>TechCrunch Disrupt is the flagship event for the global startup and venture capital ecosystem — three days at Moscone Center in San Francisco where product launches, billion-dollar funding announcements, and Startup Battlefield finals compete for the same audience attention. An audience of 10,000+ people who read visual quality as a proxy for the quality of the ideas on stage.</p>
+        <p>In 2016, I was brought in alongside Kyle Gordon of Studio ZIRO to create the visual identity for the full event — every stage, every keynote, every branded moment across the three-day run. The brief was precise and nearly impossible: build a visual system that looks as forward-thinking as the companies presenting inside it.</p>
+
+        <div class="inline-image inline-image--dark" data-kanji="技">
+          <div style="position:absolute;inset:0;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:2;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+          <span class="inline-image__label">TechCrunch Disrupt SF · Moscone Center · Stage Visuals</span>
+        </div>
       </div>
     </div>
 
-    <div class="content-section">
-      <p class="content-section__overline">02 — Concept</p>
-      <h2 class="content-section__heading">San Francisco as Data</h2>
-      <p class="content-section__body">The visual concept grew from a question: what does the city itself look like when you strip it down to pure information? Using real geographic map data and height-map elevation models of San Francisco, Keisuke and Kyle built a physically accurate, minimalist 3D rendering of the city — every block, every gradient of elevation from the waterfront to Twin Peaks, rendered as clean wireframe geometry.</p>
-      <p class="content-section__body">Multiple camera animations were developed, each exploring different districts and sightlines through the model — from an aerial pull-out over the Embarcadero to tight street-level tracking shots through SoMa. The city became a living, abstract landscape that could be animated, lit, and branded without losing its geographic specificity. TechCrunch's visual identity was fused into the renders: color grading, type treatments, and motion pacing tuned to conference energy.</p>
-    </div>
+    <!-- THE WORK -->
+    <div id="work" class="stard-section reveal">
+      <p class="stard-section__overline">The Work</p>
+      <h2 class="stard-section__title">San Francisco as Data</h2>
+      <div class="stard-section__body">
+        <p>The visual concept started from a question: what does the city itself look like when you reduce it to pure information? Using real geographic map data and height-map elevation models of San Francisco, Kyle and I built a physically accurate, minimalist 3D rendering of the city — every block, every gradient of elevation from the waterfront to Twin Peaks, expressed as clean wireframe geometry. The city's actual structure became the visual system.</p>
+        <p>Multiple camera animations were developed — aerial pull-outs over the Embarcadero, tracking shots through SoMa at street level, slow reveals of the Bay Bridge geometry. Each was designed to feel like data visualization made cinematic: specific to the geography, abstract enough to read as motion-graphic identity rather than documentary footage. TechCrunch's color palette and type system were layered in at the compositing stage, fusing the brand into the geometry rather than sitting on top of it.</p>
+        <p>The delivery system was modular by design. Different camera cuts and timing variations could be assembled for different session types — keynote openers, speaker transitions, stage backgrounds, ambient holds — without requiring re-renders. The production team had a library of components that maintained visual consistency across three full days of programming.</p>
 
-    <div class="content-section">
-      <p class="content-section__overline">03 — Execution</p>
-      <h2 class="content-section__heading">Three Days, Every Screen</h2>
-      <p class="content-section__body">The final visual system ran across every touchpoint of the three-day event: opening sequences for keynote presentations, branded holding content between speaker transitions, stage backgrounds, and ambient screen content throughout the Moscone Center. The 3D city system was designed to be modular — different camera cuts and timing variations could be assembled for different session types without requiring re-renders, giving the production team flexibility while maintaining visual consistency across the full run of the conference.</p>
-      <div class="inline-image" data-kanji="発">
-        <span class="inline-image__label">Keynote Motion System · Stage Screens · Session Branding</span>
+        <div class="inline-image" data-kanji="発">
+          <div style="position:absolute;inset:0;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:2;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+          <span class="inline-image__label">Keynote Motion System · Stage Screens · Session Branding</span>
+        </div>
+
+        <p class="pull-quote">A conference visual system works when it disappears — when the audience stops noticing the screen and starts focusing on the idea. The city render was the stage. The speakers were the story.</p>
       </div>
-      <div class="pull-quote">
-        <p class="pull-quote__text">"A conference visual system works when it disappears — when the audience stops noticing the screen and starts focusing on the idea. The city render was the stage. The speakers were the story."</p>
+    </div>
+
+    <!-- IMPACT -->
+    <div id="impact" class="stard-section reveal">
+      <p class="stard-section__overline">Impact</p>
+      <h2 class="stard-section__title">Three Days, Every Screen</h2>
+      <div class="stard-section__body">
+        <p>The visual system ran without failure across the full three-day event — every keynote, every stage transition, every ambient screen in the Moscone Center. The modular production approach meant the event team could compose new variations from the asset library in real time as programming shifted, without returning to the original 3D pipeline.</p>
+        <p>For an audience that includes founders, investors, and press who have seen thousands of conference visuals, building from real geographic data rather than generic motion graphics created a system that felt genuinely specific to this event, in this city, in this moment — not interchangeable with any other conference brand.</p>
       </div>
     </div>
 
-    <div class="content-section">
-      <p class="content-section__overline">04 — Thread</p>
-      <h2 class="content-section__heading">Visual Language for Technology Culture</h2>
-      <p class="content-section__body">TechCrunch Disrupt sits at the intersection of design, journalism, and startup culture — an audience that immediately reads visual quality as a signal. A conference that looks generic signals that the ideas inside are generic too. Building a visual system from real geographic data rather than stock motion graphics was both a practical and a philosophical choice: it meant the visuals were specific to this city, this event, this moment in 2016. The same principle connects to every other project in this portfolio — whether it is building a virtual world from Gundam's 45-year mythology or designing a Kunichika archive from the logic of the Ohe Collection. The data that already exists is always more interesting than the data you invent.</p>
+    <!-- REFLECTION -->
+    <div id="reflection" class="stard-section reveal">
+      <p class="stard-section__overline">Reflection</p>
+      <h2 class="stard-section__title">Specificity as Craft</h2>
+      <div class="stard-section__body">
+        <p>The principle behind the San Francisco data render is one that runs through the whole portfolio: the data that already exists is always more interesting than the data you invent. The city's actual block structure, elevation gradients, and waterfront geometry carry inherent meaning — geographic, cultural, historical. Using it as the visual foundation gives the work specificity that stock motion graphics can never have, no matter how sophisticated the technique.</p>
+        <p>This principle connects directly to how I approach AI interface design. A dashboard that surfaces what the system actually knows, in the form most appropriate to how users actually think, is always more powerful than one that organizes information around what's easy to display. The craft question is the same in both cases: start with the real structure of the thing, and let that structure become the visual logic.</p>
+      </div>
     </div>
 
-</section>
+    <!-- RECOGNITION -->
+    <div id="recognition" class="recognition reveal">
+      <p class="recognition__title">Recognition</p>
+      <ul class="recognition__list">
+        <li>TechCrunch Disrupt SF 2016 — Official Visual Identity</li>
+        <li>Studio ZIRO — Kyle Gordon Collaboration</li>
+        <li>Moscone Center · 3-Day · 10,000+ Attendees</li>
+        <li>Geographic Data Visualization · 3D City Rendering</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- end #snow-zone -->
 
 <!-- Prev / Next -->
 <div class="prev-next">
   <div class="prev-next__inner">
-    <a href="robot-heart.html" class="prev-next__item">
+    <a href="miselu.html" class="prev-next__item">
       <span class="prev-next__dir">← Previous</span>
-      <span class="prev-next__title">Robot Heart · Burning Man</span>
+      <span class="prev-next__title">OS-Level Audio Engineering</span>
     </a>
-    <a href="festivals.html" class="prev-next__item prev-next__item--next">
+    <a href="robot-heart.html" class="prev-next__item prev-next__item--next">
       <span class="prev-next__dir">Next →</span>
-      <span class="prev-next__title">Festival Visuals · EDC / Ultra / Detroit</span>
+      <span class="prev-next__title">The Bus That Became a World</span>
     </a>
   </div>
 </div>
@@ -201,10 +336,27 @@
 <!-- Footer -->
 <footer class="footer">
   <div class="footer__inner">
-    <span class="footer__copy">© 2024 Keisuke Shingu. All rights reserved.</span>
-    <a href="../index.html" class="footer__copy" style="color: var(--ink-80);">Back to Portfolio</a>
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
   </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
 </footer>
+
+<script src="../js/scroll-reveal.js" defer></script>
+<script src="../js/weather-hero.js" defer></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
 
 </body>
 </html>

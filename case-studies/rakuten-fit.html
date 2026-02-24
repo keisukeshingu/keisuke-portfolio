@@ -150,6 +150,38 @@
     .ba-inline { grid-template-columns: 1fr; }
 
   }
+  /* ===== Lightbox ===== */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.88); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center; cursor: zoom-out;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox__img {
+    max-width: 90vw; max-height: 90vh; object-fit: contain;
+    border-radius: 8px; box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    cursor: default; animation: lb-in 0.2s ease;
+  }
+  @keyframes lb-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .lightbox__close {
+    position: fixed; top: 24px; right: 28px;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+    color: #fff; font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s; z-index: 10000;
+  }
+  .lightbox__close:hover { background: rgba(255,255,255,0.24); }
+  .lightbox__hint {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em;
+    pointer-events: none;
+  }
+  .inline-image img, .cs-hero__image img { cursor: zoom-in; }
+
   /* ===== Animation Layer (v1_animation) ===== */
   #snow-zone { position: relative; overflow: hidden; }
   #snow-zone img { position: relative; z-index: 2; }
@@ -175,9 +207,9 @@
 <div id="snow-zone">
 
 <!-- ===== CASE STUDY HERO ===== -->
-<section class="cs-hero">
+<section class="cs-hero" style="padding-bottom:24px;">
   <div class="reveal">
-    <a href="Projects_Preview.html#audio" class="cs-hero__back">← Projects</a>
+    <a href="../projects.html" class="cs-hero__back">← Projects</a>
   </div>
   <div class="reveal" style="transition-delay: 0.05s">
     <p class="cs-hero__brand">Rakuten Fit</p>
@@ -187,9 +219,6 @@
   </div>
   <div class="reveal" style="transition-delay: 0.15s">
     <p class="cs-hero__statement">Designing a fitness companion app that transforms physical activity into economic value — connecting a white-label wearable to the Rakuten Economic Zone's 111 million members, where steps become Rakuten Points and health data informs life insurance premiums.</p>
-  </div>
-  <div class="reveal" style="transition-delay: 0.2s">
-    <div class="cs-hero__image">Hero image — Rakuten Fit daily dashboard with points earning</div>
   </div>
 </section>
 
@@ -276,7 +305,16 @@
 
         <p class="pull-quote">Every fitness app asks: how do we get users to exercise? Rakuten Fit asks: how do we make exercise economically productive?</p>
 
-        <div class="inline-image">Competitive landscape — Apple Health, Fitbit, Samsung Health vs. Rakuten ecosystem advantage</div>
+        <div class="inline-image--half">
+          <div class="inline-image" data-kanji="動" style="background:#F5F5F7;">
+            <img src="../img/library/rakuten/rakuten-fit-value-proposition-top.png" alt="Rakuten Fit Value Proposition — app overview and feature highlights" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;" loading="lazy">
+            <span class="inline-image__label">Rakuten Fit · Value Proposition</span>
+          </div>
+          <div class="inline-image" data-kanji="環" style="background:#F5F5F7;">
+            <img src="../img/library/rakuten/rakuten-fit-value-proposition-bottom.png" alt="Rakuten Ecosystem Stakeholders — Mobile, Insurance, eCommerce and business partners" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;" loading="lazy">
+            <span class="inline-image__label">Ecosystem Stakeholders</span>
+          </div>
+        </div>
 
         <p>Key constraints: white-label hardware with limited sensors, complex points economy across 70+ services, multi-stakeholder alignment (Mobile, Insurance, e-commerce), Japanese market specificity.</p>
       </div>
@@ -300,7 +338,16 @@
         <p>Nike co-branded experience proposal — seasonal challenges earning both Rakuten Points and exclusive Nike product access.</p>
         <p>Insurance data architecture: opt-in only, visible benefit, data transparency, user control, positive framing. "Your activity this month earned you ¥X in premium refund."</p>
 
-        <div class="inline-image">Insurance integration — health data → premium impact visualization</div>
+        <div class="inline-image--half">
+          <div class="inline-image" data-kanji="析" style="background:#F5F5F7;">
+            <img src="../img/library/rakuten/rakuten-fit-competitive-top.png" alt="Fitbit App Tracker — competitive platform analysis" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;" loading="lazy">
+            <span class="inline-image__label">Fitbit App Tracker · Competitive Analysis</span>
+          </div>
+          <div class="inline-image" data-kanji="流" style="background:#F5F5F7;">
+            <img src="../img/library/rakuten/rakuten-fit-competitive-bottom.png" alt="Common user flows in fitness apps research" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;" loading="lazy">
+            <span class="inline-image__label">Common User Flows · Fitness Apps</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -356,19 +403,38 @@
       </ul>
     </div>
 
+    <!-- AGENCY CONTEXT -->
+    <div class="stard-section reveal">
+      <p class="stard-section__overline">Agency Context</p>
+      <h2 class="stard-section__title">Enterprise AWS Projects · SourceFuse × Rakuten</h2>
+      <div class="stard-section__body">
+        <p>Rakuten Fit was developed in partnership with SourceFuse Technologies, an AWS Premier Partner. Alongside the fitness app, SourceFuse delivered a suite of enterprise-grade modules for Rakuten Mobile — including a Vendor Manager platform covering contracts, performance, SLAs, and risk management across Rakuten's telecom operations.</p>
+        <div class="inline-image--half">
+          <div class="inline-image" data-kanji="企" style="background:#0D0D12;">
+            <img src="../img/library/rakuten/rakuten-sourcefuse-agency-top.png" alt="SourceFuse — ProjX Portfolio & Project Management enterprise app" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;" loading="lazy">
+            <span class="inline-image__label">ProjX · Portfolio & Project Management</span>
+          </div>
+          <div class="inline-image" data-kanji="楽" style="background:#0D0D12;">
+            <img src="../img/library/rakuten/rakuten-sourcefuse-agency-bottom.png" alt="SourceFuse — Rakuten Vendor Manager telecom enterprise platform" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;" loading="lazy">
+            <span class="inline-image__label">Rakuten · Vendor Manager Platform</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <!-- ===== PREV / NEXT ===== -->
 <div class="prev-next reveal">
   <div class="prev-next__inner">
-    <a href="denon-marantz.html" class="prev-next__link prev-next__link--prev">
-      <p class="prev-next__label">← Previous Case Study</p>
+    <a href="denon-marantz.html" class="prev-next__item">
+      <p class="prev-next__dir">← Previous Case Study</p>
       <p class="prev-next__title">Making Premium Audio Feel as Good as It Sounds</p>
     </a>
-    <a href="tdk.html" class="prev-next__link prev-next__link--next">
-      <p class="prev-next__label">Next Case Study →</p>
-      <p class="prev-next__title">Three Companies, One Intelligent Interface</p>
+    <a href="ogilvy.html" class="prev-next__item prev-next__item--next">
+      <p class="prev-next__dir">Next Case Study →</p>
+      <p class="prev-next__title">Beyond Screens — Immersive Brand Architecture</p>
     </a>
   </div>
 </div>
@@ -390,6 +456,13 @@
   <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
 </footer>
 
+<!-- ===== Lightbox ===== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox__close" id="lightbox-close" aria-label="Close">✕</button>
+  <img class="lightbox__img" id="lightbox-img" src="" alt="">
+  <p class="lightbox__hint">ESC or click outside to close</p>
+</div>
+
 <!-- ===== Scripts ===== -->
 <script src="../js/scroll-reveal.js" defer></script>
 <script src="../js/weather-hero.js" defer></script>
@@ -397,6 +470,52 @@
 (function () {
   var snowZone = document.getElementById('snow-zone');
   if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
+<script>
+(function () {
+  var lightbox = document.getElementById('lightbox');
+  var lbImg    = document.getElementById('lightbox-img');
+  var lbClose  = document.getElementById('lightbox-close');
+
+  function openLightbox(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
+
+  // Wire up all inline images
+  document.querySelectorAll('.inline-image img').forEach(function (img) {
+    img.addEventListener('click', function (e) {
+      e.stopPropagation();
+      openLightbox(this.src, this.alt);
+    });
+  });
+
+  // Wire up hero image
+  var heroImg = document.querySelector('.cs-hero__image img');
+  if (heroImg) {
+    heroImg.addEventListener('click', function (e) {
+      e.stopPropagation();
+      openLightbox(this.src, this.alt);
+    });
+  }
+
+  // Close: button, backdrop click, Escape key
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
 })();
 </script>
 </body>

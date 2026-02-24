@@ -45,7 +45,17 @@
 
   /* ===== Responsive ===== */
   @media (max-width: 767px) {
-
+    .brief-content div[style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+    }
+    .brief-content div[style*="grid-template-columns"] > div:last-child {
+      order: -1;
+      text-align: center;
+    }
+    .brief-content div[style*="grid-template-columns"] > div:last-child img {
+      width: 160px !important;
+      margin: 0 auto;
+    }
   }
   /* ===== Animation Layer (v1_animation) ===== */
   #snow-zone { position: relative; overflow: hidden; }
@@ -74,19 +84,21 @@
 <!-- ===== CASE STUDY HERO ===== -->
 <section class="cs-hero">
   <div class="reveal">
-    <a href="Projects_Preview.html#publishing" class="cs-hero__back">← Projects</a>
+    <a href="../projects.html" class="cs-hero__back">← Projects</a>
   </div>
   <div class="reveal" style="transition-delay: 0.05s">
     <p class="cs-hero__brand">QuarkXPress</p>
   </div>
   <div class="reveal" style="transition-delay: 0.1s">
-    <h1 class="cs-hero__title">Where <span class="bold">Desktop Publishing</span> Began</h1>
+    <h1 class="cs-hero__title">Inside the Platform That <span class="bold">Defined Professional Publishing</span></h1>
   </div>
   <div class="reveal" style="transition-delay: 0.15s">
-    <p class="cs-hero__statement">Contributing to the desktop publishing platform that defined professional typography and page layout — the tool that powered newspapers, magazines, and design studios before the digital revolution.</p>
+    <p class="cs-hero__statement">QuarkXPress dominated professional publishing during the OS 9 to OS X transition, the industry's most disruptive platform shift. I worked on typography and interactive layout design during this era.</p>
   </div>
   <div class="reveal" style="transition-delay: 0.2s">
-    <div class="cs-hero__image">Hero image — QuarkXPress professional layout interface</div>
+    <div class="cs-hero__image" data-kanji="" style="background:#1A1A1F; --hero-kanji-color:transparent; padding:0;">
+      <img src="../img/quarkxpress-hero.jpg" alt="QuarkXPress application — fashion magazine layout with Font Manager palette" loading="eager">
+    </div>
   </div>
 </section>
 
@@ -95,15 +107,19 @@
   <div class="overview-bar__inner">
     <div class="overview-bar__item">
       <p class="overview-bar__label">Role</p>
-      <p class="overview-bar__value">Product Management & UI Group</p>
+      <p class="overview-bar__value">Product Management · UI Design · Research Lab</p>
     </div>
     <div class="overview-bar__item">
       <p class="overview-bar__label">Timeline</p>
-      <p class="overview-bar__value">Early Career</p>
+      <p class="overview-bar__value">2000 – 2007 · OS 9 → OS X Era</p>
     </div>
     <div class="overview-bar__item">
-      <p class="overview-bar__label">Platform</p>
-      <p class="overview-bar__value">Desktop (macOS / Windows)</p>
+      <p class="overview-bar__label">Scope</p>
+      <p class="overview-bar__value">Japanese Typography · Macworld Demos · Interactive Designer</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Output</p>
+      <p class="overview-bar__value">Best of Show · MacExpo UK 2006</p>
     </div>
   </div>
 </div>
@@ -112,40 +128,93 @@
 <div class="tags reveal">
   <span class="tag">Desktop Publishing</span>
   <span class="tag">Typography</span>
-  <span class="tag">Page Layout</span>
-  <span class="tag">Print Design</span>
-  <span class="tag">Professional Tools</span>
+  <span class="tag">Japanese Layout</span>
+  <span class="tag">CJK · Ruby Text</span>
+  <span class="tag">Macworld · Seybold</span>
+  <span class="tag">Quark Interactive Designer</span>
+  <span class="tag">Flash · SWF</span>
+  <span class="tag">SVG</span>
+  <span class="tag">OpenType</span>
+  <span class="tag">Print Production</span>
+  <span class="tag">Grid Systems</span>
+  <span class="tag">XTensions</span>
 </div>
 
 <!-- ===== BRIEF NARRATIVE ===== -->
 <div class="brief-content reveal">
-  <p>QuarkXPress was the industry-standard desktop publishing platform — the tool that powered professional publishing worldwide. Newspapers, magazines, advertising agencies, and design studios relied on QuarkXPress for precision typography, multi-page layout, and color-accurate print production. Before Adobe InDesign existed, QuarkXPress defined how professionals thought about digital page composition.</p>
 
-  <p>Working on QuarkXPress established my foundation in typographic systems, layout grids, and the precision-oriented design thinking that runs through my entire career. Professional publishing demands pixel-level (or rather, point-level) accuracy — every kerning pair, every baseline alignment, every color separation matters. This discipline directly shaped my approach to design systems at Denon/Marantz and Fabrion.</p>
+  <h3>The Platform</h3>
+  <p>At its peak, Quark virtually owned the professional publishing market — every newspaper, magazine, ad agency, and book publisher ran production through QuarkXPress. Adobe built InDesign specifically to unseat it. With 5 million+ licenses active worldwide and shipping in 30 languages, Quark dominated the Mac platform alongside Adobe and Macromedia.</p>
 
-  <div class="inline-image">QuarkXPress — professional typography and page layout</div>
+  <h3>Japanese Typography</h3>
+  <p>I wrote functional requirements for Japanese typography working directly with Japan's leading publishers — defining how QuarkXPress handled kanji justification, vertical text, ruby text alignment, and CJK spacing rules. These specs were defined in working sessions with editors whose print runs depended on getting every detail right.</p>
 
-  <p>The publishing technology stack taught me that great design tools are invisible — they amplify the designer's intent rather than imposing constraints. This philosophy carried through to my embedded hardware UX at Denon/Marantz (where the display serves the music), to Fabrion (where the interface serves the decision), and to the AI-native workflow (where the pipeline serves the design intent).</p>
+  <p>QuarkXPress replaced analog phototypesetting machines like the Morisawa MC-6, transforming Japanese publishing from character-by-character physical typesetting to screen-based layout. This shift changed how publishers approached iteration and design itself.</p>
 
-  <p class="pull-quote">Great design tools are invisible — they amplify the designer's intent rather than imposing constraints.</p>
+  <p class="pull-quote">The requirement is done when the publisher across the table reads it and nods.</p>
 
-  <p>QuarkXPress represents the origin point of my design engineering career — where I first learned that the intersection of precision engineering and creative expression produces the most impactful tools.</p>
+  <div class="inline-image" data-kanji="組" data-label="Morisawa MC-6 · The Phototypesetter QuarkXPress Replaced">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/All-round%20Phototypesetter%20MC-6.jpg/1200px-All-round%20Phototypesetter%20MC-6.jpg" alt="Morisawa All-round Phototypesetter MC-6 — the Japanese typesetting machine QuarkXPress digitally replaced" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;opacity:0.88;" loading="lazy" referrerpolicy="no-referrer">
+      <span class="inline-image__label">Morisawa MC-6 · The Phototypesetter QuarkXPress Replaced</span>
+    </div>
+
+  <h3>Macworld & Seybold</h3>
+  <p>I designed product demos for Macworld and Seybold, showcasing features still in development — layers, transparency, object-based interactive content — demonstrating what publishing would become, not just what the software could do today. The demos sometimes crashed, but that was the job.</p>
+
+  <div class="inline-image inline-image--dark" data-kanji="展" data-label="QuarkXPress 2024 · Font Manager · The Product on Stage">
+      <img src="../img/library/quark/035-quarkxpress-font-manager.png" alt="QuarkXPress Font Manager — the product demoed live at Macworld and Seybold" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;display:block;opacity:0.92;" loading="lazy">
+      <span class="inline-image__label">QuarkXPress · Font Manager · The Product on Stage</span>
+    </div>
+
+  <h3>The Design Ecosystem</h3>
+  <div style="display:grid; grid-template-columns:1fr 200px; gap:2rem; align-items:start; margin-bottom:1.5rem;">
+    <div>
+      <p>QuarkXPress created a design culture through thousands of production-ready templates built on precise typographic grids. Publishers like StockLayouts codified best practices for brochures, catalogs, and editorial layouts that became shared design education.</p>
+      <p>Josef Müller-Brockmann's <em>Grid Systems in Graphic Design</em> (1981) provided the intellectual foundation — its principles of modular grids and asymmetric balance became the invisible architecture behind every serious XPress layout. Setting up grids and master pages in QuarkXPress was Swiss design thinking in daily practice.</p>
+    </div>
+    <div style="flex-shrink:0;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Raster-Systeme-Cover.jpg/400px-Raster-Systeme-Cover.jpg" alt="Josef Müller-Brockmann — Grid Systems in Graphic Design" style="width:200px; border-radius:6px; box-shadow:0 4px 24px rgba(0,0,0,0.4);" loading="lazy" referrerpolicy="no-referrer">
+      <p style="font-size:0.7rem; color:var(--ink-40); margin-top:0.5rem; line-height:1.4;">Josef Müller-Brockmann<br><em>Grid Systems in Graphic Design</em>, 1981</p>
+    </div>
+  </div>
+
+  <div class="inline-image" data-kanji="版" data-label="QuarkXPress · Design System · Layout Examples">
+    <img src="../img/library/quark/147-quarkxpress-collage.jpg" alt="QuarkXPress design system collage — layout examples, typography, Swiss grid design" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;opacity:0.97;" loading="lazy">
+    <span class="inline-image__label">QuarkXPress · Layout System · Typography · Swiss Design Influence</span>
+  </div>
+
+  <h3>Interactive Designer</h3>
+  <p>I joined Quark's SVG committee because I saw interactive design crystallizing around scalable vector graphics — the future of layout tools was clear. This research led directly to Quark Interactive Designer, a remake of QuarkImmedia that would leverage Flash as the standard for interactive content.</p>
+
+  <p>I remapped the entire feature set and defined interaction models for designers unfamiliar with ActionScript. The result: fully interactive Flash content exported directly from XPress — no timeline editor, no code, designed for designers. Quark Interactive Designer won Best of Show at MacExpo UK 2006.</p>
+
+  <div class="inline-image" data-kanji="動" data-label="Macworld 2005 · Moscone Center · The Creative Industry Stage">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Macworld_2005_2.jpg/1200px-Macworld_2005_2.jpg" alt="Macworld Expo 2005 — conference floor at Moscone Center, San Francisco" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0.85;" loading="lazy" referrerpolicy="no-referrer">
+      <span class="inline-image__label">Macworld 2005 · Moscone Center · The Creative Industry Stage</span>
+    </div>
+
+  <p class="pull-quote">Design tools that don't require you to be an engineer.</p>
+
 </div>
 
 <!-- ===== KEY HIGHLIGHTS ===== -->
 <div class="key-highlight reveal">
   <div class="key-highlight__inner">
     <div class="key-highlight__item">
-      <p class="key-highlight__value">#1</p>
-      <p class="key-highlight__label">Desktop publishing platform (era)</p>
+      <p class="key-highlight__value">Best of Show</p>
+      <p class="key-highlight__label">MacExpo UK 2006 — Quark Interactive Designer</p>
     </div>
     <div class="key-highlight__item">
-      <p class="key-highlight__value">Typography</p>
-      <p class="key-highlight__label">Foundation for design systems career</p>
+      <p class="key-highlight__value">5M+ Licenses</p>
+      <p class="key-highlight__label">Active worldwide at peak — every one hardware-locked</p>
     </div>
     <div class="key-highlight__item">
-      <p class="key-highlight__value">Print→Digital</p>
-      <p class="key-highlight__label">Professional publishing pipeline</p>
+      <p class="key-highlight__value">30 Languages</p>
+      <p class="key-highlight__label">Including CJK — Japanese specs defined with top publishers</p>
+    </div>
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">OS 9 → OS X</p>
+      <p class="key-highlight__label">Every pipeline rebuilt — professional publishing's hardest shift</p>
     </div>
   </div>
 </div>
@@ -153,14 +222,10 @@
 <!-- ===== PREV / NEXT ===== -->
 <div class="prev-next reveal">
   <div class="prev-next__inner">
-    <a href="festivals.html" class="prev-next__link">
-      <p class="prev-next__label">← Previous</p>
-      <p class="prev-next__title">Real-Time Visuals at Scale</p>
+    <a href="kyoto-archive.html" class="prev-next__item prev-next__item--next">
+      <p class="prev-next__dir">Next →</p>
+      <p class="prev-next__title">Bringing 1,000 Lost Prints Back to Life</p>
     </a>
-    <div class="prev-next__link prev-next__link--next">
-      <p class="prev-next__label">Next →</p>
-      <p class="prev-next__title"></p>
-    </div>
   </div>
 </div>
 

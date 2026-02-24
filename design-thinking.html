@@ -12,7 +12,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-<style>/* ===== Design Tokens ===== */
+<style>
+  /* ===== Page Background ===== */
+  body { background: #FAFBFC; }
+
+  /* ===== Design Tokens ===== */
 
   /* ===== Reset ===== */
 
@@ -35,7 +39,11 @@
   .hero__heading .bold { font-weight: 600; color: var(--ink-100); }
   .hero__subtitle {
     font-size: 17px; font-weight: 300; line-height: 1.6;
-    color: var(--ink-60); margin-top: 24px; max-width: 560px;
+    color: var(--ink-60); margin-top: 24px;
+  }
+  .hero__notice {
+    font-size: 14px; font-weight: 400; line-height: 1.6;
+    color: #C0392B; margin-top: 16px;
   }
 
   /* ===== Category Filters ===== */
@@ -67,7 +75,10 @@
     display: block;
     border-radius: 16px;
     overflow: hidden;
-    background: var(--paper);
+    background: rgba(245, 245, 247, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
   }
   .dt-featured__link:hover {
@@ -86,11 +97,33 @@
   .dt-featured__link:hover .dt-featured__image-wrap img {
     transform: scale(1.03);
   }
-  .dt-featured__image-placeholder {
+  .dt-featured__image-placeholder,
+  .dt-card__image-placeholder {
     width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; color: var(--ink-40); font-weight: 300;
+    position: relative;
+    display: flex; align-items: flex-end; justify-content: flex-start;
+    padding: 16px 20px;
   }
+  .dt-featured__image-placeholder .ph-kanji,
+  .dt-card__image-placeholder .ph-kanji {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 200; font-size: 80px; line-height: 1;
+    color: rgba(255, 255, 255, 0.08);
+    pointer-events: none;
+  }
+  .dt-featured__image-placeholder .ph-label,
+  .dt-card__image-placeholder .ph-label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.10em;
+    text-transform: uppercase; color: rgba(255,255,255,0.28);
+    z-index: 1; position: relative;
+  }
+  /* Light backgrounds need dark text */
+  .dt-featured__image-placeholder.ph--light .ph-kanji { color: rgba(0,0,0,0.07); }
+  .dt-featured__image-placeholder.ph--light .ph-label { color: rgba(0,0,0,0.28); }
+  .dt-card__image-placeholder.ph--light .ph-kanji { color: rgba(0,0,0,0.07); }
+  .dt-card__image-placeholder.ph--light .ph-label { color: rgba(0,0,0,0.28); }
   .dt-featured__body { padding: 32px 36px 36px; }
   .dt-featured__met
   .dt-featured__meta .dot { margin: 0 8px; }
@@ -100,7 +133,7 @@
   }
   .dt-featured__excerpt {
     font-size: 15px; font-weight: 300; line-height: 1.6;
-    color: var(--ink-80); margin-bottom: 16px; max-width: 640px;
+    color: var(--ink-80); margin-bottom: 16px;
   }
   .dt-featured__footer {
     font-size: 13px; font-weight: 300; color: var(--ink-60);
@@ -117,7 +150,10 @@
     display: block;
     border-radius: 12px;
     overflow: hidden;
-    background: var(--paper);
+    background: rgba(245, 245, 247, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
   }
   .dt-card:hover {
@@ -136,11 +172,7 @@
   .dt-card:hover .dt-card__image-wrap img {
     transform: scale(1.05);
   }
-  .dt-card__image-placeholder {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; color: var(--ink-40); font-weight: 300;
-  }
+  /* .dt-card__image-placeholder styles merged above */
   .dt-card__body { padding: 24px 28px 28px; }
   .dt-card__met
   .dt-card__meta .dot { margin: 0 6px; }
@@ -171,6 +203,29 @@
   .dt-divider__label {
     font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
     text-transform: uppercase; color: var(--ink-40); margin-bottom: 32px;
+  }
+
+  /* ===== Coming Soon Badge ===== */
+  .coming-soon-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px;
+    background: var(--rule-40); color: var(--ink-40);
+    margin-top: 12px;
+  }
+  .dt-featured__link--disabled,
+  .dt-card--disabled {
+    cursor: default;
+    pointer-events: none;
+  }
+  .dt-featured__link--disabled:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .dt-card--disabled:hover {
+    transform: none;
+    box-shadow: none;
   }
 
   /* ===== Spacer ===== */
@@ -207,8 +262,10 @@
     .dt-featured__link, .dt-card { transition: none; }
     .dt-featured__image-wrap img, .dt-card__image-wrap img { transition: none; }
   }</style>
-</head></head>
+</head>
 <body>
+
+<div id="plexus-zone">
 
 <!-- ===== NAV ===== -->
 <header class="nav">
@@ -232,6 +289,9 @@
     <p class="hero__subtitle">
       Essays on digital craft, AI-native UX, and the intersection of technology & human judgment.
     </p>
+    <p class="hero__notice">
+      Below articles are in the works. I will publish them as I complete one at a time.
+    </p>
   </div>
 </section>
 
@@ -246,14 +306,11 @@
 
 <!-- ===== FEATURED POST ===== -->
 <div class="dt-featured reveal" data-category="ai-ux">
-  <a href="DT_Example.html" class="dt-featured__link">
+  <div class="dt-featured__link dt-featured__link--disabled">
     <div class="dt-featured__image-wrap">
-      <div class="dt-featured__image-placeholder">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        </svg>
+      <div class="dt-featured__image-placeholder" style="background:linear-gradient(135deg, #020A14 0%, #061828 100%);">
+        <span class="ph-kanji">知</span>
+        <span class="ph-label">AI & UX · Agents as Cognitive Prosthetics</span>
       </div>
     </div>
     <div class="dt-featured__body">
@@ -269,8 +326,9 @@
       <p class="dt-featured__footer">
         Keisuke Shingu<span class="dot">·</span>12 min read
       </p>
+      <span class="coming-soon-badge">Coming Soon</span>
     </div>
-  </a>
+  </div>
 </div>
 
 <!-- ===== DIVIDER ===== -->
@@ -281,14 +339,11 @@
 <!-- ===== POST GRID ===== -->
 <div class="dt-grid">
 
-  <a href="DT_Ma.html" class="dt-card reveal" data-category="japanese-aesthetics">
+  <div class="dt-card dt-card--disabled reveal" data-category="japanese-aesthetics">
     <div class="dt-card__image-wrap">
-      <div class="dt-card__image-placeholder">
-        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        </svg>
+      <div class="dt-card__image-placeholder ph--light" style="background:linear-gradient(135deg, #F5F0E8 0%, #E8DDD0 100%);">
+        <span class="ph-kanji">間</span>
+        <span class="ph-label">Japanese Aesthetics · Ma · Negative Space</span>
       </div>
     </div>
     <div class="dt-card__body">
@@ -300,17 +355,15 @@
         In Japanese aesthetics, the space between elements carries as much meaning as the elements themselves. What does this mean for designing information-dense enterprise dashboards?
       </p>
       <p class="dt-card__footer">8 min read</p>
+      <span class="coming-soon-badge">Coming Soon</span>
     </div>
-  </a>
+  </div>
 
-  <a href="DT_DesignTokens.html" class="dt-card reveal" data-category="design-systems">
+  <div class="dt-card dt-card--disabled reveal" data-category="design-systems">
     <div class="dt-card__image-wrap">
-      <div class="dt-card__image-placeholder">
-        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        </svg>
+      <div class="dt-card__image-placeholder" style="background:linear-gradient(135deg, #080810 0%, #12121E 100%);">
+        <span class="ph-kanji">系</span>
+        <span class="ph-label">Design Systems · Living Tokens</span>
       </div>
     </div>
     <div class="dt-card__body">
@@ -322,17 +375,15 @@
         Why most design systems fail at the seams. A framework for creating systems that evolve gracefully across products, platforms, and organizational change.
       </p>
       <p class="dt-card__footer">10 min read</p>
+      <span class="coming-soon-badge">Coming Soon</span>
     </div>
-  </a>
+  </div>
 
-  <a href="DT_60fps.html" class="dt-card reveal" data-category="engineering">
+  <div class="dt-card dt-card--disabled reveal" data-category="engineering">
     <div class="dt-card__image-wrap">
-      <div class="dt-card__image-placeholder">
-        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        </svg>
+      <div class="dt-card__image-placeholder" style="background:linear-gradient(135deg, #04060C 0%, #080C18 100%);">
+        <span class="ph-kanji">速</span>
+        <span class="ph-label">Engineering · 60fps Performance</span>
       </div>
     </div>
     <div class="dt-card__body">
@@ -344,17 +395,15 @@
         Frame rate isn't a technical spec — it's a design choice. How sub-perceptual latency shapes user trust, engagement, and the feeling of quality in premium products.
       </p>
       <p class="dt-card__footer">6 min read</p>
+      <span class="coming-soon-badge">Coming Soon</span>
     </div>
-  </a>
+  </div>
 
-  <a href="DT_Confidence.html" class="dt-card reveal" data-category="ai-ux">
+  <div class="dt-card dt-card--disabled reveal" data-category="ai-ux">
     <div class="dt-card__image-wrap">
-      <div class="dt-card__image-placeholder">
-        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <circle cx="16" cy="20" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
-          <path d="M4 32l10-8 6 4 12-10 12 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        </svg>
+      <div class="dt-card__image-placeholder" style="background:linear-gradient(135deg, #140A04 0%, #201008 100%);">
+        <span class="ph-kanji">信</span>
+        <span class="ph-label">AI & UX · Confidence Calibration</span>
       </div>
     </div>
     <div class="dt-card__body">
@@ -366,8 +415,9 @@
         The most important UX pattern in AI isn't showing answers — it's communicating uncertainty. Lessons from designing a multi-agent manufacturing platform.
       </p>
       <p class="dt-card__footer">9 min read</p>
+      <span class="coming-soon-badge">Coming Soon</span>
     </div>
-  </a>
+  </div>
 
 </div>
 
@@ -389,8 +439,14 @@
   <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
 </footer>
 
+</div><!-- /plexus-zone -->
+
 <!-- ===== Scripts ===== -->
 <script src="js/scroll-reveal.js" defer></script>
+<script src="js/plexus-bg.js"></script>
+<script>
+  if (typeof PlexusBg !== 'undefined') PlexusBg.init(document.getElementById('plexus-zone'));
+</script>
 
 </body>
 </html>

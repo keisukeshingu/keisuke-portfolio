@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../css/nav.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/case-study.css">
-<title>Festival Visuals — Case Study | Keisuke Shingu</title>
+<title>Robot Heart & Festival Visuals — Case Study | Keisuke Shingu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -39,13 +39,31 @@
 
   /* ===== Footer ===== */
 
+  /* ===== Recognition ===== */
+  .recognition {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 64px;
+    border-top: 1px solid var(--rule-40);
+  }
+  .recognition__title {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40);
+    margin-bottom: 16px; padding-top: 48px;
+  }
+  .recognition__list {
+    list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px;
+  }
+  .recognition__list li {
+    font-size: 14px; font-weight: 400; color: var(--ink-80);
+  }
+
   /* ===== Scroll animations ===== */
-  
+
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* ===== Responsive ===== */
   @media (max-width: 767px) {
-
+    .recognition { padding: 0 24px 40px; }
   }
   /* ===== Animation Layer (v1_animation) ===== */
   #snow-zone { position: relative; overflow: hidden; }
@@ -74,19 +92,22 @@
 <!-- ===== CASE STUDY HERO ===== -->
 <section class="cs-hero">
   <div class="reveal">
-    <a href="Projects_Preview.html#music" class="cs-hero__back">← Projects</a>
+    <a href="../projects.html" class="cs-hero__back">← Projects</a>
   </div>
   <div class="reveal" style="transition-delay: 0.05s">
-    <p class="cs-hero__brand">Festival & Conference Visuals</p>
+    <p class="cs-hero__brand">Robot Heart · Festival Visuals</p>
   </div>
   <div class="reveal" style="transition-delay: 0.1s">
-    <h1 class="cs-hero__title"><span class="bold">Real-Time Visuals</span> at <span class="bold">Scale</span></h1>
+    <h1 class="cs-hero__title">Music and Light as <span class="bold">One Language</span></h1>
   </div>
   <div class="reveal" style="transition-delay: 0.15s">
-    <p class="cs-hero__statement">Producing real-time generative visuals for some of the world's largest music festivals and technology conferences — designing emotional experiences for audiences of 100,000+ through live rendering, projection mapping, and immersive installations.</p>
+    <p class="cs-hero__statement">I built real-time visual engines for Robot Heart, EDC, Ultra, and Detroit Movement — audio-reactive systems synchronized to music that felt like a second instrument, not a backdrop.</p>
   </div>
   <div class="reveal" style="transition-delay: 0.2s">
-    <div class="cs-hero__image">Hero image — Main stage generative visuals at festival</div>
+    <div class="cs-hero__image" data-kanji="祭" style="background:linear-gradient(160deg, #080008 0%, #140018 100%); --hero-kanji-color:rgba(255,255,255,0.03); padding:0;">
+      <div style="width:100%;min-height:420px;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+      <span class="cs-hero__image-label">Robot Heart · Burning Man · Black Rock Desert</span>
+    </div>
   </div>
 </section>
 
@@ -95,7 +116,7 @@
   <div class="overview-bar__inner">
     <div class="overview-bar__item">
       <p class="overview-bar__label">Role</p>
-      <p class="overview-bar__value">Real-Time Visual Artist / Producer</p>
+      <p class="overview-bar__value">Visual Systems Engineer · Real-Time Artist</p>
     </div>
     <div class="overview-bar__item">
       <p class="overview-bar__label">Timeline</p>
@@ -103,65 +124,114 @@
     </div>
     <div class="overview-bar__item">
       <p class="overview-bar__label">Platform</p>
-      <p class="overview-bar__value">Generative visuals, LED stages, projection mapping</p>
+      <p class="overview-bar__value">TouchDesigner · Resolume · Audio-Reactive Systems</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Venues</p>
+      <p class="overview-bar__value">Robot Heart · EDC · Ultra · Detroit Movement</p>
     </div>
   </div>
 </div>
 
 <!-- ===== TAGS ===== -->
 <div class="tags reveal">
-  <span class="tag">EDC</span>
+  <span class="tag">Robot Heart</span>
+  <span class="tag">Burning Man</span>
+  <span class="tag">TouchDesigner</span>
+  <span class="tag">Resolume</span>
+  <span class="tag">Audio-Reactive</span>
+  <span class="tag">BPM · Frequency · Amplitude</span>
+  <span class="tag">Real-Time Rendering</span>
+  <span class="tag">EDC Las Vegas</span>
   <span class="tag">Ultra Music Festival</span>
   <span class="tag">Detroit Movement</span>
-  <span class="tag">Burning Man</span>
-  <span class="tag">TechCrunch Disrupt</span>
   <span class="tag">Generative Art</span>
   <span class="tag">Projection Mapping</span>
 </div>
 
 <!-- ===== BRIEF NARRATIVE ===== -->
 <div class="brief-content reveal">
-  <p>I produced real-time generative visuals for main stages and art installations at Electric Daisy Carnival (100,000+ attendees), Ultra Music Festival (50,000+ per day with international broadcast), Detroit Movement (the birthplace of techno), Burning Man (immersive participatory installations in extreme conditions), and TechCrunch Disrupt (bridging tech and creative worlds).</p>
 
-  <p>Producing real-time visuals for 100,000 people teaches design lessons that no screen-based practice can. Zero-latency feedback loops — when visuals synchronize with live music, any latency is immediately visible and felt. This demanded mastery of real-time rendering pipelines and performance optimization — the same discipline required for streaming AI interfaces and real-time data visualization.</p>
+  <h3>Robot Heart</h3>
+  <p>Robot Heart is a rolling art stage at Burning Man — no sponsors, no pre-rendered video, no corporate dressing. I built and ran its real-time visual engine: a system that listened and responded to music directly, where every visual output was a live computation triggered by the audio signal itself.</p>
 
-  <div class="inline-image">Festival stage — real-time generative visuals synchronized with performance</div>
+  <div class="inline-image" data-kanji="砂" data-label="Black Rock City · Aerial · The Desert Stage">
+      <div style="position:absolute;inset:0;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:2;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+      <span class="inline-image__label">Black Rock City · Aerial · The Desert Stage</span>
+    </div>
 
-  <p>Emotional design at scale — a festival stage visual isn't a UI, it's an emotional architecture. You're designing how 100,000 people feel simultaneously. System reliability under pressure — there are no bug fixes at a live festival. The system works or it doesn't, in front of an enormous audience.</p>
+  <h3>Building the Engine</h3>
+  <p>TouchDesigner handled generative and audio-reactive graphics; Resolume managed VJ mixing and output routing to LED panels. Together, they formed a system designed for desert conditions with zero fallback — dust, heat, and no recovery time.</p>
 
-  <p>Hardware-software-human integration — festival visuals respond to the DJ, the music, the crowd energy, and the physical space simultaneously. This multi-input, real-time, human-in-the-loop design thinking directly parallels the AI agent interfaces I design today. These skills are directly relevant to spatial computing platforms at Apple (Vision Pro), Meta (Quest), and Google — where physical and digital design merge.</p>
+  <p class="pull-quote">Music and light aren't two things. They're one thing — and I was engineering both ends of the signal.</p>
+
+  <h3>Audio-Reactive Systems</h3>
+  <p>I built beyond simple amplitude mapping: BPM detection synchronized visual timing to the musical pulse; frequency analysis mapped bass to geometric transformations, mids to color temperature, highs to particle systems. The result was a visual system that participated in the music, not illustrated it — light and sound arrived simultaneously.</p>
+
+  <div class="inline-image inline-image--dark" data-kanji="光" data-label="Festival Main Stage · Real-Time Generative Visuals">
+      <div style="position:absolute;inset:0;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:2;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+      <span class="inline-image__label">Festival Main Stage · Real-Time Generative Visuals</span>
+    </div>
+
+  <h3>The Main Stages</h3>
+  <p>I brought these systems to EDC Las Vegas (100,000+ attendees per night), Ultra Music Festival in Miami (50,000+ per day), Detroit Movement, and Further Future. Each venue demanded reliable, real-time performance at scale without recovery time.</p>
+
+    <div class="inline-image" data-kanji="祭" data-label="Robot Heart · Burning Man · EDC · Festival Main Stages">
+    <div style="position:absolute;inset:0;background:#b4b4b4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:2;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="18" rx="2" stroke="#7a7a7a" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" fill="#7a7a7a"/><path d="M2 15 7 10 11 14 14 11 22 18" stroke="#7a7a7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:11px;color:#7a7a7a;font-family:Inter,sans-serif;letter-spacing:0.05em;text-transform:uppercase;">Image Placeholder</span></div>
+    <span class="inline-image__label">Robot Heart · Black Rock Desert → Main Stage · 100K+ Scale</span>
+  </div>
+
+  <p>Producing visuals for 100,000 people with zero latency teaches what screen-based practice cannot: latency is felt before it's perceived, and the feedback loop is zero-tolerance.</p>
 
   <p class="pull-quote">There are no bug fixes at a live festival. The system works or it doesn't, in front of 100,000 people.</p>
+
 </div>
 
 <!-- ===== KEY HIGHLIGHTS ===== -->
 <div class="key-highlight reveal">
   <div class="key-highlight__inner">
     <div class="key-highlight__item">
+      <p class="key-highlight__value">Robot Heart</p>
+      <p class="key-highlight__label">Annual residence · Burning Man · Black Rock Desert</p>
+    </div>
+    <div class="key-highlight__item">
+      <p class="key-highlight__value">Audio-Reactive</p>
+      <p class="key-highlight__label">BPM · Frequency · Amplitude — live visual computation</p>
+    </div>
+    <div class="key-highlight__item">
       <p class="key-highlight__value">100K+</p>
-      <p class="key-highlight__label">Audience scale per event</p>
+      <p class="key-highlight__label">Audience scale · EDC Las Vegas · Ultra Music Festival</p>
     </div>
     <div class="key-highlight__item">
-      <p class="key-highlight__value">5</p>
-      <p class="key-highlight__label">Major festivals and conferences</p>
-    </div>
-    <div class="key-highlight__item">
-      <p class="key-highlight__value">Real-Time</p>
-      <p class="key-highlight__label">Zero-tolerance latency systems</p>
+      <p class="key-highlight__value">Zero Latency</p>
+      <p class="key-highlight__label">TouchDesigner + Resolume — no recovery time, no fallback</p>
     </div>
   </div>
+</div>
+
+<!-- ===== RECOGNITION ===== -->
+<div class="recognition reveal">
+  <p class="recognition__title">Recognition</p>
+  <ul class="recognition__list">
+    <li>Robot Heart — Annual Residence · Burning Man · Black Rock City</li>
+    <li>Further Future 2015 &amp; 2016 — Lead Visual Artist</li>
+    <li>EDC Las Vegas — Stage Visuals · 100K+ Capacity</li>
+    <li>Ultra Music Festival — Live Visual System</li>
+    <li>Detroit Electronic Music Festival — Generative VJ</li>
+    <li>TouchDesigner · Resolume — Production-grade real-time pipeline</li>
+  </ul>
 </div>
 
 <!-- ===== PREV / NEXT ===== -->
 <div class="prev-next reveal">
   <div class="prev-next__inner">
-    <a href="beatport-ni.html" class="prev-next__link">
-      <p class="prev-next__label">← Previous</p>
-      <p class="prev-next__title">Digital Music Distribution & DJ Software</p>
+    <a href="robot-heart.html" class="prev-next__item">
+      <p class="prev-next__dir">← Previous</p>
+      <p class="prev-next__title">The Bus That Became a World</p>
     </a>
-    <a href="quarkxpress.html" class="prev-next__link prev-next__link--next">
-      <p class="prev-next__label">Next →</p>
-      <p class="prev-next__title">Where Desktop Publishing Began</p>
+    <a href="denon-marantz.html" class="prev-next__item prev-next__item--next">
+      <p class="prev-next__dir">Next →</p>
+      <p class="prev-next__title">Making Premium Audio Feel as Good as It Sounds</p>
     </a>
   </div>
 </div>

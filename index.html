@@ -12,7 +12,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Noto+Serif+JP:wght@200;300&display=swap" rel="stylesheet">
-<style>/* ===== Design Tokens ===== */
+<style>
+  /* ===== Page Background ===== */
+  body { background: #FAFBFC; }
+
+  /* ===== Design Tokens ===== */
 
   /* ===== Reset ===== */
 
@@ -72,14 +76,74 @@
     margin-top: 16px;
   }
   .heritage-card {
-    background: transparent; padding: 20px 32px 32px;
-    cursor: pointer; transition: background 0.3s var(--ease);
+    background: rgba(250, 251, 252, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 20px 32px 32px;
+    cursor: pointer;
+    transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease);
     border-right: 1px solid var(--rule-40);
     border-bottom: 1px solid var(--rule-40);
   }
   .heritage-card:nth-child(3n) { border-right: none; }
   .heritage-card:nth-last-child(-n+3) { border-bottom: none; }
-  .heritage-card:hover { background: rgba(245, 245, 247, 0.55); }
+  .heritage-card:hover {
+    background: rgba(245, 245, 247, 0.72);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+
+  /* ===== NDA-locked card ===== */
+  .heritage-card--nda {
+    cursor: default;
+    position: relative;
+  }
+  .heritage-card--nda:hover {
+    background: rgba(250, 251, 252, 0.45);
+    box-shadow: none;
+  }
+  .heritage-card--nda .heritage-card__headline,
+  .heritage-card--nda .heritage-card__narrative {
+    opacity: 0.55;
+  }
+  .heritage-card__nda-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-60);
+    background: rgba(0,0,0,0.05);
+    border: 1px solid var(--rule-40);
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ===== NDA Toast ===== */
+  .nda-toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(29, 29, 31, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #F5F5F7;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 12px 24px;
+    border-radius: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+  }
+  .nda-toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
   .heritage-card__period {
     font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
     text-transform: uppercase; color: var(--ink-40);
@@ -195,8 +259,8 @@
     position: absolute; top: 0; bottom: 0; width: 80px;
     z-index: 2; pointer-events: none;
   }
-  .logo-marquee::before { left: 0; background: linear-gradient(to right, var(--bg, #fff), transparent); }
-  .logo-marquee::after  { right: 0; background: linear-gradient(to left, var(--bg, #fff), transparent); }
+  .logo-marquee::before { left: 0; background: linear-gradient(to right, var(--bg, #FAFBFC), transparent); }
+  .logo-marquee::after  { right: 0; background: linear-gradient(to left, var(--bg, #FAFBFC), transparent); }
   .logo-marquee__track {
     display: flex;
     align-items: center;
@@ -358,16 +422,16 @@
 <img src="img/library/ai-workflow/antigravity-screenshot.png" alt="Google Antigravity IDE — orchestration-ui, AI-native design-to-code workflow" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
 </div>
     </a>
-    <a href="projects.html#immersive" class="heritage-card reveal" style="transition-delay: 0.1s">
+    <div class="heritage-card heritage-card--nda reveal" style="transition-delay: 0.1s" onclick="showNdaToast()">
       <p class="heritage-card__period">2022 – 2023</p>
       <p class="heritage-card__domain">Agency & Consulting<span class="heritage-card__kanji">知覚</span></p>
-      <h3 class="heritage-card__headline">Ogilvy → Slalom</h3>
+      <h3 class="heritage-card__headline">Ogilvy → Slalom<span class="heritage-card__nda-badge">NDA</span></h3>
       <p class="heritage-card__narrative">Generative visuals, spatial audio, and AR for Audi at Ogilvy Japan. Then innovation strategy at Slalom Build — experience design for Toyota Woven City, Gundam Metaverse, and NVIDIA collaborations.</p>
-      
+
       <div class="heritage-card__preview">
 <img src="img/library/ogilvy/audi-experience-journey.png" alt="Audi Q4 e-tron experience journey map — Ogilvy Japan" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
 </div>
-    </a>
+    </div>
     <a href="projects.html#audio" class="heritage-card reveal" style="transition-delay: 0.15s">
       <p class="heritage-card__period">2017 – 2021</p>
       <p class="heritage-card__domain">Premium Audio<span class="heritage-card__kanji">聴覚</span></p>
@@ -554,33 +618,40 @@
 })();
 </script>
 
-<!-- ===== Animation Layer — Pluggable Weather System ===== -->
-<!--
-  PLUGGABLE ANIMATION SYSTEM
-  ===========================
-  Default: weather-hero.js (v1 snow only)
-  To swap to Weather v2.0 (Snow/Rain/Sakura/Fog):
-    1. Replace the script src below with "weather-v2.js"
-    2. Update the init call to: WeatherV2.init(snowZone, 'snow')
-    3. Available modes: 'snow', 'rain', 'sakura', 'fog'
+<!-- =====================================================
+     PLEXUS BACKGROUND — comment out the 2 lines below to disable
+     ===================================================== -->
+<script src="js/plexus-bg.js"></script>
+<script>if (typeof PlexusBg !== 'undefined') PlexusBg.init(document.body);</script>
+<!-- ===== /Plexus Background ===== -->
 
-  Both systems target the #snow-zone container.
-  Set data-weather-mode on #snow-zone to change default mode.
--->
+<!-- =====================================================
+     SNOW ANIMATION — disabled on index (plexus is default bg)
+     To re-enable: uncomment the 2 script lines below
+     =====================================================
 <script src="js/weather-hero.js"></script>
 <script>
 (function () {
   var snowZone = document.getElementById('snow-zone');
   if (!snowZone) return;
-
-  // Check for v2 weather system first, fall back to v1
   if (typeof WeatherV2 !== 'undefined') {
-    var mode = snowZone.dataset.weatherMode || 'snow';
-    WeatherV2.init(snowZone, mode);
+    WeatherV2.init(snowZone, snowZone.dataset.weatherMode || 'snow');
   } else if (typeof WeatherHero !== 'undefined') {
     WeatherHero.init(snowZone);
   }
 })();
+</script>
+-->
+
+<!-- NDA Toast -->
+<div class="nda-toast" id="nda-toast">This case study is under NDA — content coming soon</div>
+<script>
+function showNdaToast() {
+  var t = document.getElementById('nda-toast');
+  t.classList.add('visible');
+  clearTimeout(window._ndaTimer);
+  window._ndaTimer = setTimeout(function() { t.classList.remove('visible'); }, 2400);
+}
 </script>
 
 </body>

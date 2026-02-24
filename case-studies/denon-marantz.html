@@ -177,7 +177,7 @@
 <!-- ===== CASE STUDY HERO ===== -->
 <section class="cs-hero">
   <div class="reveal">
-    <a href="Projects_Preview.html#audio" class="cs-hero__back">← Projects</a>
+    <a href="../projects.html" class="cs-hero__back">← Projects</a>
   </div>
   <div class="reveal" style="transition-delay: 0.05s">
     <p class="cs-hero__brand">Denon / Marantz</p>
@@ -186,10 +186,13 @@
     <h1 class="cs-hero__title">Making <span class="bold">Premium Audio</span> Feel as Good as It <span class="bold">Sounds</span></h1>
   </div>
   <div class="reveal" style="transition-delay: 0.15s">
-    <p class="cs-hero__statement">Transforming the UX of two premium audio brands across 60+ products — from 8-bit-era bitmap displays to a modern, vector-based, multi-language design system — driving Denon/Marantz from #5 to #1 market position.</p>
+    <p class="cs-hero__statement">Transformed UX across 60+ products from bitmap displays to vector-based design system, driving Denon/Marantz from #5 to #1 market position.</p>
   </div>
   <div class="reveal" style="transition-delay: 0.2s">
-    <div class="cs-hero__image">Hero image — Marantz Cinema porthole display</div>
+    <div class="cs-hero__image" data-kanji="音" style="background:linear-gradient(160deg, #040404 0%, #0A0A0A 100%); --hero-kanji-color:rgba(255,255,255,0.04); padding:0;">
+      <img src="../img/library/denon/143-marantz-lookbook-hero.jpg" alt="Marantz integrated amplifier — editorial product photography from Look Book 2018" loading="eager">
+      <span class="cs-hero__image-label">Marantz · Look Book 2018 · Director of UX · Premium Audio Design System</span>
+    </div>
   </div>
 </section>
 
@@ -270,16 +273,24 @@
       <p class="stard-section__overline">Context</p>
       <h2 class="stard-section__title">Two Heritage Brands, One Broken Experience</h2>
       <div class="stard-section__body">
-        <p>In 2017, Denon and Marantz sat at #5 in the premium home audio market. The products were acclaimed for sound quality — audiophiles trusted the engineering. But product reviews averaged 3.5 stars. The gap between sonic excellence and user experience was costing market position.</p>
-        <p>The embedded display system across products was a relic — the TV GUI had the visual quality of an 8-bit Nintendo game. Bitmap graphics rendering with no structured file system. Every string of text and icon was a rasterized image baked at a fixed resolution. This created three cascading failures: resolution ceiling as the industry moved toward 4K/8K, localization paralysis requiring separate bitmaps per language, and consistency impossibility across 60+ products.</p>
+        <p>In 2017, Denon and Marantz ranked #5 in premium audio with excellent sound but reviews averaged only 3.5 stars — a UX gap costing market position.</p>
+        <p>The embedded display system used 8-bit bitmap graphics — every element was a rasterized image. This created three failures: resolution limits, localization requiring per-language bitmaps, and consistency gaps across 60+ products.</p>
 
-        <div class="inline-image">Before — 480p bitmap TV GUI overlay</div>
+        <div class="inline-image" data-kanji="電" data-label="Denon · Brand Guidelines 2018 · Identity System · Typography · Product Editorial">
+      <img src="../img/library/denon/148d-denon-product.jpg" alt="Denon brand guidelines — product editorial, brochure design, typography system, website and logo executions" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:0.97;" loading="lazy">
+      <span class="inline-image__label">Denon · Brand Guidelines 2018 · Identity System · Product Editorial</span>
+    </div>
 
-        <p>Meanwhile, leadership wanted to compete with Sonos, Apple, Google, and Amazon in smart home and wireless streaming through the HEOS multi-room audio platform. But HEOS was not fully integrated with the core audio products. The competitive benchmark wasn't other AV receiver brands — it was software-first companies resetting user expectations entirely.</p>
+        <div class="inline-image" data-kanji="雅" data-label="Marantz · Look Book 2018 · Brand Story · Cover · Lifestyle Editorial · Model 60 Posters · Product">
+      <img src="../img/library/denon/149a-marantz-brand.jpg" alt="Marantz brand look book — cover wordmark, dark lifestyle editorial, copper front panel, Model 60 poster triptych, cream product" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:0.97;" loading="lazy">
+      <span class="inline-image__label">Marantz · Look Book 2018 · Brand Story · Cover · Lifestyle · Model 60 Campaign</span>
+    </div>
 
-        <p class="pull-quote">The challenge: unify and modernize the user experience across two premium brands and 60+ products — bridging embedded hardware, mobile software, TV output, and voice-assistant ecosystems — to make Denon/Marantz competitive with software-first companies like Sonos.</p>
+        <p>Leadership wanted HEOS (multi-room audio) to compete with Sonos, Apple, and Amazon, but it wasn't integrated with core products. The competitive benchmark was software-first companies, not AV brands.</p>
 
-        <p>Key constraints included extreme hardware limitations (1-3 inch displays with physical buttons, not touch), legacy platform migration without disrupting the active product pipeline, Apple certification requirements for AirPlay 2 and HomeKit, and multi-platform delivery across embedded Linux, iOS, Android, and TV GUI.</p>
+        <p class="pull-quote">Unify UX across 60+ products spanning embedded hardware, mobile, TV, and voice assistants to compete with software-first companies.</p>
+
+        <p>Constraints: 1-3 inch displays with physical buttons, platform migration without disruption, Apple AirPlay 2/HomeKit certification, and delivery across embedded Linux, iOS, Android, and TV.</p>
       </div>
     </div>
 
@@ -288,31 +299,34 @@
       <p class="stard-section__overline">The Work</p>
       <h2 class="stard-section__title">From Bitmap to Vector, From Confusion to Clarity</h2>
       <div class="stard-section__body">
-        <p>Research began with support data analysis — customer support call logs revealed UX-related calls were concentrated on setup and initial configuration. Product review mining confirmed the pattern: 4.5-5.0★ sound quality but 3.5★ overall. The UX gap was measurable and specific.</p>
+        <p>Support call analysis showed UX problems concentrated in setup and configuration. Product reviews showed 4.5-5.0★ sound but 3.5★ overall rating.</p>
 
-        <p>The foundational design decision was replacing the entire bitmap-based rendering system with Qt framework on embedded Linux, converting all graphics to SVG with font-embedding and database-driven content management. This wasn't a visual refresh — it was a platform migration that enabled resolution independence, localization at scale, and systematic visual consistency.</p>
+        <p>Replaced bitmap rendering with Qt/SVG on embedded Linux, enabling resolution independence, scalable localization, and visual consistency across products.</p>
 
         <div class="inline-image--half">
           <div>Before — Bitmap rendering, 480p, per-language image files</div>
           <div>After — Vector SVG on Qt/QML, resolution-independent, database-driven</div>
         </div>
 
-        <p>I became the point person negotiating with Monotype to establish an embedded device font licensing framework. The deal covered per-device pricing at 60+ product scale, CJK character sets, embedded ROM constraints, and firmware update distribution. The resulting model saved multi-million dollars and was subsequently adopted by Audi, Porsche, BMW, and Mercedes for their infotainment systems.</p>
+        <p>Negotiated the first embedded device font licensing framework with Monotype covering 60+ products, CJK character sets, and firmware rights — saving millions. Audi, Porsche, BMW, and Mercedes later adopted this same model for automotive infotainment.</p>
 
-        <p>For the constrained 1-3 inch hardware displays, I developed a typographic system optimized for small-screen legibility with custom font selection prioritizing x-height and stroke consistency. Navigation relied on physical buttons and knobs — not touch — requiring a fundamentally different interaction model than mobile apps.</p>
+        <p>The Marantz Model 10 porthole display — a 56mm circular AMOLED controlled by a physical knob — required all UI states (volume, source selector, audio-reactive visualizer) to be legible on a coin-sized circle with no touch input.</p>
 
-        <div class="inline-image">Constrained display typography — 1-3 inch embedded screens</div>
+        <div class="inline-image inline-image--dark" data-kanji="音" data-label="Marantz Model 10 · Porthole Display · Volume Visualizer Concept">
+      <img src="../img/library/denon/144-porthole-volume-visualizer.jpg" alt="Marantz Model 10 porthole display showing -54db volume visualizer — audio-reactive circular UI concept" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;opacity:0.95;" loading="lazy">
+      <span class="inline-image__label">Marantz Model 10 · Porthole Display · Audio-Reactive Volume Visualizer</span>
+    </div>
 
-        <p>Created comprehensive HEOS Ecosystem Design Guidelines covering brand design language for both Denon (modern, approachable) and Marantz (premium, refined), cross-platform typography scales, iconography library in SVG, and multi-language specification with CJK support.</p>
+        <p>Established HEOS Design Guidelines defining Denon (modern) and Marantz (premium) brand languages with SVG iconography and multi-language support including CJK.</p>
 
-        <p>Redesigned the setup flow around three principles: guided onboarding via the companion app, multi-assistant integration for Siri/Alexa/Google Assistant, and progressive complexity keeping simple tasks simple.</p>
+        <p>Redesigned setup flow with app-guided onboarding, multi-assistant integration, and progressive complexity to simplify initial configuration.</p>
 
         <div class="inline-image--half">
           <div>Denon — Modern, approachable design language</div>
           <div>Marantz — Premium, refined design language (teal HD GUI)</div>
         </div>
 
-        <p>Ensured AirPlay 2 and HomeKit certification for 50+ products by translating Apple HIG requirements into our design guidelines and creating per-category compliance checklists. This made Denon/Marantz the largest Apple-certified portfolio in premium audio.</p>
+        <p>Secured AirPlay 2 and HomeKit certification for 50+ Apple-certified products, making Denon/Marantz the largest certified portfolio in premium audio.</p>
       </div>
     </div>
 
@@ -321,9 +335,9 @@
       <p class="stard-section__overline">Impact</p>
       <h2 class="stard-section__title">From #5 to #1</h2>
       <div class="stard-section__body">
-        <p>Market position shifted from #5 to #1, with UX as the primary driver of category leadership. Product reviews improved from 3.5★ to 4.5★ average — a full star improvement driven by setup flow redesign, UI clarity, and multi-platform consistency.</p>
+        <p>Market position moved #5 to #1. Product reviews improved from 3.5★ to 4.5★ driven by setup redesign, UI clarity, and consistency.</p>
 
-        <p>Support calls decreased by 35%, concentrated in the setup and configuration categories that the research had identified. AirPlay 2 certified products grew from 0 to 50+ — the largest portfolio in premium audio.</p>
+        <p>Support calls decreased 35% in setup and configuration. AirPlay 2 products grew from 0 to 50+ — the largest portfolio in premium audio.</p>
 
         <div class="ba-inline">
           <div class="ba-inline__cell">
@@ -344,7 +358,7 @@
           </div>
         </div>
 
-        <p>The embedded font licensing model with Monotype became an industry standard, subsequently adopted across the automotive sector. The design system I established continues to ship across new Denon and Marantz products.</p>
+        <p>The Monotype font licensing model became industry standard, adopted by automotive manufacturers. The design system continues across new Denon/Marantz products.</p>
       </div>
     </div>
 
@@ -353,11 +367,13 @@
       <p class="stard-section__overline">Reflection</p>
       <h2 class="stard-section__title">Fixing the System, Not the Symptoms</h2>
       <div class="stard-section__body">
-        <p>My approach was to fix the underlying technical and design frameworks so that better UX became the default output. When the rendering system makes premium typography impossible, you replace the rendering system. When localization requires thousands of hand-crafted assets, you build database-driven content management.</p>
+        <p>Fixed underlying frameworks so better UX became the default. When rendering systems limit typography or localization, replace the system rather than work around it.</p>
 
-        <p class="pull-quote">On a 1-3 inch display with physical buttons, every decision must answer: what does the user need to know right now, and how do I show it in the fewest pixels?</p>
+        <p class="pull-quote">On 1–3 inch displays with physical buttons: what does the user need now, and how do I show it in the fewest pixels?</p>
 
-        <p>Constrained hardware forces design discipline that unconstrained environments never demand. This project demonstrated three capabilities that scale to any product design challenge: platform thinking over feature thinking, the hardware-software bridge across embedded firmware and mobile apps, and measurable business impact through design.</p>
+        <p>Awards (EISA, Red Dot, iF, Japan Good Design) and presenting at Qt World Summit made the work an industry reference for platform migration approaches.</p>
+
+        <p>Constrained hardware forces design discipline. Small displays with physical controls strip UX to essentials, creating precision and rigor that transfers to any context.</p>
       </div>
     </div>
 
@@ -365,12 +381,13 @@
     <div id="recognition" class="recognition reveal">
       <p class="recognition__title">Recognition</p>
       <ul class="recognition__list">
-        <li>EISA Awards (2018–2020)</li>
+        <li>EISA Awards — 2018, 2019, 2020</li>
         <li>What Hi-Fi? Awards</li>
         <li>Red Dot Design Award</li>
         <li>iF Design Award</li>
         <li>Japan Good Design Award</li>
-        <li>Qt World Summit Speaker</li>
+        <li>Qt World Summit — Speaker · Bitmap → Vector Platform Migration</li>
+        <li>Monotype licensing model — subsequently adopted by Audi, Porsche, BMW, Mercedes</li>
       </ul>
     </div>
 
@@ -380,10 +397,13 @@
 <!-- ===== PREV / NEXT ===== -->
 <div class="prev-next reveal">
   <div class="prev-next__inner">
-    <div></div>
-    <a href="fabrion.html" class="prev-next__link prev-next__link--next">
-      <p class="prev-next__label">Next Case Study →</p>
-      <p class="prev-next__title">Teaching Machines to Earn Human Trust</p>
+    <a href="festivals.html" class="prev-next__item">
+      <p class="prev-next__dir">← Previous</p>
+      <p class="prev-next__title">Music and Light as One Language</p>
+    </a>
+    <a href="rakuten-fit.html" class="prev-next__item prev-next__item--next">
+      <p class="prev-next__dir">Next →</p>
+      <p class="prev-next__title">Making Fitness Economically Productive</p>
     </a>
   </div>
 </div>

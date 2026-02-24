@@ -12,7 +12,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-  <style>* {
+  <style>
+    /* ===== Page Background ===== */
+    body { background: #FAFBFC; }
+
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -897,7 +901,24 @@
     <div class="footer__copy">© 2025 Keisuke Shingu. All rights reserved.</div>
   </footer>
 
-  <script src="js/weather-hero.js"></script>
+<!-- =====================================================
+     SNOW ANIMATION — active on About page
+     To disable: comment out the 2 script lines below
+     ===================================================== -->
+<script src="js/weather-hero.js"></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (!snowZone) return;
+  if (typeof WeatherV2 !== 'undefined') {
+    WeatherV2.init(snowZone, snowZone.dataset.weatherMode || 'snow');
+  } else if (typeof WeatherHero !== 'undefined') {
+    WeatherHero.init(snowZone);
+  }
+})();
+</script>
+<!-- ===== /Snow Animation ===== -->
+
   <script src="js/scroll-reveal.js" defer></script>
 </body>
 </html>

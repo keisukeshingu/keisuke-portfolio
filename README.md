@@ -72,6 +72,9 @@ keisuke-portfolio/
 - **Body:** Inter 200–600 (Google Fonts)
 - **Kanji accents:** Noto Serif JP 200–300 (Google Fonts)
 
+### Content Alignment Rule
+Text blocks (subtitles, excerpts, body copy) within a section must extend to the full width of the visual container or adjacent image edge — never arbitrarily narrowed with `max-width`. This ensures consistent left-right alignment across hero text, card bodies, and featured post content. Headings may be constrained for typographic balance (`text-wrap: balance`), but all secondary/body text should respect the parent container width.
+
 ### Breakpoints
 - Desktop: default (`--max-w: 1120px`)
 - Tablet: `@media (max-width: 1119px)` — reduce padding
