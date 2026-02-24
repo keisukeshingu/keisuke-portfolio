@@ -72,7 +72,7 @@
     margin-top: 16px;
   }
   .heritage-card {
-    background: transparent; padding: 32px;
+    background: transparent; padding: 20px 32px 32px;
     cursor: pointer; transition: background 0.3s var(--ease);
     border-right: 1px solid var(--rule-40);
     border-bottom: 1px solid var(--rule-40);
@@ -109,16 +109,6 @@
     margin-top: 6px;
   }
 
-  /* ===== Heritage Card Icon Canvas ===== */
-  .heritage-card__icon {
-    width: 40px; height: 40px;
-    margin-bottom: 12px;
-    opacity: 0.35;
-    transition: opacity 0.5s var(--ease);
-  }
-  .heritage-card:hover .heritage-card__icon {
-    opacity: 0.7;
-  }
 
   /* ===== Kanji Accents ===== */
   .kanji-accent {
@@ -384,7 +374,7 @@
     <div class="grid-dot" style="left: calc(33.333% - 8px); top: calc(50% - 8px);"><canvas class="grid-anim" data-anim="0"></canvas></div>
     <div class="grid-dot" style="left: calc(66.666% - 8px); top: calc(50% - 8px);"><canvas class="grid-anim" data-anim="4"></canvas></div>
     <a href="projects.html#ai-systems" class="heritage-card reveal" style="transition-delay: 0.05s">
-      <canvas class="heritage-card__icon" data-anim="43"></canvas>
+
       <p class="heritage-card__period">2023 – Present</p>
       <p class="heritage-card__domain">AI Systems<span class="heritage-card__kanji">思考</span></p>
       <h3 class="heritage-card__headline">TDK → Design Engineering</h3>
@@ -397,7 +387,6 @@
       <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/tdk.svg" alt="TDK" loading="lazy"><img class="heritage-card__logo" src="logos/fabrion.svg" alt="Fabrion" loading="lazy"></div>
     </a>
     <a href="projects.html#immersive" class="heritage-card reveal" style="transition-delay: 0.1s">
-      <canvas class="heritage-card__icon" data-anim="18"></canvas>
       <p class="heritage-card__period">2022 – 2023</p>
       <p class="heritage-card__domain">Agency & Consulting<span class="heritage-card__kanji">知覚</span></p>
       <h3 class="heritage-card__headline">Ogilvy → Slalom</h3>
@@ -410,7 +399,6 @@
       <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/ogilvy.svg" alt="Ogilvy" loading="lazy"><img class="heritage-card__logo" src="logos/audi.svg" alt="Audi" loading="lazy"><img class="heritage-card__logo" src="logos/slalom.svg" alt="Slalom" loading="lazy"></div>
     </a>
     <a href="projects.html#audio" class="heritage-card reveal" style="transition-delay: 0.15s">
-      <canvas class="heritage-card__icon" data-anim="35"></canvas>
       <p class="heritage-card__period">2017 – 2021</p>
       <p class="heritage-card__domain">Premium Audio<span class="heritage-card__kanji">聴覚</span></p>
       <h3 class="heritage-card__headline">Director of UX — Denon / Marantz</h3>
@@ -423,7 +411,6 @@
       <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/denon.svg" alt="Denon" loading="lazy"><img class="heritage-card__logo" src="logos/marantz.svg" alt="Marantz" loading="lazy"></div>
     </a>
     <a href="projects.html#invention" class="heritage-card reveal" style="transition-delay: 0.2s">
-      <canvas class="heritage-card__icon" data-anim="49"></canvas>
       <p class="heritage-card__period">2011 – 2013</p>
       <p class="heritage-card__domain">Hardware Invention<span class="heritage-card__kanji">触感</span></p>
       <h3 class="heritage-card__headline">Miselu C.24</h3>
@@ -435,7 +422,6 @@
       <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/yamaha.svg" alt="Yamaha" loading="lazy"><img class="heritage-card__logo" src="logos/techcrunch.svg" alt="TechCrunch" loading="lazy"></div>
     </a>
     <a href="projects.html#music" class="heritage-card reveal" style="transition-delay: 0.25s">
-      <canvas class="heritage-card__icon" data-anim="38"></canvas>
       <p class="heritage-card__period">2007 – 2016</p>
       <p class="heritage-card__domain">Music & Live Performance<span class="heritage-card__kanji">流動</span></p>
       <h3 class="heritage-card__headline">Beatport → Native Instruments</h3>
@@ -448,7 +434,6 @@
       <div class="heritage-card__logos"><img class="heritage-card__logo" src="logos/beatport.svg" alt="Beatport" loading="lazy"><img class="heritage-card__logo" src="logos/nativeinstruments.svg" alt="Native Instruments" loading="lazy"><img class="heritage-card__logo" src="logos/pioneerdj.svg" alt="Pioneer DJ" loading="lazy"></div>
     </a>
     <a href="projects.html#publishing" class="heritage-card reveal" style="transition-delay: 0.3s">
-      <canvas class="heritage-card__icon" data-anim="31"></canvas>
       <p class="heritage-card__period">1999 – 2007</p>
       <p class="heritage-card__domain">Print & Digital Publishing<span class="heritage-card__kanji">視覚</span></p>
       <h3 class="heritage-card__headline">QuarkXPress</h3>
@@ -555,7 +540,6 @@
   }
 
   // Heritage card icons (40px)
-  initGroup('.heritage-card__icon[data-anim]', 40);
   // A. Divider strip animations (20px)
   initGroup('.strip-anim[data-anim]', 20);
   // B. Margin accent animations (28px)
