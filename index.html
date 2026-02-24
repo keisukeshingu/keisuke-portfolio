@@ -120,6 +120,34 @@
     vertical-align: middle;
   }
 
+  /* ===== Coming-soon card ===== */
+  .heritage-card--soon {
+    cursor: default;
+    position: relative;
+  }
+  .heritage-card--soon:hover {
+    background: rgba(250, 251, 252, 0.45);
+    box-shadow: none;
+  }
+  .heritage-card--soon .heritage-card__headline,
+  .heritage-card--soon .heritage-card__narrative {
+    opacity: 0.55;
+  }
+  .heritage-card__soon-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--shu);
+    background: rgba(179, 58, 58, 0.06);
+    border: 1px solid rgba(179, 58, 58, 0.18);
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
   /* ===== NDA Toast ===== */
   .nda-toast {
     position: fixed;
@@ -451,16 +479,16 @@
 <img src="img/library/miselu-patent.jpg" alt="Miselu C.24 patent Figure 2 — keyboard hardware layout, US9165476B2" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
 </div>
     </a>
-    <a href="projects.html#music" class="heritage-card reveal" style="transition-delay: 0.25s">
+    <div class="heritage-card heritage-card--soon reveal" style="transition-delay: 0.25s" onclick="showSoonToast()">
       <p class="heritage-card__period">2007 – 2016</p>
       <p class="heritage-card__domain">Music & Live Performance<span class="heritage-card__kanji">流動</span></p>
-      <h3 class="heritage-card__headline">Beatport → Native Instruments</h3>
+      <h3 class="heritage-card__headline">Beatport → Native Instruments<span class="heritage-card__soon-badge">Coming Soon</span></h3>
       <p class="heritage-card__narrative">Digital music distribution, DJ software, and real-time generative visuals. VJ performances at EDC, Ultra, Detroit Movement, Burning Man, and Further Future.</p>
-      
+
       <div class="heritage-card__preview">
 <img src="https://www.native-instruments.com/typo3temp/pics/img-welcome-hero-traktor-pro-4-hero-updated-8886c1ee796862446eab18ae20d52d3f-d@2x.jpg" alt="Traktor Pro 4 DJ software Native Instruments" style="width:100%;height:100%;object-fit:cover;border-radius:8px;display:block;" loading="lazy">
 </div>
-    </a>
+    </div>
     <a href="projects.html#publishing" class="heritage-card reveal" style="transition-delay: 0.3s">
       <p class="heritage-card__period">1999 – 2007</p>
       <p class="heritage-card__domain">Print & Digital Publishing<span class="heritage-card__kanji">視覚</span></p>
@@ -645,12 +673,19 @@
 
 <!-- NDA Toast -->
 <div class="nda-toast" id="nda-toast">This case study is under NDA — content coming soon</div>
+<div class="nda-toast" id="soon-toast">This case study is being refined — coming soon</div>
 <script>
 function showNdaToast() {
   var t = document.getElementById('nda-toast');
   t.classList.add('visible');
   clearTimeout(window._ndaTimer);
   window._ndaTimer = setTimeout(function() { t.classList.remove('visible'); }, 2400);
+}
+function showSoonToast() {
+  var t = document.getElementById('soon-toast');
+  t.classList.add('visible');
+  clearTimeout(window._soonTimer);
+  window._soonTimer = setTimeout(function() { t.classList.remove('visible'); }, 2400);
 }
 </script>
 

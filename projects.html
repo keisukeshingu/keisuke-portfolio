@@ -98,6 +98,36 @@
   .case-entry--nda .case-entry__image {
     opacity: 0.55;
   }
+
+  /* ===== Coming-soon card ===== */
+  .case-entry--soon {
+    cursor: default;
+    position: relative;
+  }
+  .case-entry--soon:hover {
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+  }
+  .case-entry--soon .case-entry__top,
+  .case-entry--soon .case-entry__tags,
+  .case-entry--soon .case-entry__image {
+    opacity: 0.55;
+  }
+  .case-entry__soon-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--shu);
+    background: rgba(179, 58, 58, 0.06);
+    border: 1px solid rgba(179, 58, 58, 0.18);
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
   .case-entry__nda-badge {
     display: inline-block;
     font-size: 10px;
@@ -521,9 +551,9 @@
   </div>
 
   <div class="era__grid">
-    <a href="case-studies/beatport-ni.html" class="case-entry">
+    <div class="case-entry case-entry--soon" onclick="showSoonToast()">
       <div class="case-entry__top">
-        <h2 class="case-entry__title">Digital Music Distribution & DJ Software</h2>
+        <h2 class="case-entry__title">Digital Music Distribution & DJ Software<span class="case-entry__soon-badge">Coming Soon</span></h2>
         <p class="case-entry__brand">Beatport → Native Instruments</p>
         <p class="case-entry__role">Research Lab / Product Manager</p>
       </div>
@@ -534,11 +564,11 @@
         <img src="https://www.native-instruments.com/typo3temp/pics/img-welcome-hero-traktor-pro-4-hero-updated-8886c1ee796862446eab18ae20d52d3f-d@2x.jpg" alt="Traktor Pro 4 professional DJ software Native Instruments" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.85;" loading="lazy">
         <canvas class="case-entry__anim" data-anim="38" width="120" height="120"></canvas>
       </div>
-    </a>
+    </div>
 
-    <a href="case-studies/robot-heart.html" class="case-entry">
+    <div class="case-entry case-entry--soon" onclick="showSoonToast()">
       <div class="case-entry__top">
-        <h2 class="case-entry__title">The Bus That Became a World</h2>
+        <h2 class="case-entry__title">The Bus That Became a World<span class="case-entry__soon-badge">Coming Soon</span></h2>
         <p class="case-entry__brand">Robot Heart · Burning Man / Further Future</p>
         <p class="case-entry__role">Lead Visual Artist · 2011 – Present</p>
       </div>
@@ -549,11 +579,11 @@
         <img src="https://dusttoashes.com/wp-content/uploads/2025/11/Robot-Heart-and-The-Man.jpg" alt="Robot Heart sound camp Burning Man desert night installation" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.85;" loading="lazy">
         <canvas class="case-entry__anim" data-anim="7" width="120" height="120"></canvas>
       </div>
-    </a>
+    </div>
 
-    <a href="case-studies/techcrunch.html" class="case-entry">
+    <div class="case-entry case-entry--soon" onclick="showSoonToast()">
       <div class="case-entry__top">
-        <h2 class="case-entry__title">Giving a Conference Its Visual Voice</h2>
+        <h2 class="case-entry__title">Giving a Conference Its Visual Voice<span class="case-entry__soon-badge">Coming Soon</span></h2>
         <p class="case-entry__brand">TechCrunch Disrupt · Studio ZIRO</p>
         <p class="case-entry__role">Visual Artist / Creative Director · 2016</p>
       </div>
@@ -564,11 +594,11 @@
         <img src="https://techcrunch.com/wp-content/uploads/2016/09/disrupt_sf16_winner-4505.jpg?w=1024" alt="TechCrunch Disrupt SF 2016 Startup Battlefield winner announcement" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.85;" loading="lazy">
         <canvas class="case-entry__anim" data-anim="22" width="120" height="120"></canvas>
       </div>
-    </a>
+    </div>
 
-    <a href="case-studies/festivals.html" class="case-entry">
+    <div class="case-entry case-entry--soon" onclick="showSoonToast()">
       <div class="case-entry__top">
-        <h2 class="case-entry__title">Real-Time Generative Visuals at Scale</h2>
+        <h2 class="case-entry__title">Real-Time Generative Visuals at Scale<span class="case-entry__soon-badge">Coming Soon</span></h2>
         <p class="case-entry__brand">Festival Visuals · EDC / Ultra / Detroit</p>
         <p class="case-entry__role">VJ / Visual Artist</p>
       </div>
@@ -579,7 +609,7 @@
         <img src="https://d3vhc53cl8e8km.cloudfront.net/hello-staging/wp-content/uploads/2022/06/01211357/EDCLV2022_0520_185836-7168_SMB_720h-525x350.jpg" alt="EDC Las Vegas 2022 Electric Daisy Carnival festival stage production" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.85;" loading="lazy">
         <canvas class="case-entry__anim" data-anim="19" width="120" height="120"></canvas>
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
@@ -744,12 +774,19 @@
 
 <!-- NDA Toast -->
 <div class="nda-toast" id="nda-toast">This case study is under NDA — content coming soon</div>
+<div class="nda-toast" id="soon-toast">This case study is being refined — coming soon</div>
 <script>
 function showNdaToast() {
   var t = document.getElementById('nda-toast');
   t.classList.add('visible');
   clearTimeout(window._ndaTimer);
   window._ndaTimer = setTimeout(function() { t.classList.remove('visible'); }, 2400);
+}
+function showSoonToast() {
+  var t = document.getElementById('soon-toast');
+  t.classList.add('visible');
+  clearTimeout(window._soonTimer);
+  window._soonTimer = setTimeout(function() { t.classList.remove('visible'); }, 2400);
 }
 </script>
 
