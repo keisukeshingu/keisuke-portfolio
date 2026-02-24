@@ -42,8 +42,8 @@ const WeatherHero = (function () {
 
   // ── Config ──
   const CFG = {
-    maxP: 100,               // more particles for denser field
-    spawnRate: 0.7,           // faster spawning
+    maxP: 50,                // moderate particle count
+    spawnRate: 0.35,          // gentle spawning
     maxShu: 2,
     shuChance: 0.08,
     faceHitChance: 0.04,
@@ -94,7 +94,7 @@ const WeatherHero = (function () {
   }
 
   // ── Object Pools ──
-  var POOL_SIZE = 110;  // headroom for 100 max
+  var POOL_SIZE = 60;   // headroom for 50 max
   var particlePool = [];
   var activeParticles = [];
   var RIPPLE_POOL_SIZE = 32;
@@ -113,6 +113,9 @@ const WeatherHero = (function () {
       windAngle: 0,         // unique drift angle (radians)
       windStrength: 0,      // unique drift strength
       windShiftRate: 0,     // how fast this particle's wind changes
+      // Per-particle pulse — gentle fade in/out
+      pulsePhase: 0,        // offset so particles don't pulse in sync
+      pulseSpeed: 0,        // how fast this particle breathes
     };
   }
   function createRipple() {
@@ -251,6 +254,10 @@ const WeatherHero = (function () {
     p.windAngle = Math.random() * TAU;
     p.windStrength = 0.008 + Math.random() * 0.018;
     p.windShiftRate = 0.15 + Math.random() * 0.6; // how fast wind direction drifts
+
+    // Pulse — each particle fades in and out at its own rhythm
+    p.pulsePhase = Math.random() * TAU;
+    p.pulseSpeed = 0.3 + Math.random() * 0.6; // 0.3–0.9 radians/sec
 
     var sizeRand = Math.pow(Math.random(), CFG.sizeWeightPow);
     p.baseSize = CFG.baseSize[0] + sizeRand * CFG.baseSize[1];
@@ -428,7 +435,9 @@ const WeatherHero = (function () {
     var size = p.baseSize * proj.s * 2 * sizeMult * dofBlur;
     if (size < 0.08) return;
 
-    var a = p.opacity;
+    // Pulse: gentle fade in/out per particle
+    var pulse = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(globalTime * p.pulseSpeed + p.pulsePhase));
+    var a = p.opacity * pulse;
 
     // ── Color computation ──
     // Shu particles: always vivid red from birth
@@ -661,7 +670,7 @@ const WeatherHero = (function () {
       });
 
       // Pre-seed particles across depth — snow visible on first frame
-      for (var i = 0; i < 35; i++) {
+      for (var i = 0; i < 15; i++) {
         var p = acquireParticle();
         if (!p) break;
         var z = 100 + Math.random() * (Z_FAR + 300);
@@ -684,6 +693,8 @@ const WeatherHero = (function () {
         p.windAngle = Math.random() * TAU;
         p.windStrength = 0.008 + Math.random() * 0.018;
         p.windShiftRate = 0.15 + Math.random() * 0.6;
+        p.pulsePhase = Math.random() * TAU;
+        p.pulseSpeed = 0.3 + Math.random() * 0.6;
         var sizeRand = Math.pow(Math.random(), CFG.sizeWeightPow);
         p.baseSize = CFG.baseSize[0] + sizeRand * CFG.baseSize[1];
         p.opacity = 0.5 + Math.random() * 0.5;
