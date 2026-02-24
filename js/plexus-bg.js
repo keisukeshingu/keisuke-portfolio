@@ -21,23 +21,27 @@ const PlexusBg = (() => {
   let raf;
   let time = 0;
 
-  /* ---------- Config ---------- */
+  /* ---------- Device detection ---------- */
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+                || (window.innerWidth < 768);
+
+  /* ---------- Config (adaptive) ---------- */
   const CFG = {
-    count:        90,        // particle count
-    speed:        0.3,       // base drift speed
-    radius:       1.8,       // particle dot radius
-    linkDist:     150,       // max distance for line connections
-    linkWidth:    0.8,       // line stroke width
-    mouseRadius:  220,       // mouse attraction radius
-    mouseForce:   0.025,     // mouse attraction strength
-    pulseNodes:   8,         // number of "bright pulse" nodes
-    pulseSpeed:   0.012,     // pulse oscillation speed
+    count:        isMobile ? 30  : 90,      // fewer particles on mobile
+    speed:        isMobile ? 0.25 : 0.3,    // slightly slower on mobile
+    radius:       isMobile ? 2.0  : 1.8,    // slightly larger dots for visibility
+    linkDist:     isMobile ? 100  : 150,    // shorter link distance on mobile
+    linkWidth:    0.8,                       // line stroke width
+    mouseRadius:  isMobile ? 160  : 220,    // touch/mouse attraction radius
+    mouseForce:   isMobile ? 0.035 : 0.025, // stronger attraction for touch
+    pulseNodes:   isMobile ? 4    : 8,      // fewer pulse nodes on mobile
+    pulseSpeed:   0.012,                     // pulse oscillation speed
     /* Colors tuned for light (#F5F5F7) background */
-    dotRGB:       [80, 100, 140],     // dark blue-grey dots
-    lineRGB:      [100, 120, 160],    // slightly lighter blue-grey lines
-    dotAlpha:     0.45,               // base dot opacity
-    lineAlphaMax: 0.14,               // max line opacity at closest distance
-    glowRGB:      [60, 100, 180],     // pulse glow color (blue accent)
+    dotRGB:       [80, 100, 140],            // dark blue-grey dots
+    lineRGB:      [100, 120, 160],           // slightly lighter blue-grey lines
+    dotAlpha:     isMobile ? 0.55 : 0.45,   // slightly more visible on mobile
+    lineAlphaMax: isMobile ? 0.18 : 0.14,   // slightly more visible on mobile
+    glowRGB:      [60, 100, 180],            // pulse glow color (blue accent)
   };
 
   /* ---------- Particle ---------- */
@@ -185,6 +189,8 @@ const PlexusBg = (() => {
 
     /* Events */
     window.addEventListener('resize', resize);
+
+    /* Mouse (desktop) */
     document.addEventListener('mousemove', e => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
@@ -194,7 +200,23 @@ const PlexusBg = (() => {
       mouse.y = -9999;
     });
 
-    console.log('[PlexusBg] Initialized — ' + CFG.count + ' particles');
+    /* Touch (mobile) */
+    document.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      mouse.x = t.clientX;
+      mouse.y = t.clientY;
+    }, { passive: true });
+    document.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      mouse.x = t.clientX;
+      mouse.y = t.clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', () => {
+      /* Fade out interaction smoothly — keep last position briefly */
+      setTimeout(() => { mouse.x = -9999; mouse.y = -9999; }, 800);
+    }, { passive: true });
+
+    console.log('[PlexusBg] Initialized — ' + CFG.count + ' particles (' + (isMobile ? 'mobile' : 'desktop') + ')');
     frame();
   }
 
