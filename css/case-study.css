@@ -159,6 +159,8 @@
   padding: 0 64px;
   display: flex;
   align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 48px;
 }
 
@@ -167,6 +169,7 @@
 .overview-item {
   padding: 0;
   white-space: nowrap;
+  text-align: center;
 }
 
 .overview-bar__label,
