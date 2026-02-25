@@ -26,7 +26,7 @@ Content width:    992px  (1120 − 128)
 | Element | `max-width` | Notes |
 |---|---|---|
 | Hero headline / quote (`clamp(32px–52px)`) | **none** — fills full content width | `text-wrap: balance` handles line breaks |
-| Hero subtitle / body copy (`17px`) | `560px` | Keeps prose at readable measure |
+| Hero subtitle / body copy (`17px`) | **none** — fills full content width | Right edge aligns with quote above and body below |
 | Section headings inside body | inherited from column `1fr` | |
 
 ---
