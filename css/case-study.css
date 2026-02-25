@@ -110,6 +110,10 @@
   margin-top: 6px;
 }
 
+.hero-thumbs--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .hero-thumb {
   aspect-ratio: 16/9;
   border-radius: 6px;
