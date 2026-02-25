@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Tokens Are Not Enough — Keisuke Shingu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===== Design Tokens ===== */
+  :root {
+    --ink-100: #1D1D1F;
+    --ink-80: #6E6E73;
+    --ink-60: #86868B;
+    --ink-40: #AEAEB2;
+    --rule-60: #D2D2D7;
+    --rule-40: #E8E8ED;
+    --paper: #F5F5F7;
+    --white: #FFFFFF;
+    --shu: #B33A3A;
+    --nav-bg: rgba(255,255,255,0.92);
+    --blur: 20px;
+    --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+    --max-w: 1120px;
+  }
+
+  /* ===== Reset ===== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--ink-100);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'ss01' on, 'cv01' on;
+  }
+  a { text-decoration: none; color: inherit; }
+
+  /* ===== Reading Progress Bar ===== */
+  .article-progress {
+    position: fixed; top: 0; left: 0; z-index: 101;
+    width: 0%; height: 2px;
+    background: var(--shu);
+    transition: width 0.1s linear;
+    pointer-events: none;
+  }
+
+  /* ===== Nav ===== */
+  .nav {
+    position: fixed; top: 2px; left: 0; right: 0; z-index: 100;
+    height: 56px; display: flex; align-items: center;
+    background: var(--nav-bg);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    border-bottom: 1px solid var(--rule-40);
+  }
+  .nav__inner {
+    width: 100%; max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav__logo { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink-100); }
+  .nav__links { display: flex; gap: 32px; list-style: none; }
+  .nav__links a { font-size: 13px; font-weight: 400; color: var(--ink-80); transition: color 0.3s var(--ease); }
+  .nav__links a:hover { color: var(--ink-100); }
+  .nav__links a.active { color: var(--ink-100); font-weight: 500; }
+
+  /* ===== Article Hero ===== */
+  .article-hero {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 140px 64px 0;
+  }
+  .article-hero__back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 400; color: var(--ink-60);
+    margin-bottom: 48px; transition: color 0.3s var(--ease);
+  }
+  .article-hero__back:hover { color: var(--ink-100); }
+  .article-hero__back svg { width: 14px; height: 14px; }
+  .article-hero__category {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .article-hero__title {
+    font-size: 48px; font-weight: 200; line-height: 1.1;
+    letter-spacing: -0.035em; color: var(--ink-60);
+    max-width: 800px; margin-bottom: 24px;
+  }
+  .article-hero__title .bold { font-weight: 600; color: var(--ink-100); }
+  .article-hero__byline {
+    font-size: 14px; font-weight: 300; color: var(--ink-60);
+    margin-bottom: 48px;
+  }
+  .article-hero__byline .dot { margin: 0 8px; color: var(--ink-40); }
+  .article-hero__image {
+    width: 100%; aspect-ratio: 16/9; border-radius: 12px;
+    overflow: hidden; margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--paper) 0%, var(--rule-40) 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .article-hero__image img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .article-hero__image-placeholder {
+    font-size: 14px; color: var(--ink-40); font-weight: 300;
+  }
+  .article-hero__caption {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    margin-bottom: 64px;
+  }
+
+  /* ===== Article Layout (Content + TOC Sidebar) ===== */
+  .article-layout {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px 80px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* ===== Table of Contents ===== */
+  .article-toc {
+    position: sticky; top: 80px;
+    padding-top: 8px;
+  }
+  .article-toc__label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
+  }
+  .article-toc__list { list-style: none; }
+  .article-toc__item { margin-bottom: 10px; }
+  .article-toc__link {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    line-height: 1.4; display: block;
+    transition: color 0.3s var(--ease);
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+  }
+  .article-toc__link:hover { color: var(--ink-100); }
+  .article-toc__link.active {
+    color: var(--ink-100); font-weight: 400;
+    border-left-color: var(--ink-100);
+  }
+
+  /* ===== Article Body ===== */
+  .article-body {
+    max-width: 640px;
+  }
+  .article-body p {
+    font-size: 16px; font-weight: 300; line-height: 1.75;
+    color: var(--ink-100); margin-bottom: 20px;
+  }
+  .article-body h2 {
+    font-size: 28px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100);
+    margin-top: 56px; margin-bottom: 20px;
+    scroll-margin-top: 80px;
+  }
+  .article-body h3 {
+    font-size: 20px; font-weight: 500; line-height: 1.3;
+    letter-spacing: -0.01em; color: var(--ink-100);
+    margin-top: 36px; margin-bottom: 12px;
+  }
+  .article-body strong { font-weight: 500; }
+  .article-body a {
+    color: var(--ink-80);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--rule-60);
+    transition: text-decoration-color 0.3s var(--ease);
+  }
+  .article-body a:hover { text-decoration-color: var(--ink-100); }
+
+  /* Pull Quote */
+  .pull-quote {
+    font-size: 18px; font-weight: 300; font-style: italic;
+    line-height: 1.6; color: var(--ink-60);
+    border-left: 3px solid var(--rule-60);
+    padding: 20px 0 20px 24px;
+    margin: 36px 0;
+    background: var(--paper);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* Inline Figure */
+  .article-figure {
+    margin: 40px 0;
+  }
+  .article-figure__image {
+    width: 100%; border-radius: 12px;
+    background: linear-gradient(135deg, var(--paper) 0%, var(--rule-40) 100%);
+    aspect-ratio: 16/10;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .article-figure__image img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .article-figure__placeholder {
+    font-size: 13px; color: var(--ink-40); font-weight: 300;
+  }
+  .article-figure__caption {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    margin-top: 10px; line-height: 1.5;
+  }
+
+  /* Video Embed */
+  .article-video {
+    margin: 40px 0;
+  }
+  .article-video__embed {
+    width: 100%; aspect-ratio: 16/9;
+    border-radius: 12px; overflow: hidden;
+    background: var(--ink-100);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .article-video__embed iframe {
+    width: 100%; height: 100%; border: none;
+    border-radius: 12px;
+  }
+  .article-video__placeholder {
+    color: var(--ink-40); font-size: 14px; font-weight: 300;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .article-video__placeholder svg { opacity: 0.5; }
+  .article-video__caption {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    margin-top: 10px;
+  }
+
+  /* ===== Author Bio ===== */
+  .article-author {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 64px;
+  }
+  .article-author__inner {
+    border-top: 1px solid var(--rule-40);
+    border-bottom: 1px solid var(--rule-40);
+    padding: 40px 0;
+    display: grid; grid-template-columns: 64px 1fr;
+    gap: 24px; align-items: start;
+    max-width: 640px;
+    margin-left: 264px;
+  }
+  .article-author__avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--paper); overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .article-author__avatar svg { color: var(--ink-40); }
+  .article-author__name {
+    font-size: 16px; font-weight: 600; color: var(--ink-100);
+    margin-bottom: 2px;
+  }
+  .article-author__role {
+    font-size: 14px; font-weight: 300; color: var(--ink-60);
+    margin-bottom: 8px;
+  }
+  .article-author__bio {
+    font-size: 14px; font-weight: 300; line-height: 1.6;
+    color: var(--ink-80); margin-bottom: 12px;
+  }
+  .article-author__links { display: flex; gap: 16px; }
+  .article-author__links a {
+    font-size: 13px; font-weight: 300; color: var(--ink-60);
+    transition: color 0.3s var(--ease);
+  }
+  .article-author__links a:hover { color: var(--ink-100); }
+
+  /* ===== Related Articles ===== */
+  .article-related {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 64px 64px 0;
+  }
+  .article-related__heading {
+    font-size: 26px; font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em; color: var(--ink-100);
+    margin-bottom: 32px;
+  }
+  .article-related__grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .dt-card {
+    display: block; border-radius: 12px; overflow: hidden;
+    background: var(--paper);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .dt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 32px rgba(0,0,0,0.05);
+  }
+  .dt-card__image-wrap {
+    width: 100%; aspect-ratio: 4/3; overflow: hidden;
+    background: linear-gradient(135deg, var(--rule-40) 0%, var(--paper) 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dt-card__image-placeholder {
+    font-size: 13px; color: var(--ink-40); font-weight: 300;
+  }
+  .dt-card__body { padding: 20px 24px 24px; }
+  .dt-card__meta {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
+  }
+  .dt-card__meta .dot { margin: 0 6px; }
+  .dt-card__title {
+    font-size: 18px; font-weight: 600; line-height: 1.25;
+    letter-spacing: -0.01em; color: var(--ink-100); margin-bottom: 8px;
+  }
+  .dt-card__excerpt {
+    font-size: 13px; font-weight: 300; line-height: 1.5;
+    color: var(--ink-80);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ===== Prev/Next Nav ===== */
+  .article-nav {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 64px 64px 0;
+  }
+  .article-nav__inner {
+    display: flex; justify-content: space-between;
+    border-top: 1px solid var(--rule-40);
+    padding-top: 32px;
+  }
+  .article-nav__link {
+    transition: opacity 0.3s var(--ease);
+    max-width: 45%;
+  }
+  .article-nav__link:hover { opacity: 0.6; }
+  .article-nav__link--next { text-align: right; margin-left: auto; }
+  .article-nav__label {
+    font-size: 12px; font-weight: 400; color: var(--ink-60);
+    margin-bottom: 6px;
+  }
+  .article-nav__title {
+    font-size: 16px; font-weight: 500; color: var(--ink-100);
+    line-height: 1.3;
+  }
+
+  /* ===== Spacer ===== */
+  .spacer { height: 80px; }
+
+  /* ===== Footer ===== */
+  .footer { border-top: 1px solid var(--rule-40); }
+  .footer__inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 40px 64px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .footer__name { font-size: 14px; font-weight: 500; color: var(--ink-100); }
+  .footer__tagline { font-size: 13px; font-weight: 300; color: var(--ink-60); margin-top: 4px; }
+  .footer__links { display: flex; gap: 32px; }
+  .footer__links a { font-size: 13px; font-weight: 300; color: var(--ink-80); transition: color 0.3s; }
+  .footer__links a:hover { color: var(--ink-100); }
+  .footer__copy {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 64px 40px;
+    border-top: 1px solid var(--rule-40); padding-top: 24px;
+    font-size: 12px; font-weight: 300; color: var(--ink-40);
+  }
+
+  /* ===== Scroll Animations ===== */
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1119px) {
+    .article-layout {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .article-toc {
+      position: relative; top: auto;
+      margin-bottom: 40px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--rule-40);
+    }
+    .article-toc__list {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .article-toc__item { margin-bottom: 0; }
+    .article-toc__link {
+      border-left: none; padding-left: 0;
+      padding: 4px 12px; border-radius: 100px;
+      border: 1px solid var(--rule-40);
+      font-size: 12px;
+    }
+    .article-toc__link.active {
+      border-color: var(--ink-100);
+      background: var(--ink-100); color: var(--white);
+      border-left: none;
+    }
+    .article-author__inner { margin-left: 0; }
+    .article-related__grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 767px) {
+    .article-hero { padding: 120px 24px 0; }
+    .article-hero__title { font-size: 32px; }
+    .article-hero__back { margin-bottom: 32px; }
+    .article-hero__byline { margin-bottom: 32px; }
+    .article-hero__caption { margin-bottom: 40px; }
+    .nav__inner { padding: 0 24px; }
+    .nav__links { display: none; }
+    .article-layout { padding: 0 24px 48px; }
+    .article-body h2 { font-size: 24px; margin-top: 40px; }
+    .article-body h3 { font-size: 18px; }
+    .article-author { padding: 0 24px; }
+    .article-author__inner {
+      grid-template-columns: 1fr; gap: 16px;
+    }
+    .article-related { padding: 48px 24px 0; }
+    .article-related__grid { grid-template-columns: 1fr; }
+    .article-nav { padding: 48px 24px 0; }
+    .article-nav__inner { flex-direction: column; gap: 24px; }
+    .article-nav__link { max-width: 100%; }
+    .article-nav__link--next { text-align: left; }
+    .footer__inner { padding: 32px 24px; flex-direction: column; gap: 24px; }
+    .footer__copy { padding: 0 24px 32px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .article-progress { transition: none; }
+    .dt-card { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Reading Progress -->
+<div class="article-progress" id="readingProgress"></div>
+
+<!-- Nav -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="../index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="../projects.html" >Projects</a></li>
+      <li><a href="../design-thinking.html" class="active">Design Thinking</a></li>
+      <li><a href="../about.html" >About</a></li>
+      <li><a href="../contact.html" >Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<article>
+  <header class="article-hero">
+    <a href="../design-thinking.html" class="article-hero__back">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2L4 7l5 5"/></svg>
+      Design Thinking
+    </a>
+    <p class="article-hero__category">Design Systems</p>
+    <h1 class="article-hero__title">
+      <span class="bold">Design Tokens Are Not Enough</span> — Building Living Systems
+    </h1>
+    <p class="article-hero__byline">
+      Keisuke Shingu<span class="dot">·</span>December 8, 2025<span class="dot">·</span>10 min read
+    </p>
+    <div class="article-hero__image">
+      <span class="article-hero__image-placeholder">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="22" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="6" y="22" width="36" height="8" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="6" y="34" width="16" height="8" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="26" y="34" width="16" height="8" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+      </span>
+    </div>
+    <p class="article-hero__caption">
+      A design system architecture diagram showing the layers between tokens, components, patterns, and organizational adoption.
+    </p>
+  </header>
+
+  <div class="article-layout">
+    <aside class="article-toc" id="articleToc">
+      <p class="article-toc__label">On This Page</p>
+      <ol class="article-toc__list">
+        <li class="article-toc__item"><a href="#token-promise" class="article-toc__link active">The Token Promise</a></li>
+        <li class="article-toc__item"><a href="#where-systems-break" class="article-toc__link">Where Systems Break</a></li>
+        <li class="article-toc__item"><a href="#living-architecture" class="article-toc__link">Living Architecture</a></li>
+        <li class="article-toc__item"><a href="#three-layers" class="article-toc__link">Three Layers Deep</a></li>
+        <li class="article-toc__item"><a href="#organizational-reality" class="article-toc__link">Organizational Reality</a></li>
+      </ol>
+    </aside>
+
+    <div class="article-body" id="articleBody">
+
+      <p>
+        Every design system pitch starts the same way: "We'll define tokens — colors, spacing, typography — and everything will be consistent." It's a compelling promise. Define once, use everywhere. Change a hex value, watch it ripple across fifty screens. The allure of tokens is the allure of control.
+      </p>
+
+      <p>
+        But after building and maintaining design systems across publishing platforms serving Forbes and Condé Nast, premium audio ecosystems spanning 60+ products, and multi-agent AI platforms — I've learned that tokens are necessary but not sufficient on their own. They solve the easiest 20% of the consistency problem and leave the hardest 80% untouched.
+      </p>
+
+      <h2 id="token-promise">The Token Promise</h2>
+
+      <p>
+        Design tokens are brilliant in their simplicity. A semantic layer that maps intent to value: <strong>--color-primary</strong> rather than <strong>#1D1D1F</strong>. They abstract visual decisions from implementation, enabling theme switching, dark mode, and brand customization without touching component code.
+      </p>
+
+      <p>
+        The token specification has matured significantly. The W3C Design Tokens Community Group has standardized the format. Figma, Style Dictionary, and a growing ecosystem of tools can generate, transform, and distribute tokens across platforms. The infrastructure is there.
+      </p>
+
+      <p>
+        So why do design systems still fracture?
+      </p>
+
+      <h2 id="where-systems-break">Where Systems Break</h2>
+
+      <p>
+        Systems don't break at the token level. They break at the <strong>seams</strong> — the places where components meet, where patterns compose, where edge cases accumulate, and where organizational incentives diverge from system goals.
+      </p>
+
+      <div class="pull-quote">
+        Design systems don't fail because the tokens are wrong. They fail because nobody designed the rules for how tokens combine, when patterns override components, and who arbitrates conflicts.
+      </div>
+
+      <p>
+        In a premium audio design system spanning 60+ products, the tokens were precise — every shade of the interface specified. But when a multi-room audio team needed a "now playing" state that combined background blur, album art tinting, and playback controls, the tokens couldn't express the <strong>relationship</strong> between these elements. The system had vocabulary but no grammar.
+      </p>
+
+      <figure class="article-figure">
+        <div class="article-figure__image">
+          <span class="article-figure__placeholder">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="4" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><line x1="4" y1="16" x2="44" y2="16" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2"/><line x1="4" y1="28" x2="44" y2="28" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2"/><line x1="16" y1="4" x2="16" y2="44" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2"/><line x1="32" y1="4" x2="32" y2="44" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2"/></svg>
+          </span>
+        </div>
+        <figcaption class="article-figure__caption">
+          The anatomy of a design system fracture: tokens define individual values correctly, but the composition layer — how components combine in context — remains undefined.
+        </figcaption>
+      </figure>
+
+      <p>
+        The same pattern repeated at the AI platform. Tokens handled color and spacing beautifully. But when we needed to express "this agent's confidence is declining over time, and the visual treatment should reflect both the current state and the trajectory," we were beyond what tokens could express. We needed <strong>design logic</strong>, not design values.
+      </p>
+
+      <h2 id="living-architecture">Living Architecture</h2>
+
+      <p>
+        The metaphor that helped us was architecture — not software architecture, but physical architecture. A building isn't defined by its materials (tokens). It's defined by its structural system (how loads transfer), its spatial program (how rooms relate), and its response to context (climate, site, culture).
+      </p>
+
+      <p>
+        A living design system needs three things beyond tokens: <strong>composition rules</strong> that define how components combine; <strong>behavioral patterns</strong> that define how states, transitions, and interactions work; and <strong>governance structures</strong> that define who can extend the system and how.
+      </p>
+
+      <h2 id="three-layers">Three Layers Deep</h2>
+
+      <h3>Layer 1: Semantic Tokens (the vocabulary)</h3>
+      <p>
+        This is where most systems stop. Color, typography, spacing, elevation, motion timing. Essential but insufficient.
+      </p>
+
+      <h3>Layer 2: Composition Patterns (the grammar)</h3>
+      <p>
+        Rules for how tokens combine in context. A card component in a grid has different spacing rules than the same card in a sidebar. A button's visual weight changes based on its container's information density. These aren't token values — they're <strong>relationships between values</strong> that shift based on context.
+      </p>
+
+      <h3>Layer 3: Behavioral Contracts (the rhetoric)</h3>
+      <p>
+        Agreements about how the system responds to state changes, error conditions, loading states, and edge cases. When an agent reports low confidence, every component in the decision interface should respond in a coordinated way — not just change color, but adjust information density, surface alternative actions, and modify the interaction pattern.
+      </p>
+
+      <figure class="article-figure">
+        <div class="article-figure__image">
+          <span class="article-figure__placeholder">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="12" r="8" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><circle cx="12" cy="34" r="8" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><circle cx="36" cy="34" r="8" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><path d="M20 18l-4 10M28 18l4 10M18 34h12" stroke="var(--ink-40)" stroke-width="1.5"/></svg>
+          </span>
+        </div>
+        <figcaption class="article-figure__caption">
+          The three-layer model: tokens (vocabulary) feed into composition patterns (grammar), which operate within behavioral contracts (rhetoric). Each layer depends on the one below.
+        </figcaption>
+      </figure>
+
+      <div class="pull-quote">
+        Tokens give you consistency of appearance. Composition patterns give you consistency of experience. Behavioral contracts give you consistency of meaning.
+      </div>
+
+      <h2 id="organizational-reality">Organizational Reality</h2>
+
+      <p>
+        The hardest part of a design system isn't technical — it's organizational. Systems succeed or fail based on governance: who decides when to add a new pattern, how exceptions are handled, and what happens when a product team's deadline conflicts with system integrity.
+      </p>
+
+      <p>
+        The systems that survive are the ones that acknowledge this reality from the start. They build contribution models that make it easier to extend the system than to work around it. They create decision frameworks for when to customize versus when to standardize. They invest in documentation that explains not just <strong>what</strong> the system does, but <strong>why</strong> it works that way.
+      </p>
+
+      <p>
+        In a publishing platform that served 95% of the print industry, this lesson came through years of maintaining a design system that thousands of designers depended on daily. The system's longevity came not from its technical sophistication but from its governance model — clear contribution paths, transparent decision-making, and a deep respect for the practitioners who used it.
+      </p>
+
+      <p>
+        Design tokens are a foundation. But a foundation isn't a building. The system that will serve your organization for years — that will evolve gracefully across product launches, team changes, and platform migrations — needs grammar, rhetoric, and governance on top of vocabulary. Start with tokens. But don't stop there.
+      </p>
+
+    </div>
+  </div>
+</article>
+
+<!-- Author Bio -->
+<section class="article-author reveal">
+  <div class="article-author__inner">
+    <div class="article-author__avatar">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="currentColor" stroke-width="1.5"/></svg>
+    </div>
+    <div>
+      <p class="article-author__name">Keisuke Shingu</p>
+      <p class="article-author__role">Product Designer & Design Systems Architect</p>
+      <p class="article-author__bio">Designing AI-native interfaces for multi-agent systems. Previously led design engineering at Denon/Marantz, Slalom Consulting, and Rakuten. Focused on the intersection of human judgment and machine intelligence.</p>
+      <div class="article-author__links">
+        <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="../contact.html" >Contact</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Articles -->
+<section class="article-related reveal">
+  <h2 class="article-related__heading">Continue Reading</h2>
+  <div class="article-related__grid">
+    <a href="ma-negative-space.html" class="dt-card">
+      <div class="dt-card__image-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/RyoanJi-Dry_garden.jpg" alt="Ryoanji zen garden negative space Japanese aesthetics Ma" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+      <div class="dt-card__body">
+        <p class="dt-card__meta">Japanese Aesthetics<span class="dot">·</span>Jan 2026</p>
+        <h3 class="dt-card__title">Ma — The Power of Negative Space in Digital Interfaces</h3>
+        <p class="dt-card__excerpt">In Japanese aesthetics, the space between elements carries as much meaning as the elements themselves.</p>
+      </div>
+    </a>
+    <a href="agents-cognitive-prosthetics.html" class="dt-card">
+      <div class="dt-card__image-wrap"><img src="https://www.tdk.com/system/files/featured_stories/machine_management.jpg" alt="AI agents cognitive prosthetics TDK factory edge intelligence" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+      <div class="dt-card__body">
+        <p class="dt-card__meta">AI & UX<span class="dot">·</span>Feb 2026</p>
+        <h3 class="dt-card__title">Agents as Cognitive Prosthetics</h3>
+        <p class="dt-card__excerpt">The most powerful AI systems aren't replacements — they're extensions of human judgment.</p>
+      </div>
+    </a>
+    <a href="60fps-performance.html" class="dt-card">
+      <div class="dt-card__image-wrap"><img src="https://www.native-instruments.com/typo3temp/pics/img-ce-gallery-traktor-pro-4-product-page-02-gallery-a-main-new-bdc5e8f4a0cb7f43a750233be2e1a9b2-d@2x.jpg" alt="60fps performance animation Traktor Pro DJ real-time motion" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
+      <div class="dt-card__body">
+        <p class="dt-card__meta">Engineering<span class="dot">·</span>Nov 2025</p>
+        <h3 class="dt-card__title">The 60fps Imperative — Performance as a Design Decision</h3>
+        <p class="dt-card__excerpt">Frame rate isn't a technical spec — it's a design choice that shapes user trust and quality perception.</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- Prev/Next -->
+<nav class="article-nav">
+  <div class="article-nav__inner">
+    <a href="ma-negative-space.html" class="article-nav__link article-nav__link--prev">
+      <p class="article-nav__label">← Previous Article</p>
+      <p class="article-nav__title">Ma — The Power of Negative Space</p>
+    </a>
+    <a href="60fps-performance.html" class="article-nav__link article-nav__link--next">
+      <p class="article-nav__label">Next Article →</p>
+      <p class="article-nav__title">The 60fps Imperative</p>
+    </a>
+  </div>
+</nav>
+
+<div class="spacer"></div>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html" >About</a>
+      <a href="../contact.html" >Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '-40px' });
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+  const progressBar = document.getElementById('readingProgress');
+  const articleBody = document.getElementById('articleBody');
+  function updateProgress() { const rect = articleBody.getBoundingClientRect(); const articleTop = rect.top + window.scrollY; const articleHeight = rect.height; const scrolled = window.scrollY - articleTop; const progress = Math.max(0, Math.min(100, (scrolled / articleHeight) * 100)); progressBar.style.width = progress + '%'; }
+  window.addEventListener('scroll', () => requestAnimationFrame(updateProgress));
+  updateProgress();
+
+  const tocLinks = document.querySelectorAll('.article-toc__link');
+  const sections = [];
+  tocLinks.forEach(link => { const id = link.getAttribute('href').slice(1); const section = document.getElementById(id); if (section) sections.push({ el: section, link: link }); });
+  const tocObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); const match = sections.find(s => s.el === entry.target); if (match) match.link.classList.add('active'); } }); }, { threshold: 0, rootMargin: '-80px 0px -70% 0px' });
+  sections.forEach(s => tocObserver.observe(s.el));
+</script>
+
+</body>
+</html>
