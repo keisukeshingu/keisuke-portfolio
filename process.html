@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process — Keisuke Shingu</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+body { background: #FAFBFC; }
+
+/* ===== Hero ===== */
+.process-hero {
+  padding: 192px 64px 80px;
+  max-width: var(--max-w); margin: 0 auto;
+}
+.process-hero__quote {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 200; line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: var(--ink-60);
+  max-width: 760px;
+  text-wrap: balance;
+}
+.process-hero__quote em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ink-100);
+}
+.process-hero__sub {
+  font-size: 17px; font-weight: 300; line-height: 1.65;
+  color: var(--ink-60); margin-top: 32px;
+  max-width: 560px;
+}
+
+/* ===== Section layout ===== */
+.process-body {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 64px 128px;
+}
+
+.process-section {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  padding: 72px 0;
+  border-top: 1px solid var(--rule-40);
+}
+
+.process-section__label {
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-40);
+  padding-top: 6px;
+}
+
+.process-section__content h2 {
+  font-size: 28px; font-weight: 600; line-height: 1.2;
+  letter-spacing: -0.02em; color: var(--ink-100);
+  margin-bottom: 20px;
+}
+
+.process-section__content p {
+  font-size: 16px; font-weight: 300; line-height: 1.75;
+  color: var(--ink-80); margin-bottom: 18px;
+}
+
+.process-section__content p:last-child { margin-bottom: 0; }
+
+.pull-quote {
+  font-size: 18px; font-weight: 300; font-style: italic;
+  line-height: 1.6; color: var(--ink-60);
+  border-left: 3px solid var(--rule-60);
+  padding: 20px 0 20px 24px;
+  margin: 32px 0;
+  background: var(--paper);
+  border-radius: 0 8px 8px 0;
+}
+
+/* ===== Principles list ===== */
+.principles-list {
+  list-style: none;
+  counter-reset: principles;
+  margin-top: 8px;
+}
+
+.principles-list li {
+  counter-increment: principles;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--rule-40);
+  font-size: 16px; font-weight: 300; line-height: 1.6;
+  color: var(--ink-80);
+}
+
+.principles-list li:last-child { border-bottom: none; }
+
+.principles-list li::before {
+  content: counter(principles, decimal-leading-zero);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ink-40);
+  padding-top: 3px;
+}
+
+.principles-list strong {
+  display: block;
+  font-size: 15px; font-weight: 500;
+  color: var(--ink-100);
+  margin-bottom: 4px;
+}
+
+/* ===== Tools grid ===== */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--rule-40);
+  border: 1px solid var(--rule-40);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.tool-item {
+  background: var(--white);
+  padding: 20px 24px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+
+.tool-item__name {
+  font-size: 14px; font-weight: 500;
+  color: var(--ink-100);
+}
+
+.tool-item__use {
+  font-size: 12px; font-weight: 300;
+  color: var(--ink-60); line-height: 1.4;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .process-hero { padding: 120px 24px 56px; }
+  .process-body { padding: 0 24px 80px; }
+  .process-section {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 48px 0;
+  }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header class="nav">
+  <nav class="nav__inner">
+    <a href="index.html" class="nav__logo">Keisuke Shingu</a>
+    <ul class="nav__links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="process.html" class="active">Process</a></li>
+      <li><a href="design-thinking.html">Design Thinking</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="process-hero">
+  <p class="process-hero__quote">
+    What strikes me most isn't the speed —<br>
+    it's <em>who can now be in the room.</em>
+  </p>
+  <p class="process-hero__sub">
+    I bring a working proof-of-concept into client meetings instead of a mockup,
+    make changes during a conversation, and show results before it ends.
+    That shift changes not just how fast design moves — it changes who
+    gets to participate in decisions.
+  </p>
+</section>
+
+<!-- ===== BODY ===== -->
+<div class="process-body">
+
+  <!-- HOW I START -->
+  <div class="process-section">
+    <div class="process-section__label">How I Start</div>
+    <div class="process-section__content">
+      <h2>First Principles Before Tools</h2>
+      <p>
+        Every engagement starts the same way: understand the constraint before touching the canvas.
+        Not the stated constraint — the structural one. What is the system actually optimizing for,
+        and where is that in tension with what users need? That gap is usually where the real design
+        problem lives.
+      </p>
+      <p>
+        I spend more time reading — support logs, product reviews, engineering specs, user research —
+        than most designers expect before I open Figma. The canvas is for expressing a position,
+        not forming one.
+      </p>
+      <div class="pull-quote">
+        The most important design decisions are usually made before the first frame is drawn.
+      </div>
+      <p>
+        This matters especially in AI systems, where the temptation is to start with the interface
+        and work backward to the model. The right order is the opposite: understand what the system
+        can reliably know, what it cannot, and how to design around that boundary honestly.
+      </p>
+    </div>
+  </div>
+
+  <!-- THE WORKFLOW -->
+  <div class="process-section">
+    <div class="process-section__label">The Workflow</div>
+    <div class="process-section__content">
+      <h2>Token Pipeline to Proof of Concept</h2>
+      <p>
+        I work in a fully connected pipeline: Figma Variables → Style Dictionary → Tailwind config →
+        Storybook → CI/CD. Design tokens flow directly into the codebase. When a token changes in
+        Figma, it propagates to every component and every platform without a manual handoff.
+      </p>
+      <p>
+        This isn't just an efficiency gain. It removes the translation layer where intent gets lost —
+        where a designer says "8px gap" and an engineer interprets "approximately 8px" and a product
+        manager approves something in between. The pipeline makes the design system the single source
+        of truth, not a reference document.
+      </p>
+      <p>
+        From there, proof-of-concepts are built in code — real components, real interactions,
+        real data where possible. Not to prototype fidelity, but to decision fidelity. The question
+        is always: is this enough to make the next decision? If yes, ship it to the room.
+      </p>
+    </div>
+  </div>
+
+  <!-- IN THE ROOM -->
+  <div class="process-section">
+    <div class="process-section__label">In the Room</div>
+    <div class="process-section__content">
+      <h2>Design as Real-Time Conversation</h2>
+      <p>
+        The traditional design review is a presentation: the designer advocates for a position,
+        stakeholders respond, revisions are scheduled. This rhythm made sense when making changes
+        meant days of work. It no longer does.
+      </p>
+      <p>
+        When you can make a meaningful change in the room — adjust the flow, swap the component,
+        test the edge case — the conversation changes from approval to collaboration. Stakeholders
+        stop being an audience and start being participants. Decisions get made that used to require
+        three more meetings.
+      </p>
+      <div class="pull-quote">
+        The proof-of-concept isn't a deliverable. It's the opening move in a conversation.
+      </div>
+      <p>
+        This demands a different kind of preparation. The work before the meeting is not polish —
+        it's identifying which decisions are blocked, which assumptions need testing, and what the
+        minimum artifact is that unlocks each one. Come in with the right question, not the
+        finished answer.
+      </p>
+    </div>
+  </div>
+
+  <!-- PRINCIPLES -->
+  <div class="process-section">
+    <div class="process-section__label">Principles</div>
+    <div class="process-section__content">
+      <h2>What I Hold Constant</h2>
+      <ul class="principles-list">
+        <li>
+          <span></span>
+          <div>
+            <strong>Constraint before canvas</strong>
+            Understand the structural problem before opening a design tool. The canvas is for
+            expressing a position, not forming one.
+          </div>
+        </li>
+        <li>
+          <span></span>
+          <div>
+            <strong>Proof over pitch</strong>
+            A working artifact that answers the next question is worth more than a polished
+            presentation of a finished answer. Lead with the minimum demonstrable thing.
+          </div>
+        </li>
+        <li>
+          <span></span>
+          <div>
+            <strong>Tokens are vocabulary, not grammar</strong>
+            Design systems need more than named values. They need composition rules,
+            pattern decisions, and governance — the grammar that makes vocabulary coherent.
+          </div>
+        </li>
+        <li>
+          <span></span>
+          <div>
+            <strong>Honour what already exists</strong>
+            Every product has accumulated meaning — conventions users rely on, patterns that
+            carry expectation. Earn the right to change something before changing it.
+          </div>
+        </li>
+        <li>
+          <span></span>
+          <div>
+            <strong>AI earns trust, it doesn't claim it</strong>
+            In AI systems, transparency is not a feature — it's a precondition for use.
+            Intent, confidence, provenance, and alternatives must be present before the
+            interface asks for human judgment.
+          </div>
+        </li>
+        <li>
+          <span></span>
+          <div>
+            <strong>The user role is a decision model</strong>
+            Design for what users need to decide, not what they want to see. Different roles
+            require different information architectures from the same underlying data.
+          </div>
+        </li>
+        <li>
+          <span></span>
+          <div>
+            <strong>Ship to learn, not to finish</strong>
+            The goal of a release is not completion — it is a question answered by real usage.
+            Define the question before shipping.
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="process-section">
+    <div class="process-section__label">Tools</div>
+    <div class="process-section__content">
+      <h2>What I Actually Use</h2>
+      <p>
+        Tools are chosen for how well they disappear — how quickly intent becomes artifact.
+        The list changes; the criteria don't.
+      </p>
+      <div class="tools-grid">
+        <div class="tool-item">
+          <span class="tool-item__name">Figma</span>
+          <span class="tool-item__use">Design, variables, component architecture</span>
+        </div>
+        <div class="tool-item">
+          <span class="tool-item__name">Claude</span>
+          <span class="tool-item__use">Reasoning, research synthesis, code generation</span>
+        </div>
+        <div class="tool-item">
+          <span class="tool-item__name">Cursor</span>
+          <span class="tool-item__use">AI-native IDE for real-time proof-of-concept</span>
+        </div>
+        <div class="tool-item">
+          <span class="tool-item__name">Style Dictionary</span>
+          <span class="tool-item__use">Token transformation across platforms</span>
+        </div>
+        <div class="tool-item">
+          <span class="tool-item__name">Storybook</span>
+          <span class="tool-item__use">Component documentation and visual testing</span>
+        </div>
+        <div class="tool-item">
+          <span class="tool-item__name">Tailwind</span>
+          <span class="tool-item__use">Utility-first CSS from token pipeline output</span>
+        </div>
+        <div class="tool-item">
+          <span class="tool-item__name">React</span>
+          <span class="tool-item__use">Component-based UI for interactive PoCs</span>
+        </div>
+        <div class="tool-item">
+          <span class="tool-item__name">Notion</span>
+          <span class="tool-item__use">Decision logs, design rationale, team alignment</span>
+        </div>
+        <div class="tool-item">
+          <span class="tool-item__name">Miro</span>
+          <span class="tool-item__use">Systems mapping, journey architecture</span>
+        </div>
+        <div class="tool-item">
+          <span class="tool-item__name">GitHub</span>
+          <span class="tool-item__use">Version control, CI/CD, design-to-code pipeline</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <span class="footer__name">Keisuke Shingu</span>
+      <span class="footer__tagline">Design Engineering · AI Systems · Tokyo → San Francisco</span>
+    </div>
+    <div class="footer__links">
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/keisukeshingu" target="_blank" rel="noopener">GitHub</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer__copy">© 2026 Keisuke Shingu</div>
+</footer>
+
+<script src="js/scroll-reveal.js"></script>
+</body>
+</html>

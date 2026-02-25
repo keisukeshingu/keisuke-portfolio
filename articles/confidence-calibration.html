@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Design Tokens Are Not Enough — Keisuke Shingu</title>
+<title>Confidence Calibration — Keisuke Shingu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -433,23 +433,9 @@
 </style>
 </head>
 <body>
-
-<!-- Reading Progress -->
 <div class="article-progress" id="readingProgress"></div>
-
-<!-- Nav -->
-<header class="nav">
-  <nav class="nav__inner">
-    <a href="../index.html" class="nav__logo">Keisuke Shingu</a>
-    <ul class="nav__links">
-      <li><a href="../projects.html" >Projects</a></li>
-      <li><a href="../process.html">Process</a></li>
-      <li><a href="../design-thinking.html" class="active">Design Thinking</a></li>
-      <li><a href="../about.html" >About</a></li>
-      <li><a href="../contact.html" >Contact</a></li>
-    </ul>
-  </nav>
-</header>
+<header class="nav"><nav class="nav__inner"><a href="../index.html" class="nav__logo">Keisuke Shingu</a><ul class="nav__links"><li><a href="../projects.html" >Projects</a></li>
+      <li><a href="../process.html">Process</a></li><li><a href="../design-thinking.html" class="active">Design Thinking</a></li><li><a href="../about.html" >About</a></li><li><a href="../contact.html" >Contact</a></li></ul></nav></header>
 
 <article>
   <header class="article-hero">
@@ -457,20 +443,20 @@
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2L4 7l5 5"/></svg>
       Design Thinking
     </a>
-    <p class="article-hero__category">Design Systems</p>
+    <p class="article-hero__category">AI & UX</p>
     <h1 class="article-hero__title">
-      <span class="bold">Design Tokens Are Not Enough</span> — Building Living Systems
+      <span class="bold">Confidence Calibration</span> — When AI Should Say "I Don't Know"
     </h1>
     <p class="article-hero__byline">
-      Keisuke Shingu<span class="dot">·</span>December 8, 2025<span class="dot">·</span>10 min read
+      Keisuke Shingu<span class="dot">·</span>October 3, 2025<span class="dot">·</span>9 min read
     </p>
     <div class="article-hero__image">
       <span class="article-hero__image-placeholder">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="22" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="6" y="22" width="36" height="8" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="6" y="34" width="16" height="8" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="26" y="34" width="16" height="8" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M24 8v32M8 24h32" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/><circle cx="24" cy="24" r="6" stroke="currentColor" stroke-width="1" fill="none"/><circle cx="24" cy="24" r="2" fill="currentColor"/></svg>
       </span>
     </div>
     <p class="article-hero__caption">
-      A design system architecture diagram showing the layers between tokens, components, patterns, and organizational adoption.
+      Confidence calibration interface: the visual treatment of AI certainty should scale with its magnitude, not hide behind a single score.
     </p>
   </header>
 
@@ -478,227 +464,171 @@
     <aside class="article-toc" id="articleToc">
       <p class="article-toc__label">On This Page</p>
       <ol class="article-toc__list">
-        <li class="article-toc__item"><a href="#token-promise" class="article-toc__link active">The Token Promise</a></li>
-        <li class="article-toc__item"><a href="#where-systems-break" class="article-toc__link">Where Systems Break</a></li>
-        <li class="article-toc__item"><a href="#living-architecture" class="article-toc__link">Living Architecture</a></li>
-        <li class="article-toc__item"><a href="#three-layers" class="article-toc__link">Three Layers Deep</a></li>
-        <li class="article-toc__item"><a href="#organizational-reality" class="article-toc__link">Organizational Reality</a></li>
+        <li class="article-toc__item"><a href="#certainty-theater" class="article-toc__link active">Certainty Theater</a></li>
+        <li class="article-toc__item"><a href="#cost-of-false-confidence" class="article-toc__link">The Cost of False Confidence</a></li>
+        <li class="article-toc__item"><a href="#calibration-spectrum" class="article-toc__link">The Calibration Spectrum</a></li>
+        <li class="article-toc__item"><a href="#visual-language" class="article-toc__link">A Visual Language for Uncertainty</a></li>
+        <li class="article-toc__item"><a href="#designing-humility" class="article-toc__link">Designing Humility</a></li>
       </ol>
     </aside>
 
     <div class="article-body" id="articleBody">
 
       <p>
-        Every design system pitch starts the same way: "We'll define tokens — colors, spacing, typography — and everything will be consistent." It's a compelling promise. Define once, use everywhere. Change a hex value, watch it ripple across fifty screens. The allure of tokens is the allure of control.
+        Ask any AI system a question and you'll get an answer. Ask it how confident it is and you'll get a number — usually suspiciously high. The fundamental UX problem with modern AI isn't that it gives wrong answers. It's that it presents every answer with the same unwavering confidence, regardless of whether it's drawing from deep training signal or making an educated guess.
       </p>
 
       <p>
-        But after building and maintaining design systems across publishing platforms serving Forbes and Condé Nast, premium audio ecosystems spanning 60+ products, and multi-agent AI platforms — I've learned that tokens are necessary but not sufficient on their own. They solve the easiest 20% of the consistency problem and leave the hardest 80% untouched.
+        This is what I call <strong>certainty theater</strong> — the performance of confidence without its substance. And it's one of the most dangerous patterns in AI interface design.
       </p>
 
-      <h2 id="token-promise">The Token Promise</h2>
+      <h2 id="certainty-theater">Certainty Theater</h2>
 
       <p>
-        Design tokens are brilliant in their simplicity. A semantic layer that maps intent to value: <strong>--color-primary</strong> rather than <strong>#1D1D1F</strong>. They abstract visual decisions from implementation, enabling theme switching, dark mode, and brand customization without touching component code.
-      </p>
-
-      <p>
-        The token specification has matured significantly. The W3C Design Tokens Community Group has standardized the format. Figma, Style Dictionary, and a growing ecosystem of tools can generate, transform, and distribute tokens across platforms. The infrastructure is there.
+        Most AI-powered interfaces present recommendations in a uniform visual language. A product suggestion and a medical insight get the same card layout, the same font weight, the same treatment. Some systems add a confidence percentage — "87% confident" — but these numbers are often poorly calibrated and, worse, they all <strong>look the same</strong>.
       </p>
 
       <p>
-        So why do design systems still fracture?
-      </p>
-
-      <h2 id="where-systems-break">Where Systems Break</h2>
-
-      <p>
-        Systems don't break at the token level. They break at the <strong>seams</strong> — the places where components meet, where patterns compose, where edge cases accumulate, and where organizational incentives diverge from system goals.
+        An 87% confidence and a 62% confidence are very different propositions. The first suggests the system has strong signal and the human should likely follow it. The second suggests genuine uncertainty where human judgment is critical. But in most interfaces, these two states are visually indistinguishable — a number that changes while everything else stays constant.
       </p>
 
       <div class="pull-quote">
-        Design systems don't fail because the tokens are wrong. They fail because nobody designed the rules for how tokens combine, when patterns override components, and who arbitrates conflicts.
+        The most honest thing an AI system can do is show you exactly how much it doesn't know. But most interfaces are designed to project certainty, because uncertainty feels like a product failure.
       </div>
 
+      <h2 id="cost-of-false-confidence">The Cost of False Confidence</h2>
+
       <p>
-        In a premium audio design system spanning 60+ products, the tokens were precise — every shade of the interface specified. But when a multi-room audio team needed a "now playing" state that combined background blur, album art tinting, and playback controls, the tokens couldn't express the <strong>relationship</strong> between these elements. The system had vocabulary but no grammar.
+        In a manufacturing quality control system I helped design, the AI agents each assessed product quality from different perspectives — visual, sensor-based, historical patterns. Early in development, we presented all assessments identically: a pass/fail recommendation with a confidence score displayed as text.
+      </p>
+
+      <p>
+        The operators learned to ignore the scores. When everything looks the same, numbers become noise. An operator would see "Visual: Pass (78%)" and "Sensor: Pass (96%)" and treat them as equivalent. They weren't. The 78% visual assessment was saying "I'm not sure" — but the interface wasn't.
+      </p>
+
+      <p>
+        It took a quality escape — a defective batch that the visual agent had flagged with low confidence — to reveal the problem. The information was there. The interface had failed to make it <strong>legible</strong>.
+      </p>
+
+      <h2 id="calibration-spectrum">The Calibration Spectrum</h2>
+
+      <p>
+        True confidence calibration means the visual treatment of uncertainty scales continuously with its magnitude. Not a binary "confident/uncertain" toggle, but a spectrum where every level of confidence has a distinct visual signature that the human can read at a glance.
       </p>
 
       <figure class="article-figure">
         <div class="article-figure__image">
           <span class="article-figure__placeholder">
-            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="4" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><line x1="4" y1="16" x2="44" y2="16" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2"/><line x1="4" y1="28" x2="44" y2="28" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2"/><line x1="16" y1="4" x2="16" y2="44" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2"/><line x1="32" y1="4" x2="32" y2="44" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2"/></svg>
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" rx="4" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><rect x="8" y="32" width="6" height="6" rx="1" fill="var(--ink-40)" opacity="0.9"/><rect x="17" y="26" width="6" height="12" rx="1" fill="var(--ink-40)" opacity="0.7"/><rect x="26" y="20" width="6" height="18" rx="1" fill="var(--ink-40)" opacity="0.5"/><rect x="35" y="14" width="6" height="24" rx="1" fill="var(--ink-40)" opacity="0.3"/></svg>
           </span>
         </div>
         <figcaption class="article-figure__caption">
-          The anatomy of a design system fracture: tokens define individual values correctly, but the composition layer — how components combine in context — remains undefined.
+          The calibration spectrum: four levels of confidence expressed through opacity, visual weight, border treatment, and information density. High-confidence items are solid and compact; low-confidence items are lighter and reveal more underlying data.
         </figcaption>
       </figure>
 
       <p>
-        The same pattern repeated at the AI platform. Tokens handled color and spacing beautifully. But when we needed to express "this agent's confidence is declining over time, and the visual treatment should reflect both the current state and the trajectory," we were beyond what tokens could express. We needed <strong>design logic</strong>, not design values.
+        We developed a four-dimensional approach to expressing confidence visually:
       </p>
 
-      <h2 id="living-architecture">Living Architecture</h2>
-
+      <h3>1. Visual Weight</h3>
       <p>
-        The metaphor that helped us was architecture — not software architecture, but physical architecture. A building isn't defined by its materials (tokens). It's defined by its structural system (how loads transfer), its spatial program (how rooms relate), and its response to context (climate, site, culture).
+        High-confidence elements are bold, solid, and visually dominant. Low-confidence elements are lighter, with reduced opacity and thinner borders. The eye naturally prioritizes the heavier elements — which is exactly right, because those are the assessments the system is most sure about.
       </p>
 
+      <h3>2. Information Density</h3>
       <p>
-        A living design system needs three things beyond tokens: <strong>composition rules</strong> that define how components combine; <strong>behavioral patterns</strong> that define how states, transitions, and interactions work; and <strong>governance structures</strong> that define who can extend the system and how.
+        When the system is confident, it can be brief. When uncertain, it should show its work. Low-confidence recommendations automatically expand to reveal the underlying data, alternative interpretations, and contributing factors. The interface literally opens up when it's less sure.
       </p>
 
-      <h2 id="three-layers">Three Layers Deep</h2>
-
-      <h3>Layer 1: Semantic Tokens (the vocabulary)</h3>
+      <h3>3. Action Affordance</h3>
       <p>
-        This is where most systems stop. Color, typography, spacing, elevation, motion timing. Essential but insufficient.
+        High-confidence recommendations offer a direct "Accept" action. Low-confidence ones present options: "Accept," "Review Data," "Override." The interaction cost scales with uncertainty — it takes more effort to accept a low-confidence recommendation, which is appropriate because those decisions deserve more human attention.
       </p>
 
-      <h3>Layer 2: Composition Patterns (the grammar)</h3>
+      <h3>4. Temporal Treatment</h3>
       <p>
-        Rules for how tokens combine in context. A card component in a grid has different spacing rules than the same card in a sidebar. A button's visual weight changes based on its container's information density. These aren't token values — they're <strong>relationships between values</strong> that shift based on context.
+        Confident elements appear immediately. Uncertain elements arrive with a slight delay and a softer animation — they enter the interface tentatively, as if the system itself is hesitating. This temporal calibration is subtle but powerful: it gives the human brain an extra beat to engage critical thinking.
       </p>
 
-      <h3>Layer 3: Behavioral Contracts (the rhetoric)</h3>
+      <h2 id="visual-language">A Visual Language for Uncertainty</h2>
+
       <p>
-        Agreements about how the system responds to state changes, error conditions, loading states, and edge cases. When an agent reports low confidence, every component in the decision interface should respond in a coordinated way — not just change color, but adjust information density, surface alternative actions, and modify the interaction pattern.
+        Beyond the four dimensions, we needed a cohesive visual language that made uncertainty feel intentional rather than broken. The challenge: in most design systems, visual lightness and reduced opacity signal "disabled" or "inactive." We needed uncertainty to feel <strong>active and important</strong> — a call for human engagement, not a system limitation.
       </p>
 
       <figure class="article-figure">
         <div class="article-figure__image">
           <span class="article-figure__placeholder">
-            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="12" r="8" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><circle cx="12" cy="34" r="8" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><circle cx="36" cy="34" r="8" stroke="var(--ink-40)" stroke-width="1.5" fill="none"/><path d="M20 18l-4 10M28 18l4 10M18 34h12" stroke="var(--ink-40)" stroke-width="1.5"/></svg>
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><circle cx="16" cy="24" r="10" stroke="var(--ink-40)" stroke-width="2" fill="none"/><circle cx="32" cy="24" r="10" stroke="var(--ink-40)" stroke-width="1" stroke-dasharray="3 2" fill="none"/></svg>
           </span>
         </div>
         <figcaption class="article-figure__caption">
-          The three-layer model: tokens (vocabulary) feed into composition patterns (grammar), which operate within behavioral contracts (rhetoric). Each layer depends on the one below.
+          Confident vs. uncertain: the solid circle (left) represents a high-confidence assessment. The dashed circle (right) represents low confidence — not disabled, but inviting closer inspection.
         </figcaption>
       </figure>
 
       <div class="pull-quote">
-        Tokens give you consistency of appearance. Composition patterns give you consistency of experience. Behavioral contracts give you consistency of meaning.
+        Uncertainty in an AI interface shouldn't look like a bug. It should look like an invitation — the system saying "I've done my best analysis, but this one needs your judgment."
       </div>
 
-      <h2 id="organizational-reality">Organizational Reality</h2>
+      <p>
+        The solution was a combination of dashed borders, expanded layouts, and warm accent colors that distinguished "uncertain" from "disabled." Uncertain elements had <strong>more</strong> visual detail, not less — showing the contributing data sources, the confidence distribution, the alternative assessments. Uncertainty became the most information-rich state in the interface.
+      </p>
+
+      <h2 id="designing-humility">Designing Humility</h2>
 
       <p>
-        The hardest part of a design system isn't technical — it's organizational. Systems succeed or fail based on governance: who decides when to add a new pattern, how exceptions are handled, and what happens when a product team's deadline conflicts with system integrity.
+        Confidence calibration is ultimately about designing humility into AI systems. Not the false humility of blanket disclaimers ("AI can make mistakes"), but genuine, calibrated humility — showing exactly where the system's knowledge is strong and where it's weak, and adjusting the entire interaction accordingly.
       </p>
 
       <p>
-        The systems that survive are the ones that acknowledge this reality from the start. They build contribution models that make it easier to extend the system than to work around it. They create decision frameworks for when to customize versus when to standardize. They invest in documentation that explains not just <strong>what</strong> the system does, but <strong>why</strong> it works that way.
+        This requires a cultural shift in how we think about AI products. Most product teams optimize for the "happy path" — the scenarios where the AI is right and the user is delighted. But the real product quality shows in the unhappy path: what happens when the system is uncertain, when it's wrong, when the edge cases emerge.
       </p>
 
       <p>
-        In a publishing platform that served 95% of the print industry, this lesson came through years of maintaining a design system that thousands of designers depended on daily. The system's longevity came not from its technical sophistication but from its governance model — clear contribution paths, transparent decision-making, and a deep respect for the practitioners who used it.
-      </p>
-
-      <p>
-        Design tokens are a foundation. But a foundation isn't a building. The system that will serve your organization for years — that will evolve gracefully across product launches, team changes, and platform migrations — needs grammar, rhetoric, and governance on top of vocabulary. Start with tokens. But don't stop there.
+        The interfaces that will earn lasting trust aren't the ones that project the most confidence. They're the ones that are most honest about their limitations — and most graceful in how they hand the decision back to the human who needs to make it.
       </p>
 
     </div>
   </div>
 </article>
 
-<!-- Author Bio -->
 <section class="article-author reveal">
   <div class="article-author__inner">
-    <div class="article-author__avatar">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="currentColor" stroke-width="1.5"/></svg>
-    </div>
+    <div class="article-author__avatar"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="currentColor" stroke-width="1.5"/></svg></div>
     <div>
       <p class="article-author__name">Keisuke Shingu</p>
       <p class="article-author__role">Product Designer & Design Systems Architect</p>
       <p class="article-author__bio">Designing AI-native interfaces for multi-agent systems. Previously led design engineering at Denon/Marantz, Slalom Consulting, and Rakuten. Focused on the intersection of human judgment and machine intelligence.</p>
-      <div class="article-author__links">
-        <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="../contact.html" >Contact</a>
-      </div>
+      <div class="article-author__links"><a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a><a href="../contact.html" >Contact</a></div>
     </div>
   </div>
 </section>
 
-<!-- Related Articles -->
 <section class="article-related reveal">
   <h2 class="article-related__heading">Continue Reading</h2>
   <div class="article-related__grid">
-    <a href="ma-negative-space.html" class="dt-card">
-      <div class="dt-card__image-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/RyoanJi-Dry_garden.jpg" alt="Ryoanji zen garden negative space Japanese aesthetics Ma" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
-      <div class="dt-card__body">
-        <p class="dt-card__meta">Japanese Aesthetics<span class="dot">·</span>Jan 2026</p>
-        <h3 class="dt-card__title">Ma — The Power of Negative Space in Digital Interfaces</h3>
-        <p class="dt-card__excerpt">In Japanese aesthetics, the space between elements carries as much meaning as the elements themselves.</p>
-      </div>
-    </a>
-    <a href="agents-cognitive-prosthetics.html" class="dt-card">
-      <div class="dt-card__image-wrap"><img src="https://www.tdk.com/system/files/featured_stories/machine_management.jpg" alt="AI agents cognitive prosthetics TDK factory edge intelligence" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
-      <div class="dt-card__body">
-        <p class="dt-card__meta">AI & UX<span class="dot">·</span>Feb 2026</p>
-        <h3 class="dt-card__title">Agents as Cognitive Prosthetics</h3>
-        <p class="dt-card__excerpt">The most powerful AI systems aren't replacements — they're extensions of human judgment.</p>
-      </div>
-    </a>
-    <a href="60fps-performance.html" class="dt-card">
-      <div class="dt-card__image-wrap"><img src="https://www.native-instruments.com/typo3temp/pics/img-ce-gallery-traktor-pro-4-product-page-02-gallery-a-main-new-bdc5e8f4a0cb7f43a750233be2e1a9b2-d@2x.jpg" alt="60fps performance animation Traktor Pro DJ real-time motion" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div>
-      <div class="dt-card__body">
-        <p class="dt-card__meta">Engineering<span class="dot">·</span>Nov 2025</p>
-        <h3 class="dt-card__title">The 60fps Imperative — Performance as a Design Decision</h3>
-        <p class="dt-card__excerpt">Frame rate isn't a technical spec — it's a design choice that shapes user trust and quality perception.</p>
-      </div>
-    </a>
+    <a href="agents-cognitive-prosthetics.html" class="dt-card"><div class="dt-card__image-wrap"><img src="https://www.tdk.com/system/files/featured_stories/machine_management.jpg" alt="AI agents cognitive prosthetics edge intelligence TDK factory" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div><div class="dt-card__body"><p class="dt-card__meta">AI & UX<span class="dot">·</span>Feb 2026</p><h3 class="dt-card__title">Agents as Cognitive Prosthetics</h3><p class="dt-card__excerpt">The most powerful AI systems aren't replacements — they're extensions of human judgment.</p></div></a>
+    <a href="ma-negative-space.html" class="dt-card"><div class="dt-card__image-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/RyoanJi-Dry_garden.jpg" alt="Ryoanji zen garden negative space Japanese aesthetics Ma" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div><div class="dt-card__body"><p class="dt-card__meta">Japanese Aesthetics<span class="dot">·</span>Jan 2026</p><h3 class="dt-card__title">Ma — The Power of Negative Space</h3><p class="dt-card__excerpt">In Japanese aesthetics, the space between elements carries as much meaning as the elements themselves.</p></div></a>
+    <a href="60fps-performance.html" class="dt-card"><div class="dt-card__image-wrap"><img src="https://www.native-instruments.com/typo3temp/pics/img-ce-gallery-traktor-pro-4-product-page-02-gallery-a-main-new-bdc5e8f4a0cb7f43a750233be2e1a9b2-d@2x.jpg" alt="60fps performance animation Traktor Pro DJ real-time motion" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"></div><div class="dt-card__body"><p class="dt-card__meta">Engineering<span class="dot">·</span>Nov 2025</p><h3 class="dt-card__title">The 60fps Imperative</h3><p class="dt-card__excerpt">Frame rate isn't a technical spec — it's a design choice that shapes user trust and quality perception.</p></div></a>
   </div>
 </section>
 
-<!-- Prev/Next -->
 <nav class="article-nav">
   <div class="article-nav__inner">
-    <a href="ma-negative-space.html" class="article-nav__link article-nav__link--prev">
-      <p class="article-nav__label">← Previous Article</p>
-      <p class="article-nav__title">Ma — The Power of Negative Space</p>
-    </a>
-    <a href="60fps-performance.html" class="article-nav__link article-nav__link--next">
-      <p class="article-nav__label">Next Article →</p>
-      <p class="article-nav__title">The 60fps Imperative</p>
-    </a>
+    <a href="60fps-performance.html" class="article-nav__link article-nav__link--prev"><p class="article-nav__label">← Previous Article</p><p class="article-nav__title">The 60fps Imperative</p></a>
+    <div></div>
   </div>
 </nav>
 
 <div class="spacer"></div>
-
-<footer class="footer">
-  <div class="footer__inner">
-    <div>
-      <p class="footer__name">Keisuke Shingu</p>
-      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
-    </div>
-    <div class="footer__links">
-      <a href="../about.html" >About</a>
-      <a href="../contact.html" >Contact</a>
-      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
-    </div>
-  </div>
-  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
-</footer>
+<footer class="footer"><div class="footer__inner"><div><p class="footer__name">Keisuke Shingu</p><p class="footer__tagline">Product UX Planning & Design Engineering</p></div><div class="footer__links"><a href="../about.html" >About</a><a href="../contact.html" >Contact</a><a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a></div></div><p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p></footer>
 
 <script>
-  const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '-40px' });
-  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-
-  const progressBar = document.getElementById('readingProgress');
-  const articleBody = document.getElementById('articleBody');
-  function updateProgress() { const rect = articleBody.getBoundingClientRect(); const articleTop = rect.top + window.scrollY; const articleHeight = rect.height; const scrolled = window.scrollY - articleTop; const progress = Math.max(0, Math.min(100, (scrolled / articleHeight) * 100)); progressBar.style.width = progress + '%'; }
-  window.addEventListener('scroll', () => requestAnimationFrame(updateProgress));
-  updateProgress();
-
-  const tocLinks = document.querySelectorAll('.article-toc__link');
-  const sections = [];
-  tocLinks.forEach(link => { const id = link.getAttribute('href').slice(1); const section = document.getElementById(id); if (section) sections.push({ el: section, link: link }); });
-  const tocObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { tocLinks.forEach(l => l.classList.remove('active')); const match = sections.find(s => s.el === entry.target); if (match) match.link.classList.add('active'); } }); }, { threshold: 0, rootMargin: '-80px 0px -70% 0px' });
-  sections.forEach(s => tocObserver.observe(s.el));
+  const observer=new IntersectionObserver((e)=>{e.forEach((e)=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.1,rootMargin:'-40px'});document.querySelectorAll('.reveal').forEach((e)=>observer.observe(e));
+  const progressBar=document.getElementById('readingProgress'),articleBody=document.getElementById('articleBody');function updateProgress(){const r=articleBody.getBoundingClientRect(),t=r.top+window.scrollY,h=r.height,s=window.scrollY-t;progressBar.style.width=Math.max(0,Math.min(100,(s/h)*100))+'%'}window.addEventListener('scroll',()=>requestAnimationFrame(updateProgress));updateProgress();
+  const tocLinks=document.querySelectorAll('.article-toc__link'),secs=[];tocLinks.forEach(l=>{const id=l.getAttribute('href').slice(1),s=document.getElementById(id);if(s)secs.push({el:s,link:l})});const tocObs=new IntersectionObserver((e)=>{e.forEach(en=>{if(en.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));const m=secs.find(s=>s.el===en.target);if(m)m.link.classList.add('active')}})},{threshold:0,rootMargin:'-80px 0px -70% 0px'});secs.forEach(s=>tocObs.observe(s.el));
 </script>
-
 </body>
 </html>
