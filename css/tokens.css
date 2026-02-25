@@ -34,4 +34,7 @@
   --shu:     #B33A3A;
   --shu-10:  rgba(179, 58, 58, 0.10);
   --shu-20:  rgba(179, 58, 58, 0.20);
+
+  /* Particle — plexus blue accent */
+  --particle: #3C64B4;
 }
