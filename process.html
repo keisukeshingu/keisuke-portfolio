@@ -117,6 +117,26 @@ body { background: #FAFBFC; }
   margin-bottom: 4px;
 }
 
+/* ===== Process artifact image ===== */
+.process-artifact {
+  margin: 32px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--rule-40);
+}
+.process-artifact img {
+  width: 100%;
+  display: block;
+}
+.process-artifact__caption {
+  font-size: 12px; font-weight: 400;
+  color: var(--ink-60);
+  padding: 10px 16px;
+  border-top: 1px solid var(--rule-40);
+  background: var(--paper);
+  margin: 0;
+}
+
 /* ===== Tools grid ===== */
 .tools-grid {
   display: grid;
@@ -167,7 +187,6 @@ body { background: #FAFBFC; }
     <a href="index.html" class="nav__logo">Keisuke Shingu</a>
     <ul class="nav__links">
       <li><a href="projects.html">Projects</a></li>
-      <li><a href="process.html" class="active">Process</a></li>
       <li><a href="design-thinking.html">Design Thinking</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -209,6 +228,12 @@ body { background: #FAFBFC; }
       </p>
       <div class="pull-quote">
         The most important design decisions are usually made before the first frame is drawn.
+      </div>
+      <div class="process-artifact">
+        <img src="img/library/process/first-principles-journey-map.png"
+             alt="User personas and MNML customer journey map template — first-principles UX research artifacts"
+             loading="lazy">
+        <p class="process-artifact__caption">Personas + MNML Customer Journey Map — structural research artifacts built before any interface work begins</p>
       </div>
       <p>
         This matters especially in AI systems, where the temptation is to start with the interface
