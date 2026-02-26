@@ -13,260 +13,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ===== Design Tokens ===== */
-
-  /* ===== Reset ===== */
-
-  /* ===== Nav ===== */
-
-  /* ===== Case Study Hero ===== */
-
-  /* ===== Hero Image ===== */
-
-  /* ===== Overview Bar ===== */
-
-  /* ===== Tags ===== */
-
-  /* ===== Metrics Grid ===== */
-  .metrics {
-    max-width: var(--max-w); margin: 0 auto; padding: 48px 64px;
-  }
-  .metrics__grid {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--rule-40); border-bottom: 1px solid var(--rule-40);
-    padding: 32px 0;
-  }
-  .metrics__item { padding: 0 32px; border-left: 1px solid var(--rule-40); }
-  .metrics__item:first-child { border-left: none; padding-left: 0; }
-  .metrics__item:last-child { padding-right: 0; }
-  .metrics__value {
-    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink-100);
-  }
-  .metrics__label {
-    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
-  }
-
-  /* ===== Content Layout (TOC + Body) ===== */
-  .cs-content {
-    max-width: var(--max-w); margin: 0 auto;
-    padding: 0 64px 64px;
-    display: grid; grid-template-columns: 200px 1fr; gap: 64px;
-  }
-
-  /* ===== Table of Contents ===== */
-  .toc { position: sticky; top: 80px; align-self: start; }
-  .toc__label {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
-  }
-  .toc__list { list-style: none; }
-  .toc__list li { margin-top: 12px; }
-  .toc__list a {
-    font-size: 13px; font-weight: 400; color: var(--ink-60);
-    transition: color 0.3s var(--ease);
-  }
-  .toc__list a:hover, .toc__list a.active { color: var(--ink-100); }
-
-  /* ===== STAR-D Sections ===== */
-  .stard-section {
-    padding: 48px 0; border-top: 1px solid var(--rule-40);
-  }
-  .stard-section:first-child { border-top: none; }
-  .stard-section__overline {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
-  }
-  .stard-section__title {
-    font-size: 26px; font-weight: 600; line-height: 1.2;
-    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 24px;
-  }
-  .stard-section__body p {
-    font-size: 15px; font-weight: 300; line-height: 1.75;
-    color: var(--ink-80); margin-top: 16px;
-  }
-  .stard-section__body p:first-child { margin-top: 0; }
-
-  /* ===== Pull Quote ===== */
-
-  /* ===== Before / After (embedded in flow) ===== */
-  .ba-inline {
-    margin: 32px 0;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-    background: #E5253A; border-radius: 8px; overflow: hidden;
-  }
-  .ba-inline__cell {
-    background: var(--white); padding: 24px;
-  }
-  .ba-inline__label {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; margin-bottom: 8px;
-  }
-  .ba-inline__label--before { color: #E5253A; }
-  .ba-inline__label--after  { color: #E5253A; }
-  .ba-inline__text {
-    font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--ink-80);
-  }
-
-  /* ===== Artifact image block ===== */
-  .cs-artifact {
-    margin: 32px 0 0;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid var(--rule-40);
-  }
-  .cs-artifact img {
-    width: 100%; display: block;
-  }
-  .cs-artifact__caption {
-    font-size: 12px; font-weight: 400;
-    color: var(--ink-60);
-    padding: 10px 16px;
-    border-top: 1px solid var(--rule-40);
-    background: var(--paper);
-    margin: 0;
-  }
-
-  /* ===== Recognition ===== */
-  .recognition {
-    padding: 48px 0 0; border-top: 1px solid var(--rule-40);
-  }
-  .recognition__title {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
-  }
-  .recognition__list {
-    list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px;
-  }
-  .recognition__list li {
-    font-size: 14px; font-weight: 400; color: var(--ink-80);
-  }
-
-  /* ===== Circular Flow Icons ===== */
-  .flow-icon {
-    display: flex; justify-content: center; align-items: flex-start;
-    margin: 40px 0; padding: 16px 0;
-  }
-  .flow-node {
-    display: flex; flex-direction: column; align-items: center; gap: 16px;
-  }
-  .flow-node__disc {
-    position: relative; width: 120px; height: 120px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .flow-node__ring-outer {
-    position: absolute; inset: 0; border-radius: 50%;
-    border: 1px solid var(--rule-40);
-    animation: ring-outer 4s ease-in-out infinite;
-  }
-  .flow-node__ring-inner {
-    position: absolute; inset: 14px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.12);
-    animation: ring-inner 6s linear infinite;
-  }
-  .flow-node__kanji {
-    font-size: 32px; font-weight: 200; color: var(--ink-60);
-    letter-spacing: -0.02em; line-height: 1;
-    position: relative; z-index: 1;
-    animation: kanji-breathe 4s ease-in-out infinite;
-  }
-  .flow-node__icon {
-    width: 36px; height: 36px;
-    position: relative; z-index: 1;
-    animation: kanji-breathe 4s ease-in-out infinite;
-    display: block;
-  }
-  .flow-node__label {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--ink-40); text-align: center;
-  }
-  .flow-node__sublabel {
-    font-size: 11px; font-weight: 300; color: var(--ink-60);
-    text-align: center; margin-top: -8px;
-  }
-
-  /* Pipeline (3 nodes) */
-  .flow-pipeline {
-    display: flex; justify-content: center; align-items: flex-start;
-    gap: 0; margin: 48px 0;
-  }
-  .flow-pipeline .flow-node__disc {
-    width: 100px; height: 100px;
-  }
-  .flow-pipeline .flow-node__kanji {
-    font-size: 26px;
-  }
-  .flow-connector {
-    display: flex; align-items: center; padding: 0 8px;
-    margin-top: 50px; /* vertically center with disc */
-    gap: 6px;
-  }
-  .flow-dot {
-    width: 4px; height: 4px; border-radius: 50%;
-    background: var(--ink-40); display: block;
-  }
-  .flow-dot:nth-child(1) { animation: dot-flow 1.8s ease-in-out 0s infinite; }
-  .flow-dot:nth-child(2) { animation: dot-flow 1.8s ease-in-out 0.3s infinite; }
-  .flow-dot:nth-child(3) { animation: dot-flow 1.8s ease-in-out 0.6s infinite; }
-  .flow-dot:nth-child(4) { animation: dot-flow 1.8s ease-in-out 0.9s infinite; }
-  .flow-dot:nth-child(5) { animation: dot-flow 1.8s ease-in-out 1.2s infinite; }
-
-  /* Staggered animation delays per node */
+  /* ── Page-specific: flow node stagger delays ── */
   .flow-pipeline .flow-node:nth-child(1) .flow-node__ring-outer { animation-delay: 0s; }
   .flow-pipeline .flow-node:nth-child(3) .flow-node__ring-outer { animation-delay: 0.6s; }
   .flow-pipeline .flow-node:nth-child(5) .flow-node__ring-outer { animation-delay: 1.2s; }
-
-  @keyframes ring-outer {
-    0%, 100% { transform: scale(1); opacity: 0.3; }
-    50% { transform: scale(1.08); opacity: 0.7; }
-  }
-  @keyframes ring-inner {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  @keyframes kanji-breathe {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-  }
-  @keyframes dot-flow {
-    0%, 100% { opacity: 0.2; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.3); }
-  }
-
-  /* ===== Prev / Next Nav ===== */
-
-  /* ===== Footer ===== */
-
-  /* ===== Scroll animations ===== */
-
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* ===== Responsive ===== */
-  @media (max-width: 1119px) {
-    .cs-content { grid-template-columns: 1fr; gap: 0; }
-    .toc { position: static; display: flex; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 32px; border-bottom: 1px solid var(--rule-40); }
-    .toc__label { width: 100%; }
-    .toc__list { display: flex; flex-wrap: wrap; gap: 8px 24px; }
-    .toc__list li { margin-top: 0; }
-  }
-  @media (max-width: 767px) {
-    .metrics { padding: 32px 24px; }
-    .metrics__grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .metrics__item { border-left: none; padding: 0; }
-    .cs-content { padding: 0 24px 40px; }
-    .ba-inline { grid-template-columns: 1fr; }
-    .flow-pipeline { flex-wrap: wrap; gap: 24px; }
-    .flow-connector { display: none; }
-  }
-  /* ===== Animation Layer (v1_animation) ===== */
-  #snow-zone { position: relative; overflow: hidden; }
-  #snow-zone img { position: relative; z-index: 2; }
-  @media (prefers-reduced-motion: reduce) {
-    .weather-hero { display: none !important; }
-    .flow-node__ring-outer,
-    .flow-node__ring-inner,
-    .flow-node__kanji,
-    .flow-dot { animation: none !important; opacity: 0.6; }
-  }
 </style>
 </head>
 <body>
@@ -363,7 +113,9 @@
   </div>
 </div>
 
-<!-- ===== TOC + CONTENT ===== -->
+<!-- ═══════════════════════════════════════════════════════════
+     cs-content: LAYOUT GRID  (toc sidebar | content column)
+     ═══════════════════════════════════════════════════════════ -->
 <div class="cs-content">
 
   <!-- Table of Contents -->
@@ -379,7 +131,7 @@
     </ul>
   </aside>
 
-  <!-- Content Body -->
+  <!-- ── content-col START ─────────────────────────────────── -->
   <div>
 
     <!-- OPENING CONTEXT -->
@@ -573,7 +325,9 @@
       </ul>
     </div>
 
+  <!-- ── content-col END ───────────────────────────────────── -->
   </div>
+<!-- ═══ /cs-content ══════════════════════════════════════════ -->
 </div>
 
 <!-- ===== PREV / NEXT ===== -->

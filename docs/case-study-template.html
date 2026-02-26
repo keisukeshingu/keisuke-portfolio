@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  CASE STUDY — CANONICAL TEMPLATE                                 ║
+  ║  keisuke-portfolio / docs/case-study-template.html               ║
+  ║                                                                  ║
+  ║  HOW TO USE                                                      ║
+  ║  1. Copy this file to case-studies/your-project.html             ║
+  ║  2. Fill in all [PLACEHOLDER] values                             ║
+  ║  3. Add/remove stard-sections inside content-col only            ║
+  ║  4. NEVER place sections outside content-col START/END markers   ║
+  ║  5. Add page-specific CSS inside the <style> block only          ║
+  ║                                                                  ║
+  ║  LAYOUT RULE                                                      ║
+  ║  All content sections (stard-section, recognition, cs-artifact)  ║
+  ║  MUST live inside:                                               ║
+  ║    <!-- ── content-col START --> ... <!-- ── content-col END -->  ║
+  ║                                                                  ║
+  ║  The cs-content grid is: 200px (toc) | 1fr (content-col)         ║
+  ║  Anything outside content-col will break the two-column layout.  ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+  <title>[Project Name] — Case Study | Keisuke Shingu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /*
+     * PAGE-SPECIFIC CSS ONLY
+     * ─────────────────────
+     * Do NOT duplicate classes that are already in case-study.css:
+     *   cs-content, toc, stard-section, ba-inline, cs-artifact,
+     *   recognition, flow-node, flow-pipeline, metrics (base),
+     *   reveal.visible, snow-zone, @keyframes, @media rules
+     *
+     * Add here ONLY:
+     *   - metrics column count override (if not 4-col default)
+     *   - hero glow / hero grid (page-specific visual treatment)
+     *   - any one-off component unique to this case study
+     */
+
+    /* Example: override metrics to 3 columns */
+    /* .metrics__grid { grid-template-columns: repeat(3, 1fr); } */
+  </style>
+</head>
+
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="../index.html" class="nav__logo">KS</a>
+    <ul class="nav__links">
+      <li><a href="../index.html">Work</a></li>
+      <li><a href="../design-thinking.html">Design Thinking</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="snow-zone">
+
+<!-- ===== HERO ===== -->
+<section class="cs-hero">
+  <div class="reveal">
+    <a href="../index.html" class="cs-hero__back">← Work</a>
+  </div>
+  <div class="reveal" style="transition-delay: 0.05s">
+    <p class="cs-hero__brand">[Company / Project] · [Year]</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.1s">
+    <h1 class="cs-hero__title"><span class="bold">[Title Bold]</span> [Title Light]</h1>
+  </div>
+  <div class="reveal" style="transition-delay: 0.15s">
+    <p class="cs-hero__role">[Role] · [Scope e.g. UX Strategy, Design Engineering]</p>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s">
+    <!-- Hero image: set background gradient + data-kanji per project -->
+    <div class="cs-hero__image" data-kanji="[漢]"
+         style="background: linear-gradient(160deg, #0D0D0F 0%, #1A1A1F 100%);
+                --hero-kanji-color: rgba(255,255,255,0.04);">
+      <!-- Optional: <img src="../img/library/[project]/hero.jpg" alt="..." loading="eager"> -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== OVERVIEW BAR ===== -->
+<div class="overview-bar reveal">
+  <div class="overview-bar__inner">
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Role</p>
+      <p class="overview-bar__value">[Role]</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Timeline</p>
+      <p class="overview-bar__value">[Timeline]</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Platform</p>
+      <p class="overview-bar__value">[Platform]</p>
+    </div>
+    <div class="overview-bar__item">
+      <p class="overview-bar__label">Output</p>
+      <p class="overview-bar__value">[Output]</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAGS ===== -->
+<div class="tags reveal">
+  <div class="tags__inner">
+    <span class="tag">[Tag 1]</span>
+    <span class="tag">[Tag 2]</span>
+    <span class="tag">[Tag 3]</span>
+  </div>
+</div>
+
+<!-- ===== METRICS ===== -->
+<div class="metrics reveal">
+  <div class="metrics__grid">
+    <!-- Default: 4-col. Override in <style> if different. -->
+    <div class="metrics__item">
+      <p class="metrics__value">[Value]</p>
+      <p class="metrics__label">[Label]</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">[Value]</p>
+      <p class="metrics__label">[Label]</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">[Value]</p>
+      <p class="metrics__label">[Label]</p>
+    </div>
+    <div class="metrics__item">
+      <p class="metrics__value">[Value]</p>
+      <p class="metrics__label">[Label]</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     cs-content: LAYOUT GRID  (toc sidebar | content column)
+     ═══════════════════════════════════════════════════════════ -->
+<div class="cs-content">
+
+  <!-- Table of Contents — update hrefs to match section IDs below -->
+  <aside class="toc reveal">
+    <p class="toc__label">Contents</p>
+    <ul class="toc__list">
+      <li><a href="#context" class="active">[Section 1 label]</a></li>
+      <li><a href="#work">[Section 2 label]</a></li>
+      <li><a href="#impact">[Section 3 label]</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+      <li style="margin-top:20px; padding-top:12px; border-top: 1px solid var(--rule-40)">
+        <a href="#recognition">Recognition</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- ── content-col START ─────────────────────────────────── -->
+  <div>
+
+    <!--
+      ▸ ADD ALL SECTIONS HERE — inside content-col only.
+      ▸ Each section uses class="stard-section reveal"
+      ▸ First section has no top border (CSS handles this automatically)
+      ▸ id must match the TOC href above
+    -->
+
+    <!-- SECTION 1: Opening Context -->
+    <div id="context" class="stard-section reveal">
+      <p class="stard-section__overline">[Overline e.g. Opening Context]</p>
+      <h2 class="stard-section__title">[Section Title]</h2>
+      <div class="stard-section__body">
+        <p>[Body paragraph 1]</p>
+        <p>[Body paragraph 2]</p>
+      </div>
+    </div>
+
+    <!-- SECTION 2: The Work -->
+    <div id="work" class="stard-section reveal">
+      <p class="stard-section__overline">[Overline e.g. The Work]</p>
+      <h2 class="stard-section__title">[Section Title]</h2>
+      <div class="stard-section__body">
+        <p>[Body paragraph]</p>
+
+        <!--
+          OPTIONAL: Before / After comparison block
+          Uses class="ba-inline" — already in case-study.css
+        -->
+        <!--
+        <div class="ba-inline">
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--before">Before</p>
+            <p class="ba-inline__text">[Before description]</p>
+          </div>
+          <div class="ba-inline__cell">
+            <p class="ba-inline__label ba-inline__label--after">After</p>
+            <p class="ba-inline__text">[After description]</p>
+          </div>
+        </div>
+        -->
+
+        <!--
+          OPTIONAL: Artifact image block
+          Uses class="cs-artifact" — already in case-study.css
+        -->
+        <!--
+        <div class="cs-artifact">
+          <img src="../img/library/[project]/[image].png"
+               alt="[Descriptive alt text]" loading="lazy">
+          <p class="cs-artifact__caption">[Caption text]</p>
+        </div>
+        -->
+      </div>
+    </div>
+
+    <!-- SECTION 3: Impact -->
+    <div id="impact" class="stard-section reveal">
+      <p class="stard-section__overline">[Overline e.g. Impact]</p>
+      <h2 class="stard-section__title">[Section Title]</h2>
+      <div class="stard-section__body">
+        <p>[Body paragraph]</p>
+      </div>
+    </div>
+
+    <!-- REFLECTION -->
+    <div id="reflection" class="stard-section reveal">
+      <p class="stard-section__overline">Reflection</p>
+      <h2 class="stard-section__title">[Reflection title]</h2>
+      <div class="stard-section__body">
+        <p>[Reflection body]</p>
+      </div>
+    </div>
+
+    <!-- RECOGNITION — always last inside content-col -->
+    <div id="recognition" class="recognition reveal">
+      <p class="recognition__title">Recognition</p>
+      <ul class="recognition__list">
+        <li>[Recognition item 1]</li>
+        <li>[Recognition item 2]</li>
+        <li>[Recognition item 3]</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- ── content-col END ───────────────────────────────────── -->
+
+</div>
+<!-- ═══ /cs-content ══════════════════════════════════════════ -->
+
+<!-- ===== PREV / NEXT ===== -->
+<div class="prev-next reveal">
+  <div class="prev-next__inner">
+    <a href="[prev].html" class="prev-next__item">
+      <p class="prev-next__dir">← Previous Case Study</p>
+      <p class="prev-next__title">[Prev Title]</p>
+    </a>
+    <a href="[next].html" class="prev-next__item prev-next__item--next">
+      <p class="prev-next__dir">Next Case Study →</p>
+      <p class="prev-next__title">[Next Title]</p>
+    </a>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+</div><!-- end #snow-zone -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <p class="footer__name">Keisuke Shingu</p>
+      <p class="footer__tagline">Product UX Planning & Design Engineering</p>
+    </div>
+    <div class="footer__links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="https://linkedin.com/in/keisukeshingu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="footer__copy">© 2026 Keisuke Shingu. All rights reserved.</p>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script src="../js/scroll-reveal.js" defer></script>
+<script src="../js/weather-hero.js" defer></script>
+<script>
+(function () {
+  var snowZone = document.getElementById('snow-zone');
+  if (snowZone) WeatherHero.init(snowZone);
+})();
+</script>
+</body>
+</html>

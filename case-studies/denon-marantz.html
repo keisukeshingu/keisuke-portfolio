@@ -13,149 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ===== Design Tokens ===== */
-
-  /* ===== Reset ===== */
-
-  /* ===== Nav ===== */
-
-  /* ===== Case Study Hero ===== */
-
-  /* ===== Hero Image ===== */
-
-  /* ===== Overview Bar ===== */
-
-  /* ===== Tags ===== */
-
-  /* ===== Metrics Grid ===== */
-  .metrics {
-    max-width: var(--max-w); margin: 0 auto; padding: 48px 64px;
-  }
-  .metrics__grid {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--rule-40); border-bottom: 1px solid var(--rule-40);
-    padding: 32px 0;
-  }
-  .metrics__item { padding: 0 32px; border-left: 1px solid var(--rule-40); }
-  .metrics__item:first-child { border-left: none; padding-left: 0; }
-  .metrics__item:last-child { padding-right: 0; }
-  .metrics__value {
-    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink-100);
-  }
-  .metrics__label {
-    font-size: 12px; font-weight: 300; color: var(--ink-60); margin-top: 8px;
-  }
-
-  /* ===== Content Layout (TOC + Body) ===== */
-  .cs-content {
-    max-width: var(--max-w); margin: 0 auto;
-    padding: 0 64px 64px;
-    display: grid; grid-template-columns: 200px 1fr; gap: 64px;
-  }
-
-  /* ===== Table of Contents ===== */
-  .toc { position: sticky; top: 80px; align-self: start; }
-  .toc__label {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
-  }
-  .toc__list { list-style: none; }
-  .toc__list li { margin-top: 12px; }
-  .toc__list a {
-    font-size: 13px; font-weight: 400; color: var(--ink-60);
-    transition: color 0.3s var(--ease);
-  }
-  .toc__list a:hover, .toc__list a.active { color: var(--ink-100); }
-
-  /* ===== STAR-D Sections ===== */
-  .stard-section {
-    padding: 48px 0; border-top: 1px solid var(--rule-40);
-  }
-  .stard-section:first-child { border-top: none; }
-  .stard-section__overline {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--ink-40); margin-bottom: 8px;
-  }
-  .stard-section__title {
-    font-size: 26px; font-weight: 600; line-height: 1.2;
-    letter-spacing: -0.02em; color: var(--ink-100); margin-bottom: 24px;
-  }
-  .stard-section__body p {
-    font-size: 15px; font-weight: 300; line-height: 1.75;
-    color: var(--ink-80); margin-top: 16px;
-  }
-  .stard-section__body p:first-child { margin-top: 0; }
-
-  /* ===== Inline Image ===== */
-
-  /* ===== Pull Quote ===== */
-
-  /* ===== Before / After (embedded in flow) ===== */
-  .ba-inline {
-    margin: 32px 0;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-    background: var(--rule-40); border-radius: 8px; overflow: hidden;
-  }
-  .ba-inline__cell {
-    background: var(--white); padding: 24px;
-  }
-  .ba-inline__label {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; margin-bottom: 8px;
-  }
-  .ba-inline__label--before { color: var(--ink-40); }
-  .ba-inline__label--after { color: var(--ink-100); }
-  .ba-inline__text {
-    font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--ink-80);
-  }
-
-  /* ===== Recognition ===== */
-  .recognition {
-    padding: 48px 0 0; border-top: 1px solid var(--rule-40);
-  }
-  .recognition__title {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--ink-40); margin-bottom: 16px;
-  }
-  .recognition__list {
-    list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px;
-  }
-  .recognition__list li {
-    font-size: 14px; font-weight: 400; color: var(--ink-80);
-  }
-
-  /* ===== Prev / Next Nav ===== */
-
-  /* ===== Footer ===== */
-
-  /* ===== Scroll animations ===== */
-  
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* ===== Responsive ===== */
-  @media (max-width: 1119px) {
-    .cs-content { grid-template-columns: 1fr; gap: 0; }
-    .toc { position: static; display: flex; flex-wrap: wrap; gap: 8px 24px; padding-bottom: 32px; border-bottom: 1px solid var(--rule-40); }
-    .toc__label { width: 100%; }
-    .toc__list { display: flex; flex-wrap: wrap; gap: 8px 24px; }
-    .toc__list li { margin-top: 0; }
-
-  }
-  @media (max-width: 767px) {
-
-    .metrics { padding: 32px 24px; }
-    .metrics__grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-    .metrics__item { border-left: none; padding: 0; }
-    .cs-content { padding: 0 24px 40px; }
-    .ba-inline { grid-template-columns: 1fr; }
-
-  }
-  /* ===== Animation Layer (v1_animation) ===== */
-  #snow-zone { position: relative; overflow: hidden; }
-  #snow-zone img { position: relative; z-index: 2; }
-  @media (prefers-reduced-motion: reduce) {
-    .weather-hero { display: none !important; }
-  }
+  /* All styles from case-study.css */
 </style>
 </head>
 <body>
@@ -250,7 +108,9 @@
   </div>
 </div>
 
-<!-- ===== TOC + CONTENT ===== -->
+<!-- ═══════════════════════════════════════════════════════════
+     cs-content: LAYOUT GRID  (toc sidebar | content column)
+     ═══════════════════════════════════════════════════════════ -->
 <div class="cs-content">
 
   <!-- Table of Contents -->
@@ -265,7 +125,7 @@
     </ul>
   </aside>
 
-  <!-- Content Body -->
+  <!-- ── content-col START ─────────────────────────────────── -->
   <div>
 
     <!-- OPENING CONTEXT (S+T combined) -->
@@ -399,7 +259,9 @@
       </ul>
     </div>
 
+  <!-- ── content-col END ───────────────────────────────────── -->
   </div>
+<!-- ═══ /cs-content ══════════════════════════════════════════ -->
 </div>
 
 <!-- ===== PREV / NEXT ===== -->
