@@ -107,6 +107,25 @@
     font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--ink-80);
   }
 
+  /* ===== Artifact image block ===== */
+  .cs-artifact {
+    margin: 32px 0 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--rule-40);
+  }
+  .cs-artifact img {
+    width: 100%; display: block;
+  }
+  .cs-artifact__caption {
+    font-size: 12px; font-weight: 400;
+    color: var(--ink-60);
+    padding: 10px 16px;
+    border-top: 1px solid var(--rule-40);
+    background: var(--paper);
+    margin: 0;
+  }
+
   /* ===== Recognition ===== */
   .recognition {
     padding: 48px 0 0; border-top: 1px solid var(--rule-40);
@@ -355,6 +374,7 @@
       <li><a href="#work">Three Tools, One Conversation</a></li>
       <li><a href="#impact">The Artifact Is the Conversation</a></li>
       <li><a href="#reflection">Reflection</a></li>
+      <li><a href="#agent-stories">AI Agent Stories</a></li>
       <li style="margin-top:20px; padding-top:12px; border-top: 1px solid var(--rule-40)"><a href="#recognition">Recognition</a></li>
     </ul>
   </aside>
@@ -545,11 +565,11 @@
 
         <p>Together these patterns shift agent design from prompt engineering into product thinking: what should the agent reason through, when should it defer, and what must it never do regardless of input.</p>
       </div>
-      <div class="stard-section__artifact" style="margin-top: 2.5rem;">
+      <div class="cs-artifact">
         <img src="../img/library/ai-workflow/AI_Agent_Stories.png"
              alt="AI Agent Stories — Execution Model Selection showing Chain of Thought steps, HITL trigger, and Agent Guardrails"
-             loading="lazy"
-             style="width: 100%; border-radius: 6px; border: 1px solid var(--rule-1, #e8e8e8);">
+             loading="lazy">
+        <p class="cs-artifact__caption">INV-401 · Nexus Agent — Execution Model Selection · Chain of Thought · HITL · Agent Guardrails</p>
       </div>
     </div>
 
