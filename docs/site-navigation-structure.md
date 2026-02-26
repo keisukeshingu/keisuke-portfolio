@@ -52,6 +52,24 @@ Section title: **FEATURED EXPERIENCES**
 | `case-studies/denon-marantz.html` | `/case-studies/denon-marantz.html` | ✅ Live |
 | `case-studies/miselu.html` | `/case-studies/miselu.html` | ✅ Live |
 | `case-studies/quarkxpress.html` | `/case-studies/quarkxpress.html` | ✅ Live |
+| `case-studies/tdk.html` | — | 🔒 Not linked (excluded from prev/next) |
+| `case-studies/rakuten-fit.html` | — | 🔒 Not linked |
+| `case-studies/robot-heart.html` | — | 🔒 Not linked |
+| `case-studies/fabrion.html` | — | 🔒 Not linked |
+| `case-studies/ogilvy.html` | — | 🔒 NDA |
+| `case-studies/slalom.html` | — | 🔒 NDA |
+| `case-studies/beatport-ni.html` | — | 🔒 Not linked |
+| `case-studies/techcrunch.html` | — | 🔒 Not linked |
+| `case-studies/festivals.html` | — | 🔒 Not linked |
+| `case-studies/kyoto-archive.html` | — | 🔒 Not linked |
+
+### Prev / Next Navigation Loop (live pages only)
+
+```
+ai-workflow → denon-marantz → miselu → quarkxpress → ai-workflow
+```
+
+Only the 4 live pages form a closed loop. All other pages are excluded from the chain.
 
 ---
 
