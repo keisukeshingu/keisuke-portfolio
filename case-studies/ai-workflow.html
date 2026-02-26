@@ -540,15 +540,19 @@
     <!-- AI AGENT STORIES -->
     <div id="agent-stories" class="stard-section reveal">
       <p class="stard-section__overline">AI Agent Stories</p>
-      <h2 class="stard-section__title">Chain of Thought · Human-in-the-Loop · Agent Guardrails</h2>
+      <h2 class="stard-section__title">Designing the Reasoning Layer</h2>
       <div class="stard-section__body">
-        <p>Real agent workflows surface three recurring design challenges: structuring reasoning chains that stay on task (CoT), knowing when to pause and surface a decision to a human (HITL), and defining the boundaries an agent must never cross (Guardrails). The diagram below maps how these patterns interact across a production AI workflow.</p>
+        <p>Writing user stories for AI agents exposes a layer of design that traditional UX frameworks don't address: not just what a user needs, but how the agent reasons its way to a response. The Execution Model Selection story below illustrates this in a real context — a retail investor choosing which AI model executes their trading strategy.</p>
+
+        <p>Three patterns emerge that every agent workflow must resolve. <strong>Chain of Thought</strong> makes the agent's reasoning explicit and auditable — a sequence of queries across available models, performance metrics, and fees, ending in a scored recommendation. <strong>Human-in-the-Loop</strong> defines the moment the agent pauses: the user selects the model, and the agent surfaces comparison data before any execution occurs. <strong>Agent Guardrails</strong> set the non-negotiables — never recommend a model with fewer than 50 historical trades, never hide fees, never show unavailable models, always caveat when data is insufficient.</p>
+
+        <p>Together these patterns shift agent design from prompt engineering into product thinking: what should the agent reason through, when should it defer, and what must it never do regardless of input.</p>
       </div>
-      <div class="process-artifact" style="margin-top: 2rem;">
+      <div class="stard-section__artifact" style="margin-top: 2.5rem;">
         <img src="../img/library/ai-workflow/AI_Agent_Stories.png"
-             alt="AI Agent Stories — Chain of Thought, Human-in-the-Loop, and Agent Guardrails diagram"
+             alt="AI Agent Stories — Execution Model Selection showing Chain of Thought steps, HITL trigger, and Agent Guardrails"
              loading="lazy"
-             style="width: 100%; border-radius: 8px;">
+             style="width: 100%; border-radius: 6px; border: 1px solid var(--rule-1, #e8e8e8);">
       </div>
     </div>
 
