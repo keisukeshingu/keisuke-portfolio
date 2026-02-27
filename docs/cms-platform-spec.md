@@ -1,7 +1,7 @@
 # Platform Technical Specification
 ## Keisuke Shingu — Portfolio CMS + Multimedia Platform
 
-**Version:** 2.0
+**Version:** 2.1
 **Author:** Keisuke Shingu
 **Status:** Planning — Supersedes cms-architecture.md v1.0
 **Last updated:** 2026-02-27
@@ -31,6 +31,7 @@ The platform must support the following media types natively, integrated into th
 | Audio (self-hosted) | Ambient soundscapes, music project demos, podcast clips | Web Audio API + Howler.js |
 | Audio (SoundCloud) | Embedded SoundCloud tracks/playlists, artist portfolio pieces | SoundCloud Widget API (oEmbed) |
 | Background music | Page-level ambient audio that plays while browsing a case study | Howler.js (looped, crossfade) |
+| Audio-reactive visuals | Plexus, snow, and canvas animations respond to audio frequency/amplitude | Web Audio API AnalyserNode |
 | Video | Case study walkthroughs, prototype demos, process recordings | Mux Video (adaptive HLS) |
 | 3D | Product visualizations, spatial interfaces, interactive sculptures | Three.js (R128+) |
 | Data visualization | Metrics, workflows, system diagrams, design token maps | D3.js |
@@ -533,6 +534,9 @@ This is a **page-level** field (not section-level). It provides ambient backgrou
     { name: 'loop',          type: 'boolean', initialValue: true                 },
     { name: 'crossfadeDuration', type: 'number', initialValue: 4000,
       description: 'Crossfade duration in ms when transitioning between pages'   },
+
+    // Audio-reactive animation settings
+    { name: 'audioReactivity', type: 'audioReactivity'                           },
   ]
 }
 ```
@@ -575,7 +579,233 @@ User clicks [✕ Close] → stop audio, hide player for session
 - Volume, position, and playing state survive navigation.
 - `prefers-reduced-motion` does not disable audio, but the mini-player animation is static.
 
-#### 3.3.4 `videoEmbed`
+#### 3.3.4 `audioReactivity` (CMS-editable per page)
+
+When background audio is playing, canvas animations (plexus particles, snow/weather, micro-animations) can respond to the music in real time. Every parameter is editable in Sanity Studio so the author can tune the visual response per page without code changes.
+
+```typescript
+{
+  name: 'audioReactivity',
+  type: 'object',
+  fields: [
+    { name: 'enabled',          type: 'boolean', initialValue: true,
+      description: 'Master toggle — disable to keep audio without visual response' },
+
+    // FFT analysis config
+    { name: 'fftSize',          type: 'number', initialValue: 256,
+      description: 'FFT window size (64–2048). Larger = finer freq resolution, more CPU' },
+    { name: 'smoothingTimeConstant', type: 'number', initialValue: 0.8,
+      description: '0.0–1.0. Higher = smoother (less jittery). Lower = more reactive' },
+
+    // Frequency band mapping
+    { name: 'bands',            type: 'object', fields: [
+        { name: 'bass',        type: 'object', fields: [
+            { name: 'rangeHz',      type: 'string', initialValue: '20-250'       },
+            { name: 'sensitivity',  type: 'number', initialValue: 1.2,
+              description: '0.0–3.0. Multiplier for this band response'          },
+          ]                                                                      },
+        { name: 'mid',         type: 'object', fields: [
+            { name: 'rangeHz',      type: 'string', initialValue: '250-4000'     },
+            { name: 'sensitivity',  type: 'number', initialValue: 1.0            },
+          ]                                                                      },
+        { name: 'treble',      type: 'object', fields: [
+            { name: 'rangeHz',      type: 'string', initialValue: '4000-20000'   },
+            { name: 'sensitivity',  type: 'number', initialValue: 0.8            },
+          ]                                                                      },
+      ]                                                                          },
+
+    // Per-animation target mapping
+    { name: 'plexusMapping',    type: 'object', fields: [
+        { name: 'enabled',         type: 'boolean', initialValue: true           },
+        { name: 'particleCount',   type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'bass',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 60              },
+            { name: 'max',         type: 'number', initialValue: 140             },
+          ], description: 'Particle count scales between min–max with band energy' },
+        { name: 'linkDistance',    type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'mid',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 80              },
+            { name: 'max',         type: 'number', initialValue: 220             },
+          ], description: 'Connection distance breathes with mid frequencies'     },
+        { name: 'speed',          type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'bass',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 0.15            },
+            { name: 'max',         type: 'number', initialValue: 0.8             },
+          ], description: 'Drift speed pulses with bass kicks'                    },
+        { name: 'glowIntensity',  type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'treble',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 0.3             },
+            { name: 'max',         type: 'number', initialValue: 1.0             },
+          ], description: 'Pulse node glow reacts to treble shimmer'              },
+        { name: 'lineAlpha',      type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'average',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 0.06            },
+            { name: 'max',         type: 'number', initialValue: 0.28            },
+          ], description: 'Line opacity breathes with overall energy'             },
+      ]                                                                          },
+
+    { name: 'weatherMapping',   type: 'object', fields: [
+        { name: 'enabled',         type: 'boolean', initialValue: true           },
+        { name: 'particleCount',   type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'average',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 20              },
+            { name: 'max',         type: 'number', initialValue: 120             },
+          ], description: 'Snow/rain density scales with overall volume'          },
+        { name: 'windForce',      type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'bass',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 0.0             },
+            { name: 'max',         type: 'number', initialValue: 2.5             },
+          ], description: 'Horizontal wind drift reacts to bass drops'            },
+        { name: 'fallSpeed',      type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'mid',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 0.5             },
+            { name: 'max',         type: 'number', initialValue: 3.0             },
+          ], description: 'Fall velocity rises with mid energy'                   },
+        { name: 'wobbleAmplitude', type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'treble',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 0.5             },
+            { name: 'max',         type: 'number', initialValue: 4.0             },
+          ], description: 'Particle wobble intensifies with treble'               },
+      ]                                                                          },
+
+    { name: 'flowNodeMapping',  type: 'object', fields: [
+        { name: 'enabled',         type: 'boolean', initialValue: true           },
+        { name: 'ringScale',      type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'bass',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 1.0             },
+            { name: 'max',         type: 'number', initialValue: 1.25            },
+          ], description: 'Ring outer scale pulses on bass'                       },
+        { name: 'kanjiOpacity',   type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'mid',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 0.4             },
+            { name: 'max',         type: 'number', initialValue: 1.0             },
+          ], description: 'Kanji character breathes with mid frequencies'          },
+        { name: 'dotFlowSpeed',   type: 'object', fields: [
+            { name: 'band',        type: 'string', initialValue: 'treble',
+              options: { list: ['bass', 'mid', 'treble', 'average'] }            },
+            { name: 'min',         type: 'number', initialValue: 1.0             },
+            { name: 'max',         type: 'number', initialValue: 3.0             },
+          ], description: 'Connector dot pulse speed tracks treble'               },
+      ]                                                                          },
+  ]
+}
+```
+
+**Audio-reactive pipeline (runtime architecture):**
+
+```
+Background Audio Source (Howler.js or SoundCloud)
+         │
+         ▼
+Web Audio API — AudioContext
+         │
+         ▼
+AnalyserNode (fftSize from CMS, smoothing from CMS)
+         │
+         ├──▸ getByteFrequencyData(Uint8Array)
+         │         │
+         │         ▼
+         │    FrequencyBandSplitter
+         │    ├── bass:    avg of bins 20–250 Hz    → 0.0–1.0 normalized
+         │    ├── mid:     avg of bins 250–4000 Hz  → 0.0–1.0 normalized
+         │    ├── treble:  avg of bins 4000–20k Hz  → 0.0–1.0 normalized
+         │    └── average: avg of all bins           → 0.0–1.0 normalized
+         │              │
+         │              ▼
+         │    Sensitivity multiplier (from CMS per band)
+         │              │
+         │              ▼
+         │    AudioReactiveStore (Zustand)
+         │    { bass: 0.72, mid: 0.45, treble: 0.31, average: 0.49 }
+         │              │
+         │    ┌─────────┼─────────────────────┐
+         │    ▼         ▼                     ▼
+         │  PlexusBg  WeatherHero         FlowPipeline
+         │    │         │                     │
+         │    ▼         ▼                     ▼
+         │  Reads mapping from CMS:       Reads mapping from CMS:
+         │  speed.band = 'bass'           ringScale.band = 'bass'
+         │  speed.min = 0.15              ringScale.min = 1.0
+         │  speed.max = 0.8               ringScale.max = 1.25
+         │    │                               │
+         │    ▼                               ▼
+         │  lerp(0.15, 0.8, store.bass)   lerp(1.0, 1.25, store.bass)
+         │  = 0.62 → applied to drift     = 1.18 → applied to transform
+         │
+         └──▸ 60fps RAF loop — all animations read from shared store
+```
+
+**Howler.js → Web Audio bridge:**
+
+Howler.js manages playback (crossfade, volume, loop), but we tap into its internal `AudioContext` to create the `AnalyserNode`. Howler exposes `Howler.ctx` (the shared AudioContext) and each sound's internal `_node` array. The bridge connects the Howler source node to an AnalyserNode without interrupting playback:
+
+```typescript
+// AudioReactiveBridge.ts
+const analyser = Howler.ctx.createAnalyser()
+analyser.fftSize = cmsConfig.fftSize        // from Sanity
+analyser.smoothingTimeConstant = cmsConfig.smoothingTimeConstant
+
+// Connect Howler's master output → analyser → destination
+Howler.masterGain.connect(analyser)
+analyser.connect(Howler.ctx.destination)
+```
+
+**SoundCloud → Web Audio bridge:**
+
+For SoundCloud background audio, the SC.Widget iframe cannot share an AudioContext (cross-origin). Instead, the system uses a hybrid approach: the SoundCloud Widget plays the audio, but we use its `SC.Widget.Events.PLAY_PROGRESS` callback to approximate energy from playback position + pre-analyzed waveform data (stored in Sanity as `waveformData[]`).
+
+For full-fidelity audio reactivity with SoundCloud, the preferred path is to also upload the audio file to Sanity (self-hosted source) and use the SoundCloud URL only as a display/attribution link. The self-hosted file feeds Web Audio API while the SoundCloud player remains visible as a branded embed.
+
+**CMS editing experience in Sanity Studio:**
+
+```
+caseStudy → backgroundAudio → audioReactivity
+  │
+  ├── [✓] Enabled
+  ├── FFT Size: [256 ▾]
+  ├── Smoothing: [0.8] ━━━━━━●━━━
+  │
+  ├── ▼ Frequency Bands
+  │   ├── Bass (20–250 Hz)    Sensitivity: [1.2]
+  │   ├── Mid (250–4000 Hz)   Sensitivity: [1.0]
+  │   └── Treble (4k–20k Hz)  Sensitivity: [0.8]
+  │
+  ├── ▼ Plexus Animation
+  │   ├── [✓] Enabled
+  │   ├── Particle Count:  Band [bass ▾]   Min [60]  Max [140]
+  │   ├── Link Distance:   Band [mid ▾]    Min [80]  Max [220]
+  │   ├── Speed:           Band [bass ▾]   Min [0.15] Max [0.8]
+  │   ├── Glow Intensity:  Band [treble ▾] Min [0.3] Max [1.0]
+  │   └── Line Alpha:      Band [average▾] Min [0.06] Max [0.28]
+  │
+  ├── ▼ Snow / Weather
+  │   ├── [✓] Enabled
+  │   ├── Particle Count:  Band [average▾] Min [20]  Max [120]
+  │   ├── Wind Force:      Band [bass ▾]   Min [0.0] Max [2.5]
+  │   ├── Fall Speed:      Band [mid ▾]    Min [0.5] Max [3.0]
+  │   └── Wobble:          Band [treble ▾] Min [0.5] Max [4.0]
+  │
+  └── ▼ Flow Pipeline Nodes
+      ├── [✓] Enabled
+      ├── Ring Scale:      Band [bass ▾]   Min [1.0] Max [1.25]
+      ├── Kanji Opacity:   Band [mid ▾]    Min [0.4] Max [1.0]
+      └── Dot Flow Speed:  Band [treble ▾] Min [1.0] Max [3.0]
+```
+
+Every slider, dropdown, and toggle is a Sanity field. The author can fine-tune how each animation responds to each frequency band without touching code.
+
+#### 3.3.5 `videoEmbed`
 
 ```typescript
 {
@@ -865,27 +1095,29 @@ SERVER-ONLY (env vars):
 | 34 | `AnimeSequence` | SVG animation timeline | `svg`, `timeline`, `trigger`, `loop` |
 | 35 | `MediaFallback` | Static image fallback for reduced-motion or SSR | `fallbackImage`, `alt` |
 | 36 | `AudioContextProvider` | React context for cross-page audio state persistence | `children` |
+| 37 | `AudioReactiveBridge` | Connects Howler/SC audio source → Web Audio AnalyserNode → Zustand store | `fftSize`, `smoothing`, `bands` |
+| 38 | `AudioReactiveProvider` | Zustand store providing `{ bass, mid, treble, average }` to all animations | `children`, `audioReactivity` |
 
 ### 5.6 About / Process / Editorial Components (5)
 
 | # | Component | Purpose | Props |
 |---|---|---|---|
-| 37 | `PortraitGrid` | Bio portrait + text layout | `portrait`, `name`, `title`, `bio` |
-| 38 | `PhilosophyBlock` | Philosophy essay card | `heading`, `body` |
-| 39 | `Timeline` | Career timeline | `entries[]` |
-| 40 | `ToolsGrid` | Tools used grid with icons | `tools[]` |
-| 41 | `ArticleCard` | Editorial article preview | `title`, `excerpt`, `date`, `slug` |
+| 39 | `PortraitGrid` | Bio portrait + text layout | `portrait`, `name`, `title`, `bio` |
+| 40 | `PhilosophyBlock` | Philosophy essay card | `heading`, `body` |
+| 41 | `Timeline` | Career timeline | `entries[]` |
+| 42 | `ToolsGrid` | Tools used grid with icons | `tools[]` |
+| 43 | `ArticleCard` | Editorial article preview | `title`, `excerpt`, `date`, `slug` |
 
 ### 5.7 Utility Components (4)
 
 | # | Component | Purpose | Props |
 |---|---|---|---|
-| 42 | `PortableTextRenderer` | Sanity rich text → HTML | `value`, `components` |
-| 43 | `SanityImage` | next/image with Sanity CDN | `image`, `alt`, `sizes`, `priority` |
-| 44 | `SeoHead` | Per-page meta + OG tags | `title`, `description`, `ogImage`, `url` |
-| 45 | `SkipToContent` | Accessibility skip link | — |
+| 44 | `PortableTextRenderer` | Sanity rich text → HTML | `value`, `components` |
+| 45 | `SanityImage` | next/image with Sanity CDN | `image`, `alt`, `sizes`, `priority` |
+| 46 | `SeoHead` | Per-page meta + OG tags | `title`, `description`, `ogImage`, `url` |
+| 47 | `SkipToContent` | Accessibility skip link | — |
 
-**Total: 45 components**
+**Total: 47 components**
 
 ---
 
@@ -1164,8 +1396,11 @@ Visualization    D3.js                7.x        Data viz (bar, sankey, force, e
                  @react-three/drei    9.x        Helpers (OrbitControls, loaders)
 
 Audio            Howler.js            2.x        Playback, spatial audio, background music
-                 Web Audio API        native     Waveform analysis, ambient
+                 Web Audio API        native     AnalyserNode FFT for audio reactivity
                  SoundCloud Widget    1.x        oEmbed + SC.Widget JS control
+
+Audio-reactive   Web Audio AnalyserNode native   FFT frequency band extraction (bass/mid/treble)
+                 Zustand              4.x        Shared reactive store (60fps band energy values)
 
 Video            Mux                  latest     Adaptive HLS, signed URLs
                  @mux/mux-player      latest     React player component
@@ -1482,19 +1717,29 @@ This specification supersedes the following documents:
 
 Those documents remain in the repo for reference but are no longer the active specification. This document (`cms-platform-spec.md`) is the single source of truth.
 
-### Key additions in v2.0:
+### Key additions in v2.0 → v2.1:
+
+**v2.0:**
 - Full Information Architecture with sitemap hierarchy
 - Three user journey maps with multimedia touchpoints
 - Complete entity relationship diagram
 - Nine multimedia schema types (self-hosted audio, SoundCloud embed, background audio, video, 3D, React Flow, D3, Anime.js, data viz)
 - SoundCloud oEmbed + Widget API integration with cs-artifact treatment
 - Page-level background music system with crossfade, opt-in UX, persistent mini-player
-- 45-component inventory (vs. implied ~20 in v1.0)
 - Structural wireframe blueprints for every page template
 - Explicit performance budgets per page type
 - Complete SEO framework with JSON-LD structured data
 - Dynamic OG image generation spec
 - Conditional bundle loading strategy for multimedia libraries
+
+**v2.1:**
+- Audio-reactive animation system: plexus, snow/weather, and flow pipeline animations respond to background music frequency bands (bass, mid, treble)
+- Full `audioReactivity` CMS schema: every animation parameter (particle count, speed, glow, wind, wobble, ring scale) mapped to a frequency band with editable min/max ranges and per-band sensitivity
+- Web Audio API AnalyserNode pipeline: Howler.js → AnalyserNode → FrequencyBandSplitter → Zustand store → 60fps animation loop
+- SoundCloud → Web Audio hybrid bridge for cross-origin audio analysis
+- Sanity Studio editing experience with sliders and dropdowns for all audio-reactive parameters
+- Project separation strategy: original static repo preserved as-is, CMS built in new `keisuke-portfolio-cms` repository
+- 47-component inventory (up from 45: added AudioReactiveBridge, AudioReactiveProvider)
 
 ---
 
@@ -1516,5 +1761,103 @@ This document is formatted for direct consumption by Figma Make. Component names
 
 ---
 
+## Appendix C — Project Separation Strategy
+
+The current static portfolio site remains untouched. The CMS platform is a **new project** in a **separate repository**. This preserves the original as a stable reference and production fallback.
+
+### Repository Structure
+
+```
+GitHub: keisukeshingu/
+│
+├── keisuke-portfolio/              ← ORIGINAL (unchanged)
+│   ├── Static HTML/CSS/JS
+│   ├── GitHub Pages deployment
+│   ├── All current docs, images, case studies
+│   └── Stays live at keisukeshingu.github.io/keisuke-portfolio/
+│
+└── keisuke-portfolio-cms/          ← NEW (this spec)
+    ├── Next.js 14 App Router
+    ├── Sanity Studio (embedded)
+    ├── All multimedia components
+    ├── Audio-reactive animation system
+    └── Deploys to Vercel → keisukeshingu.com
+```
+
+### Migration Rules
+
+| Rule | Detail |
+|---|---|
+| **Original repo is read-only during migration** | No new features or breaking changes to the static site |
+| **Content migration is copy, not move** | HTML content is copied into Sanity documents; original files untouched |
+| **Images are re-uploaded, not linked** | Images go into Sanity CDN; original `img/` folder stays as-is |
+| **Design tokens are cloned** | `css/tokens.css` is copied into `styles/tokens.css` in the new repo |
+| **Current site stays live** | GitHub Pages serves the original until CMS site is verified and DNS switched |
+| **DNS cutover is the final step** | Only after full QA sign-off does the domain point to Vercel |
+| **Original repo becomes archive** | After DNS cutover, rename to `keisuke-portfolio-static-archive` |
+
+### New Repo Initialization
+
+```bash
+# Create new repo
+gh repo create keisukeshingu/keisuke-portfolio-cms --private --clone
+
+# Bootstrap Next.js
+cd keisuke-portfolio-cms
+npx create-next-app@latest . --typescript --app --eslint
+
+# Copy design tokens and docs from original
+cp ../keisuke-portfolio/css/tokens.css styles/tokens.css
+cp ../keisuke-portfolio/css/base.css styles/base.css
+cp ../keisuke-portfolio/css/nav.css styles/nav.css
+cp ../keisuke-portfolio/css/footer.css styles/footer.css
+cp ../keisuke-portfolio/css/case-study.css styles/case-study.css
+cp -r ../keisuke-portfolio/logos public/logos
+cp -r ../keisuke-portfolio/docs docs/reference/
+
+# Install dependencies
+pnpm add next-sanity @sanity/image-url @portabletext/react
+pnpm add sanity @sanity/vision @sanity/presentation
+pnpm add howler @mux/mux-player three @react-three/fiber @react-three/drei
+pnpm add reactflow d3 animejs framer-motion zustand
+pnpm add -D @types/howler @types/d3 @types/three
+```
+
+### Parallel Development Flow
+
+```
+Phase 1–3 (Foundation + Pages):
+  Original site: LIVE on GitHub Pages (production)
+  CMS site: Development on Vercel preview URLs
+
+Phase 4–6 (Visual Editor + Media + Links):
+  Original site: LIVE (unchanged)
+  CMS site: Staging on Vercel (*.vercel.app)
+
+Phase 7 (QA):
+  Original site: LIVE (fallback)
+  CMS site: Final testing on preview domain
+
+DNS Cutover:
+  Original site: Archived
+  CMS site: LIVE on keisukeshingu.com
+```
+
+### Version Correspondence
+
+| Original File | CMS Equivalent |
+|---|---|
+| `index.html` | `app/page.tsx` + Sanity `homePage` |
+| `projects.html` | `app/projects/page.tsx` + Sanity query |
+| `case-studies/ai-workflow.html` | `app/case-studies/[slug]/page.tsx` + Sanity `caseStudy` doc |
+| `css/tokens.css` | `styles/tokens.css` (1:1 copy) |
+| `css/case-study.css` | `styles/case-study.css` (1:1 copy, then CSS Modules) |
+| `js/plexus-bg.js` | `components/home/PlexusBg.tsx` (React wrapper + audio-reactive) |
+| `js/weather-hero.js` | `components/case-study/WeatherHero.tsx` (React wrapper + audio-reactive) |
+| `js/scroll-reveal.js` | `components/layout/ScrollReveal.tsx` (IntersectionObserver hook) |
+| `docs/*.md` | `docs/reference/*.md` (copied for reference) |
+
+---
+
 *Document maintained in `/docs/` — update on any architectural decision change.*
-*Version 2.0 — Keisuke Shingu + Claude (Cowork mode) — 2026-02-27*
+*Version 2.1 — Keisuke Shingu + Claude (Cowork mode) — 2026-02-27*
