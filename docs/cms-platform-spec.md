@@ -28,7 +28,9 @@ The platform must support the following media types natively, integrated into th
 
 | Media Type | Use Cases | Framework |
 |---|---|---|
-| Audio | Ambient soundscapes, music project demos, podcast clips | Web Audio API + Howler.js |
+| Audio (self-hosted) | Ambient soundscapes, music project demos, podcast clips | Web Audio API + Howler.js |
+| Audio (SoundCloud) | Embedded SoundCloud tracks/playlists, artist portfolio pieces | SoundCloud Widget API (oEmbed) |
+| Background music | Page-level ambient audio that plays while browsing a case study | Howler.js (looped, crossfade) |
 | Video | Case study walkthroughs, prototype demos, process recordings | Mux Video (adaptive HLS) |
 | 3D | Product visualizations, spatial interfaces, interactive sculptures | Three.js (R128+) |
 | Data visualization | Metrics, workflows, system diagrams, design token maps | D3.js |
@@ -302,6 +304,7 @@ CONVERSION: Contact form submission
 │ title        │                    │ metrics[]        │──▸ metricItem
 │ eras[]       │──▸ eraGroup        │ sections[]       │──▸ csSection ──────────┐
 └──────────────┘    │               │ recognition[]    │──▸ recognitionItem      │
+                    │               │ backgroundAudio  │──▸ backgroundAudio      │
                     │               │ prevCase         │──▸ ref (caseStudy)      │
                     └──▸ ref ──────▸│ nextCase         │──▸ ref (caseStudy)      │
                                     │ metaTitle        │                         │
@@ -321,6 +324,7 @@ CONVERSION: Contact form submission
 │ clientLogos  │    │ metrics        (metricItem[])     │
 └──────────────┘    │ dataViz        (dataVizEmbed)     │──▸ type + config JSON
                     │ audioEmbed     (audioEmbed)       │──▸ Sanity file + waveform
+                    │ soundcloudEmbed (soundcloudEmbed)│──▸ SC URL + player config
 ┌──────────────┐    │ videoEmbed     (videoEmbed)       │──▸ Mux playback ID
 │ processPage  │    │ threeScene     (threeSceneEmbed)  │──▸ model URL + camera JSON
 │ (singleton)  │    │ reactFlowDiag  (reactFlowEmbed)   │──▸ nodes[] + edges[] JSON
@@ -395,6 +399,9 @@ CONVERSION: Contact form submission
     // Recognition
     { name: 'recognition',     type: 'array', of: [{ type: 'recognitionItem' }] },
 
+    // Background Audio (page-level ambient music)
+    { name: 'backgroundAudio', type: 'backgroundAudio'                           },
+
     // Navigation
     { name: 'prevCase',        type: 'reference', to: [{ type: 'caseStudy' }]   },
     { name: 'nextCase',        type: 'reference', to: [{ type: 'caseStudy' }]   },
@@ -426,6 +433,7 @@ This is the most important schema in the system. Each section can contain any co
 
     // Multimedia embeds (optional per section)
     { name: 'audioEmbed',      type: 'audioEmbed'                                },
+    { name: 'soundcloudEmbed', type: 'soundcloudEmbed'                           },
     { name: 'videoEmbed',      type: 'videoEmbed'                                },
     { name: 'threeScene',      type: 'threeSceneEmbed'                           },
     { name: 'reactFlowDiag',   type: 'reactFlowEmbed'                           },
@@ -455,7 +463,119 @@ This is the most important schema in the system. Each section can contain any co
 }
 ```
 
-#### 3.3.2 `videoEmbed`
+#### 3.3.2 `soundcloudEmbed`
+
+```typescript
+{
+  name: 'soundcloudEmbed',
+  type: 'object',
+  fields: [
+    { name: 'url',           type: 'url',
+      description: 'SoundCloud track or playlist URL'                             },
+    { name: 'title',         type: 'string'                                      },
+    { name: 'visual',        type: 'boolean', initialValue: true,
+      description: 'Use SoundCloud visual player (large artwork) vs compact'     },
+    { name: 'color',         type: 'string', initialValue: '#B33A3A',
+      description: 'Player accent color (default: shu red)'                      },
+    { name: 'autoPlay',      type: 'boolean', initialValue: false                },
+    { name: 'showArtwork',   type: 'boolean', initialValue: true                 },
+    { name: 'showUser',      type: 'boolean', initialValue: true                 },
+    { name: 'showComments',  type: 'boolean', initialValue: false                },
+    { name: 'maxHeight',     type: 'number', initialValue: 166,
+      description: 'Compact player = 166px, Visual player = 450px'              },
+    { name: 'caption',       type: 'string'                                      },
+  ]
+}
+```
+
+**Rendering strategy:** The `SoundCloudPlayer` component uses the SoundCloud oEmbed API to resolve the track URL into an iframe embed. The Widget API (`SC.Widget`) provides JavaScript control for play/pause/seek from custom UI if needed.
+
+```
+SoundCloud URL (from Sanity)
+         │
+         ▼
+oEmbed API: https://soundcloud.com/oembed?url={url}&format=json
+         │
+         ▼
+Returns: { html: '<iframe ...>', title, thumbnail_url, author_name }
+         │
+         ▼
+Render <iframe> inside cs-artifact treatment (border-radius, caption)
+         │
+         ▼
+Optional: SC.Widget(iframe) for JS control (play, pause, seek, getPosition)
+```
+
+#### 3.3.3 `backgroundAudio`
+
+This is a **page-level** field (not section-level). It provides ambient background music that plays while the user is browsing a case study or any page.
+
+```typescript
+{
+  name: 'backgroundAudio',
+  type: 'object',
+  fields: [
+    { name: 'source',        type: 'string', options: {
+        list: ['file', 'soundcloud']
+      }, initialValue: 'file'                                                    },
+    { name: 'file',          type: 'file', options: { accept: 'audio/*' },
+      description: 'Self-hosted audio file (MP3/OGG/WAV)'                       },
+    { name: 'soundcloudUrl', type: 'url',
+      description: 'SoundCloud track URL (used when source = soundcloud)'        },
+    { name: 'title',         type: 'string'                                      },
+    { name: 'artist',        type: 'string'                                      },
+    { name: 'volume',        type: 'number', initialValue: 0.3,
+      description: 'Initial volume 0.0–1.0 (default: 0.3 for ambient)'          },
+    { name: 'fadeInDuration', type: 'number', initialValue: 3000,
+      description: 'Fade-in time in ms when user opts in'                        },
+    { name: 'fadeOutDuration', type: 'number', initialValue: 2000,
+      description: 'Fade-out on page exit or pause'                              },
+    { name: 'loop',          type: 'boolean', initialValue: true                 },
+    { name: 'crossfadeDuration', type: 'number', initialValue: 4000,
+      description: 'Crossfade duration in ms when transitioning between pages'   },
+  ]
+}
+```
+
+**Background Audio UX contract:**
+
+```
+User arrives on page with backgroundAudio configured
+         │
+         ▼
+Floating mini-player appears (bottom-right, above footer)
+  ┌──────────────────────────────────────┐
+  │  ♫ Track Title — Artist              │
+  │  [▶ Play]  ───●──────── 0:30 / 3:45 │
+  │  🔊 ━━━━●━━━━━                       │
+  └──────────────────────────────────────┘
+         │
+         ▼
+Audio does NOT autoplay (browser policy + UX respect)
+User clicks [▶ Play] to opt in
+         │
+         ▼
+Howler.js fades in at configured volume (default 0.3)
+Audio loops seamlessly
+         │
+         ▼
+User navigates to another page:
+  ├── Next page HAS backgroundAudio → crossfade (4s default)
+  └── Next page has NO backgroundAudio → fade out (2s)
+         │
+         ▼
+User clicks [⏸ Pause] → fade out, remember paused state
+User clicks [✕ Close] → stop audio, hide player for session
+```
+
+**Key principles:**
+- Never autoplay. Always require user opt-in (respects browser autoplay policy and user preference).
+- Persist playback state across page navigations using React context or Zustand store.
+- Mini-player persists in layout (not per-page) so audio is uninterrupted during Next.js route transitions.
+- Volume, position, and playing state survive navigation.
+- `prefers-reduced-motion` does not disable audio, but the mini-player animation is static.
+
+#### 3.3.4 `videoEmbed`
 
 ```typescript
 {
@@ -731,38 +851,41 @@ SERVER-ONLY (env vars):
 | 25 | `Recognition` | Awards/recognition list | `items[]` |
 | 26 | `CasePrevNext` | Prev/Next navigation pair | `prev`, `next` |
 
-### 5.5 Multimedia Components (7)
+### 5.5 Multimedia Components (10)
 
 | # | Component | Purpose | Props |
 |---|---|---|---|
-| 27 | `AudioPlayer` | Waveform audio player | `file`, `title`, `artist`, `waveformData`, `ambient` |
-| 28 | `VideoPlayer` | Adaptive HLS video with poster | `muxPlaybackId`, `poster`, `aspectRatio`, `autoplay`, `captions` |
-| 29 | `ThreeScene` | Interactive 3D model viewer | `modelUrl`, `camera`, `lighting`, `autoRotate`, `fallback` |
-| 30 | `ReactFlowDiagram` | Interactive node/edge diagram | `nodes`, `edges`, `direction`, `interactive`, `minimap` |
-| 31 | `D3Viz` | Data visualization container | `vizType`, `data`, `config`, `colorScheme`, `height` |
-| 32 | `AnimeSequence` | SVG animation timeline | `svg`, `timeline`, `trigger`, `loop` |
-| 33 | `MediaFallback` | Static image fallback for reduced-motion or SSR | `fallbackImage`, `alt` |
+| 27 | `AudioPlayer` | Waveform audio player (self-hosted files) | `file`, `title`, `artist`, `waveformData`, `ambient` |
+| 28 | `SoundCloudPlayer` | Embedded SoundCloud track/playlist player | `url`, `visual`, `color`, `showArtwork`, `caption` |
+| 29 | `BackgroundAudioPlayer` | Persistent mini-player for page-level ambient music | `source`, `file`, `soundcloudUrl`, `volume`, `loop`, `crossfade` |
+| 30 | `VideoPlayer` | Adaptive HLS video with poster | `muxPlaybackId`, `poster`, `aspectRatio`, `autoplay`, `captions` |
+| 31 | `ThreeScene` | Interactive 3D model viewer | `modelUrl`, `camera`, `lighting`, `autoRotate`, `fallback` |
+| 32 | `ReactFlowDiagram` | Interactive node/edge diagram | `nodes`, `edges`, `direction`, `interactive`, `minimap` |
+| 33 | `D3Viz` | Data visualization container | `vizType`, `data`, `config`, `colorScheme`, `height` |
+| 34 | `AnimeSequence` | SVG animation timeline | `svg`, `timeline`, `trigger`, `loop` |
+| 35 | `MediaFallback` | Static image fallback for reduced-motion or SSR | `fallbackImage`, `alt` |
+| 36 | `AudioContextProvider` | React context for cross-page audio state persistence | `children` |
 
 ### 5.6 About / Process / Editorial Components (5)
 
 | # | Component | Purpose | Props |
 |---|---|---|---|
-| 34 | `PortraitGrid` | Bio portrait + text layout | `portrait`, `name`, `title`, `bio` |
-| 35 | `PhilosophyBlock` | Philosophy essay card | `heading`, `body` |
-| 36 | `Timeline` | Career timeline | `entries[]` |
-| 37 | `ToolsGrid` | Tools used grid with icons | `tools[]` |
-| 38 | `ArticleCard` | Editorial article preview | `title`, `excerpt`, `date`, `slug` |
+| 37 | `PortraitGrid` | Bio portrait + text layout | `portrait`, `name`, `title`, `bio` |
+| 38 | `PhilosophyBlock` | Philosophy essay card | `heading`, `body` |
+| 39 | `Timeline` | Career timeline | `entries[]` |
+| 40 | `ToolsGrid` | Tools used grid with icons | `tools[]` |
+| 41 | `ArticleCard` | Editorial article preview | `title`, `excerpt`, `date`, `slug` |
 
 ### 5.7 Utility Components (4)
 
 | # | Component | Purpose | Props |
 |---|---|---|---|
-| 39 | `PortableTextRenderer` | Sanity rich text → HTML | `value`, `components` |
-| 40 | `SanityImage` | next/image with Sanity CDN | `image`, `alt`, `sizes`, `priority` |
-| 41 | `SeoHead` | Per-page meta + OG tags | `title`, `description`, `ogImage`, `url` |
-| 42 | `SkipToContent` | Accessibility skip link | — |
+| 42 | `PortableTextRenderer` | Sanity rich text → HTML | `value`, `components` |
+| 43 | `SanityImage` | next/image with Sanity CDN | `image`, `alt`, `sizes`, `priority` |
+| 44 | `SeoHead` | Per-page meta + OG tags | `title`, `description`, `ogImage`, `url` |
+| 45 | `SkipToContent` | Accessibility skip link | — |
 
-**Total: 42 components**
+**Total: 45 components**
 
 ---
 
@@ -1040,8 +1163,9 @@ Visualization    D3.js                7.x        Data viz (bar, sankey, force, e
                  @react-three/fiber   8.x        React bindings for Three.js
                  @react-three/drei    9.x        Helpers (OrbitControls, loaders)
 
-Audio            Howler.js            2.x        Playback, spatial audio
+Audio            Howler.js            2.x        Playback, spatial audio, background music
                  Web Audio API        native     Waveform analysis, ambient
+                 SoundCloud Widget    1.x        oEmbed + SC.Widget JS control
 
 Video            Mux                  latest     Adaptive HLS, signed URLs
                  @mux/mux-player      latest     React player component
@@ -1076,7 +1200,8 @@ To keep performance within targets, multimedia libraries load conditionally:
 | Three.js + Fiber + Drei | Lazy | Dynamic import on first ThreeScene in viewport |
 | React Flow | Lazy | Dynamic import on first ReactFlowDiagram |
 | Anime.js | Lazy | Dynamic import on first AnimeSequence |
-| Howler.js | Lazy | Dynamic import on first AudioPlayer |
+| Howler.js | Lazy | Dynamic import on first AudioPlayer or BackgroundAudioPlayer |
+| SoundCloud Widget | Lazy | `<script>` injected on first SoundCloudPlayer render |
 | Mux Player | Lazy | Dynamic import on first VideoPlayer |
 | Plexus, MicroAnim, Weather | Page-specific | Only on pages that use them |
 
@@ -1361,8 +1486,10 @@ Those documents remain in the repo for reference but are no longer the active sp
 - Full Information Architecture with sitemap hierarchy
 - Three user journey maps with multimedia touchpoints
 - Complete entity relationship diagram
-- Seven multimedia schema types (audio, video, 3D, React Flow, D3, Anime.js, data viz)
-- 42-component inventory (vs. implied ~20 in v1.0)
+- Nine multimedia schema types (self-hosted audio, SoundCloud embed, background audio, video, 3D, React Flow, D3, Anime.js, data viz)
+- SoundCloud oEmbed + Widget API integration with cs-artifact treatment
+- Page-level background music system with crossfade, opt-in UX, persistent mini-player
+- 45-component inventory (vs. implied ~20 in v1.0)
 - Structural wireframe blueprints for every page template
 - Explicit performance budgets per page type
 - Complete SEO framework with JSON-LD structured data
