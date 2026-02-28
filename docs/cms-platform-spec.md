@@ -58,7 +58,7 @@ keisukeshingu.com/
 │   ├── Era: AI Systems (2023–Present)
 │   │   ├── /case-studies/ai-workflow
 │   │   ├── /case-studies/tdk
-│   │   └── /case-studies/fabrion
+│   │   └── /case-studies/ai-native-design
 │   ├── Era: Agency & Consulting
 │   │   ├── /case-studies/slalom        [NDA]
 │   │   └── /case-studies/ogilvy        [NDA]

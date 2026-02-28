@@ -12,7 +12,6 @@
 |---|---|
 | Keisuke Shingu (logo) | `index.html` |
 | Projects | `projects.html` |
-| Process | `process.html` |
 | Design Thinking | `design-thinking.html` |
 | About | `about.html` |
 | Contact | `contact.html` |
@@ -55,7 +54,7 @@ Section title: **FEATURED EXPERIENCES**
 | `case-studies/tdk.html` | — | 🔒 Not linked (excluded from prev/next) |
 | `case-studies/rakuten-fit.html` | — | 🔒 Not linked |
 | `case-studies/robot-heart.html` | — | 🔒 Not linked |
-| `case-studies/fabrion.html` | — | 🔒 Not linked |
+| `case-studies/ai-native-design.html` | — | AI-Native Design Engineering |
 | `case-studies/ogilvy.html` | — | 🔒 NDA |
 | `case-studies/slalom.html` | — | 🔒 NDA |
 | `case-studies/beatport-ni.html` | — | 🔒 Not linked |

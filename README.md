@@ -14,15 +14,15 @@ keisuke-portfolio/
 ├── index.html                  # Home / Portfolio overview
 ├── projects.html               # All case studies by era
 ├── about.html                  # About + timeline + clients
-├── design-thinking.html        # Articles + writing index
+├── design-thinking.html        # Articles + writing index + process content
 ├── contact.html                # Contact CTA
 │
 ├── case-studies/               # Individual project case studies
 │   ├── slalom.html             # Gundam Metaverse · Slalom Consulting
 │   ├── robot-heart.html        # Robot Heart · Burning Man
 │   ├── techcrunch.html         # TechCrunch Disrupt · Studio ZIRO
-│   ├── kyoto-archive.html      # Kunichika Digital Archive · Kyoto University
-│   ├── fabrion.html            # Fabrion · AI Systems
+│   ├── kyoto-archive.html      # Kyoto University of the Arts — Media Lab
+│   ├── ai-native-design.html   # AI-Native Design Engineering
 │   ├── tdk.html                # TDK SensEI
 │   ├── ai-workflow.html        # AI Workflow
 │   ├── rakuten-fit.html        # Rakuten Fit

@@ -120,7 +120,7 @@ Keep inline only what is unique to the page:
 
 | Page | Columns |
 |---|---|
-| ai-workflow, fabrion, ogilvy, rakuten-fit, denon-marantz | 4 (default) |
+| ai-workflow, ai-native-design, ogilvy, rakuten-fit, denon-marantz | 4 (default) |
 | tdk, miselu, robot-heart, techcrunch | 3 (override inline) |
 
 ---

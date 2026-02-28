@@ -32,7 +32,7 @@ keisuke-portfolio/
 ├── index.html                   # Home: hero + plexus animation + heritage cards + logo grid
 ├── projects.html                # Project grid (case entries)
 ├── about.html                   # Bio + clients grid + portrait placeholder
-├── design-thinking.html         # Editorial index (5 articles)
+├── design-thinking.html         # Editorial index (5 articles) + process content
 ├── contact.html                 # Contact form
 │
 ├── case-studies/                # 14 case study pages
@@ -40,7 +40,7 @@ keisuke-portfolio/
 │   ├── robot-heart.html         # Coming Soon
 │   ├── techcrunch.html          # Coming Soon
 │   ├── kyoto-archive.html       ✓ live
-│   ├── fabrion.html             ✓ live
+│   ├── ai-native-design.html    ✓ live (AI-Native Design Engineering)
 │   ├── tdk.html                 ✓ live
 │   ├── ai-workflow.html         ✓ live
 │   ├── rakuten-fit.html         ✓ live
@@ -102,6 +102,25 @@ Red shu-accent badge shown. Clicking shows toast: *"Coming soon — check back l
 
 **Toast implementation:** Both toasts use a shared frosted-glass dark overlay at bottom of screen.
 Functions: `showNDAToast()`, `showSoonToast()` — inline script in each HTML file.
+
+---
+
+## Prev / Next Navigation Chain (Chronological, Dead-End)
+
+Live pages only. Chain does **not** wrap — first and last entries have a single link.
+
+| # | Page | ← Newer Work | Earlier Work → |
+|---|------|-------------|----------------|
+| 1 | `ai-native-design.html` | — (dead end) | ai-workflow |
+| 2 | `ai-workflow.html` | ai-native-design | tdk |
+| 3 | `tdk.html` | ai-workflow | rakuten-fit |
+| 4 | `rakuten-fit.html` | tdk | denon-marantz |
+| 5 | `denon-marantz.html` | rakuten-fit | miselu |
+| 6 | `miselu.html` | denon-marantz | quarkxpress |
+| 7 | `quarkxpress.html` | miselu | kyoto-archive |
+| 8 | `kyoto-archive.html` | quarkxpress | — (dead end) |
+
+Non-live pages (NDA/Soon) link to the nearest live neighbor. Re-wire when they go live.
 
 ---
 
@@ -229,6 +248,12 @@ The text paragraphs about tools remain; only the visual logo block was removed.
 | Plexus animation — touch event support | ✅ |
 | Plexus animation — full viewport height on mobile scroll | ✅ |
 | Denon/Marantz thumbnail — replaced broken Denon.com hotlink with 148b-denon-digital.jpg | ✅ |
+| Removed process.html — content merged into design-thinking.html | ✅ |
+| Cleaned all process.html nav/footer links from 6 article pages | ✅ |
+| Renamed fabrion.html → ai-native-design.html; purged all "Fabrion" from live site | ✅ |
+| Renamed Kyoto Archive page title → "Kyoto University of the Arts — Media Lab" | ✅ |
+| Prev/next chain rewired: chronological, dead-end, live-pages-only | ✅ |
+| Non-live pages (NDA/Soon) prev/next links pointed to nearest live neighbors | ✅ |
 
 ---
 
@@ -238,7 +263,7 @@ The text paragraphs about tools remain; only the visual logo block was removed.
 - [ ] Macworld/Steve Jobs photo for quarkxpress.html hero
 - [ ] Real portrait photo for about.html
 - [ ] Process images / diagrams inside case study `inline-image` containers
-- [ ] Proprietary placeholder images: fabrion.html, rakuten-fit.html
+- [ ] Proprietary placeholder images: ai-native-design.html, rakuten-fit.html
 
 ### Roadmap (Planned Architecture)
 - [ ] Lighthouse audit (target: 95+ all metrics)
@@ -247,6 +272,17 @@ The text paragraphs about tools remain; only the visual logo block was removed.
 - [ ] Custom domain setup
 - [ ] Phase 5 — Editorial CMS (Next.js + Sanity.io — queued for planning session)
   - User stories first → design specs → separated data/backend/frontend architecture
+
+---
+
+## Naming Conventions
+
+| File Slug | Display Name | Rule |
+|-----------|-------------|------|
+| `ai-native-design.html` | **AI-Native Design Engineering** | Renamed from `fabrion.html`. Never use "Fabrion" in any user-facing text, nav, card, copy, or filenames. |
+| `kyoto-archive.html` | **Kyoto University of the Arts — Media Lab** | Page title updated. File slug unchanged. |
+
+> **Important:** The word "Fabrion" must not appear anywhere on the live site — not in titles, cards, nav, body copy, or meta tags. Always use "AI-Native Design Engineering" or "AI Agent Platform" as the display name.
 
 ---
 
